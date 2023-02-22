@@ -163,8 +163,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 			->setOrderId( ( (string) $order->get_id() ) )
 			->setAmount( $payment_data['amount'] )
 			->setCurrency( $payment_data['currency'] )
-			->setCustomer( $api_customer )
-		;
+			->setCustomer( $api_customer );
 
 		if ( $payment_data['return_url'] ) {
 			$api_payment->setReturnUrl( $payment_data['return_url'] );
