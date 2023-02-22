@@ -1,0 +1,16 @@
+{
+  "name": "stancer",
+  "version": "1.0.0",
+  "author": "Stancer",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "archive": "env node ./scripts/zip.js",
+    "build:archive": "rm -rf vendor && composer install --no-dev && npm run version && npm run archive && composer install",
+    "version": "env node ./scripts/version.js"
+  },
+  "devDependencies": {
+    "archiver": "^5.0.0",
+    "glob": "^8.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+
+rules:
+  class-name-format:
+    - 2
+    -
+      convention: hyphenatedbem
+
+  property-sort-order:
+    - 2
+    -
+      order: concentric

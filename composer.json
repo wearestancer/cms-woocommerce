@@ -1,0 +1,23 @@
+{
+    "name": "stancer/woocommerce",
+    "description": "Stancer Woocommerce payment plugin",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "installer-name": "stancer"
+    },
+    "require": {
+        "stancer/stancer": "^1.0"
+    },
+    "require-dev": {
+        "php-stubs/woocommerce-stubs": "^7.3",
+        "squizlabs/php_codesniffer": "^3.7",
+        "wp-coding-standards/wpcs": "^2.3"
+    }
+}

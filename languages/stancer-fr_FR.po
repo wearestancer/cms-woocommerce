@@ -1,0 +1,184 @@
+# Copyright (C) 2023 Stancer / Iliad 78
+# This file is distributed under the MIT.
+msgid ""
+msgstr ""
+"Project-Id-Version: $[last-commit-hash]\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/wearestancer/cms/woocommerce/-/"
+"issues\n"
+"POT-Creation-Date: $[first-commit-date]\n"
+"PO-Revision-Date: $[last-commit-date]\n"
+"Last-Translator: $[last-commit-author]\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+msgid "Stancer"
+msgstr "Stancer"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.stancer.com"
+msgstr "https://www.stancer.com"
+
+#. Description of the plugin
+#: includes/class-stancer-gateway.php:56
+msgid "Simple payment solution at low prices."
+msgstr "La solution de paiement simple à petit prix."
+
+#. translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
+#: includes/class-stancer-gateway.php:121
+msgid "Starts with \"%s\""
+msgstr "Commence avec \"%s\""
+
+#: includes/class-stancer-gateway.php:127
+msgid "Public live API key"
+msgstr "Clé de production publique"
+
+#: includes/class-stancer-gateway.php:132
+msgid "Secret live API key"
+msgstr "Clé de production privée"
+
+#: includes/class-stancer-gateway.php:137
+msgid "Public test API key"
+msgstr "Clé de test publique"
+
+#: includes/class-stancer-gateway.php:142
+msgid "Secret test API key"
+msgstr "Clé de test privée"
+
+#: includes/class-stancer-gateway.php:156
+msgid "Pay by card"
+msgstr "Payer par carte"
+
+#: includes/class-stancer-gateway.php:157
+msgid "Title"
+msgstr "Titre"
+
+#: includes/class-stancer-gateway.php:163
+msgid "Enable Stancer"
+msgstr "Activer Stancer"
+
+#: includes/class-stancer-gateway.php:164
+msgid "Enable/Disable"
+msgstr "Activer/Désactiver"
+
+#: includes/class-stancer-gateway.php:169
+msgid "Settings"
+msgstr "Réglages"
+
+#: includes/class-stancer-gateway.php:184
+msgid ""
+"In test mode, no payment will really send to a bank, only test card can be "
+"used."
+msgstr ""
+"En mode test, aucun paiement ne sera envoyé à une banque, seuls les cartes "
+"de test sont utilisables."
+
+#: includes/class-stancer-gateway.php:185
+msgid "Enable test mode"
+msgstr "Activer le mode test"
+
+#: includes/class-stancer-gateway.php:186
+msgid "Test mode"
+msgstr "Mode test"
+
+#: includes/class-stancer-gateway.php:192
+#: includes/class-stancer-gateway.php:193
+msgid "Page type"
+msgstr "Mode d’affichage"
+
+#: includes/class-stancer-gateway.php:195
+msgid "Popup"
+msgstr "Popup"
+
+#: includes/class-stancer-gateway.php:196
+msgid "Redirect to an external page"
+msgstr "Rediriger vers une page externe"
+
+#: includes/class-stancer-gateway.php:201
+msgid ""
+"Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, "
+"Mastercard Secure Code...)."
+msgstr ""
+"Montant minimum pour le déclenchement d'un paiement authentifié (3DS, "
+"Verified by Visa, Mastercard Secure Code...)."
+
+#: includes/class-stancer-gateway.php:203
+msgid ""
+"Leave blank if you do not wish to authenticate, at zero all payments will be "
+"authenticated."
+msgstr ""
+"Laissez vide si vous ne souhaitez pas faire de paiement authentifié, si vous "
+"le placez à zéro tous les paiements seront authentifiés."
+
+#: includes/class-stancer-gateway.php:207
+msgid "Authentication limit"
+msgstr "Limite pour les paiements authentifiés"
+
+#: includes/class-stancer-gateway.php:212
+msgid ""
+"Will be used as description for every payment made, and will be visible to "
+"your customer in redirect mode."
+msgstr ""
+"Sera utilisé comme description pour chaque paiement, celle-ci sera visible "
+"pour vos clients en mode redirection."
+
+#: includes/class-stancer-gateway.php:214
+msgid "List of available variables:"
+msgstr "Liste des variables disponibles :"
+
+#: includes/class-stancer-gateway.php:218
+msgid "Shop name configured in Woocommerce"
+msgstr "Nom de la boutique configuré dans Woocommerce"
+
+#: includes/class-stancer-gateway.php:219
+msgid "Total amount"
+msgstr "Montant total"
+
+#: includes/class-stancer-gateway.php:220
+msgid "Currency of the order"
+msgstr "Devise de la commande"
+
+#: includes/class-stancer-gateway.php:221
+msgid "Cart identifier"
+msgstr "Identifiant du panier"
+
+#: includes/class-stancer-gateway.php:230
+msgid "Your order SHOP_NAME"
+msgstr "Votre commande SHOP_NAME"
+
+#: includes/class-stancer-gateway.php:231
+msgid "Description"
+msgstr "Description"
+
+#: includes/class-stancer-gateway.php:352
+msgid "The payment attempt failed."
+msgstr "La tentative de paiement a échouée."
+
+#. translators: %s: Stancer payment identifier.
+#: includes/class-stancer-gateway.php:374
+msgid "Payment was completed via Stancer (Transaction ID: %s)"
+msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
+
+#: includes/views/class-stancer-payment-fields.php:17
+msgid "Choose a cart"
+msgstr "Choisir une carte"
+
+#. translators: 1: Card brand 2: Last 4 digit.
+#: includes/views/class-stancer-payment-fields.php:20
+msgid "%1$s finishing with %2$s"
+msgstr "%1$s finissant par %2$s"
+
+#: includes/views/class-stancer-payment-fields.php:28
+msgid "Pay with your card"
+msgstr "Payer avec votre carte"
+
+#: includes/views/class-stancer-payment-fields.php:33
+msgid "You will be redirected to our partner's portal to make the payment."
+msgstr ""
+"Vous allez être redirigé vers le portail de notre partenaire de paiement."

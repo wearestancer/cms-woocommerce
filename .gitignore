@@ -1,0 +1,19 @@
+
+# composer
+vendor/
+
+# node
+node_modules/
+.pnpm-store
+
+# Tests report
+reports/
+
+# macOS specific files
+.DS_Store
+._*
+
+# Generated content
+assets/
+
+*.zip

@@ -1,0 +1,4 @@
+*.mo	binary
+*.po	filter=locales
+
+CHANGELOG.md	merge=union

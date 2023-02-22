@@ -1,0 +1,42 @@
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_REF_PROTECTED == "true"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - when: always
+
+
+phpcs:
+  stage: test
+
+  image: php:7.4
+
+  before_script:
+    - apt update
+    - apt install -y libzip-dev
+
+    - pecl install zip
+    - docker-php-ext-enable zip
+
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.checksum');"
+    - php -r "if (hash_file('sha384', 'composer-setup.php') !== file_get_contents('composer-setup.checksum')) { echo 'Installer corrupt'; unlink('composer-setup.php'); exit(1); }"
+    - php composer-setup.php --install-dir /usr/local/bin --filename=composer
+    - php -r "unlink('composer-setup.php');"
+    - php -r "unlink('composer-setup.checksum');"
+
+    - php -v
+    - composer --version
+
+    - composer install
+    - ./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/WordPress,vendor/wp-coding-standards/wpcs/WordPress-Core,vendor/wp-coding-standards/wpcs/WordPress-Docs,vendor/wp-coding-standards/wpcs/WordPress-Extra
+
+  script:
+    - ./vendor/bin/phpcs || true
+    - ./vendor/bin/phpcs --report=junit --report-file=phpcs.junit.xml
+
+  artifacts:
+    reports:
+      junit: phpcs.junit.xml
