@@ -1,5 +1,5 @@
 {
-    "name": "stancer/woocommerce",
+    "name": "stancer/cms-woocommerce",
     "description": "Stancer Woocommerce payment plugin",
     "type": "wordpress-plugin",
     "license": "MIT",
