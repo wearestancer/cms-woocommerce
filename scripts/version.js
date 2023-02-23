@@ -38,3 +38,15 @@ glob("**/*.php", globOptions, (err, files) => {
     });
   });
 });
+
+fs.readFile('README.txt', { encoding: "utf8" }, (err, content) => {
+  if (err) {
+    throw err;
+  }
+
+  fs.writeFile('README.txt', content.replace(/Stable tag:.+/, `Stable tag: ${pack.version}`), (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+});
