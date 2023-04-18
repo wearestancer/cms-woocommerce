@@ -4,6 +4,10 @@
   "author": "Stancer",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
     "archive": "env node ./scripts/zip.js",
     "build:archive": "rm -rf vendor && composer install --no-dev && npm run version && npm run archive && composer install",
