@@ -7,7 +7,58 @@ Stable tag: 1.0.0
 License: MIT
 Contributors: stancer
 
-Accept Credit Cards and SEPA on your WooCommerce store.
+With Stancer, develop business online in a secure way.
+No commitment, no subscription, no hidden costs.
+
+== The ideal payment solution for your WooCommerce shop ==
+
+= Accept a multitude of payment methods =
+
+The Stancer module for WooCommerce allows you to accept the most common payment methods used by your customers such as credit cards, classic or instant SEPA transfers, or SEPA direct debits, to collect them from your WooCommerce merchant site.
+
+In order to make the shopping experience smoother, customers have the possibility to register a credit card during the checkout process in order to quickly pay their next purchases.
+
+
+= Easy integration =
+
+To integrate our solution on your WooCommerce website, you must [create a Stancer account](https://manage.stancer.com/en/sign-up).
+
+After your account has been validated by our team, you will be able to opt for the different integration modes available:
+
+1. Via a Stancer pop-in integrated on your merchant site:
+    When the customer clicks on "Order", the Stancer payment module pop-in opens on the page of your site and allows the customer to enter their bank details.
+2. Via a redirection:
+    After clicking on "Checkout", the user automatically leaves your merchant site and is directed to a Stancer payment page. Once the payment has been accepted, the user is redirected to the order confirmation page of your shop site.
+
+Find out more in our [technical documentation](https://www.stancer.com/documentation/).
+
+
+= Guarantee the security of your payments =
+
+Secure transactions enhance your website's reputation and help your business grow. This is why we have set up robust and reliable protection systems to protect you from fraud attempts.
+
+Payments are 3D-Secure compatible. The amount at which the 3D-Secure is adjustable from the back-office module in WooCommerce.
+
+
+= A dashboard to follow your activity =
+
+Manage and control your business from a Dashboard. This unique dashboard gives you a consolidated view of cash receipts, refunds and claims. Keep a history of activity and get statistics on your recurring revenues.
+
+
+== Develop your online business, at lower cost ==
+
+= A simple, affordable offer =
+
+We have designed our solution to be as accessible as possible so that every company can get the most out of it and grow serenely.
+
+Discover our [pricing](https://www.stancer.com/en/pricing/).
+
+= A flexible offer, without commitment =
+
+Benefit from a lower-cost online payment solution, with no subscription and no commitment. You are free to suspend or terminate the offer at any time, at no cost.
+
+Do you have any questions about Stancer? [Contact us](https://share-eu1.hsforms.com/1eDEtFIXEQtWpVz8PyOEK3gft2n5)
+
 
 == Installation ==
 
@@ -17,25 +68,23 @@ Accept Credit Cards and SEPA on your WooCommerce store.
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to
-leave your web browser.
-To do an automatic install of, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser.
+To do an automatic install, log in to your WordPress dashboard, navigate to the "Plugins" menu and click "Add New".
 
-In the search field type "Stancer" and click Search Plugins.
-Once you’ve found our plugin you can view details about it such as the point release, rating and description.
-Most importantly of course, you can install it by simply clicking “Install Now”.
+In the search field type "Stancer", you will see the plugin. You can install it by simply clicking "Install Now".
 
 = Manual installation =
 
-The manual installation method involves downloading our plugin and uploading it to your webserver via your favorite
-FTP application.
-The WordPress codex contains
-[instructions on how to do this here](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
+The manual installation method involves downloading our plugin and uploading it to your webserver via your favorite FTP application.
+The WordPress codex contains [instructions on how to do this](http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
 
 = Updating =
 
-Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
+Updates are done automatically. However, we recommend that you back up your site before each update.
 
 == Changelog ==
 
-[See changelog file](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+[See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+
+= Version 1.0.0 =
+* First version.
