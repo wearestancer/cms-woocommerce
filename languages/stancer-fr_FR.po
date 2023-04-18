@@ -133,8 +133,8 @@ msgid "List of available variables:"
 msgstr "Liste des variables disponibles :"
 
 #: includes/class-stancer-gateway.php:218
-msgid "Shop name configured in Woocommerce"
-msgstr "Nom de la boutique configuré dans Woocommerce"
+msgid "Shop name configured in WooCommerce"
+msgstr "Nom de la boutique configuré dans WooCommerce"
 
 #: includes/class-stancer-gateway.php:219
 msgid "Total amount"

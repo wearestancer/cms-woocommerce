@@ -215,7 +215,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$desc_description .= '<br/>';
 
 		$vars = [
-			'SHOP_NAME'    => __( 'Shop name configured in Woocommerce', 'stancer' ),
+			'SHOP_NAME'    => __( 'Shop name configured in WooCommerce', 'stancer' ),
 			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
 			'CURRENCY'     => __( 'Currency of the order', 'stancer' ),
 			'CART_ID'      => __( 'Cart identifier', 'stancer' ),

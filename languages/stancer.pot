@@ -116,7 +116,7 @@ msgid "List of available variables:"
 msgstr ""
 
 #: includes/class-stancer-gateway.php:218
-msgid "Shop name configured in Woocommerce"
+msgid "Shop name configured in WooCommerce"
 msgstr ""
 
 #: includes/class-stancer-gateway.php:219
