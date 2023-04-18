@@ -8,7 +8,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: Stancer
- * Plugin URI:  https://www.stancer.com
+ * Plugin URI:  https://gitlab.com/wearestancer/cms/woocommerce
  * Description: Simple payment solution at low prices.
  * Version:     1.0.0
  * Author:      Stancer
