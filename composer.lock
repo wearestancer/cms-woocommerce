@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a0c9b409b10be124a8c9e931ff0d4e6",
+    "content-hash": "bc65693a009d8cfe58738f8858532327",
     "packages": [
         {
             "name": "psr/http-message",
@@ -265,6 +265,47 @@
             "time": "2023-11-10T00:33:47+00:00"
         },
         {
+            "name": "simplesecurewp/php-stubs-woocommerce-subscriptions",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simplesecurewp/php-stubs-woocommerce-subscriptions.git",
+                "reference": "697ed7df0727f2d33b81b54656c6fb51768512de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simplesecurewp/php-stubs-woocommerce-subscriptions/zipball/697ed7df0727f2d33b81b54656c6fb51768512de",
+                "reference": "697ed7df0727f2d33b81b54656c6fb51768512de",
+                "shasum": ""
+            },
+            "require": {
+                "php-stubs/wordpress-stubs": "^5.3 || ^6.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simple Secure WP",
+                    "email": "simplesecurewp@gmail.com"
+                }
+            ],
+            "description": "PHP tags for WooCommerce Subscriptions for use in PHPStan",
+            "keywords": [
+                "PHPStan",
+                "static analysis",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/simplesecurewp/php-stubs-woocommerce-subscriptions/issues",
+                "source": "https://github.com/simplesecurewp/php-stubs-woocommerce-subscriptions/tree/main"
+            },
+            "time": "2023-03-20T21:17:23+00:00"
+        },
+        {
             "name": "squizlabs/php_codesniffer",
             "version": "3.8.1",
             "source": {
@@ -398,7 +439,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "simplesecurewp/php-stubs-woocommerce-subscriptions": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
