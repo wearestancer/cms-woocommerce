@@ -13,7 +13,7 @@
  */
 
 /**
- * Stancer API
+ * Stancer API.
  *
  * @since 1.0.0
  *
@@ -22,7 +22,7 @@
  */
 class WC_Stancer_Api {
 	/**
-	 * Stancer API configuration
+	 * Stancer API configuration.
 	 *
 	 * @since 1.0.0
 	 * @var WC_Stancer_Config
@@ -30,7 +30,7 @@ class WC_Stancer_Api {
 	public $api_config;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 *
@@ -41,17 +41,14 @@ class WC_Stancer_Api {
 	}
 
 	/**
-	 * Prepare payment data for send a payment to Stancer
+	 * Prepare payment data for send a payment to Stancer.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param WC_Order $order Order.
 	 * @return array
 	 */
 	public function build_payment_data( WC_Order $order ) {
-		global $locale;
-
-		$iso_code = explode( '_', $locale );
-		$iso_code = $iso_code[0] ?? 'fr';
 		$total = $order->get_total();
 		$amount = (int) (string) ( $total * 100 );
 		$auth_limit = $this->api_config->auth_limit;
@@ -81,12 +78,12 @@ class WC_Stancer_Api {
 	}
 
 	/**
-	 * Send payment to Stancer Api
+	 * Send payment to Stancer API.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WC_Order    $order    Order.
-	 * @param string|null $card_id  Card identifier.
+	 * @param WC_Order $order Order.
+	 * @param string|null $card_id Card identifier.
 	 * @return Stancer\Payment|null
 	 */
 	public function send_payment( WC_Order $order, $card_id = null ): ?Stancer\Payment {
@@ -96,22 +93,20 @@ class WC_Stancer_Api {
 		$stancer_payment = WC_Stancer_Payment::get_payment( $order, $payment_data, true );
 
 		if ( $stancer_payment ) {
-			$api_payment = WC_Stancer_Payment::get_api_payment( $stancer_payment );
+			$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
 
 			if ( $card_id ) {
-				$card = new Stancer\Card( $card_id );
-
 				if ( $payment_data['auth'] ) {
-					$api_payment->setAuth( $api_payment->getPaymentPageUrl() );
+					$api_payment->set_auth( $api_payment->get_payment_page_url() );
 				} else {
-					$api_payment->setStatus( Stancer\Payment\Status::CAPTURE );
+					$api_payment->set_status( Stancer\Payment\Status::CAPTURE );
 				}
 
-				$api_payment->setCard( $card );
+				$api_payment->set_card( new Stancer\Card( $card_id ) );
 			}
 
 			if ( static::sent_object_to_api( $api_payment ) ) {
-				$api_cutomer = $api_payment->getCustomer();
+				$api_cutomer = $api_payment->customer;
 				WC_Stancer_Customer::save_from( $api_cutomer );
 			}
 		}
@@ -120,7 +115,7 @@ class WC_Stancer_Api {
 	}
 
 	/**
-	 * Send payment to API
+	 * Send payment to API.
 	 *
 	 * @since 1.0.0
 	 * @param Stancer\Payment $object Object to send.

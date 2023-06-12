@@ -13,7 +13,7 @@
  */
 
 /**
- * Stancer plugin
+ * Stancer plugin.
  *
  * @since 1.0.0
  *
@@ -38,7 +38,7 @@ class WC_Stancer {
 	private $version;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
@@ -96,9 +96,9 @@ class WC_Stancer {
 				tokenized tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT "Is this card tokenized?",
 				datetime_created datetime NULL DEFAULT NULL COMMENT "Creation date and time",
 				datetime_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
-				PRIMARY KEY  (stancer_card_id),
-				UNIQUE INDEX  card_id (card_id),
-				INDEX  user_id (user_id)
+				PRIMARY KEY (stancer_card_id),
+				UNIQUE INDEX card_id (card_id),
+				INDEX user_id (user_id)
 			);';
 
 			dbDelta( $sql );
@@ -113,7 +113,7 @@ class WC_Stancer {
 				created datetime COMMENT "Creation date into the API",
 				datetime_created datetime NULL DEFAULT NULL COMMENT "Creation date and time",
 				datetime_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
-				PRIMARY KEY  (stancer_customer_id),
+				PRIMARY KEY (stancer_customer_id),
 				UNIQUE INDEX customer_id (customer_id),
 				INDEX user_id (user_id)
 			);';
@@ -132,7 +132,7 @@ class WC_Stancer {
 				datetime_created datetime NULL DEFAULT NULL COMMENT "Creation date and time",
 				created datetime COMMENT "Creation date into the API",
 				datetime_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
-				PRIMARY KEY  (stancer_payment_id),
+				PRIMARY KEY (stancer_payment_id),
 				UNIQUE INDEX payment_id (payment_id),
 				INDEX order_id (order_id)
 			);';
