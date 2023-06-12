@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage stancer/includes
  */
 class WC_Stancer_Gateway extends WC_Payment_Gateway {
+	use WC_Stancer_Subscription_Trait;
 
 	/**
 	 * Stancer configuration.
@@ -65,6 +66,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
 
+		$this->supports = [
+			'products',
+		];
+
 		// Add message on checkout.
 		add_action( 'woocommerce_before_checkout_form', [ $this, 'display_notice' ] );
 
@@ -76,6 +81,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
+
+		$this->init_subscription();
 	}
 
 	/**
@@ -90,6 +97,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 */
 	public function create_api_payment( $order, $card_id = null ) {
 		$redirect = $order->get_checkout_payment_url( true );
+		$reload = true;
 		$api_payment = $this->api->send_payment( $order, $card_id );
 
 		if ( $api_payment && $api_payment->return_url ) {
@@ -98,10 +106,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 					'lang' => 'fr',
 				]
 			);
+			$reload = false;
 		}
 
 		return [
 			'redirect' => $redirect,
+			'reload' => $reload,
+			'result' => $reload ? 'failed' : 'success',
 		];
 	}
 
@@ -201,6 +212,22 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$template[] = '</tr>';
 
 		return implode( '', $template );
+	}
+
+	/**
+	 * Return checkout button classes.
+	 *
+	 * @return string
+	 */
+	public function get_button_classes() {
+		$default_classes = [
+			'button',
+			'alt',
+			wc_wp_theme_get_element_class_name( 'button' ),
+			'js-stancer-place-order',
+		];
+
+		return implode( ' ', $default_classes );
 	}
 
 	/**
@@ -472,15 +499,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function place_order_button_html() {
 		$order_button_text = apply_filters( 'woocommerce_order_button_text', __( 'Place order', 'woocommerce' ) );
 
-		$default_classes = [
-			'button',
-			'alt',
-			wc_wp_theme_get_element_class_name( 'button' ),
-			'js-stancer-place-order',
-		];
-
 		$attrs = [
-			'class="' . esc_attr( implode( ' ', $default_classes ) ) . '"',
+			'class="' . esc_attr( $this->get_button_classes() ) . '"',
 			'id="place_order"',
 			'name="woocommerce_checkout_place_order"',
 			'value="' . esc_attr( $order_button_text ) . '"',
@@ -502,12 +522,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 		$card_id = filter_input( INPUT_POST, 'stancer-card', FILTER_SANITIZE_STRING );
-		$result = $this->create_api_payment( $order, $card_id );
 
-		return [
-			'result' => $result['redirect'] ? 'success' : 'failed',
-			'redirect' => $result['redirect'],
-		];
+		return $this->create_api_payment( $order, $card_id );
 	}
 
 	/**
@@ -593,6 +609,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 					)
 				);
 				$order->set_transaction_id( $api_payment->getId() );
+
+				$this->register_subscription_data( $order, $stancer_payment );
 
 				wp_safe_redirect( $this->get_return_url( $order ) );
 

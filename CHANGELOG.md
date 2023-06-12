@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - New integration mode "Inside the page"
+- Support [WooCommerce Subscription](https://woocommerce.com/fr-fr/products/woocommerce-subscriptions/)
 
 ### Changed
 - Optimize autoloader
