@@ -147,7 +147,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}wc_stancer_card WHERE card_id = %d",
+				"SELECT * FROM {$wpdb->prefix}wc_stancer_card WHERE card_id = %s",
 				esc_sql( $api_card->getId() )
 			)
 		);
@@ -180,7 +180,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}wc_stancer_card WHERE user_id = %s AND expiration > CURDATE() ORDER BY last_used DESC",
+				"SELECT * FROM {$wpdb->prefix}wc_stancer_card WHERE user_id = %d AND expiration > CURDATE() ORDER BY last_used DESC",
 				absint( $customer->get_id() )
 			)
 		);

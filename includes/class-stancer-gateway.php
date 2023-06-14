@@ -377,14 +377,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
 				// Save card.
-				// @todo : remove check of property when property deleted will be added.
-				$deleted = property_exists( $api_card, 'deleted' ) && $api_card->deleted ?? false;
+				WC_Stancer_Card::save_from( $api_card, $customer );
 
-				if ( $deleted ) {
-					WC_Stancer_Card::delete_from( $api_card );
-				} else {
-					WC_Stancer_Card::save_from( $api_card, $customer );
-				}
+				$stancer_payment->card_id = $api_card->id;
+				$stancer_payment->save();
 
 				// Remove cart.
 				WC()->cart->empty_cart();
