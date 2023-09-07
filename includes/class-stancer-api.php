@@ -105,10 +105,12 @@ class WC_Stancer_Api {
 				$api_payment->set_card( new Stancer\Card( $card_id ) );
 			}
 
-			if ( static::sent_object_to_api( $api_payment ) ) {
-				$api_cutomer = $api_payment->customer;
-				WC_Stancer_Customer::save_from( $api_cutomer );
+			if ( ! static::sent_object_to_api( $api_payment ) ) {
+				return null;
 			}
+
+			$api_cutomer = $api_payment->customer;
+			WC_Stancer_Customer::save_from( $api_cutomer );
 		}
 
 		return $api_payment;

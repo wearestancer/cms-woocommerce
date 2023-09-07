@@ -160,7 +160,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * @return bool
 	 */
 	public static function save_from( ?Stancer\Customer $api_customer = null ) {
-		if ( ! $api_customer ) {
+		if ( ! $api_customer || ! $api_customer->external_id ) {
 			return false;
 		}
 
