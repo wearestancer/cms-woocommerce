@@ -22,60 +22,12 @@
  */
 class WC_Stancer_Config {
 	/**
-	 * Mode Live or Test.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $mode;
-
-	/**
-	 * API Host.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $host;
-
-	/**
-	 * API Timeout.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $timeout;
-
-	/**
 	 * Auth limit.
 	 *
 	 * @since 1.0.0
 	 * @var string
 	 */
 	public $auth_limit;
-
-	/**
-	 * Page type.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $page_type;
-
-	/**
-	 * Public API key.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $public_key;
-
-	/**
-	 * Secret API key.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $secret_key;
 
 	/**
 	 * Description.
@@ -86,12 +38,68 @@ class WC_Stancer_Config {
 	public $description;
 
 	/**
-	 * API is configured.
+	 * API Host.
 	 *
 	 * @since 1.0.0
-	 * @var bool
+	 * @var string
 	 */
-	public $is_configured;
+	public $host;
+
+	/**
+	 * Mode Live or Test.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $mode;
+
+	/**
+	 * Page type.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $page_type;
+
+	/**
+	 * Public production API key.
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	public $pprod;
+
+	/**
+	 * Public test API key.
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	public $ptest;
+
+	/**
+	 * Secret production API key.
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	public $sprod;
+
+	/**
+	 * Secret test API key.
+	 *
+	 * @since 1.1.0
+	 * @var string
+	 */
+	public $stest;
+
+	/**
+	 * API Timeout.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	public $timeout;
 
 	/**
 	 * Constructor.
@@ -104,11 +112,12 @@ class WC_Stancer_Config {
 		$this->auth_limit = $settings['auth_limit'];
 		$this->description = $settings['description'];
 		$this->host = $settings['host'];
-		$this->is_configured = $this->is_configured();
 		$this->mode = Stancer\Config::TEST_MODE;
 		$this->page_type = $settings['page_type'];
-		$this->public_key = $this->get_public_key( $settings );
-		$this->secret_key = $this->get_secret_key( $settings );
+		$this->pprod = $settings['api_live_public_key'];
+		$this->ptest = $settings['api_test_public_key'];
+		$this->sprod = $settings['api_live_secret_key'];
+		$this->stest = $settings['api_test_secret_key'];
 		$this->timeout = $settings['timeout'];
 
 		if ( ! empty( $settings['test_mode'] ) && 'no' === $settings['test_mode'] ) {
@@ -122,21 +131,17 @@ class WC_Stancer_Config {
 	 * @since 1.0.0
 	 */
 	private function get_config() {
-		$api_config = null;
+		$keys = [
+			$this->pprod,
+			$this->sprod,
+			$this->ptest,
+			$this->stest,
+		];
 
-		if ( ! $this->public_key || ! $this->secret_key ) {
-			return $api_config;
-		}
-
-		$api_config = Stancer\Config::init(
-			[
-				$this->public_key,
-				$this->secret_key,
-			]
-		);
+		$api_config = Stancer\Config::init( array_filter( $keys ) );
 
 		if ( $api_config ) {
-			$api_config->setMode( $this->mode );
+			$api_config->setMode( $this->mode ?? Stancer\Config::TEST_MODE );
 
 			if ( $this->host ) {
 				$api_config->setHost( $this->host );
@@ -154,36 +159,6 @@ class WC_Stancer_Config {
 		}
 
 		return $api_config;
-	}
-
-	/**
-	 * Get the public API key.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $settings Settings.
-	 */
-	private function get_public_key( $settings ) {
-		if ( $this->is_test_mode() ) {
-			return $settings['api_test_public_key'];
-		}
-
-		return $settings['api_live_public_key'];
-	}
-
-	/**
-	 * Get the secrect API key.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $settings Settings.
-	 */
-	private function get_secret_key( $settings ) {
-		if ( $this->is_test_mode() ) {
-			return $settings['api_test_secret_key'];
-		}
-
-		return $settings['api_live_secret_key'];
 	}
 
 	/**
