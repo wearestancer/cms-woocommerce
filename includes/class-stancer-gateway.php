@@ -342,6 +342,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 */
 	public function receipt_page( $order_id ) {
 		$order = wc_get_order( $order_id );
+		$settings = get_option( 'woocommerce_stancer_settings' );
+
+		// Don't know why, but WC does not find the settings if did not do it myself.
+		$wc_config = new WC_Stancer_Config( $settings );
+
+		if ( $wc_config->is_not_configured() ) {
+			$order->update_status( 'failed' );
+
+			WC()->session->set( 'stancer_error_payment', __( 'The module is not correctly configured.', 'stancer' ) );
+			wp_safe_redirect( wc_get_checkout_url() );
+
+			exit();
+		}
+
 		$customer = new WC_Customer( $order->get_customer_id() );
 		$stancer_payment = WC_Stancer_Payment::get_payment( $order );
 		$api_payment = new Stancer\Payment( $stancer_payment->payment_id );

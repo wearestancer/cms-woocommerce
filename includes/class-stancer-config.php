@@ -192,4 +192,13 @@ class WC_Stancer_Config {
 
 		return false;
 	}
+
+	/**
+	 * Checks if it is NOT configured.
+	 *
+	 * @since 1.1.0
+	 */
+	public function is_not_configured() {
+		return ! $this->is_configured();
+	}
 }
