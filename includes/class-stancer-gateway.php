@@ -274,31 +274,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$customer = WC()->customer;
-		$cards = [];
-
-		if ( $customer ) {
-			$cards = WC_Stancer_Card::get_customer_cards( $customer );
-		}
-
-		if ( ! empty( $cards ) ) {
-			$options = [];
-			$options[] = __( 'Choose a cart', 'stancer' );
-			foreach ( $cards as $card ) {
-				// translators: 1: Card brand 2: Last 4 digit.
-				$options[ $card->card_id ] = vsprintf( __( '%1$s finishing with %2$s', 'stancer' ), [ $card->brand_name, $card->last4 ] );
-			}
-
-			woocommerce_form_field(
-				'stancer-card',
-				[
-					'type' => 'select',
-					'options' => $options,
-					'label' => __( 'Pay with your card', 'stancer' ),
-				]
-			);
-		}
-
 		echo esc_html__( 'You will be redirected to our partner\'s portal to make the payment.', 'stancer' );
 
 		wp_enqueue_script(
