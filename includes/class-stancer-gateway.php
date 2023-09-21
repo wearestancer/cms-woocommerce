@@ -198,6 +198,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'title' => __( 'Page type', 'stancer' ),
 			'options' => [
 				'iframe' => __( 'Popup', 'stancer' ),
+				'pip' => __( 'Inside the page', 'stancer' ),
 				'redirect' => __( 'Redirect to an external page', 'stancer' ),
 			],
 			'type' => 'select',
@@ -276,13 +277,31 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function payment_fields() {
 		echo esc_html__( 'You will be redirected to our partner\'s portal to make the payment.', 'stancer' );
 
-		wp_enqueue_script(
-			'stancer-popup',
-			plugin_dir_url( STANCER_FILE ) . 'public/js/popup.js',
-			[],
-			'1.0.0',
-			true
-		);
+		$options = get_option( 'woocommerce_stancer_settings' );
+
+		if ( 'pip' === $options['page_type'] ) {
+			wp_enqueue_script(
+				'stancer-iframe',
+				plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.js',
+				[],
+				STANCER_VERSION,
+				true
+			);
+			wp_enqueue_style(
+				'stancer-iframe',
+				plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.css',
+				[],
+				STANCER_VERSION
+			);
+		} else {
+			wp_enqueue_script(
+				'stancer-popup',
+				plugin_dir_url( STANCER_FILE ) . 'public/js/popup.js',
+				[],
+				STANCER_VERSION,
+				true
+			);
+		}
 	}
 
 	/**
