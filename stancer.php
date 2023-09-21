@@ -12,7 +12,7 @@
  * Description: Simple payment solution at low prices.
  * Version:     1.0.0
  * Author:      Stancer
- * Author URI:  https://www.stancer.com
+ * Author URI:  https://www.stancer.com/
  * License:     MIT
  * License URI: https://opensource.org/licenses/MIT
  * Domain Path: /languages

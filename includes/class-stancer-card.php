@@ -4,7 +4,7 @@
  *
  * See readme for more informations.
  *
- * @link https://www.stancer.com
+ * @link https://www.stancer.com/
  * @license MIT
  * @copyright 2023 Stancer / Iliad 78
  *
