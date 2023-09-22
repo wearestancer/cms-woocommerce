@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - New integration mode "Inside the page"
 
+### Fixes
+- Some errors may not be catch by the module
+
 
 ## [1.0.0] - 2023-04-18
 
