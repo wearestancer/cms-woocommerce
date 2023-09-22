@@ -1,9 +1,6 @@
 jQuery(document).ready(function ($) {
-  const $window = $(window);
-  const $body = $(document.body);
-  const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
-  const $frame = $(document.createElement('iframe')).addClass('stancer-iframe');
   const $stancer_payment_method = $("#payment_method_stancer");
+  const $placeOrder = $('.js-stancer-place-order');
   const $form = $('form.woocommerce-checkout');
   const $cardSelect = $('#stancer-card');
 
@@ -14,65 +11,24 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  const close = () => {
-    $body.removeClass('stancer-block-scroll');
-    $backdrop.detach();
-    $frame.detach();
-  };
-
-  $backdrop.on('click', close);
-
-  $window
-    .on('message', function (event) {
-      const origin = event.originalEvent.origin;
-      const data = event.originalEvent.data;
-
-      if (origin === 'https://payment.stancer.com') {
-        if (data.url) {
-          if (['error', 'finished', 'secure-auth-error'].includes(data.status)) {
-            window.location = data.url;
-          }
-
-          if (data.status === 'finished') {
-            return;
-          }
-        }
-
-        let height = 400;
-        let radius = 10;
-        let width = 400;
-
-        if (data.status === 'secure-auth-start') {
-          height = $window.height();
-          width = $window.width();
-          radius = 0;
-        } else if (!['error', 'init', 'secure-auth-end', 'secure-auth-error'].includes(data.status)) {
-          height = data.height;
-          width = data.width;
-        }
-
-        document.body.style.setProperty('--stancer-iframe-height', height + 'px');
-        document.body.style.setProperty('--stancer-iframe-width', width + 'px');
-        document.body.style.setProperty('--stancer-iframe-border-radius', radius + 'px');
-      }
-    })
-    .on('keydown', function (event) {
-      if (event.which === 27) { // Escape
-        close();
-      }
-    })
-  ;
-
-  $body.on('click', '.js-stancer-place-order', function (event) {
+  $placeOrder.on('click', function (e) {
     if (!$stancer_payment_method.is(':checked')) {
-     return true;
+      return true;
     }
 
-    event.preventDefault();
+    e.preventDefault();
 
-    const $this = $(this);
+    const $body = $(document.body);
+    const width = 550;
+    const height = 855;
+    const left = (screen.width - width) / 2;
+    const top = Math.max((screen.height - height) / 2, 0);
 
-    $this.block({ message: null });
+    const popup = window.open(
+      'about:blank',
+      '_blank',
+      'popup, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
+    );
 
     $.ajax({
       url: wc_checkout_params.checkout_url,
@@ -82,16 +38,15 @@ jQuery(document).ready(function ($) {
       success: function(result) {
         try {
           if ('success' === result.result && result.redirect && result.redirect !== '') {
-            $this.unblock();
-            $body.addClass('stancer-block-scroll');
-            $backdrop.appendTo($body);
-            $frame.appendTo($body).attr('src', result.redirect);
+            popup.location.href = result.redirect;
           } else if ('failure' === result.result) {
             throw 'Result failure';
           } else {
             throw 'Invalid response';
           }
         } catch(err) {
+          popup.close();
+
           // Reload page
           if (true === result.reload) {
             window.location.reload();

@@ -4,7 +4,7 @@
  *
  * See readme for more informations.
  *
- * @link https://www.stancer.com
+ * @link https://www.stancer.com/
  * @license MIT
  * @copyright 2023 Stancer / Iliad 78
  *
@@ -13,7 +13,7 @@
  */
 
 /**
- * Abstract table representation
+ * Abstract table representation.
  *
  * @since 1.0.0
  *
@@ -22,7 +22,7 @@
  */
 class WC_Stancer_Abstract_Table {
 	/**
-	 * Primary key value
+	 * Primary key value.
 	 *
 	 * @since 1.0.0
 	 * @var integer
@@ -30,7 +30,7 @@ class WC_Stancer_Abstract_Table {
 	protected $id;
 
 	/**
-	 * Creation ate and time
+	 * Creation ate and time.
 	 *
 	 * @since 1.0.0
 	 * @var DateTime
@@ -38,7 +38,7 @@ class WC_Stancer_Abstract_Table {
 	protected $datetime_created;
 
 	/**
-	 * Last modification ate and time
+	 * Last modification ate and time.
 	 *
 	 * @since 1.0.0
 	 * @var DateTime
@@ -46,7 +46,7 @@ class WC_Stancer_Abstract_Table {
 	protected $datetime_modified;
 
 	/**
-	 * Return properties value
+	 * Return properties value.
 	 *
 	 * @since 1.0.0
 	 * @param string $property Property name.
@@ -60,7 +60,7 @@ class WC_Stancer_Abstract_Table {
 	}
 
 	/**
-	 * Update a property value
+	 * Update a property value.
 	 *
 	 * @since 1.0.0
 	 * @param string $property Property name.
@@ -75,7 +75,7 @@ class WC_Stancer_Abstract_Table {
 	}
 
 	/**
-	 * Hydrate class
+	 * Hydrate class.
 	 *
 	 * @since 1.0.0
 	 * @param array $data Data to hydrate.
@@ -93,7 +93,7 @@ class WC_Stancer_Abstract_Table {
 	}
 
 	/**
-	 * Save to database
+	 * Save to database.
 	 *
 	 * @since 1.0.0
 	 */
