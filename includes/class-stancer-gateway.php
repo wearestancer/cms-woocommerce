@@ -245,7 +245,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		$inputs['timeout'] = [
-			'default' => 1,
+			'default' => 0,
 			'type' => 'hidden',
 		];
 
