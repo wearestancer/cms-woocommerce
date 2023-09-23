@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - New integration mode "Inside the page"
 
+### Changed
+- Optimize autoloader
+
 ### Removed
 - `timeout` setting, will be reintegrated later
 

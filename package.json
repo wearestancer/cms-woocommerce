@@ -10,8 +10,9 @@
   },
   "scripts": {
     "archive": "env node ./scripts/zip.js",
-    "build:archive": "rm -rf vendor && composer install --no-dev && npm run version && npm run archive && composer install",
-    "version": "env node ./scripts/version.js"
+    "build:archive": "pnpm run build:plugin && pnpm run archive && composer install",
+    "build:plugin": "rm -rf vendor && composer install --no-dev --optimize-autoloader && pnpm run versions",
+    "versions": "env node ./scripts/version.js"
   },
   "devDependencies": {
     "archiver": "^5.0.0",
