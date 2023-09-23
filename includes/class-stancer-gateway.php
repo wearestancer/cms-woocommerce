@@ -31,6 +31,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Stancer configuration.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var WC_Stancer_Config
 	 */
 	public $api_config;
@@ -39,6 +40,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Stancer API.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var WC_Stancer_Api
 	 */
 	public $api;
@@ -79,6 +81,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param WC_Order $order Order.
 	 * @param string|null $card_id Card identifier.
+	 *
 	 * @return array
 	 */
 	public function create_api_payment( $order, $card_id = null ) {
@@ -186,7 +189,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		$inputs['test_mode'] = [
 			'default' => 'yes',
-			'description' => __( 'In test mode, no payment will really send to a bank, only test card can be used.', 'stancer' ),
+			'description' => __(
+				'In test mode, no payment will really send to a bank, only test card can be used.',
+				'stancer',
+			),
 			'label' => __( 'Enable test mode', 'stancer' ),
 			'title' => __( 'Test mode', 'stancer' ),
 			'type' => 'checkbox',
@@ -204,9 +210,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'select',
 		];
 
-		$desc_auth_limit = __( 'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).', 'stancer' );
+		$desc_auth_limit = __(
+			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',
+			'stancer',
+		);
 		$desc_auth_limit .= '<br/>';
-		$desc_auth_limit .= __( 'Leave blank if you do not wish to authenticate, at zero all payments will be authenticated.', 'stancer' );
+		$desc_auth_limit .= __(
+			'Leave blank if you do not wish to authenticate, at zero all payments will be authenticated.',
+			'stancer',
+		);
 
 		$inputs['auth_limit'] = [
 			'default' => '0',
@@ -215,7 +227,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'description' => $desc_auth_limit,
 		];
 
-		$desc_description = __( 'Will be used as description for every payment made, and will be visible to your customer in redirect mode.', 'stancer' );
+		$desc_description = __(
+			'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
+			'stancer',
+		);
 		$desc_description .= ' ';
 		$desc_description .= __( 'List of available variables:', 'stancer' );
 		$desc_description .= '<br/>';
@@ -284,21 +299,21 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'stancer-iframe',
 				plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.js',
 				[],
-				STANCER_VERSION,
+				STANCER_WC_VERSION,
 				true
 			);
 			wp_enqueue_style(
 				'stancer-iframe',
 				plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.css',
 				[],
-				STANCER_VERSION
+				STANCER_WC_VERSION
 			);
 		} else {
 			wp_enqueue_script(
 				'stancer-popup',
 				plugin_dir_url( STANCER_FILE ) . 'public/js/popup.js',
 				[],
-				STANCER_VERSION,
+				STANCER_WC_VERSION,
 				true
 			);
 		}
@@ -346,10 +361,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$card_id = filter_input( INPUT_POST, 'stancer-card', FILTER_SANITIZE_STRING );
 		$result = $this->create_api_payment( $order, $card_id );
 
-		return array(
+		return [
 			'result' => $result['redirect'] ? 'success' : 'failed',
 			'redirect' => $result['redirect'],
-		);
+		];
 	}
 
 	/**
@@ -406,7 +421,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				WC()->session->set( 'stancer_error_payment', __( 'The payment attempt failed.', 'stancer' ) );
 				wp_safe_redirect( wc_get_checkout_url() );
 
-				exit;
+				break;
 			case Stancer\Payment\Status::AUTHORIZED:
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
@@ -422,17 +437,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				// Complete order.
 				$order->payment_complete();
 
-				// translators: %s: Stancer payment identifier.
-				$order->add_order_note( sprintf( __( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ), $api_payment->getId() ) );
+				$order->add_order_note(
+					sprintf(
+						// translators: %s: Stancer payment identifier.
+						__( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ),
+						$api_payment->getId()
+					)
+				);
 				$order->set_transaction_id( $api_payment->getId() );
 
 				wp_safe_redirect( $this->get_return_url( $order ) );
 
-				exit;
+				break;
 			default:
 				wp_safe_redirect( wc_get_checkout_url() );
-
-				exit;
 		}
 	}
 }

@@ -25,6 +25,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * Name of primary key.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $primary = 'stancer_customer_id';
@@ -33,6 +34,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * Table name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $table = 'wc_stancer_customer';
@@ -41,6 +43,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * WooCommerce user ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var integer
 	 */
 	protected $user_id;
@@ -49,6 +52,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * API customer ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $customer_id;
@@ -57,6 +61,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * Customer's name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $name;
@@ -65,6 +70,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * Customer's email.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $email;
@@ -73,6 +79,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * Customer's mobile phone number.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $mobile;
@@ -81,6 +88,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * Card creation date in Stancer API.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $created;
@@ -91,6 +99,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param integer $customer_id WooCommerce customer ID.
+	 *
 	 * @return object|null
 	 */
 	public static function find( $customer_id ) {
@@ -112,6 +121,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param array $customer Customer data.
+	 *
 	 * @return Stancer\Customer
 	 */
 	public static function generate_api_customer( $customer ) {
@@ -157,11 +167,11 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @param Stancer\Customer|null $api_customer Customer to update.
 	 *
-	 * @return bool
+	 * @return static|null
 	 */
 	public static function save_from( ?Stancer\Customer $api_customer = null ) {
 		if ( ! $api_customer || ! $api_customer->external_id ) {
-			return false;
+			return null;
 		}
 
 		$existing_customer = static::find( $api_customer->external_id );

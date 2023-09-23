@@ -26,12 +26,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'STANCER_VERSION', '1.0.0' );
+define( 'STANCER_WC_VERSION', '1.0.0' );
 define( 'STANCER_FILE', __FILE__ );
 define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
 
-require_once STANCER_DIRECTORY_PATH . 'includes/class-stancer.php';
 require_once STANCER_DIRECTORY_PATH . '/vendor/autoload.php';
+require_once STANCER_DIRECTORY_PATH . '/includes/class-stancer.php';
 
 add_action( 'plugins_loaded', 'load_translations' );
 

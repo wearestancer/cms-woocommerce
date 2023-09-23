@@ -26,7 +26,7 @@ glob("**/*.php", globOptions, (err, files) => {
       }
 
       const data = content
-        .replace(/define\( 'STANCER_VERSION'.+/, `define( 'STANCER_VERSION', '${pack.version}' );`)
+        .replace(/define\( 'STANCER_WC_VERSION'.+/, `define( 'STANCER_WC_VERSION', '${pack.version}' );`)
         .replace(/\* Version:.+/, `* Version:     ${pack.version}`)
       ;
 
