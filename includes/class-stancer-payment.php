@@ -172,6 +172,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 
 		$api_payment = new Stancer\Payment();
 		$api_payment->amount = $payment_data['amount'];
+		$api_payment->capture = false;
 		$api_payment->currency = $payment_data['currency'];
 		$api_payment->customer = $api_customer;
 		$api_payment->order_id = (string) $order->get_id();

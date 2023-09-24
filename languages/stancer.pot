@@ -223,7 +223,7 @@ msgid "The payment attempt failed."
 msgstr ""
 
 #. translators: %s: Stancer payment identifier.
-#: includes/class-stancer-gateway.php:586
+#: includes/class-stancer-gateway.php:591
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr ""
 
