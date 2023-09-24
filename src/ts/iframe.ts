@@ -99,7 +99,6 @@
       success: (result: CheckoutResponse) => {
         try {
           if ('success' === result.result && result.redirect && result.redirect !== '') {
-            $this.unblock();
             $body.addClass('stancer-block-scroll');
             $backdrop.appendTo($body);
             $frame.appendTo($body).attr('src', result.redirect);
@@ -142,6 +141,8 @@
 
             $body.trigger('checkout_error', [result.messages]);
           }
+        } finally {
+          $this.unblock();
         }
       },
       error: (_jqXHR, _textStatus, errorThrown) => {
