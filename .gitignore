@@ -15,4 +15,5 @@ reports/
 
 # Generated content
 public/
+*.mo
 *.zip
