@@ -184,7 +184,7 @@ class WC_Stancer {
 	public function load_public_hooks() {
 		wp_enqueue_script(
 			$this->plugin_name,
-			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.js',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
 			[],
 			$this->version,
 			true

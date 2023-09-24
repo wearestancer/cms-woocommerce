@@ -14,6 +14,5 @@ reports/
 ._*
 
 # Generated content
-assets/
-
+public/
 *.zip

@@ -27,6 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Currently plugin version.
  */
 define( 'STANCER_WC_VERSION', '1.0.0' );
+define( 'STANCER_ASSETS_VERSION', '0000000' );
 define( 'STANCER_FILE', __FILE__ );
 define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
 

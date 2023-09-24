@@ -301,23 +301,23 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( 'pip' === $options['page_type'] ) {
 			wp_enqueue_script(
 				'stancer-iframe',
-				plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.js',
+				plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.min.js',
 				[],
-				STANCER_WC_VERSION,
+				STANCER_ASSETS_VERSION,
 				true
 			);
 			wp_enqueue_style(
 				'stancer-iframe',
-				plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.css',
+				plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
 				[],
-				STANCER_WC_VERSION
+				STANCER_ASSETS_VERSION
 			);
 		} else {
 			wp_enqueue_script(
 				'stancer-popup',
-				plugin_dir_url( STANCER_FILE ) . 'public/js/popup.js',
+				plugin_dir_url( STANCER_FILE ) . 'public/js/popup.min.js',
 				[],
-				STANCER_WC_VERSION,
+				STANCER_ASSETS_VERSION,
 				true
 			);
 		}

@@ -6,10 +6,12 @@ module.exports.push("**.zip");
 
 // Gulp process
 module.exports.push("node_modules/**");
+module.exports.push("src/**");
 module.exports.push("gulp*");
 module.exports.push("package*");
 module.exports.push("yarn*");
 module.exports.push("pnpm*");
+module.exports.push("tsconfig.*");
 
 // Composer stuff
 module.exports.push("composer*");
