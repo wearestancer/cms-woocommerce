@@ -72,6 +72,7 @@ class WC_Stancer_Api {
 		return [
 			'amount' => $amount,
 			'auth' => $auth,
+			'capture' => false,
 			'currency' => strtolower( $currency_code ),
 			'description' => $description,
 			'order_id' => (string) $order->get_id(),
@@ -108,7 +109,7 @@ class WC_Stancer_Api {
 				$api_payment->set_card( new Stancer\Card( $card_id ) );
 			}
 
-			if ( ! static::sent_object_to_api( $api_payment ) ) {
+			if ( $api_payment->isModified() && ! static::sent_object_to_api( $api_payment ) ) {
 				return null;
 			}
 

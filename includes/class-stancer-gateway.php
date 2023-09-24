@@ -566,6 +566,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				break;
 			case Stancer\Payment\Status::AUTHORIZED:
+				$api_payment->status = Stancer\Payment\Status::CAPTURE;
+				$api_payment->send();
+
+				// No break, we just need to ask for the capture and leave the "capture" part creating the order.
+
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
 				// Save card.
