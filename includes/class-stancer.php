@@ -45,13 +45,8 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'STANCER_WC_VERSION' ) ) {
-			$this->version = STANCER_WC_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
-
 		$this->plugin_name = 'stancer';
+		$this->version = STANCER_WC_VERSION;
 
 		$this->load_actions();
 		$this->load_filters();
