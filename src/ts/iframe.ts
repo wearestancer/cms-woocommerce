@@ -55,17 +55,28 @@
           }
         }
 
+        const maxHeight = $window.height() ?? 100;
+        const maxWidth = $window.width() ?? 100;
         let height = 400;
         let radius = 10;
         let width = 400;
 
         if (data.status === 'secure-auth-start') {
-          height = $window.height() ?? 400;
-          width = $window.width() ?? 400;
-          radius = 0;
+          height = maxHeight;
+          width = maxWidth;
         } else if (!['error', 'init', 'secure-auth-end', 'secure-auth-error'].includes(data.status)) {
           height = data.height;
           width = data.width;
+        }
+
+        if (height >= maxHeight) {
+          height = maxHeight;
+          radius = 0;
+        }
+
+        if (width >= maxWidth) {
+          width = maxWidth;
+          radius = 0;
         }
 
         document.body.style.setProperty('--stancer-iframe-height', `${height}px`);
