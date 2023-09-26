@@ -1,5 +1,7 @@
 @use 'sass:math';
 
+$base-index: 99990;
+
 @mixin transition {
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
@@ -25,6 +27,7 @@
   border-radius: var(--stancer-iframe-border-radius, 10px);
   box-shadow: 0 0 50px rgba(0, 0, 0, .2), 0 0 25px rgba(0, 0, 0, .2), 0 0 5px rgba(0, 0, 0, .2);
   transition-property: width, height, border-radius, margin-top, margin-left;
+  z-index: #{$base-index + 1};
 }
 
 .stancer-backdrop {
@@ -35,6 +38,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   transition-property: opacity;
+  z-index: $base-index;
 
   @starting-style {
     opacity: 0;
