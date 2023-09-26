@@ -19,7 +19,6 @@
 
   const $stancer_payment_method = $('#payment_method_stancer');
   const $placeOrder = $('.js-stancer-place-order');
-  const $form = $('form.woocommerce-checkout');
   const $cardSelect = $('#stancer-card');
 
   if ($cardSelect.selectWoo) {
@@ -29,13 +28,15 @@
     });
   }
 
-  $placeOrder.on('click', (event) => {
+  $placeOrder.on('click', function (event) {
     if (!$stancer_payment_method.is(':checked')) {
       return true;
     }
 
     event.preventDefault();
 
+    const $this = $(this);
+    const $form = $this.parents('form');
     const $body = $(document.body);
     const width = 550;
     const height = 855;
