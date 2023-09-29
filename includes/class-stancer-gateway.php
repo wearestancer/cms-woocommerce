@@ -294,32 +294,37 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		echo esc_html__( 'You will be redirected to our partner\'s portal to make the payment.', 'stancer' );
-
 		$options = get_option( 'woocommerce_stancer_settings' );
 
-		if ( 'pip' === $options['page_type'] ) {
-			wp_enqueue_script(
-				'stancer-iframe',
-				plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.min.js',
-				[],
-				STANCER_ASSETS_VERSION,
-				true
-			);
-			wp_enqueue_style(
-				'stancer-iframe',
-				plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
-				[],
-				STANCER_ASSETS_VERSION
-			);
-		} else {
-			wp_enqueue_script(
-				'stancer-popup',
-				plugin_dir_url( STANCER_FILE ) . 'public/js/popup.min.js',
-				[],
-				STANCER_ASSETS_VERSION,
-				true
-			);
+		switch ( $options['page_type'] ) {
+			case 'iframe':
+				wp_enqueue_script(
+					'stancer-popup',
+					plugin_dir_url( STANCER_FILE ) . 'public/js/popup.min.js',
+					[],
+					STANCER_ASSETS_VERSION,
+					true,
+				);
+				break;
+
+			case 'pip':
+				wp_enqueue_script(
+					'stancer-iframe',
+					plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.min.js',
+					[],
+					STANCER_ASSETS_VERSION,
+					true,
+				);
+				wp_enqueue_style(
+					'stancer-iframe',
+					plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
+					[],
+					STANCER_ASSETS_VERSION,
+				);
+				break;
+
+			default:
+				echo esc_html__( 'You will be redirected to our partner\'s portal to make the payment.', 'stancer' );
 		}
 	}
 
