@@ -60,8 +60,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->init_form_fields();
 		$this->init_settings();
 
-		$this->title = $this->get_option( 'title' );
-		$this->description = $this->get_option( 'description' );
+		$this->title = $this->get_option( 'payment_option_text' );
+		$this->description = $this->get_option( 'payment_option_description' );
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
 
@@ -158,17 +158,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Init settings page.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 New page type `pip`.
+	 * @since 1.1.0 New payment description.
 	 *
 	 * @return self
 	 */
 	public function init_form_fields() {
 		$inputs = [];
-
-		$inputs['title'] = [
-			'default' => __( 'Pay by card', 'stancer' ),
-			'title' => __( 'Title', 'stancer' ),
-			'type' => 'text',
-		];
 
 		$inputs['enabled'] = [
 			'default' => 'yes',
@@ -177,8 +173,21 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'checkbox',
 		];
 
-		$inputs['api'] = [
-			'title' => __( 'Settings', 'stancer' ),
+		$inputs['payment_option_text'] = [
+			'default' => __( 'Pay by card', 'stancer' ),
+			'desc_tip' => __( 'Payment method title shown to the customer during checkout.', 'stancer' ),
+			'title' => __( 'Title', 'stancer' ),
+			'type' => 'text',
+		];
+
+		$inputs['payment_option_description'] = [
+			'desc_tip' => __( 'Payment method description shown to the customer during checkout.', 'stancer' ),
+			'title' => __( 'Payment option description', 'stancer' ),
+			'type' => 'text',
+		];
+
+		$inputs['authentication_title'] = [
+			'title' => __( 'Authentication', 'stancer' ),
 			'type' => 'title',
 		];
 
@@ -200,6 +209,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'label' => __( 'Enable test mode', 'stancer' ),
 			'title' => __( 'Test mode', 'stancer' ),
 			'type' => 'checkbox',
+		];
+
+		$inputs['behavior_title'] = [
+			'title' => __( 'Behavior', 'stancer' ),
+			'type' => 'title',
 		];
 
 		$inputs['page_type'] = [
@@ -251,7 +265,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$desc_description .= '<br/>';
 		}
 
-		$inputs['description'] = [
+		$inputs['payment_description'] = [
 			'default' => __( 'Your order SHOP_NAME', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',
@@ -294,9 +308,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 */
 	public function payment_fields() {
-		$options = get_option( 'woocommerce_stancer_settings' );
+		echo esc_html( $this->settings['payment_option_description'] );
 
-		switch ( $options['page_type'] ) {
+		switch ( $this->settings['page_type'] ) {
 			case 'iframe':
 				wp_enqueue_script(
 					'stancer-popup',

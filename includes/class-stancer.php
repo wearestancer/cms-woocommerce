@@ -71,6 +71,35 @@ class WC_Stancer {
 	}
 
 	/**
+	 * Initialize administration.
+	 *
+	 * @since 1.1.0
+	 */
+	public function init_admin() {
+		$this->install_database();
+
+		$options = get_option( 'woocommerce_stancer_settings' );
+		$replace = [
+			'description' => 'payment_description',
+			'title' => 'payment_option_text',
+		];
+		$updated = false;
+
+		foreach ( $replace as $key => $value ) {
+			if ( array_key_exists( $key, $options ) ) {
+				$options[ $value ] = $options[ $key ];
+				$updated = true;
+
+				unset( $options[ $key ] );
+			}
+		}
+
+		if ( $updated ) {
+			update_option( 'woocommerce_stancer_settings', $options );
+		}
+	}
+
+	/**
 	 * Create database at plugin activation.
 	 *
 	 * @since 1.0.0
@@ -151,7 +180,7 @@ class WC_Stancer {
 	 */
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_gateway' ], 0 );
-		add_action( 'admin_init', [ $this, 'install_database' ] );
+		add_action( 'admin_init', [ $this, 'init_admin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 	}
