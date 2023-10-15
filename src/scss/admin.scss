@@ -1,0 +1,123 @@
+@use 'sass:list';
+@use 'sass:map';
+@use './icons';
+
+@mixin medium-screen() {
+  @media (min-width: 550px) {
+    @content;
+  }
+}
+
+@mixin large-screen() {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+.stancer-admin {
+  $elem: &;
+
+  .woocommerce & & {
+    &__form-control {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-content: stretch;
+      align-items: stretch;
+      justify-content: stretch;
+      gap: 1ch;
+
+      @include medium-screen() {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @include large-screen() {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      #{$elem}__label {
+        display: grid;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+        gap: 1.5ch;
+        min-height: calc(20px + 2.5em);
+        border: 1px solid #8c8f94;
+        border-radius: 3px;
+        padding: 1.5ch;
+        text-align: center;
+        transition-duration: 250ms;
+        transition-property: border-color, box-shadow;
+
+        @supports (min-height: calc(20px + 2lh)) {
+          min-height: calc(20px + 2lh);
+        }
+
+        @include medium-screen() {
+          grid-template-rows: max-content 1fr;
+          min-height: min-content;
+        }
+
+        &--no-logo {
+          @include large-screen() {
+            grid-column: span 2;
+          }
+
+          grid-template-rows: max-content;
+        }
+
+        &--stancer {
+          @include large-screen() {
+            grid-column: span 2;
+            grid-template-columns: repeat(2, max-content);
+          }
+
+          grid-template-rows: 1fr;
+          align-items: end;
+          justify-content: center;
+        }
+      }
+
+      #{$elem}__preview {
+        height: 20px;
+
+        @each $name, $data in icons.$image-map {
+          &#{$elem}__preview--#{$name} {
+            aspect-ratio: list.slash(map-get($data, 'width'), map-get($data, 'height'));
+          }
+        }
+      }
+
+      #{$elem}__radio {
+        display: none;
+
+        &:checked {
+          & + #{$elem}__label {
+            $color: #2271b1;
+
+            border-color: $color;
+            box-shadow: 0 0 0 1px $color;
+          }
+        }
+      }
+    }
+
+    &__header {
+      padding-right: 0; // fix tooltip
+    }
+
+    &__label {
+      display: flex;
+      align-items: center;
+      gap: 1ch;
+
+      @media (min-width: 783px) {
+        justify-content: space-between;
+      }
+
+      .woocommerce-help-tip {
+        margin: 0; // fix tooltip
+      }
+    }
+  }
+}

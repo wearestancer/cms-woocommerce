@@ -15,5 +15,6 @@ reports/
 
 # Generated content
 public/
+src/scss/_icons.scss
 *.mo
 *.zip

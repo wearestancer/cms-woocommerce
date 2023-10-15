@@ -120,6 +120,90 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Generate the payment option logo selector.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $key Field key.
+	 * @param array $data Field data.
+	 * @return string
+	 */
+	public function generate_payment_option_logo_html( $key, $data ) {
+		$current_value = $this->get_option( $key );
+		$option_name = $this->get_field_key( $key );
+		$defaults = [
+			'desc_tip' => false,
+			'description' => '',
+			'title' => '',
+		];
+		$data = wp_parse_args( $data, $defaults );
+
+		$images = [
+			'no-logo' => __( 'No logo.', 'stancer' ),
+			'stancer' => __( 'Stancer logo.', 'stancer' ),
+			'visa-mc-prefixed' => __( 'Main schemes logos prefixed with Stancer logo.', 'stancer' ),
+			'visa-mc' => __( 'Main schemes logos.', 'stancer' ),
+			'visa-mc-suffixed' => __( 'Main schemes logos suffixed with Stancer logo.', 'stancer' ),
+			'visa-mc-stancer' => __( 'Main schemes logos with full Stancer logo.', 'stancer' ),
+			'all-schemes-prefixed' => __( 'Every supported schemes logos prefixed with Stancer logo.', 'stancer' ),
+			'all-schemes' => __( 'Every supported schemes logos.', 'stancer' ),
+			'all-schemes-suffixed' => __( 'Every supported schemes logos suffixed with Stancer logo.', 'stancer' ),
+			'all-schemes-stancer' => __( 'Every supported schemes logos with full Stancer logo.', 'stancer' ),
+		];
+
+		$template = [
+			'<tr class="titledesc stancer-admin">',
+			'<th scope="row" class="titledesc stancer-admin__header">',
+			'<span class="stancer-admin__label">',
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			wp_kses_post( $data['title'] ),
+			$this->get_tooltip_html( $data ),
+			'</span>',
+			'</th>',
+			'<td class="forminp stancer-admin__form-control">',
+		];
+
+		foreach ( $images as $image => $text ) {
+			$input_id = esc_html( $option_name . '-' . $image );
+
+			$template[] = '<input
+				class="stancer-admin__radio"
+				name="' . esc_html( $option_name ) . '"
+				type="radio"
+				id="' . $input_id . '"
+				value="' . esc_html( $image ) . '"
+				' . ( $current_value === $image ? 'checked' : '' ) . '
+			/>';
+
+			$class = [
+				'stancer-admin__label',
+				'stancer-admin__label--' . $image,
+			];
+
+			$template[] = '<label class="' . implode( ' ', $class ) . '" for="' . $input_id . '">';
+
+			if ( 'no-logo' !== $image ) {
+				$image_path = plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $image;
+
+				$class = [
+					'stancer-admin__preview',
+					'stancer-admin__preview--' . $image,
+				];
+
+				$template[] = '<img class="' . implode( ' ', $class ) . '" src="' . esc_html( $image_path ) . '" />';
+			}
+
+			$template[] = $text;
+			$template[] = '</label>';
+		}
+
+		$template[] = '</td>';
+		$template[] = '</tr>';
+
+		return implode( '', $template );
+	}
+
+	/**
 	 * Return the list of needed configurations.
 	 *
 	 * @since 1.0.0
@@ -160,6 +244,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 * @since 1.1.0 New page type `pip`.
 	 * @since 1.1.0 New payment description.
+	 * @since 1.1.0 Allow to choose scheme logos.
 	 *
 	 * @return self
 	 */
@@ -184,6 +269,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'desc_tip' => __( 'Payment method description shown to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Payment option description', 'stancer' ),
 			'type' => 'text',
+		];
+
+		$inputs['payment_option_logo'] = [
+			'default' => 'all-schemes-stancer',
+			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),
+			'title' => __( 'Payment option logos', 'stancer' ),
+			'type' => 'payment_option_logo',
 		];
 
 		$inputs['authentication_title'] = [
@@ -282,6 +374,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'hidden',
 		];
 
+		wp_enqueue_style(
+			'stancer-admin',
+			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
+			[],
+			STANCER_ASSETS_VERSION,
+		);
+
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
 
 		return $this;
@@ -306,8 +405,29 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Display payment fields.
 	 *
 	 * @since 1.0.0
+	 * @since 1.1.0 Add logos and description.
 	 */
 	public function payment_fields() {
+		$logo = $this->settings['payment_option_logo'] ?? 'no-logo';
+
+		if ( 'no-logo' !== $logo ) {
+			wp_enqueue_style(
+				'stancer-option',
+				plugin_dir_url( STANCER_FILE ) . 'public/css/option.min.css',
+				[],
+				STANCER_ASSETS_VERSION,
+			);
+
+			$image_path = plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $logo;
+
+			$class = [
+				'stancer-option__logo',
+				'stancer-option__logo--' . $logo,
+			];
+
+			echo wp_kses_post( '<img class="' . implode( ' ', $class ) . '" src="' . esc_html( $image_path ) . '" />' );
+		}
+
 		echo esc_html( $this->settings['payment_option_description'] );
 
 		switch ( $this->settings['page_type'] ) {
