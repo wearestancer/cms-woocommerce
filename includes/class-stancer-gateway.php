@@ -65,13 +65,17 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
 
-		// Actions.
-		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
-		add_action( 'woocommerce_receipt_' . $this->id, [ $this, 'receipt_page' ] );
+		// Add message on checkout.
 		add_action( 'woocommerce_before_checkout_form', [ $this, 'display_notice' ] );
 
-		// Filters.
+		// Action on payment return.
+		add_action( 'woocommerce_receipt_' . $this->id, [ $this, 'receipt_page' ] );
+
+		// Add our gateway on checkout button.
 		add_filter( 'woocommerce_order_button_html', [ $this, 'place_order_button_html' ] );
+
+		// Update settings.
+		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 	}
 
 	/**
