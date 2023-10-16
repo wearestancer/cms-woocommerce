@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "lib": [
+      "DOM",
+      "ES2016"
+    ],
+    "module": "CommonJS",
+    "moduleResolution": "Classic",
+    "outDir": "public/js/",
+    "sourceMap": false,
+    "strict": true,
+    "target": "ES5"
+  },
+  "include": [
+    "src/ts/**/*.ts"
+  ]
+}

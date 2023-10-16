@@ -25,6 +25,7 @@ class WC_Stancer {
 	 * The ID of Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string $plugin_name The ID of Stancer plugin.
 	 */
 	private $plugin_name;
@@ -33,6 +34,7 @@ class WC_Stancer {
 	 * The version of Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string $version The current version of Stancer plugin.
 	 */
 	private $version;
@@ -43,15 +45,14 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'STANCER_VERSION' ) ) {
-			$this->version = STANCER_VERSION;
+		if ( defined( 'STANCER_WC_VERSION' ) ) {
+			$this->version = STANCER_WC_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
 
 		$this->plugin_name = 'stancer';
 
-		$this->load_dependencies();
 		$this->load_actions();
 		$this->load_filters();
 	}
@@ -60,10 +61,12 @@ class WC_Stancer {
 	 * Add Stancer to the list of available gateways.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param array $gateways List of gateways.
 	 */
 	public function add_gateway( $gateways ) {
 		$gateways[] = 'WC_Stancer_Gateway';
+
 		return $gateways;
 	}
 
@@ -154,20 +157,6 @@ class WC_Stancer {
 	}
 
 	/**
-	 * Load all dependencies.
-	 *
-	 * @since 1.0.0
-	 */
-	private function load_dependencies() {
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-abstract-table.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-api.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-card.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-customer.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-config.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-payment.php';
-	}
-
-	/**
 	 * Load all filters for Stancer plugin.
 	 *
 	 * @since 1.0.0
@@ -195,7 +184,7 @@ class WC_Stancer {
 	public function load_public_hooks() {
 		wp_enqueue_script(
 			$this->plugin_name,
-			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.js',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
 			[],
 			$this->version,
 			true

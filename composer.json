@@ -12,6 +12,11 @@
     "extra": {
         "installer-name": "stancer"
     },
+    "autoload": {
+        "classmap": [
+            "includes/"
+        ]
+    },
     "require": {
         "stancer/stancer": "^1.0"
     },

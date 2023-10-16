@@ -10,11 +10,30 @@
   },
   "scripts": {
     "archive": "env node ./scripts/zip.js",
-    "build:archive": "rm -rf vendor && composer install --no-dev && npm run version && npm run archive && composer install",
-    "version": "env node ./scripts/version.js"
+    "build:archive": "pnpm run build:plugin && pnpm run archive && composer install",
+    "build:assets": "gulp build",
+    "build:plugin": "rm -rf vendor && composer install --no-dev --optimize-autoloader && pnpm run build:assets && pnpm run messages:compile && pnpm run versions",
+    "messages": "pnpm run messages:discover && pnpm run messages:merge",
+    "messages:discover": "env node ./scripts/messages/discover.js",
+    "messages:compile": "env node ./scripts/messages/compile.js",
+    "messages:merge": "env node ./scripts/messages/merge.js",
+    "versions": "env node ./scripts/version.js"
   },
   "devDependencies": {
+    "@types/jquery": "^3.0.0",
+    "@types/select2": "^4.0.0",
     "archiver": "^5.0.0",
-    "glob": "^8.0.0"
+    "autoprefixer": "^10.0.0",
+    "glob": "^8.0.0",
+    "gulp": "^4.0.0",
+    "gulp-csso": "^4.0.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-terser": "^2.0.0",
+    "gulp-typescript": "6.0.0-alpha.1",
+    "postcss": "^8.0.0",
+    "sass": "^1.0.0",
+    "typescript": "^5.0.0"
   }
 }

@@ -25,6 +25,7 @@ class WC_Stancer_Api {
 	 * Stancer API configuration.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var WC_Stancer_Config
 	 */
 	public $api_config;
@@ -46,6 +47,7 @@ class WC_Stancer_Api {
 	 * @since 1.0.0
 	 *
 	 * @param WC_Order $order Order.
+	 *
 	 * @return array
 	 */
 	public function build_payment_data( WC_Order $order ) {
@@ -58,7 +60,7 @@ class WC_Stancer_Api {
 
 		if ( $this->api_config->description ) {
 			$params = [
-				'SHOP_NAME' => 'Woocommerce',
+				'SHOP_NAME' => 'WooCommerce',
 				'CART_ID' => (int) $order->get_id(),
 				'TOTAL_AMOUNT' => sprintf( '%.02f', $total ),
 				'CURRENCY' => strtoupper( $currency_code ),
@@ -84,6 +86,7 @@ class WC_Stancer_Api {
 	 *
 	 * @param WC_Order $order Order.
 	 * @param string|null $card_id Card identifier.
+	 *
 	 * @return Stancer\Payment|null
 	 */
 	public function send_payment( WC_Order $order, $card_id = null ): ?Stancer\Payment {
@@ -97,7 +100,7 @@ class WC_Stancer_Api {
 
 			if ( $card_id ) {
 				if ( $payment_data['auth'] ) {
-					$api_payment->set_auth( $api_payment->get_payment_page_url() );
+					$api_payment->set_auth( $api_payment->getPaymentPageUrl() );
 				} else {
 					$api_payment->set_status( Stancer\Payment\Status::CAPTURE );
 				}
@@ -120,24 +123,24 @@ class WC_Stancer_Api {
 	 * Send payment to API.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param Stancer\Payment $object Object to send.
+	 *
 	 * @return bool
 	 */
 	public static function sent_object_to_api( $object ): bool {
-		$log = '';
-
 		try {
 			$object->send();
 		} catch ( Exception $exception ) {
 			$log = $exception->getMessage();
-		}
 
-		if ( ! empty( $log ) ) {
-			if ( class_exists( 'WC_Logger' ) ) {
-				wc_get_logger()->debug( 'Stancer --- ' . $log );
+			if ( ! empty( $log ) ) {
+				if ( class_exists( 'WC_Logger' ) ) {
+					wc_get_logger()->debug( 'Stancer --- ' . $log );
+				}
+
+				return false;
 			}
-
-			return false;
 		}
 
 		return true;

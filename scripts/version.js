@@ -17,6 +17,8 @@ glob("**/*.php", globOptions, (err, files) => {
     throw err;
   }
 
+  const now = (new Date()).getTime();
+
   files.forEach((file) => {
     const filepath = path.join(process.cwd(), file);
 
@@ -26,7 +28,8 @@ glob("**/*.php", globOptions, (err, files) => {
       }
 
       const data = content
-        .replace(/define\( 'STANCER_VERSION'.+/, `define( 'STANCER_VERSION', '${pack.version}' );`)
+        .replace(/define\( 'STANCER_WC_VERSION'.+/, `define( 'STANCER_WC_VERSION', '${pack.version}' );`)
+        .replace(/define\( 'STANCER_ASSETS_VERSION'.+/, `define( 'STANCER_ASSETS_VERSION', '${now}' );`)
         .replace(/\* Version:.+/, `* Version:     ${pack.version}`)
       ;
 

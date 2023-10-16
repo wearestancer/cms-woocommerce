@@ -25,6 +25,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Name of primary key.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $primary = 'stancer_card_id';
@@ -33,6 +34,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Table name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $table = 'wc_stancer_card';
@@ -41,6 +43,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * WooCommerce user ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var integer
 	 */
 	protected $user_id;
@@ -49,6 +52,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * API card ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $card_id;
@@ -57,6 +61,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Card's last 4 numbers.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $last4;
@@ -65,6 +70,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Expiration date.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $expiration;
@@ -73,6 +79,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Card's brand.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $brand;
@@ -81,6 +88,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Card's brand name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $brand_name;
@@ -89,6 +97,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Card's holder name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $name;
@@ -97,6 +106,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Card creation date in Stancer API.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $created;
@@ -105,6 +115,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Last date of use.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $last_used;
@@ -113,6 +124,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * Is card tokenized ?
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var bool
 	 */
 	protected $tokenized;
@@ -123,15 +135,13 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param Stancer\Card $api_card Card to delete.
+	 *
 	 * @return bool
 	 */
 	public static function delete_from( Stancer\Card $api_card ) {
 		global $wpdb;
 
-		return (bool) $wpdb->delete(
-			'wc_stancer_card',
-			[ 'card_id' => absint( $api_card->id ) ]
-		);
+		return (bool) $wpdb->delete( "{$wpdb->prefix}wc_stancer_card", [ 'card_id' => absint( $api_card->id ) ] );
 	}
 
 	/**
@@ -148,7 +158,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
 				"SELECT * FROM {$wpdb->prefix}wc_stancer_card WHERE card_id = %s",
-				esc_sql( $api_card->getId() )
+				esc_sql( $api_card->id ),
 			)
 		);
 
@@ -174,6 +184,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 		global $wpdb;
 
 		$stancer_cards = [];
+
 		if ( empty( $customer->get_id() ) ) {
 			return $stancer_cards;
 		}
@@ -211,6 +222,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 		}
 
 		$stancer_card = static::find_by_api_card( $api_card );
+
 		if ( ! $stancer_card ) {
 			$creation = $api_card->creation_date;
 
@@ -222,7 +234,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 			$stancer_card->brand_name = $api_card->getBrandName();
 			$stancer_card->name = $api_card->name;
 			$stancer_card->created = $creation ? $creation->format( 'Y-m-d H:i:s' ) : null;
-			$stancer_card->expiration = $api_card->expiration_date->format( 'Y-m-d' );
+			$stancer_card->expiration = $api_card->getExpirationDate()->format( 'Y-m-d' );
 			$stancer_card->tokenized = $api_card->is_tokenized;
 		}
 

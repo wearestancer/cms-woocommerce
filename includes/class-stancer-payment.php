@@ -25,6 +25,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Name of primary key.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $primary = 'stancer_payment_id';
@@ -33,6 +34,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Table name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $table = 'wc_stancer_payment';
@@ -41,6 +43,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * API payment ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $payment_id;
@@ -49,6 +52,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * API card ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $card_id;
@@ -57,6 +61,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * API customer ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $customer_id;
@@ -65,6 +70,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Currency used.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $currency;
@@ -73,6 +79,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Amount.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var integer
 	 */
 	protected $amount;
@@ -81,6 +88,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * WooCommerce order ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var integer
 	 */
 	protected $order_id = null;
@@ -89,6 +97,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Status.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $status = 'pending';
@@ -97,6 +106,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Card creation date in Stancer API.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $created;
@@ -147,6 +157,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @param WC_Order $order Source order.
 	 * @param array $payment_data Payment data.
+	 *
 	 * @return Stancer\Payment
 	 */
 	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
@@ -190,6 +201,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @param WC_Order $order Order to find.
 	 * @param array $payment_data Payment data used to create a new payment.
 	 * @param bool $generate_api_payment Do we need to generate a new payment if not already present.
+	 *
 	 * @return WC_Stancer_Payment
 	 */
 	public static function get_payment( $order, array $payment_data = [], bool $generate_api_payment = false ) {
@@ -216,6 +228,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param Stancer\Payment $api_payment Object to save.
+	 *
 	 * @return WC_Stancer_Payment
 	 */
 	public static function save_from( Stancer\Payment $api_payment ) {
