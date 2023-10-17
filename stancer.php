@@ -34,6 +34,9 @@ require_once STANCER_DIRECTORY_PATH . '/vendor/autoload.php';
 
 add_action( 'plugins_loaded', 'load_translations' );
 
+// Add links on plugins.
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'plugin_action_links' );
+
 /**
  * Wrapper to load our translations.
  */
@@ -50,6 +53,41 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
 	function is_woocommerce_activated() {
 		return class_exists( 'woocommerce' );
 	}
+}
+
+/**
+ * Add links on plugins.
+ *
+ * @since 1.1.0
+ *
+ * @param array $links Plugin Action links.
+ *
+ * @return array
+ * */
+function plugin_action_links( array $links ) {
+	$locale_limit = 1;
+	$locale = str_replace( '_', '-', get_locale(), $locale_limit );
+
+	$new = [
+		'settings' => vsprintf(
+			'<a href="%s" aria-label="%s">%s</a>',
+			[
+				admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' ),
+				esc_attr__( 'View Stancer module settings', 'stancer' ),
+				esc_html__( 'Settings', 'stancer' ),
+			],
+		),
+		'manage' => vsprintf(
+			'<a href="%s" target="_blank" rel="noopener, noreferrer" aria-label="%s">%s</a>',
+			[
+				sprintf( 'https://manage.stancer.com/%s/', $locale ),
+				esc_attr__( 'Go to Stancer Customer Account', 'stancer' ),
+				esc_html__( 'Customer Account', 'stancer' ),
+			],
+		),
+	];
+
+	return array_merge( $new, $links );
 }
 
 /**
