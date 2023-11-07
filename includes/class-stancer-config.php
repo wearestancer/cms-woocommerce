@@ -102,7 +102,7 @@ class WC_Stancer_Config {
 	 */
 	public function __construct( $settings ) {
 		$this->auth_limit = $settings['auth_limit'];
-		$this->description = $settings['description'];
+		$this->description = $settings['payment_description'] ?? '';
 		$this->host = $settings['host'];
 		$this->mode = Stancer\Config::TEST_MODE;
 		$this->page_type = $settings['page_type'];

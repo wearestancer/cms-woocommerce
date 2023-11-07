@@ -32,146 +32,213 @@ msgstr ""
 msgid "https://www.stancer.com/"
 msgstr ""
 
-#. translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
-#: includes/class-stancer-gateway.php:128
-msgid "Starts with \"%s\""
-msgstr ""
-
-#: includes/class-stancer-gateway.php:134
-msgid "Public live API key"
-msgstr ""
-
 #: includes/class-stancer-gateway.php:139
-msgid "Secret live API key"
+msgid "No logo."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:140
+msgid "Stancer logo."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:141
+msgid "Main schemes logos prefixed with Stancer logo."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:142
+msgid "Main schemes logos."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:143
+msgid "Main schemes logos suffixed with Stancer logo."
 msgstr ""
 
 #: includes/class-stancer-gateway.php:144
+msgid "Main schemes logos with full Stancer logo."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:145
+msgid "Every supported schemes logos prefixed with Stancer logo."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:146
+msgid "Every supported schemes logos."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:147
+msgid "Every supported schemes logos suffixed with Stancer logo."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:148
+msgid "Every supported schemes logos with full Stancer logo."
+msgstr ""
+
+#. translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
+#: includes/class-stancer-gateway.php:212
+msgid "Starts with \"%s\""
+msgstr ""
+
+#: includes/class-stancer-gateway.php:218
+msgid "Public live API key"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:223
+msgid "Secret live API key"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:228
 msgid "Public test API key"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:149
+#: includes/class-stancer-gateway.php:233
 msgid "Secret test API key"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:165
-msgid "Pay by card"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:166
-msgid "Title"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:172
+#: includes/class-stancer-gateway.php:253
 msgid "Enable Stancer"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:173
+#: includes/class-stancer-gateway.php:254
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:178
-#: stancer.php:74
-msgid "Settings"
+#: includes/class-stancer-gateway.php:259
+msgid "Pay by card"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:193
-msgid "In test mode, no payment will really send to a bank, only test card can be used."
+#: includes/class-stancer-gateway.php:260
+msgid "Payment method title shown to the customer during checkout."
 msgstr ""
 
-#: includes/class-stancer-gateway.php:197
-msgid "Enable test mode"
+#: includes/class-stancer-gateway.php:261
+msgid "Title"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:198
-msgid "Test mode"
+#: includes/class-stancer-gateway.php:266
+msgid "Payment method description shown to the customer during checkout."
 msgstr ""
 
-#: includes/class-stancer-gateway.php:204
-#: includes/class-stancer-gateway.php:205
-msgid "Page type"
+#: includes/class-stancer-gateway.php:267
+msgid "Payment option description"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:207
-msgid "Popup"
+#: includes/class-stancer-gateway.php:273
+msgid "Card logos displayed to the customer during checkout."
 msgstr ""
 
-#: includes/class-stancer-gateway.php:208
-msgid "Inside the page"
+#: includes/class-stancer-gateway.php:274
+msgid "Payment option logos"
 msgstr ""
 
-#: includes/class-stancer-gateway.php:209
-msgid "Redirect to an external page"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:214
-msgid "Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...)."
-msgstr ""
-
-#: includes/class-stancer-gateway.php:219
-msgid "Leave blank if you do not wish to authenticate, at zero all payments will be authenticated."
-msgstr ""
-
-#: includes/class-stancer-gateway.php:226
-msgid "Authentication limit"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:231
-msgid "Will be used as description for every payment made, and will be visible to your customer in redirect mode."
-msgstr ""
-
-#: includes/class-stancer-gateway.php:236
-msgid "List of available variables:"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:240
-msgid "Shop name configured in WooCommerce"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:241
-msgid "Total amount"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:242
-msgid "Currency of the order"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:243
-msgid "Cart identifier"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:252
-msgid "Your order SHOP_NAME"
-msgstr ""
-
-#: includes/class-stancer-gateway.php:253
-msgid "Description"
+#: includes/class-stancer-gateway.php:279
+msgid "Authentication"
 msgstr ""
 
 #: includes/class-stancer-gateway.php:294
+msgid "In test mode, no payment will really send to a bank, only test card can be used."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:298
+msgid "Enable test mode"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:299
+msgid "Test mode"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:304
+msgid "Behavior"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:310
+#: includes/class-stancer-gateway.php:311
+msgid "Page type"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:313
+msgid "Popup"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:314
+msgid "Inside the page"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:315
+msgid "Redirect to an external page"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:320
+msgid "Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...)."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:325
+msgid "Leave blank if you do not wish to authenticate, at zero all payments will be authenticated."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:332
+msgid "Authentication limit"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:337
+msgid "Will be used as description for every payment made, and will be visible to your customer in redirect mode."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:342
+msgid "List of available variables:"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:346
+msgid "Shop name configured in WooCommerce"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:347
+msgid "Total amount"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:348
+msgid "Currency of the order"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:349
+msgid "Cart identifier"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:358
+msgid "Your order SHOP_NAME"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:359
+msgid "Description"
+msgstr ""
+
+#: includes/class-stancer-gateway.php:458
 msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 
-#: includes/class-stancer-gateway.php:388
+#: includes/class-stancer-gateway.php:527
 msgid "The module is not correctly configured."
 msgstr ""
 
-#: includes/class-stancer-gateway.php:422
+#: includes/class-stancer-gateway.php:561
 msgid "The payment attempt failed."
 msgstr ""
 
 #. translators: %s: Stancer payment identifier.
-#: includes/class-stancer-gateway.php:444
+#: includes/class-stancer-gateway.php:583
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr ""
 
-#: stancer.php:73
+#: stancer.php:77
 msgid "View Stancer module settings"
 msgstr ""
 
-#: stancer.php:81
+#: stancer.php:78
+msgid "Settings"
+msgstr ""
+
+#: stancer.php:85
 msgid "Go to Stancer Customer Account"
 msgstr ""
 
-#: stancer.php:82
+#: stancer.php:86
 msgid "Customer Account"
 msgstr ""
