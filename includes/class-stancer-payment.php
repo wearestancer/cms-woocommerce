@@ -175,6 +175,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$api_payment->currency = $payment_data['currency'];
 		$api_payment->customer = $api_customer;
 		$api_payment->order_id = (string) $order->get_id();
+		$api_payment->methods_allowed = [ 'card' ];
 
 		if ( $payment_data['auth'] ) {
 			$api_payment->auth = true;

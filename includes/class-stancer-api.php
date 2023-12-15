@@ -129,7 +129,7 @@ class WC_Stancer_Api {
 	 * @return bool
 	 */
 	public static function sent_object_to_api( $object ): bool {
-		if ( $object->is_not_modified() ) {
+		if ( $object->isNotModified() ) {
 			return true;
 		}
 
