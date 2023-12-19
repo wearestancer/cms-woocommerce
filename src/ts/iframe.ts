@@ -98,7 +98,7 @@
 
   $body.on('click', '.js-stancer-place-order', function (event) {
     if (!$stancer_payment_method.is(':checked')) {
-     return true;
+      return true;
     }
 
     event.preventDefault();
@@ -110,7 +110,7 @@
 
     $.ajax({
       url: wc_checkout_params.checkout_url,
-      type:'POST',
+      type: 'POST',
       data: $form.serialize(),
       dataType: 'json',
       success: (result: CheckoutResponse) => {
@@ -124,7 +124,7 @@
           } else {
             throw new Error('Invalid response');
           }
-        } catch(err) {
+        } catch (err) {
           // Reload page
           if (result.reload) {
             window.location.reload();
