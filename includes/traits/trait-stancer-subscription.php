@@ -32,7 +32,14 @@ trait WC_Stancer_Subscription_Trait {
 	 * @return string
 	 */
 	public function format_change_payment_button( string $base ) {
-		return str_replace( 'button alt', esc_attr( $this->get_button_classes() ), $base );
+		$default_classes = [
+			'button',
+			'alt',
+			wc_wp_theme_get_element_class_name( 'button' ),
+			'js-stancer-change-payment-method',
+		];
+
+		return str_replace( 'button alt', esc_attr( implode( ' ', $default_classes ) ), $base );
 	}
 
 	/**

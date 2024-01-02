@@ -250,6 +250,20 @@ class WC_Stancer {
 			}
 		}
 
+		$new_defaults = [
+			'subscription_payment_change_description' => __(
+				'An authorization request without an amount will be made in order to validate the new method.',
+				'stancer',
+			),
+		];
+
+		foreach ( $new_defaults as $key => $value ) {
+			if ( ! array_key_exists( $key, $options ) ) {
+				$options[ $key ] = $value;
+				$updated = true;
+			}
+		}
+
 		if ( $updated ) {
 			update_option( 'woocommerce_stancer_settings', $options );
 		}

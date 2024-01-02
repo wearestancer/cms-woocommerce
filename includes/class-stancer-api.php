@@ -116,7 +116,7 @@ class WC_Stancer_Api {
 		$payment_data = $this->build_payment_data( $order, $force_auth );
 
 		$api_payment = null;
-		$stancer_payment = WC_Stancer_Payment::get_payment( $order, $payment_data, true );
+		$stancer_payment = WC_Stancer_Payment::find( $order, $payment_data, true, [ 'pending' ] );
 
 		if ( $stancer_payment ) {
 			$api_payment = new Stancer\Payment( $stancer_payment->payment_id );

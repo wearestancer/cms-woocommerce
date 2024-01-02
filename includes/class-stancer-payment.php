@@ -188,38 +188,21 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$api_payment->order_id = (string) $order->get_id();
 		$api_payment->methods_allowed = [ 'card' ];
 
-		if ( $payment_data['auth'] ) {
+		if ( array_key_exists( 'auth', $payment_data ) && $payment_data['auth'] ) {
 			$api_payment->auth = true;
 		}
 
-		if ( $payment_data['description'] ) {
+		if ( array_key_exists( 'description', $payment_data ) && $payment_data['description'] ) {
 			$api_payment->description = $payment_data['description'];
 		}
 
-		if ( $payment_data['return_url'] ) {
+		if ( array_key_exists( 'return_url', $payment_data ) && $payment_data['return_url'] ) {
 			$api_payment->return_url = $payment_data['return_url'];
 		}
 
 		$api_payment->send();
 
 		return $api_payment;
-	}
-
-	/**
-	 * Retrieves payment.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WC_Order $order Order to find.
-	 * @param array $payment_data Payment data used to create a new payment.
-	 * @param bool $generate_api_payment Do we need to generate a new payment if not already present.
-	 *
-	 * @return WC_Stancer_Payment
-	 */
-	public static function get_payment( $order, array $payment_data = [], bool $generate_api_payment = false ) {
-		$stancer_payment = static::find( $order, $payment_data, $generate_api_payment, [ 'pending' ] );
-
-		return $stancer_payment;
 	}
 
 	/**

@@ -34,6 +34,7 @@ msgstr ""
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
 #: includes/class-stancer-gateway.php
+#: subscription/change-payment-method.php
 msgid "%1$s finishing with %2$s"
 msgstr ""
 
@@ -132,6 +133,23 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Payment option logos"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "WooSubscription"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+#: includes/class-stancer.php
+msgid "An authorization request without an amount will be made in order to validate the new method."
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Description shown to the customer during payment method change."
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Payment method change description"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -297,4 +315,12 @@ msgstr ""
 
 #: stancer.php
 msgid "Customer Account"
+msgstr ""
+
+#: subscription/change-payment-method.php
+msgid "This method has not been validated. Please try a new one."
+msgstr ""
+
+#: subscription/change-payment-method.php
+msgid "Payment method changed successfully."
 msgstr ""

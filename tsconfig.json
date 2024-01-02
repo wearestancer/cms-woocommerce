@@ -4,7 +4,7 @@
     "declaration": false,
     "lib": [
       "DOM",
-      "ES2016"
+      "ES2019"
     ],
     "module": "CommonJS",
     "moduleResolution": "Classic",

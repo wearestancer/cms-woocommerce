@@ -182,6 +182,19 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['view-subscription'] ), ARRAY_A );
 		}
 
+		if ( array_key_exists( 'change_payment_method', $request ) ) {
+			$sql = 'SELECT `brand_name`, `last4`, `expiration`
+					FROM ' . $table( 'card' ) . '
+					LEFT JOIN ' . $table( 'subscription' ) . '
+					USING (`card_id`)
+					WHERE TRUE
+					AND `subscription_id` = %d
+					AND `is_active` = 1
+					;';
+
+			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['change_payment_method'] ), ARRAY_A );
+		}
+
 		// phpcs:enable
 
 		if ( is_array( $result ) ) {
@@ -344,6 +357,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 New page type `pip`.
 	 * @since 1.1.0 New payment description.
 	 * @since 1.1.0 Allow to choose scheme logos.
+	 * @since 1.1.0 WooSubscription method change description.
 	 *
 	 * @return self
 	 */
@@ -375,6 +389,27 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Payment option logos', 'stancer' ),
 			'type' => 'payment_option_logo',
+		];
+
+		$method_change_type = 'hidden';
+
+		if ( $this->subscriptions_enabled() ) {
+			$inputs['woosubscription_title'] = [
+				'title' => __( 'WooSubscription', 'stancer' ),
+				'type' => 'title',
+			];
+
+			$method_change_type = 'text';
+		}
+
+		$inputs['subscription_payment_change_description'] = [
+			'default' => __(
+				'An authorization request without an amount will be made in order to validate the new method.',
+				'stancer',
+			),
+			'desc_tip' => __( 'Description shown to the customer during payment method change.', 'stancer' ),
+			'title' => __( 'Payment method change description', 'stancer' ),
+			'type' => $method_change_type,
 		];
 
 		$inputs['authentication_title'] = [
@@ -527,33 +562,43 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			echo wp_kses_post( '<img class="' . implode( ' ', $class ) . '" src="' . esc_html( $image_path ) . '" />' );
 		}
 
-		echo esc_html( $this->settings['payment_option_description'] );
+		$page_type = $this->settings['page_type'];
+		$data = [
+			'initiate' => WC_AJAX::get_endpoint( 'checkout' ),
+		];
 
-		switch ( $this->settings['page_type'] ) {
+		if ( isset( $_GET['change_payment_method'] ) && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'] ) ) {
+			$page_type = 'pip'; // Picture in picture is forced for payment method change.
+			$data['changePaymentMethod'] = [
+				'nonce' => wp_create_nonce( 'change-method-' . $_GET['change_payment_method'] ),
+				'url' => plugins_url( $this->id . '/subscription/change-payment-method.php' ),
+			];
+
+			echo esc_html( $this->settings['subscription_payment_change_description'] );
+		} else {
+			echo esc_html( $this->settings['payment_option_description'] );
+		}
+
+		$script_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
+		$style_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
+
+		$add_script = function ( string $script ) use ( $data, $script_path ) {
+			$name = 'stancer-' . $script;
+
+			wp_register_script( $name, $script_path( $script ), [ 'jquery' ], STANCER_ASSETS_VERSION, true );
+			wp_localize_script( $name, 'stancer', $data );
+			wp_enqueue_script( $name );
+		};
+
+		switch ( $page_type ) {
 			case 'iframe':
-				wp_enqueue_script(
-					'stancer-popup',
-					plugin_dir_url( STANCER_FILE ) . 'public/js/popup.min.js',
-					[],
-					STANCER_ASSETS_VERSION,
-					true,
-				);
+				$add_script( 'popup' );
 				break;
 
 			case 'pip':
-				wp_enqueue_script(
-					'stancer-iframe',
-					plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.min.js',
-					[],
-					STANCER_ASSETS_VERSION,
-					true,
-				);
-				wp_enqueue_style(
-					'stancer-iframe',
-					plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
-					[],
-					STANCER_ASSETS_VERSION,
-				);
+				$add_script( 'iframe' );
+				wp_enqueue_style( 'stancer-iframe', $style_path( 'iframe' ), [], STANCER_ASSETS_VERSION );
+
 				break;
 
 			default:
@@ -622,7 +667,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		$customer = new WC_Customer( $order->get_customer_id() );
-		$stancer_payment = WC_Stancer_Payment::get_payment( $order );
+		$stancer_payment = WC_Stancer_Payment::find( $order, [], false, [ 'pending' ] );
 		$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
 
 		$auth = $api_payment->auth;
@@ -647,6 +692,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		switch ( $status ) {
 			case Stancer\Payment\Status::FAILED:
 			case Stancer\Payment\Status::REFUSED:
+				if ( 0 === $api_payment->amount ) {
+					return;
+				}
+
 				$order->update_status( 'failed' );
 
 				WC()->session->set( 'stancer_error_payment', __( 'The payment attempt failed.', 'stancer' ) );
