@@ -104,7 +104,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( $api_payment && $api_payment->return_url ) {
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
-					'lang' => 'fr',
+					'lang' => str_replace( '_', '-', get_locale() ),
 				]
 			);
 			$reload = false;
