@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c17d97d8747cbb4270e13595eca2b2af",
+    "content-hash": "c8b34047b4a1c68ea18a921299e88951",
     "packages": [
         {
             "name": "psr/http-message",
@@ -256,16 +256,16 @@
         },
         {
             "name": "php-stubs/woocommerce-stubs",
-            "version": "v8.6.1",
+            "version": "v8.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/woocommerce-stubs.git",
-                "reference": "ba95d7c652646aac136b6131fcc64008a2b917e6"
+                "reference": "320ad596d47d4a8687bbeac0924d8167a6689da6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/ba95d7c652646aac136b6131fcc64008a2b917e6",
-                "reference": "ba95d7c652646aac136b6131fcc64008a2b917e6",
+                "url": "https://api.github.com/repos/php-stubs/woocommerce-stubs/zipball/320ad596d47d4a8687bbeac0924d8167a6689da6",
+                "reference": "320ad596d47d4a8687bbeac0924d8167a6689da6",
                 "shasum": ""
             },
             "require": {
@@ -294,22 +294,22 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/woocommerce-stubs/issues",
-                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v8.6.1"
+                "source": "https://github.com/php-stubs/woocommerce-stubs/tree/v8.8.2"
             },
-            "time": "2024-02-20T17:47:00+00:00"
+            "time": "2024-04-17T12:41:04+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v6.4.3",
+            "version": "v6.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "6105bdab2f26c0204fe90ecc53d5684754550e8f"
+                "reference": "379f17a90c01498d4c99a0d15aab6e7aa6a2c840"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/6105bdab2f26c0204fe90ecc53d5684754550e8f",
-                "reference": "6105bdab2f26c0204fe90ecc53d5684754550e8f",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/379f17a90c01498d4c99a0d15aab6e7aa6a2c840",
+                "reference": "379f17a90c01498d4c99a0d15aab6e7aa6a2c840",
                 "shasum": ""
             },
             "require-dev": {
@@ -317,7 +317,7 @@
                 "nikic/php-parser": "^4.13",
                 "php": "^7.4 || ~8.0.0",
                 "php-stubs/generator": "^0.8.3",
-                "phpdocumentor/reflection-docblock": "^5.3",
+                "phpdocumentor/reflection-docblock": "5.3",
                 "phpstan/phpstan": "^1.10.49",
                 "phpunit/phpunit": "^9.5",
                 "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^0.11"
@@ -341,9 +341,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.4.3"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.5.2"
             },
-            "time": "2024-02-11T18:56:19+00:00"
+            "time": "2024-04-14T17:30:14+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",
@@ -512,58 +512,17 @@
             "time": "2024-03-17T23:44:50+00:00"
         },
         {
-            "name": "simplesecurewp/php-stubs-woocommerce-subscriptions",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/simplesecurewp/php-stubs-woocommerce-subscriptions.git",
-                "reference": "697ed7df0727f2d33b81b54656c6fb51768512de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/simplesecurewp/php-stubs-woocommerce-subscriptions/zipball/697ed7df0727f2d33b81b54656c6fb51768512de",
-                "reference": "697ed7df0727f2d33b81b54656c6fb51768512de",
-                "shasum": ""
-            },
-            "require": {
-                "php-stubs/wordpress-stubs": "^5.3 || ^6.0"
-            },
-            "default-branch": true,
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Simple Secure WP",
-                    "email": "simplesecurewp@gmail.com"
-                }
-            ],
-            "description": "PHP tags for WooCommerce Subscriptions for use in PHPStan",
-            "keywords": [
-                "PHPStan",
-                "static analysis",
-                "wordpress"
-            ],
-            "support": {
-                "issues": "https://github.com/simplesecurewp/php-stubs-woocommerce-subscriptions/issues",
-                "source": "https://github.com/simplesecurewp/php-stubs-woocommerce-subscriptions/tree/main"
-            },
-            "time": "2023-03-20T21:17:23+00:00"
-        },
-        {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.9.0",
+            "version": "3.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "d63cee4890a8afaf86a22e51ad4d97c91dd4579b"
+                "reference": "267a4405fff1d9c847134db3a3c92f1ab7f77909"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/d63cee4890a8afaf86a22e51ad4d97c91dd4579b",
-                "reference": "d63cee4890a8afaf86a22e51ad4d97c91dd4579b",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/267a4405fff1d9c847134db3a3c92f1ab7f77909",
+                "reference": "267a4405fff1d9c847134db3a3c92f1ab7f77909",
                 "shasum": ""
             },
             "require": {
@@ -630,20 +589,53 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-16T15:06:51+00:00"
+            "time": "2024-03-31T21:03:09+00:00"
         },
         {
-            "name": "wp-coding-standards/wpcs",
-            "version": "3.0.1",
+            "name": "stancer/php-stubs-woo-subscriptions",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "b4caf9689f1a0e4a4c632679a44e638c1c67aff1"
+                "url": "https://gitlab.com/wearestancer/library/php-stubs-woo-subscriptions.git",
+                "reference": "b9ba0b156663e5d98dd804ac1a037300e6b565a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/b4caf9689f1a0e4a4c632679a44e638c1c67aff1",
-                "reference": "b4caf9689f1a0e4a4c632679a44e638c1c67aff1",
+                "url": "https://gitlab.com/api/v4/projects/wearestancer%2Flibrary%2Fphp-stubs-woo-subscriptions/repository/archive.zip?sha=b9ba0b156663e5d98dd804ac1a037300e6b565a3",
+                "reference": "b9ba0b156663e5d98dd804ac1a037300e6b565a3",
+                "shasum": ""
+            },
+            "require": {
+                "php-stubs/woocommerce-stubs": "^8.7"
+            },
+            "require-dev": {
+                "php-stubs/generator": "^0.8.4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Woo Subscriptions function and class declaration stubs for static analysis.",
+            "homepage": "https://gitlab.com/wearestancer/library/php-stubs-woo-subscriptions",
+            "support": {
+                "issues": "https://gitlab.com/wearestancer/library/php-stubs-woo-subscriptions/-/issues",
+                "source": "https://gitlab.com/wearestancer/library/php-stubs-woo-subscriptions/-/tree/v6.0.0"
+            },
+            "time": "2024-03-26T18:04:30+00:00"
+        },
+        {
+            "name": "wp-coding-standards/wpcs",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
+                "reference": "9333efcbff231f10dfd9c56bb7b65818b4733ca7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/9333efcbff231f10dfd9c56bb7b65818b4733ca7",
+                "reference": "9333efcbff231f10dfd9c56bb7b65818b4733ca7",
                 "shasum": ""
             },
             "require": {
@@ -652,16 +644,16 @@
                 "ext-tokenizer": "*",
                 "ext-xmlreader": "*",
                 "php": ">=5.4",
-                "phpcsstandards/phpcsextra": "^1.1.0",
-                "phpcsstandards/phpcsutils": "^1.0.8",
-                "squizlabs/php_codesniffer": "^3.7.2"
+                "phpcsstandards/phpcsextra": "^1.2.1",
+                "phpcsstandards/phpcsutils": "^1.0.10",
+                "squizlabs/php_codesniffer": "^3.9.0"
             },
             "require-dev": {
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9.0",
                 "phpcsstandards/phpcsdevtools": "^1.2.0",
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
             },
             "suggest": {
                 "ext-iconv": "For improved results",
@@ -692,21 +684,19 @@
             },
             "funding": [
                 {
-                    "url": "https://opencollective.com/thewpcc/contribute/wp-php-63406",
+                    "url": "https://opencollective.com/php_codesniffer",
                     "type": "custom"
                 }
             ],
-            "time": "2023-09-14T07:06:09+00:00"
+            "time": "2024-03-25T16:39:00+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "simplesecurewp/php-stubs-woocommerce-subscriptions": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }

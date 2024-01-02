@@ -31,7 +31,7 @@
     },
     "require-dev": {
         "php-stubs/woocommerce-stubs": "^8.0",
-        "simplesecurewp/php-stubs-woocommerce-subscriptions": "dev-main",
+        "stancer/php-stubs-woo-subscriptions": "^6.0",
         "wp-coding-standards/wpcs": "^3.0"
     }
 }

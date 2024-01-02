@@ -1,0 +1,194 @@
+#! /bin/bash
+
+set -eu -o pipefail
+
+site_host="woocommerce.localtest.stancer.network"
+site_port=10020
+wordpress_dir=/var/www/html
+plugin_dir="${wordpress_dir}/wp-content/plugins/stancer"
+devcontainer_dir="${plugin_dir}/.devcontainer"
+
+
+# Adding our directory as a safe directory.
+git config --global --add safe.directory "$plugin_dir"
+
+# Adding git filter for traduction meta data
+git config filter.locales.smudge './scripts/locales/smudge.sh %f'
+git config filter.locales.clean './scripts/locales/clean.sh'
+
+
+# Install dependencies
+composer install --working-dir="${plugin_dir}"
+pnpm config set store-dir "${HOME}/.cache/pnpm"
+pnpm install --dir "${plugin_dir}"
+
+# Prepare assets
+pnpm run --dir "${plugin_dir}" build:assets
+
+
+# Get Caddy root CA
+curl http://caddy:2019/pki/ca/local/certificates -so "${devcontainer_dir}/root-ca.crt"
+
+
+# Wordpress
+
+# Prerequires
+sudo chmod g+w "${wordpress_dir}/wp-config.php"
+sudo mkdir --mode=775 -p "${wordpress_dir}/wp-content/upgrade"
+sudo chown -R www-data:www-data "${wordpress_dir}/wp-content/upgrade"
+sudo chmod g+w "${wordpress_dir}/wp-content/plugins"
+sudo chmod g+w "${wordpress_dir}/wp-content/themes"
+
+# Activate debug
+wp --path="$wordpress_dir" config set WP_DEBUG true --raw
+wp --path="$wordpress_dir" config set WP_DEBUG_LOG true --raw
+
+# Run the installer (similar to the browser install)
+wp --path="$wordpress_dir" core install \
+  --url="${site_host}:${site_port}" \
+  --title="WooCommerce Testing" \
+  --admin_user='shop-admin@stancer.com' \
+  --admin_password='shop-admin' \
+  --admin_email='shop-admin@stancer.com'
+
+# Make HTTPS the default
+wp --path="$wordpress_dir" option update siteurl "https://${site_host}:${site_port}"
+wp --path="$wordpress_dir" option update home "https://${site_host}:${site_port}"
+
+
+# Remove default starter modules
+wp --path="$wordpress_dir" plugin uninstall --all --exclude=stancer,woocommerce,woocommerce-subscriptions,wp-mail-smtp
+
+
+# Install SMTP plugin
+command=$(wp --path="$wordpress_dir" plugin list --field=name --status=active | grep wp-mail-smtp || true)
+if [ -z "$command" ]; then
+  wp --path="$wordpress_dir" plugin install --activate wp-mail-smtp
+  wp --path="$wordpress_dir" option add --format=json wp_mail_smtp_review_notice <<CONF
+{
+  "time": $(date +%s),
+  "dismissed": false
+}
+CONF
+fi
+
+configuration_name="wp_mail_smtp"
+wp --path="$wordpress_dir" option patch update --json "$configuration_name" smtp <<CONF
+{
+  "auth": false,
+  "autotls": false,
+  "host": "mailtrap",
+  "port": 25
+}
+CONF
+wp --path="$wordpress_dir" option patch update "$configuration_name" mail mailer smtp
+
+
+# Install woocommerce
+command=$(wp --path="$wordpress_dir" plugin list --field=name --status=active | grep woocommerce || true)
+if [ -z "$command" ]; then
+  wp --path="$wordpress_dir" plugin install --activate woocommerce
+fi
+
+# Create some example products
+products=()
+products+=("Brique de lait;simple;1.99;Un puissant produit laitier de test;SKU-milk-bottle")
+products+=("Sandwich;simple;3.25;Un sandwich testable;SKU-sandwich")
+products+=("Pack de lait;simple;12.00;Plein de calcium pour des tests solides;SKU-milk-pack")
+products+=("Testing Magazine No.120;simple;24.99;Le magazine de WooCommerce;SKU-magazine")
+
+for product in "${products[@]}" ; do
+  name=$(echo "$product" | cut -d';' -f1)
+  type=$(echo "$product" | cut -d';' -f2)
+  price=$(echo "$product" | cut -d';' -f3)
+  desc=$(echo "$product" | cut -d';' -f4)
+  sku=$(echo "$product" | cut -d';' -f5)
+
+  command=$(wp --path="$wordpress_dir" wc product list --user=1 --format=count --sku="$sku")
+
+  if [ "$command" == 0 ]; then
+    echo "Add product $name"
+    wp --path="$wordpress_dir" wc product create \
+      --name="$name" \
+      --type="$type" \
+      --regular_price="$price" \
+      --description="$desc" \
+      --sku="$sku" \
+      --user=1
+  fi
+done
+
+
+# Set some defaults
+wp --path="$wordpress_dir" option update woocommerce_allow_tracking "no"
+wp --path="$wordpress_dir" option update woocommerce_no_sales_tax 1
+wp --path="$wordpress_dir" option update woocommerce_default_country "FR"
+
+
+# Running package manager updates
+composer update
+pnpm install
+pnpm run build:assets
+
+
+# Install our plugin
+command=$(wp --path="$wordpress_dir" plugin list --field=name --status=active | grep stancer || true)
+if [ -z "$command" ]; then
+  wp --path="$wordpress_dir" plugin activate stancer
+fi
+
+# Configure it
+if [ -f .devcontainer/.env ]; then
+  source .devcontainer/.env
+
+  configuration_name="woocommerce_stancer_settings"
+  command=$(wp --path="$wordpress_dir" option list --search="$configuration_name" --format=count)
+
+  if [ "$command" == 0 ]; then
+    wp --path="$wordpress_dir" option add --format=json "$configuration_name" <<CONF
+{
+  "api_live_public_key": "",
+  "api_live_secret_key": "",
+  "api_test_public_key": "",
+  "api_test_secret_key": "",
+  "enabled": "yes",
+  "host": "",
+  "page_type": "pip",
+  "payment_description": "Your order SHOP_NAME",
+  "payment_option_description": "",
+  "payment_option_logo": "all-schemes-stancer",
+  "payment_option_text": "Pay by card",
+  "test_mode": "yes"
+}
+CONF
+  fi
+
+  if [ -n "${API_PUBLIC_KEY:-}" ]; then
+    wp --path="$wordpress_dir" option patch update "$configuration_name" api_test_public_key "$API_PUBLIC_KEY"
+  fi
+
+  if [ -n "${API_SECRET_KEY:-}" ]; then
+    wp --path="$wordpress_dir" option patch update "$configuration_name" api_test_secret_key "$API_SECRET_KEY"
+  fi
+
+  if [ -n "${API_HOST:-}" ]; then
+    wp --path="$wordpress_dir" option patch update "$configuration_name" host "$API_HOST"
+  fi
+
+
+  if [ -n "${WP_THEME:-}" ]; then
+    command=$(wp --path="$wordpress_dir" theme list --field=name | grep "$WP_THEME" || true)
+
+    if [ -z "$command" ]; then
+      wp --path="$wordpress_dir" theme install --activate "$WP_THEME"
+    else
+      wp --path="$wordpress_dir" theme activate "$WP_THEME"
+    fi
+  fi
+fi
+
+
+# Local configuration
+if [ -f "${wordpress_dir}/wp-content/plugins/stancer/.devcontainer/post-attach.local.sh" ]; then
+  /bin/bash "${wordpress_dir}/wp-content/plugins/stancer/.devcontainer/post-attach.local.sh"
+fi

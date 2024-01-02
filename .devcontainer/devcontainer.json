@@ -1,8 +1,8 @@
 {
 	"name": "WooCommerce",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "wordpress",
+	"workspaceFolder": "/var/www/html/wp-content/plugins/stancer",
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -18,7 +18,7 @@
 				],
 				"intelephense.stubs": [
 					"vendor/php-stubs/woocommerce-stubs",
-					"vendor/simplesecurewp/php-stubs-woocommerce-subscriptions",
+					"vendor/stancer/php-stubs-woo-subscriptions",
 					"apache",
 					"bcmath",
 					"bz2",
@@ -64,12 +64,6 @@
 					"Phar",
 					"posix",
 					"pspell",
-					"random",
-					"readline",
-					"Reflection",
-					"session",
-					"shmop",
-					"SimpleXML",
 					"snmp",
 					"soap",
 					"sockets",
@@ -97,16 +91,12 @@
 			}
 		}
 	},
-	"features": {
-		"ghcr.io/devcontainers/features/git:1": {}
-	},
-	"forwardPorts": [
-		8080
-	],
-	"postAttachCommand": "git config filter.locales.smudge \"./scripts/locales/smudge.sh %f\" && git config filter.locales.clean \"./scripts/locales/clean.sh\" && pnpm install",
+	"initializeCommand": "ls",
+	"postAttachCommand": "/post-attach",
 	"portsAttributes": {
 		"9003": {
 			"label": "xdebug"
 		}
-	}
+	},
+	"remoteUser": "vscode"
 }

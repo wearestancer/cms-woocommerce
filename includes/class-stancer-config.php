@@ -103,15 +103,15 @@ class WC_Stancer_Config {
 	 * @param array $settings Base settings.
 	 */
 	public function __construct( $settings ) {
-		$this->auth_limit = $settings['auth_limit'];
+		$this->auth_limit = $settings['auth_limit'] ?? 0;
 		$this->description = $settings['payment_description'] ?? '';
-		$this->host = $settings['host'];
+		$this->host = $settings['host'] ?? '';
 		$this->mode = Stancer\Config::TEST_MODE;
-		$this->page_type = $settings['page_type'];
-		$this->pprod = $settings['api_live_public_key'];
-		$this->ptest = $settings['api_test_public_key'];
-		$this->sprod = $settings['api_live_secret_key'];
-		$this->stest = $settings['api_test_secret_key'];
+		$this->page_type = $settings['page_type'] ?? 'pip';
+		$this->pprod = $settings['api_live_public_key'] ?? '';
+		$this->ptest = $settings['api_test_public_key'] ?? '';
+		$this->sprod = $settings['api_live_secret_key'] ?? '';
+		$this->stest = $settings['api_test_secret_key'] ?? '';
 
 		if ( ! empty( $settings['test_mode'] ) && 'no' === $settings['test_mode'] ) {
 			$this->mode = Stancer\Config::LIVE_MODE;
