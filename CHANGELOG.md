@@ -17,10 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically create an archive for every merge request (CMS-88)
 - New integration mode "Inside the page"
 - Support [Woo Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
+- Refund option to woocommerce back-office
 
 ### Changed
 - iFrame security (CMS-66)
 - Optimize autoloader
+
 
 ### Removed
 - `timeout` setting, will be reintegrated later

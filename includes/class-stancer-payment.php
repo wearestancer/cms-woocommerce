@@ -121,9 +121,9 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @param bool $generate_api_payment Do we need to generate a new payment if not already present.
 	 * @param string[] $status Statuses to find.
 	 *
-	 * @return WC_Stancer_Payment
+	 * @return ?WC_Stancer_Payment
 	 */
-	public static function find(
+	private static function find_by_order_id(
 		WC_Order $order,
 		array $payment_data = [],
 		bool $generate_api_payment = false,
@@ -158,6 +158,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		}
 
 		return $stancer_payment;
+
 	}
 
 	/**
@@ -170,7 +171,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return Stancer\Payment
 	 */
-	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
+	private static function generate_api_payment( WC_Order $order, array $payment_data ) {
 		$customer = [
 			'first_name' => $order->get_billing_first_name(),
 			'last_name' => $order->get_billing_last_name(),

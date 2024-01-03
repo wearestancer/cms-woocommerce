@@ -26,8 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage stancer/includes
  */
 class WC_Stancer_Gateway extends WC_Payment_Gateway {
+	use WC_Stancer_Refunds;
 	use WC_Stancer_Subscription_Trait;
-
 	/**
 	 * Stancer configuration.
 	 *
@@ -57,6 +57,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->has_fields = true;
 		$this->method_title = 'Stancer';
 		$this->method_description = __( 'Simple payment solution at low prices.', 'stancer' );
+		$this->supports = [
+			'payments',
+			'refunds',
+		];
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -71,13 +75,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		// Add message on checkout.
-		add_action( 'woocommerce_before_checkout_form', [ $this, 'display_notice' ] );
+		add_action( 'woocommerce_before_checkout_form', array( $this, 'display_notice' ) );
 
 		// Action on payment return.
-		add_action( 'woocommerce_receipt_' . $this->id, [ $this, 'receipt_page' ] );
+		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
 
 		// Add our gateway on checkout button.
-		add_filter( 'woocommerce_order_button_html', [ $this, 'place_order_button_html' ] );
+		add_filter( 'woocommerce_order_button_html', array( $this, 'place_order_button_html' ) );
 
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
@@ -85,6 +89,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->dynamic_title();
 		$this->init_subscription();
 	}
+
+
 
 	/**
 	 * Create payment.
@@ -102,6 +108,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$api_payment = $this->api->send_payment( $order, $card_id );
 
 		if ( $api_payment && $api_payment->return_url ) {
+			$order->set_transaction_id( $api_payment->getId() );
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
 					'lang' => str_replace( '_', '-', get_locale() ),
@@ -110,11 +117,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$reload = false;
 		}
 
-		return [
+		return array(
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
-		];
+		);
 	}
 
 	/**
@@ -227,14 +234,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function generate_payment_option_logo_html( $key, $data ) {
 		$current_value = $this->get_option( $key );
 		$option_name = $this->get_field_key( $key );
-		$defaults = [
+		$defaults = array(
 			'desc_tip' => false,
 			'description' => '',
 			'title' => '',
-		];
+		);
 		$data = wp_parse_args( $data, $defaults );
 
-		$images = [
+		$images = array(
 			'no-logo' => __( 'No logo.', 'stancer' ),
 			'stancer' => __( 'Stancer logo.', 'stancer' ),
 			'visa-mc-prefixed' => __( 'Main schemes logos prefixed with Stancer logo.', 'stancer' ),
@@ -245,9 +252,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'all-schemes' => __( 'Every supported schemes logos.', 'stancer' ),
 			'all-schemes-suffixed' => __( 'Every supported schemes logos suffixed with Stancer logo.', 'stancer' ),
 			'all-schemes-stancer' => __( 'Every supported schemes logos with full Stancer logo.', 'stancer' ),
-		];
+		);
 
-		$template = [
+		$template = array(
 			'<tr class="titledesc stancer-admin">',
 			'<th scope="row" class="titledesc stancer-admin__header">',
 			'<span class="stancer-admin__label">',
@@ -257,7 +264,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'</span>',
 			'</th>',
 			'<td class="forminp stancer-admin__form-control">',
-		];
+		);
 
 		foreach ( $images as $image => $text ) {
 			$input_id = esc_html( $option_name . '-' . $image );
@@ -271,20 +278,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				' . ( $current_value === $image ? 'checked' : '' ) . '
 			/>';
 
-			$class = [
+			$class = array(
 				'stancer-admin__label',
 				'stancer-admin__label--' . $image,
-			];
+			);
 
 			$template[] = '<label class="' . implode( ' ', $class ) . '" for="' . $input_id . '">';
 
 			if ( 'no-logo' !== $image ) {
 				$image_path = plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $image;
 
-				$class = [
+				$class = array(
 					'stancer-admin__preview',
 					'stancer-admin__preview--' . $image,
-				];
+				);
 
 				$template[] = '<img class="' . implode( ' ', $class ) . '" src="' . esc_html( $image_path ) . '" />';
 			}
@@ -326,28 +333,28 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		// translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
 		$desc = __( 'Starts with "%s"', 'stancer' );
 
-		return [
-			'api_live_public_key' => [
+		return array(
+			'api_live_public_key' => array(
 				'description' => sprintf( $desc, 'pprod_' ),
 				'pattern' => 'pprod_',
 				'title' => __( 'Public live API key', 'stancer' ),
-			],
-			'api_live_secret_key' => [
+			),
+			'api_live_secret_key' => array(
 				'description' => sprintf( $desc, 'sprod_' ),
 				'pattern' => 'sprod_',
 				'title' => __( 'Secret live API key', 'stancer' ),
-			],
-			'api_test_public_key' => [
+			),
+			'api_test_public_key' => array(
 				'description' => sprintf( $desc, 'ptest_' ),
 				'pattern' => 'ptest_',
 				'title' => __( 'Public test API key', 'stancer' ),
-			],
-			'api_test_secret_key' => [
+			),
+			'api_test_secret_key' => array(
 				'description' => sprintf( $desc, 'stest_' ),
 				'pattern' => 'stest_',
 				'title' => __( 'Secret test API key', 'stancer' ),
-			],
-		];
+			),
+		);
 	}
 
 	/**
@@ -362,34 +369,41 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return self
 	 */
 	public function init_form_fields() {
-		$inputs = [];
+		$inputs = array();
 
-		$inputs['enabled'] = [
+		$inputs['enabled'] = array(
 			'default' => 'yes',
 			'label' => __( 'Enable Stancer', 'stancer' ),
 			'title' => __( 'Enable/Disable', 'stancer' ),
 			'type' => 'checkbox',
-		];
+		);
 
-		$inputs['payment_option_text'] = [
+		$inputs['payment_option_text'] = array(
 			'default' => __( 'Credit card / Debit card', 'stancer' ),
 			'desc_tip' => __( 'Payment method title shown to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Title', 'stancer' ),
 			'type' => 'text',
-		];
+		);
 
-		$inputs['payment_option_description'] = [
+		$inputs['payment_option_description'] = array(
 			'desc_tip' => __( 'Payment method description shown to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Payment option description', 'stancer' ),
 			'type' => 'text',
-		];
+		);
 
-		$inputs['payment_option_logo'] = [
+		$inputs['enable_refund'] = array(
+			'default' => 'yes',
+			'label' => __( 'Enable Refund', 'stancer' ),
+			'title' => __( 'Refund', 'stancer' ),
+			'type' => 'checkbox',
+		);
+
+		$inputs['payment_option_logo'] = array(
 			'default' => 'all-schemes-stancer',
 			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Payment option logos', 'stancer' ),
 			'type' => 'payment_option_logo',
-		];
+		);
 
 		if ( $this->subscriptions_enabled() ) {
 			$inputs['woosubscription_title'] = [
@@ -413,21 +427,21 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'stancer',
 		);
 
-		$inputs['authentication_title'] = [
+		$inputs['authentication_title'] = array(
 			'title' => __( 'Authentication', 'stancer' ),
 			'type' => 'title',
-		];
+		);
 
 		foreach ( $this->get_configurations() as $key => $conf ) {
 			$inputs[ $key ] = array_merge(
 				$conf,
-				[
+				array(
 					'type' => 'text',
-				]
+				)
 			);
 		}
 
-		$inputs['test_mode'] = [
+		$inputs['test_mode'] = array(
 			'default' => 'yes',
 			'description' => __(
 				'In test mode, no payment will really send to a bank, only test card can be used.',
@@ -436,24 +450,24 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'label' => __( 'Enable test mode', 'stancer' ),
 			'title' => __( 'Test mode', 'stancer' ),
 			'type' => 'checkbox',
-		];
+		);
 
-		$inputs['behavior_title'] = [
+		$inputs['behavior_title'] = array(
 			'title' => __( 'Behavior', 'stancer' ),
 			'type' => 'title',
-		];
+		);
 
-		$inputs['page_type'] = [
+		$inputs['page_type'] = array(
 			'default' => 'iframe',
 			'label' => __( 'Page type', 'stancer' ),
 			'title' => __( 'Page type', 'stancer' ),
-			'options' => [
+			'options' => array(
 				'iframe' => __( 'Popup', 'stancer' ),
 				'pip' => __( 'Inside the page', 'stancer' ),
 				'redirect' => __( 'Redirect to an external page', 'stancer' ),
-			],
+			),
 			'type' => 'select',
-		];
+		);
 
 		$desc_auth_limit = __(
 			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',
@@ -465,12 +479,12 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'stancer',
 		);
 
-		$inputs['auth_limit'] = [
+		$inputs['auth_limit'] = array(
 			'default' => '0',
 			'title' => __( 'Authentication limit', 'stancer' ),
 			'type' => 'text',
 			'description' => $desc_auth_limit,
-		];
+		);
 
 		$desc_description = __(
 			'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
@@ -480,39 +494,39 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$desc_description .= __( 'List of available variables:', 'stancer' );
 		$desc_description .= '<br/>';
 
-		$vars = [
+		$vars = array(
 			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
 			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
 			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
 			'CART_ID' => __( 'Cart identifier', 'stancer' ),
-		];
+		);
 
 		foreach ( $vars as $key => $value ) {
 			$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
 			$desc_description .= '<br/>';
 		}
 
-		$inputs['payment_description'] = [
+		$inputs['payment_description'] = array(
 			'default' => __( 'Your order SHOP_NAME', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',
 			'description' => $desc_description,
-		];
+		);
 
-		$inputs['host'] = [
+		$inputs['host'] = array(
 			'default' => '',
 			'type' => 'hidden',
-		];
+		);
 
-		$inputs['timeout'] = [
+		$inputs['timeout'] = array(
 			'default' => 0,
 			'type' => 'hidden',
-		];
+		);
 
 		wp_enqueue_style(
 			'stancer-admin',
 			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
-			[],
+			array(),
 			STANCER_ASSETS_VERSION,
 		);
 
@@ -549,16 +563,16 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			wp_enqueue_style(
 				'stancer-option',
 				plugin_dir_url( STANCER_FILE ) . 'public/css/option.min.css',
-				[],
+				array(),
 				STANCER_ASSETS_VERSION,
 			);
 
 			$image_path = plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $logo;
 
-			$class = [
+			$class = array(
 				'stancer-option__logo',
 				'stancer-option__logo--' . $logo,
-			];
+			);
 
 			echo wp_kses_post( '<img class="' . implode( ' ', $class ) . '" src="' . esc_html( $image_path ) . '" />' );
 		}
@@ -624,7 +638,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'value="' . esc_attr( $order_button_text ) . '"',
 			'type="submit"',
 			'data-value="' . esc_attr( $order_button_text ) . '"',
-		];
+		);
 		$button = '<button ' . implode( ' ', $attrs ) . '>' . esc_html( $order_button_text ) . '</button>';
 
 		return $button;
@@ -643,7 +657,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		return $this->create_api_payment( $order, $card_id );
 	}
-
 	/**
 	 * Complete order.
 	 *
@@ -680,10 +693,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				// We can not mark the payment failed in the API.
 				$status = Stancer\Payment\Status::FAILED;
 			}
-		} else {
-			if ( ! $status && $api_card ) {
-				$status = Stancer\Payment\Status::CAPTURE;
-			}
+		} elseif ( ! $status && $api_card ) {
+			$status = Stancer\Payment\Status::CAPTURE;
 		}
 
 		if ( ! empty( $status ) ) {
@@ -722,7 +733,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				WC()->cart->empty_cart();
 
 				// Complete order.
-				$order->payment_complete();
+				$order->payment_complete( $api_payment->getId() );
 
 				$order->add_order_note(
 					sprintf(

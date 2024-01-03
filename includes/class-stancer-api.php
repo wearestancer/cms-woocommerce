@@ -12,6 +12,8 @@
  * @subpackage stancer/includes
  */
 
+use Stancer\Payment;
+
 /**
  * Stancer API.
  *
@@ -21,6 +23,7 @@
  * @subpackage stancer/includes
  */
 class WC_Stancer_Api {
+
 	/**
 	 * Stancer API configuration.
 	 *
@@ -135,41 +138,72 @@ class WC_Stancer_Api {
 				return null;
 			}
 
-			$api_cutomer = $api_payment->customer;
-			WC_Stancer_Customer::save_from( $api_cutomer );
+			$api_customer = $api_payment->customer;
+			WC_Stancer_Customer::save_from( $api_customer );
 		}
 
 		return $api_payment;
 	}
 
 	/**
-	 * Send payment to API.
+	 * Send Refund to our api.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
-	 * @param Stancer\Payment $object Object to send.
-	 *
-	 * @return bool
+	 * @param WC_Order $order Wc order.
+	 * @param float|null $refund_amount amount to be refund in cents.
+	 * @param string $reason the reason for the refund.
+	 * @return Stancer\Payment
+	 * @throws Exception Check for minimum sum before accepting refund or showing an error Message to the User.
+	 * @throws Exception Catch all api exception and translate it for users.
 	 */
+	public function send_refund( WC_Order $order, ?int $refund_amount, string $reason ): Stancer\Payment {
+		if ( ! $refund_amount || 0 === $refund_amount ) {
+			throw new Exception( __( 'you must refound a non zero amount' ) );
+		}
+		$stancer_payment = WC_Stancer_Payment::get_payment( $order, Stancer\Payment\Status::TO_CAPTURE );
+		$stancer_payment_api = new Stancer\Payment( $stancer_payment->payment_id );
+		try {
+			$stancer_payment_api->refund( (int) ( $refund_amount ) );
+		} catch ( Stancer\Exceptions\InvalidAmountException $e ) {
+			throw new Exception(
+				sprintf(
+					// translators: %1f: refunded payment sums. %3s: the currency of the transaction, %2f: the amount still refundable.
+					__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
+					$refund_amount / 100,
+					$stancer_payment_api->getRefundableAmount() / 100,
+					$order->get_currency( 'view' ),
+				)
+			);
+		}
+		return $stancer_payment_api;
+	}
+
+
+		/**
+		 * Send payment to API.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param Stancer\Payment $object Object to send.
+		 *
+		 * @return bool
+		 */
 	public static function sent_object_to_api( $object ): bool {
 		if ( $object->isNotModified() ) {
 			return true;
 		}
-
 		try {
 			$object->send();
 		} catch ( Exception $exception ) {
 			$log = $exception->getMessage();
-
 			if ( ! empty( $log ) ) {
 				if ( class_exists( 'WC_Logger' ) ) {
 					wc_get_logger()->debug( 'Stancer --- ' . $log );
 				}
-
 				return false;
 			}
 		}
-
 		return true;
 	}
 }
