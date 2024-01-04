@@ -54,6 +54,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix config bug (CMS-116)
 - Fix a bug that changed order statuses (CMS-117)
+## [unreleased]
+
+## Added
+- Support for WooCommerce blocks (CMS-68)
 
 
 ## [1.2.1] - 2024-03-22

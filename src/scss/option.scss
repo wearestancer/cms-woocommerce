@@ -8,7 +8,6 @@
 
   .payment_method_stancer &__logo {
     $base-height: 20px;
-
     display: block;
     height: $base-height;
 
@@ -46,3 +45,17 @@
     gap: 1ch;
   }
 }
+// We need to have a high specifity to override the woo "object-fit" (who totally breack our logos on chrome)
+.wc-block-checkout__payment-method {
+  .wc-block-components-radio-control-accordion-option {
+    .wc-block-components-radio-control__label {
+      .payment_method_stancer {
+        img {
+          margin-top: 8px;
+          object-fit: inherit;
+        }
+      }
+    }
+  }
+}
+

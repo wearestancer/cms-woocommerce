@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
     "declaration": false,
+    "jsx":"react",
     "lib": [
       "DOM",
       "ES2019"
     ],
-    "module": "CommonJS",
-    "moduleResolution": "Classic",
+    "module": "NodeNext",
     "outDir": "public/js/",
     "sourceMap": false,
     "strict": true,
     "target": "ES5"
   },
   "include": [
-    "src/ts/**/*.ts"
+    "src/ts/"
   ]
 }

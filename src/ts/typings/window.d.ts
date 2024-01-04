@@ -36,10 +36,52 @@ declare global {
     scroll_to_notices: (element: JQuery) => this;
   }
 
+  interface StancerSettings {
+    description: string;
+    label: string;
+    logo:{
+      url: string;
+      class: string;
+    }
+    page_type: string;
+    title: string;
+
+  }
+
+  interface WooCommerceEnvironment {
+    wcBlocksRegistry:{
+      registerPaymentMethod:(arg0: object)=>void
+    }
+    wcSettings:{
+      CURRENCY: {
+        code: string;
+      }
+      getPaymentMethodData: (arg0: string, arg1: object)=>StancerSettings,
+      description: string;
+    }
+  }
+
+  interface WordPressEnvironment{
+    htmlEntities:{
+      decodeEntities:(arg0:string)=>string
+    }
+    apiFetch:({})=>Promise<CheckoutResponse>;
+  }
+
+  interface CheckoutResponse{
+    payment_result:
+     {
+      payment_status: string;
+      redirect_url: string;
+    }
+  }
+
   interface Window {
     stancer_admin: AdminData;
     stancer: StancerData;
+    wc : WooCommerceEnvironment;
     wc_checkout_params: WooCommerceCheckoutParams;
+    wp: WordPressEnvironment;
   }
 
   const stancer: StancerData;

@@ -109,8 +109,8 @@
       },
       error: (_jqXHR, _textStatus, errorThrown) => {
         $body.trigger('checkout_error', [errorThrown]);
-      }
+      },
     });
-  })
+  });
 }))(jQuery);
 

@@ -597,7 +597,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				$conf,
 				[
 					'type' => 'text',
-				]
+				],
 			);
 		}
 
@@ -675,6 +675,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'default' => 0,
 			'type' => 'hidden',
 		];
+
+		wp_enqueue_style(
+			'stancer-admin',
+			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
+			[],
+			STANCER_ASSETS_VERSION,
+		);
+		wp_enqueue_script(
+			'stancer-admin-ts',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
+			[],
+			STANCER_ASSETS_VERSION,
+			true,
+		);
 
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
 

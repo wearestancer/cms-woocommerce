@@ -12,6 +12,9 @@
  * @subpackage stancer/includes
  */
 
+use Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry;
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+
 /**
  * Stancer plugin.
  *
@@ -172,6 +175,7 @@ class WC_Stancer {
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
+		add_action( 'woocommerce_blocks_loaded', array( $this, 'gateway_block_support' ) );
 	}
 
 	/**
@@ -245,6 +249,34 @@ class WC_Stancer {
 	public function load_plugin() {
 		$this->upgrade_plugin();
 		$this->load_gateway();
+	}
+	/**
+	 * Register the Gateway Block support to the approriate action hooks
+	 *
+	 * @since unreleased
+	 *
+	 * @return void
+	 */
+	public function gateway_block_support() {
+		if ( class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
+			require_once $this->plugin_abspath() . 'includes/class-stancer-gateway-block-support.php';
+			add_action(
+				'woocommerce_blocks_payment_method_type_registration',
+				function ( PaymentMethodRegistry $payment_method_registry ) {
+					$payment_method_registry->register( new WC_Stancer_Gateway_Block_Support() );
+				}
+			);
+		}
+	}
+	/**
+	 * Get the plugin absolute path
+	 *
+	 * @since unreleased
+	 *
+	 * @return string
+	 */
+	public function plugin_abspath() {
+		return plugin_dir_path( dirname( ( __FILE__ ) ) );
 	}
 
 	/**
