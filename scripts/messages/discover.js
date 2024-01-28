@@ -9,8 +9,9 @@ exec(`wp i18n make-pot . ${template}`, (error) => {
   }
 
   const content = fs.readFileSync(template, { encoding: 'utf-8' })
-    .replace(/^# Copyright \(C\) (.+) Stancer$/m, '# Copyright (C) $1 Stancer / Iliad 78')
+    .replace(/^# Copyright \(C\) (.+) Stancer$/m, '# Copyright (C) 2023-$1 Stancer / Iliad 78')
     .replace(/^"Report-Msgid-Bugs-To: .+"$/m, '"Report-Msgid-Bugs-To: https://gitlab.com/wearestancer/cms/woocommerce/-/issues\\n"')
+    .replace(/^(#: .+?):\d+$/gsm, '$1')
   ;
 
   fs.writeFileSync(template, content, { encoding: 'utf-8' });
