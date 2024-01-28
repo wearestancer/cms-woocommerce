@@ -32,6 +32,11 @@ msgstr ""
 msgid "https://www.stancer.com/"
 msgstr ""
 
+#. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
+#: includes/class-stancer-gateway.php
+msgid "%1$s finishing with %2$s"
+msgstr ""
+
 #: includes/class-stancer-gateway.php
 msgid "No logo."
 msgstr ""
@@ -102,7 +107,7 @@ msgid "Enable/Disable"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Pay by card"
+msgid "Credit card / Debit card"
 msgstr ""
 
 #: includes/class-stancer-gateway.php

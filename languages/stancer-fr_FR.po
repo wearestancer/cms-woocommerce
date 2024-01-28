@@ -33,6 +33,11 @@ msgstr "La solution de paiement simple à petit prix."
 msgid "https://www.stancer.com/"
 msgstr "https://www.stancer.com/fr/"
 
+#. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
+#: includes/class-stancer-gateway.php
+msgid "%1$s finishing with %2$s"
+msgstr "%1$s finissant par %2$s"
+
 #: includes/class-stancer-gateway.php
 msgid "No logo."
 msgstr "Aucun logo."
@@ -103,8 +108,8 @@ msgid "Enable/Disable"
 msgstr "Activer/Désactiver"
 
 #: includes/class-stancer-gateway.php
-msgid "Pay by card"
-msgstr "Payer par carte"
+msgid "Credit card / Debit card"
+msgstr "Carte bancaire"
 
 #: includes/class-stancer-gateway.php
 msgid "Payment method title shown to the customer during checkout."

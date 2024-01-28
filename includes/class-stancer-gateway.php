@@ -82,6 +82,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 
+		$this->dynamic_title();
 		$this->init_subscription();
 	}
 
@@ -128,6 +129,77 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( $notice, 'error' );
 			WC()->session->set( 'stancer_error_payment', null );
 		}
+	}
+
+	/**
+	 * Generate a dynamic module title.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return self
+	 */
+	public function dynamic_title() {
+		global $wpdb;
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$request = $_REQUEST;
+		// phpcs:enable
+		$result = null;
+
+		if ( array_key_exists( 'page', $request ) && 'wc-orders' === $request['page'] ) {
+			$this->title = 'Stancer';
+		}
+
+		$table = fn( string $name ) => '`' . $wpdb->prefix . 'wc_stancer_' . $name . '`';
+
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+
+		if ( array_key_exists( 'view-order', $request ) ) {
+			$sql = 'SELECT `brand_name`, `last4`, `expiration`
+					FROM ' . $table( 'card' ) . '
+					LEFT JOIN ' . $table( 'payment' ) . '
+					USING (`card_id`)
+					WHERE TRUE
+					AND `order_id` = %d
+					AND `status` IN ("authorized", "to_capture", "captured")
+					ORDER BY `stancer_payment_id` DESC
+					LIMIT 1
+					;';
+
+			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['view-order'] ), ARRAY_A );
+		}
+
+		if ( array_key_exists( 'view-subscription', $request ) ) {
+			$sql = 'SELECT `brand_name`, `last4`, `expiration`
+					FROM ' . $table( 'card' ) . '
+					LEFT JOIN ' . $table( 'subscription' ) . '
+					USING (`card_id`)
+					WHERE TRUE
+					AND `subscription_id` = %d
+					AND `is_active` = 1
+					;';
+
+			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['view-subscription'] ), ARRAY_A );
+		}
+
+		// phpcs:enable
+
+		if ( is_array( $result ) ) {
+			$date = new DateTime( $result['expiration'] );
+
+			$this->title = vsprintf(
+				// translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
+				__( '%1$s finishing with %2$s', 'stancer' ),
+				[
+					$result['brand_name'],
+					$result['last4'],
+					$date->format( 'm' ),
+					$date->format( 'Y' ),
+				],
+			);
+		}
+
+		return $this;
 	}
 
 	/**
@@ -286,7 +358,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		$inputs['payment_option_text'] = [
-			'default' => __( 'Pay by card', 'stancer' ),
+			'default' => __( 'Credit card / Debit card', 'stancer' ),
 			'desc_tip' => __( 'Payment method title shown to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Title', 'stancer' ),
 			'type' => 'text',
