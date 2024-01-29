@@ -568,6 +568,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			case Stancer\Payment\Status::AUTHORIZED:
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
+			case Stancer\Payment\Status::CAPTURED:
 				// Save card.
 				WC_Stancer_Card::save_from( $api_card, $customer );
 
