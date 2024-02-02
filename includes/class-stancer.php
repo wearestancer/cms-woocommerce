@@ -169,7 +169,6 @@ class WC_Stancer {
 	 */
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
-		add_action( 'upgrader_process_complete', [ $this, 'upgrade_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 	}
@@ -215,7 +214,7 @@ class WC_Stancer {
 	 * @since 1.1.0
 	 */
 	public function load_plugin() {
-		$this->install_database();
+		$this->upgrade_plugin();
 		$this->load_gateway();
 	}
 
@@ -232,6 +231,12 @@ class WC_Stancer {
 	 * @since 1.1.0
 	 */
 	public function upgrade_plugin() {
+		$version = get_option( 'stancer-version', '0.0.0' );
+
+		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+			return;
+		}
+
 		$this->install_database();
 
 		$options = get_option( 'woocommerce_stancer_settings' );
