@@ -8,25 +8,16 @@ workflow:
     - when: always
 
 
+variables:
+  DOCKER_REGISTRY: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/wearestancer
+
+
 phpcs:
   stage: test
 
-  image: php:7.4
+  image: ${DOCKER_REGISTRY}/php:7.4-xdebug3.1
 
   before_script:
-    - apt update
-    - apt install -y libzip-dev
-
-    - pecl install zip
-    - docker-php-ext-enable zip
-
-    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    - php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.checksum');"
-    - php -r "if (hash_file('sha384', 'composer-setup.php') !== file_get_contents('composer-setup.checksum')) { echo 'Installer corrupt'; unlink('composer-setup.php'); exit(1); }"
-    - php composer-setup.php --install-dir /usr/local/bin --filename=composer
-    - php -r "unlink('composer-setup.php');"
-    - php -r "unlink('composer-setup.checksum');"
-
     - php -v
     - composer --version
 
