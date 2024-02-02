@@ -12,6 +12,29 @@ variables:
   DOCKER_REGISTRY: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/wearestancer
 
 
+Create archive:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/wordpress:6-fpm
+
+  before_script:
+    - php -v
+    - composer --version
+    - pnpm --version
+
+    - pnpm install
+
+  script:
+    - pnpm run build:archive
+    - if [ -n "$CI_COMMIT_TAG" ]; then export ZIP_NAME="wc-${CI_COMMIT_TAG}"; else ZIP_NAME="wc-${CI_COMMIT_REF_SLUG}"; fi
+    - echo "${ZIP_NAME}"
+    - mv stancer*.zip "${ZIP_NAME}.zip"
+
+  artifacts:
+    paths:
+      - '*.zip'
+
+
 phpcs:
   stage: test
 
