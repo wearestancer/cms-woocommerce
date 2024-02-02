@@ -13,7 +13,7 @@ trim_trailing_whitespace = true
 indent_size = 4
 indent_style = tab
 
-[.devcontainer/devcontainer.json]
+[.devcontainer/devcontainer.json,.gitattributes]
 indent_size = 4
 indent_style = tab
 

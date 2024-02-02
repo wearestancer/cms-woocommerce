@@ -16,5 +16,7 @@ find "$scripts_dir" -name 'clean.sh' \
 
 if [ -n "$apply" ]; then
   grep 'filter=' "${main_dir}/.gitattributes" | awk '{ print $1 }' \
-    | xargs -I % sh -c 'find "$main_dir" -name '%' -delete ; git restore %'
+    | xargs -I % find "$main_dir" -name '%' -delete
+
+  git restore .
 fi
