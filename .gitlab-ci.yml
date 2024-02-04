@@ -12,6 +12,16 @@ variables:
   DOCKER_REGISTRY: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/wearestancer
 
 
+.svn-publish:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/svn
+
+  before_script:
+    - svn co https://plugins.svn.wordpress.org/stancer svn
+    - cd svn
+
+
 Create archive:
   stage: deploy
 
@@ -54,3 +64,36 @@ phpcs:
   artifacts:
     reports:
       junit: phpcs.junit.xml
+
+
+Publish main changes:
+  extends:
+    - .svn-publish
+
+  script:
+    - unzip -o ../*.zip -d trunk
+    - svn add trunk/*
+    - svn up
+    - svn stat
+    - svn ci -m "$CI_COMMIT_TITLE" --username "$SVN_USER" --password "$SVN_PASSWD"
+
+  needs:
+    - job: Create archive
+      artifacts: true
+
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $SVN_USER && $SVN_PASSWD
+
+
+Publish version:
+  extends:
+    - .svn-publish
+
+  script:
+    - svn cp trunk "tags/${CI_COMMIT_TAG}"
+    - svn ci -m "Version ${CI_COMMIT_TAG}" --username "$SVN_USER" --password "$SVN_PASSWD"
+
+  rules:
+    - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_TAG
