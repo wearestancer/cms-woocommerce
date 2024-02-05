@@ -8,25 +8,50 @@ workflow:
     - when: always
 
 
+variables:
+  DOCKER_REGISTRY: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/wearestancer
+  PHP_VERSION: "7.4"
+
+
+.svn-publish:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/wordpress:svn
+
+  before_script:
+    - svn co https://plugins.svn.wordpress.org/stancer svn
+    - cd svn
+
+
+Create archive:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/wordpress:php${PHP_VERSION}
+
+  before_script:
+    - php -v
+    - composer --version
+    - pnpm --version
+
+    - pnpm install
+
+  script:
+    - pnpm run build:archive
+    - if [ -n "$CI_COMMIT_TAG" ]; then export ZIP_NAME="wc-${CI_COMMIT_TAG}"; else ZIP_NAME="wc-${CI_COMMIT_REF_SLUG}"; fi
+    - echo "${ZIP_NAME}"
+    - mv stancer*.zip "${ZIP_NAME}.zip"
+
+  artifacts:
+    paths:
+      - '*.zip'
+
+
 phpcs:
   stage: test
 
-  image: php:7.4
+  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
 
   before_script:
-    - apt update
-    - apt install -y libzip-dev
-
-    - pecl install zip
-    - docker-php-ext-enable zip
-
-    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    - php -r "copy('https://composer.github.io/installer.sig', 'composer-setup.checksum');"
-    - php -r "if (hash_file('sha384', 'composer-setup.php') !== file_get_contents('composer-setup.checksum')) { echo 'Installer corrupt'; unlink('composer-setup.php'); exit(1); }"
-    - php composer-setup.php --install-dir /usr/local/bin --filename=composer
-    - php -r "unlink('composer-setup.php');"
-    - php -r "unlink('composer-setup.checksum');"
-
     - php -v
     - composer --version
 
@@ -40,3 +65,36 @@ phpcs:
   artifacts:
     reports:
       junit: phpcs.junit.xml
+
+
+Publish main changes:
+  extends:
+    - .svn-publish
+
+  script:
+    - unzip -o ../*.zip -d trunk
+    - svn add trunk/*
+    - svn up
+    - svn stat
+    - svn ci -m "$CI_COMMIT_TITLE" --username "$SVN_USER" --password "$SVN_PASSWD"
+
+  needs:
+    - job: Create archive
+      artifacts: true
+
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $SVN_USER && $SVN_PASSWD
+
+
+Publish version:
+  extends:
+    - .svn-publish
+
+  script:
+    - svn cp trunk "tags/${CI_COMMIT_TAG}"
+    - svn ci -m "Version ${CI_COMMIT_TAG}" --username "$SVN_USER" --password "$SVN_PASSWD"
+
+  rules:
+    - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_TAG
