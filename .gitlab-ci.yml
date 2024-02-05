@@ -16,7 +16,7 @@ variables:
 .svn-publish:
   stage: deploy
 
-  image: ${DOCKER_REGISTRY}/svn
+  image: ${DOCKER_REGISTRY}/wordpress:svn
 
   before_script:
     - svn co https://plugins.svn.wordpress.org/stancer svn
@@ -26,7 +26,7 @@ variables:
 Create archive:
   stage: deploy
 
-  image: ${DOCKER_REGISTRY}/wordpress:6-php${PHP_VERSION}-fpm
+  image: ${DOCKER_REGISTRY}/wordpress:php${PHP_VERSION}
 
   before_script:
     - php -v
@@ -49,7 +49,7 @@ Create archive:
 phpcs:
   stage: test
 
-  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}-xdebug3.1
+  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
 
   before_script:
     - php -v
