@@ -10,6 +10,7 @@ workflow:
 
 variables:
   DOCKER_REGISTRY: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/wearestancer
+  PHP_VERSION: "7.4"
 
 
 .svn-publish:
@@ -25,7 +26,7 @@ variables:
 Create archive:
   stage: deploy
 
-  image: ${DOCKER_REGISTRY}/wordpress:6-fpm
+  image: ${DOCKER_REGISTRY}/wordpress:6-php${PHP_VERSION}-fpm
 
   before_script:
     - php -v
@@ -48,7 +49,7 @@ Create archive:
 phpcs:
   stage: test
 
-  image: ${DOCKER_REGISTRY}/php:7.4-xdebug3.1
+  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}-xdebug3.1
 
   before_script:
     - php -v
