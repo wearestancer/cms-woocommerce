@@ -39,6 +39,15 @@ msgid "%1$s finishing with %2$s"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
+#: includes/class-stancer-gateway.php:125
+msgid "You are on %1$s mode but your %1$s keys are not properly setup. "
+msgstr ""
+
+#: includes/class-stancer-gateway.php:127
+msgid "Stancer plugin is not properly configured."
+msgstr ""
+
+#: includes/class-stancer-gateway.php:165
 msgid "No logo."
 msgstr ""
 

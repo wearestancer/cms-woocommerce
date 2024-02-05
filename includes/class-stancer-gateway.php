@@ -84,7 +84,12 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		$this->dynamic_title();
 		$this->init_subscription();
+
+		if ( $this->api_config->is_not_configured() ) {
+			add_action( 'admin_notices', [ $this, 'display_error_key' ] );
+		}
 	}
+
 
 	/**
 	 * Create payment.
@@ -115,6 +120,23 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
 		];
+	}
+
+	/**
+	 * Display notices if the key are not properly setup.
+	 * The way this hook work highly displeases me but the new function exist only since WordPress 6.4.
+	 *
+	 * @return void
+	 */
+	public function display_error_key() {
+		$mode = $this->api_config->mode;
+		$notice_type = $this->api_config->is_test_mode() ? 'warning is-dismissible' : 'error';
+		$class = 'stancer-key-notice notice notice-' . $notice_type;
+		// translators: %1$s the mode in which our API is (test mode or Live mode).
+		$message = sprintf( __( 'You are on %1$s mode but your %1$s keys are not properly setup. ', 'stancer' ), $mode );
+		$url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
+		$urlname = __( 'Stancer plugin is not properly configured.', 'stancer' );
+		printf( '<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>', esc_attr( $class ), esc_html( $message ), esc_attr( $url ), esc_html( $urlname ) );
 	}
 
 	/**
@@ -514,6 +536,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
 			[],
 			STANCER_ASSETS_VERSION,
+		);
+		wp_enqueue_script(
+			'stancer-admin-ts',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
+			[],
+			STANCER_ASSETS_VERSION,
+			true
 		);
 
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
