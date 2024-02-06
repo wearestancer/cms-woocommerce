@@ -139,6 +139,7 @@ class WC_Stancer_Config {
 			}
 
 			// phpcs:disable WordPress.WP.CapitalPDangit.MisspelledInText
+			// phpcs:disable WordPress.WP.CapitalPDangit.Misspelled
 			$api_config->addAppData( 'libstancer-woocommerce', STANCER_WC_VERSION );
 			$api_config->addAppData( 'woocommerce', WC_VERSION );
 			$api_config->addAppData( 'wordpress', get_bloginfo( 'version' ) );
