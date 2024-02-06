@@ -76,7 +76,6 @@ Publish main changes:
     - unzip -o ../*.zip -d "$TEMP_FOLDER"
     - rsync -Sa --delete "${TEMP_FOLDER}/stancer/" trunk/
     - svn add --force trunk/*
-    - svn up trunk/
     - svn stat
     - svn ci -m "$CI_COMMIT_TITLE" --username "$SVN_USER" --password "$SVN_PASSWD"
 
