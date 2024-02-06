@@ -154,6 +154,7 @@ class WC_Stancer_Api {
 		if ( $obj->isNotModified() ) {
 			return true;
 		}
+
 		try {
 			$obj->send();
 		} catch ( Exception $exception ) {
