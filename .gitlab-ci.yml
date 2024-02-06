@@ -9,7 +9,7 @@ workflow:
 
 
 variables:
-  DOCKER_REGISTRY: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/wearestancer
+  DOCKER_REGISTRY: wearestancer
   PHP_VERSION: "7.4"
 
 
