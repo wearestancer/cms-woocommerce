@@ -72,7 +72,9 @@ Publish main changes:
     - .svn-publish
 
   script:
-    - unzip -o ../*.zip -d trunk
+    - export TEMP_FOLDER="$(mktemp -d)"
+    - unzip -o ../*.zip -d "$TEMP_FOLDER"
+    - rsync -Sa --delete "${TEMP_FOLDER}/stancer/" trunk/
     - svn add --force trunk/*
     - svn up trunk/
     - svn stat
