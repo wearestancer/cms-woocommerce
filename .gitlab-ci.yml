@@ -35,6 +35,13 @@ Create archive:
 
     - pnpm install
 
+    # Fix locales files
+    - git config filter.locales.smudge './scripts/locales/smudge.sh %f'
+    - git config filter.locales.clean './scripts/locales/clean.sh'
+
+    - rm languages/*.po
+    - git restore languages/
+
   script:
     - pnpm run build:archive
     - if [ -n "$CI_COMMIT_TAG" ]; then export ZIP_NAME="wc-${CI_COMMIT_TAG}"; else ZIP_NAME="wc-${CI_COMMIT_REF_SLUG}"; fi
