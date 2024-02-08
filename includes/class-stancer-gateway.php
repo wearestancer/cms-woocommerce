@@ -391,7 +391,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'payment_option_logo',
 		];
 
-		$method_change_type = 'hidden';
+		$inputs['subscription_payment_change_description'] = [
+			'default' => __(
+				'An authorization request without an amount will be made in order to validate the new method.',
+				'stancer',
+			),
+			'type' => 'hidden',
+		];
 
 		if ( $this->subscriptions_enabled() ) {
 			$inputs['woosubscription_title'] = [
@@ -399,17 +405,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'type' => 'title',
 			];
 
-			$method_change_type = 'text';
-
-			$inputs['subscription_payment_change_description'] = [
-				'default' => __(
-					'An authorization request without an amount will be made in order to validate the new method.',
-					'stancer',
-				),
-				'desc_tip' => __( 'Description shown to the customer during payment method change.', 'stancer' ),
-				'title' => __( 'Payment method change description', 'stancer' ),
-				'type' => $method_change_type,
-			];
+			$inputs['subscription_payment_change_description']['desc_tip'] = __(
+				'Description shown to the customer during payment method change.',
+				'stancer',
+			);
+			$inputs['subscription_payment_change_description']['title'] = __(
+				'Payment method change description',
+				'stancer',
+			);
+			$inputs['subscription_payment_change_description']['type'] = 'text';
 		}
 
 		$inputs['authentication_title'] = [
