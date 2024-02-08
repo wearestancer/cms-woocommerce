@@ -246,26 +246,33 @@ class WC_Stancer {
 		];
 		$updated = false;
 
-		foreach ( $replace as $key => $value ) {
-			if ( array_key_exists( $key, $options ) ) {
-				$options[ $value ] = $options[ $key ];
-				$updated = true;
+		if ( is_array( $options ) ) {
+			$replace = [
+				'description' => 'payment_description',
+				'title' => 'payment_option_text',
+			];
 
-				unset( $options[ $key ] );
+			foreach ( $replace as $key => $value ) {
+				if ( array_key_exists( $key, $options ) ) {
+					$options[ $value ] = $options[ $key ];
+					$updated = true;
+
+					unset( $options[ $key ] );
+				}
 			}
-		}
 
-		$new_defaults = [
-			'subscription_payment_change_description' => __(
-				'An authorization request without an amount will be made in order to validate the new method.',
-				'stancer',
-			),
-		];
+			$new_defaults = [
+				'subscription_payment_change_description' => __(
+					'An authorization request without an amount will be made in order to validate the new method.',
+					'stancer',
+				),
+			];
 
-		foreach ( $new_defaults as $key => $value ) {
-			if ( ! array_key_exists( $key, $options ) ) {
-				$options[ $key ] = $value;
-				$updated = true;
+			foreach ( $new_defaults as $key => $value ) {
+				if ( ! array_key_exists( $key, $options ) ) {
+					$options[ $key ] = $value;
+					$updated = true;
+				}
 			}
 		}
 
