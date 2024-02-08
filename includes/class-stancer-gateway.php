@@ -400,17 +400,17 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			];
 
 			$method_change_type = 'text';
-		}
 
-		$inputs['subscription_payment_change_description'] = [
-			'default' => __(
-				'An authorization request without an amount will be made in order to validate the new method.',
-				'stancer',
-			),
-			'desc_tip' => __( 'Description shown to the customer during payment method change.', 'stancer' ),
-			'title' => __( 'Payment method change description', 'stancer' ),
-			'type' => $method_change_type,
-		];
+			$inputs['subscription_payment_change_description'] = [
+				'default' => __(
+					'An authorization request without an amount will be made in order to validate the new method.',
+					'stancer',
+				),
+				'desc_tip' => __( 'Description shown to the customer during payment method change.', 'stancer' ),
+				'title' => __( 'Payment method change description', 'stancer' ),
+				'type' => $method_change_type,
+			];
+		}
 
 		$inputs['authentication_title'] = [
 			'title' => __( 'Authentication', 'stancer' ),
