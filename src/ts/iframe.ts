@@ -253,8 +253,12 @@
             if (result.messages) {
               const $message = $(document.createElement('div')).text(result.messages);
 
-              $('.woocommerce-error, .woocommerce-info').remove();
-              $('.woocommerce-notices-wrapper').after($message);
+              $('.woocommerce-notices-wrapper')
+                .siblings('.wc-block-components-notice-banner, .woocommerce-error, .woocommerce-info')
+                  .remove()
+                  .end()
+                .after($message)
+              ;
 
               if (result.result === 'success') {
                 $message.addClass('woocommerce-info');
