@@ -46,6 +46,33 @@ class WC_Stancer_Abstract_Table {
 	protected $datetime_modified;
 
 	/**
+	 * Model constructor.
+	 *
+	 * @since 1.1.0
+	 * @param int $id Object identifier.
+	 */
+	public function __construct( $id = null ) {
+		global $wpdb;
+
+		if ( $id ) {
+			$this->id = $id;
+
+			// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$row = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT * FROM `{$wpdb->prefix}{$this->table}` WHERE `{$this->primary}` = %d",
+					intval( $id ),
+				)
+			);
+			// phpcs:enable
+
+			if ( $row ) {
+				$this->hydrate( (array) $row );
+			}
+		}
+	}
+
+	/**
 	 * Return properties value.
 	 *
 	 * @since 1.0.0
@@ -159,5 +186,35 @@ class WC_Stancer_Abstract_Table {
 		// phpcs:enable
 
 		return $this;
+	}
+
+	/**
+	 * Search an object.
+	 *
+	 * @since 1.1.0
+	 * @param array $data Search parameters.
+	 * @return WC_Stancer_Abstract_Table[]
+	 */
+	public static function search( $data ) {
+		global $wpdb;
+
+		$obj = new static();
+
+		$values = implode( ' AND ', array_map( fn( $k ) => "`{$k}` = %s", array_keys( $data ) ) );
+		$sql = "SELECT * FROM `{$wpdb->prefix}{$obj->table}` WHERE {$values}";
+
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+		$rows = $wpdb->get_results( $wpdb->prepare( $sql, $data ), ARRAY_A );
+		// phpcs:enable
+		$results = [];
+
+		foreach ( $rows as $row ) {
+			$result = new static();
+			$result->hydrate( $row );
+
+			$results[] = $result;
+		}
+
+		return $results;
 	}
 }

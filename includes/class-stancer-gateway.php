@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage stancer/includes
  */
 class WC_Stancer_Gateway extends WC_Payment_Gateway {
+	use WC_Stancer_Subscription_Trait;
 
 	/**
 	 * Stancer configuration.
@@ -65,6 +66,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
 
+		$this->supports = [
+			'products',
+		];
+
 		// Add message on checkout.
 		add_action( 'woocommerce_before_checkout_form', [ $this, 'display_notice' ] );
 
@@ -76,6 +81,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
+
+		$this->dynamic_title();
+		$this->init_subscription();
 	}
 
 	/**
@@ -90,18 +98,22 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 */
 	public function create_api_payment( $order, $card_id = null ) {
 		$redirect = $order->get_checkout_payment_url( true );
+		$reload = true;
 		$api_payment = $this->api->send_payment( $order, $card_id );
 
 		if ( $api_payment && $api_payment->return_url ) {
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
-					'lang' => 'fr',
+					'lang' => str_replace( '_', '-', get_locale() ),
 				]
 			);
+			$reload = false;
 		}
 
 		return [
 			'redirect' => $redirect,
+			'reload' => $reload,
+			'result' => $reload ? 'failed' : 'success',
 		];
 	}
 
@@ -117,6 +129,90 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			wc_add_notice( $notice, 'error' );
 			WC()->session->set( 'stancer_error_payment', null );
 		}
+	}
+
+	/**
+	 * Generate a dynamic module title.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return self
+	 */
+	public function dynamic_title() {
+		global $wpdb;
+
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		$request = $_REQUEST;
+		// phpcs:enable
+		$result = null;
+
+		if ( array_key_exists( 'page', $request ) && 'wc-orders' === $request['page'] ) {
+			$this->title = 'Stancer';
+		}
+
+		$table = fn( string $name ) => '`' . $wpdb->prefix . 'wc_stancer_' . $name . '`';
+
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+
+		if ( array_key_exists( 'view-order', $request ) ) {
+			$sql = 'SELECT `brand_name`, `last4`, `expiration`
+					FROM ' . $table( 'card' ) . '
+					LEFT JOIN ' . $table( 'payment' ) . '
+					USING (`card_id`)
+					WHERE TRUE
+					AND `order_id` = %d
+					AND `status` IN ("authorized", "to_capture", "captured")
+					ORDER BY `stancer_payment_id` DESC
+					LIMIT 1
+					;';
+
+			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['view-order'] ), ARRAY_A );
+		}
+
+		if ( array_key_exists( 'view-subscription', $request ) ) {
+			$sql = 'SELECT `brand_name`, `last4`, `expiration`
+					FROM ' . $table( 'card' ) . '
+					LEFT JOIN ' . $table( 'subscription' ) . '
+					USING (`card_id`)
+					WHERE TRUE
+					AND `subscription_id` = %d
+					AND `is_active` = 1
+					;';
+
+			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['view-subscription'] ), ARRAY_A );
+		}
+
+		if ( array_key_exists( 'change_payment_method', $request ) ) {
+			$sql = 'SELECT `brand_name`, `last4`, `expiration`
+					FROM ' . $table( 'card' ) . '
+					LEFT JOIN ' . $table( 'subscription' ) . '
+					USING (`card_id`)
+					WHERE TRUE
+					AND `subscription_id` = %d
+					AND `is_active` = 1
+					;';
+
+			$result = $wpdb->get_row( $wpdb->prepare( $sql, $request['change_payment_method'] ), ARRAY_A );
+		}
+
+		// phpcs:enable
+
+		if ( is_array( $result ) ) {
+			$date = new DateTime( $result['expiration'] );
+
+			$this->title = vsprintf(
+				// translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
+				__( '%1$s finishing with %2$s', 'stancer' ),
+				[
+					$result['brand_name'],
+					$result['last4'],
+					$date->format( 'm' ),
+					$date->format( 'Y' ),
+				],
+			);
+		}
+
+		return $this;
 	}
 
 	/**
@@ -204,6 +300,22 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Return checkout button classes.
+	 *
+	 * @return string
+	 */
+	public function get_button_classes() {
+		$default_classes = [
+			'button',
+			'alt',
+			wc_wp_theme_get_element_class_name( 'button' ),
+			'js-stancer-place-order',
+		];
+
+		return implode( ' ', $default_classes );
+	}
+
+	/**
 	 * Return the list of needed configurations.
 	 *
 	 * @since 1.0.0
@@ -245,6 +357,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 New page type `pip`.
 	 * @since 1.1.0 New payment description.
 	 * @since 1.1.0 Allow to choose scheme logos.
+	 * @since 1.1.0 WooSubscription method change description.
 	 *
 	 * @return self
 	 */
@@ -259,7 +372,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		$inputs['payment_option_text'] = [
-			'default' => __( 'Pay by card', 'stancer' ),
+			'default' => __( 'Credit card / Debit card', 'stancer' ),
 			'desc_tip' => __( 'Payment method title shown to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Title', 'stancer' ),
 			'type' => 'text',
@@ -276,6 +389,27 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),
 			'title' => __( 'Payment option logos', 'stancer' ),
 			'type' => 'payment_option_logo',
+		];
+
+		$method_change_type = 'hidden';
+
+		if ( $this->subscriptions_enabled() ) {
+			$inputs['woosubscription_title'] = [
+				'title' => __( 'WooSubscription', 'stancer' ),
+				'type' => 'title',
+			];
+
+			$method_change_type = 'text';
+		}
+
+		$inputs['subscription_payment_change_description'] = [
+			'default' => __(
+				'An authorization request without an amount will be made in order to validate the new method.',
+				'stancer',
+			),
+			'desc_tip' => __( 'Description shown to the customer during payment method change.', 'stancer' ),
+			'title' => __( 'Payment method change description', 'stancer' ),
+			'type' => $method_change_type,
 		];
 
 		$inputs['authentication_title'] = [
@@ -428,33 +562,43 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			echo wp_kses_post( '<img class="' . implode( ' ', $class ) . '" src="' . esc_html( $image_path ) . '" />' );
 		}
 
-		echo esc_html( $this->settings['payment_option_description'] );
+		$page_type = $this->settings['page_type'];
+		$data = [
+			'initiate' => WC_AJAX::get_endpoint( 'checkout' ),
+		];
 
-		switch ( $this->settings['page_type'] ) {
+		if ( isset( $_GET['change_payment_method'] ) && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'] ) ) {
+			$page_type = 'pip'; // Picture in picture is forced for payment method change.
+			$data['changePaymentMethod'] = [
+				'nonce' => wp_create_nonce( 'change-method-' . $_GET['change_payment_method'] ),
+				'url' => plugins_url( $this->id . '/subscription/change-payment-method.php' ),
+			];
+
+			echo esc_html( $this->settings['subscription_payment_change_description'] );
+		} else {
+			echo esc_html( $this->settings['payment_option_description'] );
+		}
+
+		$script_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
+		$style_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
+
+		$add_script = function ( string $script ) use ( $data, $script_path ) {
+			$name = 'stancer-' . $script;
+
+			wp_register_script( $name, $script_path( $script ), [ 'jquery' ], STANCER_ASSETS_VERSION, true );
+			wp_localize_script( $name, 'stancer', $data );
+			wp_enqueue_script( $name );
+		};
+
+		switch ( $page_type ) {
 			case 'iframe':
-				wp_enqueue_script(
-					'stancer-popup',
-					plugin_dir_url( STANCER_FILE ) . 'public/js/popup.min.js',
-					[],
-					STANCER_ASSETS_VERSION,
-					true,
-				);
+				$add_script( 'popup' );
 				break;
 
 			case 'pip':
-				wp_enqueue_script(
-					'stancer-iframe',
-					plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.min.js',
-					[],
-					STANCER_ASSETS_VERSION,
-					true,
-				);
-				wp_enqueue_style(
-					'stancer-iframe',
-					plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
-					[],
-					STANCER_ASSETS_VERSION,
-				);
+				$add_script( 'iframe' );
+				wp_enqueue_style( 'stancer-iframe', $style_path( 'iframe' ), [], STANCER_ASSETS_VERSION );
+
 				break;
 
 			default:
@@ -472,15 +616,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function place_order_button_html() {
 		$order_button_text = apply_filters( 'woocommerce_order_button_text', __( 'Place order', 'woocommerce' ) );
 
-		$default_classes = [
-			'button',
-			'alt',
-			wc_wp_theme_get_element_class_name( 'button' ),
-			'js-stancer-place-order',
-		];
-
 		$attrs = [
-			'class="' . esc_attr( implode( ' ', $default_classes ) ) . '"',
+			'class="' . esc_attr( $this->get_button_classes() ) . '"',
 			'id="place_order"',
 			'name="woocommerce_checkout_place_order"',
 			'value="' . esc_attr( $order_button_text ) . '"',
@@ -502,12 +639,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 		$card_id = filter_input( INPUT_POST, 'stancer-card', FILTER_SANITIZE_STRING );
-		$result = $this->create_api_payment( $order, $card_id );
 
-		return [
-			'result' => $result['redirect'] ? 'success' : 'failed',
-			'redirect' => $result['redirect'],
-		];
+		return $this->create_api_payment( $order, $card_id );
 	}
 
 	/**
@@ -534,7 +667,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		$customer = new WC_Customer( $order->get_customer_id() );
-		$stancer_payment = WC_Stancer_Payment::get_payment( $order );
+		$stancer_payment = WC_Stancer_Payment::find( $order, [], false, [ 'pending' ] );
 		$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
 
 		$auth = $api_payment->auth;
@@ -559,6 +692,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		switch ( $status ) {
 			case Stancer\Payment\Status::FAILED:
 			case Stancer\Payment\Status::REFUSED:
+				if ( 0 === $api_payment->amount ) {
+					return;
+				}
+
 				$order->update_status( 'failed' );
 
 				WC()->session->set( 'stancer_error_payment', __( 'The payment attempt failed.', 'stancer' ) );
@@ -566,6 +703,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				break;
 			case Stancer\Payment\Status::AUTHORIZED:
+				$api_payment->status = Stancer\Payment\Status::CAPTURE;
+				$api_payment->send();
+
+				// No break, we just need to ask for the capture and leave the "capture" part creating the order.
+
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
 			case Stancer\Payment\Status::CAPTURED:
@@ -589,6 +731,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 					)
 				);
 				$order->set_transaction_id( $api_payment->getId() );
+
+				$this->register_subscription_data( $order, $stancer_payment );
 
 				wp_safe_redirect( $this->get_return_url( $order ) );
 

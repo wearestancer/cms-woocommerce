@@ -5,6 +5,14 @@ declare global {
     message?: string | null;
   }
 
+  interface StancerData {
+    changePaymentMethod?: {
+      nonce: string;
+      url: string;
+    };
+    initiate: string;
+  }
+
   interface WooCommerceCheckoutParams {
     checkout_url: string;
   }
@@ -20,9 +28,11 @@ declare global {
   }
 
   interface Window {
+    stancer: StancerData;
     wc_checkout_params: WooCommerceCheckoutParams;
   }
 
+  const stancer: StancerData;
   const wc_checkout_params: WooCommerceCheckoutParams;
 }
 

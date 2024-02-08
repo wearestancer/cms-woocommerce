@@ -18,6 +18,7 @@
 				],
 				"intelephense.stubs": [
 					"vendor/php-stubs/woocommerce-stubs",
+					"vendor/simplesecurewp/php-stubs-woocommerce-subscriptions",
 					"apache",
 					"bcmath",
 					"bz2",

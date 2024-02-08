@@ -17,6 +17,13 @@ glob("languages/*.po", (err, files) => {
       if (error) {
         throw error;
       }
+
+      const current = new Date().getFullYear();
+      const content = fs.readFileSync(portable, { encoding: 'utf-8' })
+        .replace(/^# Copyright \(C\) .*/m, `# Copyright (C) 2023-${current} Stancer / Iliad 78`)
+      ;
+
+      fs.writeFileSync(portable, content, { encoding: 'utf-8' });
     });
   });
 });

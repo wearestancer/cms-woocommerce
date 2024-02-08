@@ -19,8 +19,8 @@
 
   type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
 
+  const $body = $(document.body);
   const $stancer_payment_method = $('#payment_method_stancer');
-  const $placeOrder = $('.js-stancer-place-order');
   const $cardSelect = $('#stancer-card');
 
   if ($cardSelect.selectWoo) {
@@ -30,7 +30,7 @@
     });
   }
 
-  $placeOrder.on('click', function (event) {
+  $body.on('click', '.js-stancer-place-order', function (event) {
     if (!$stancer_payment_method.is(':checked')) {
       return true;
     }
@@ -56,7 +56,7 @@
     }
 
     $.ajax({
-      url: wc_checkout_params.checkout_url,
+      url: stancer.initiate,
       type:'POST',
       data: $form.serialize(),
       dataType: 'json',

@@ -45,13 +45,8 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'STANCER_WC_VERSION' ) ) {
-			$this->version = STANCER_WC_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
-
 		$this->plugin_name = 'stancer';
+		$this->version = STANCER_WC_VERSION;
 
 		$this->load_actions();
 		$this->load_filters();
@@ -71,35 +66,6 @@ class WC_Stancer {
 	}
 
 	/**
-	 * Initialize administration.
-	 *
-	 * @since 1.1.0
-	 */
-	public function init_admin() {
-		$this->install_database();
-
-		$options = get_option( 'woocommerce_stancer_settings' );
-		$replace = [
-			'description' => 'payment_description',
-			'title' => 'payment_option_text',
-		];
-		$updated = false;
-
-		foreach ( $replace as $key => $value ) {
-			if ( array_key_exists( $key, $options ) ) {
-				$options[ $value ] = $options[ $key ];
-				$updated = true;
-
-				unset( $options[ $key ] );
-			}
-		}
-
-		if ( $updated ) {
-			update_option( 'woocommerce_stancer_settings', $options );
-		}
-	}
-
-	/**
 	 * Create database at plugin activation.
 	 *
 	 * @since 1.0.0
@@ -107,13 +73,17 @@ class WC_Stancer {
 	public function install_database() {
 		global $wpdb;
 
-		$version = get_option( 'stancer', '1.0.0' );
+		$version = get_option( 'stancer-version', '0.0.0' );
+
+		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+			return;
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 
-		if ( version_compare( '1.0.0', $version, '>=' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
+		if ( version_compare( '1.0.0', $version, '>' ) ) {
 			$sql = 'CREATE TABLE ' . $wpdb->prefix . 'wc_stancer_card (
 				stancer_card_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT "Unique ID in this table",
 				user_id int(10) UNSIGNED NOT NULL COMMENT "User ID (see users table)",
@@ -171,6 +141,25 @@ class WC_Stancer {
 
 			dbDelta( $sql );
 		}
+
+		if ( version_compare( '1.1.0', $version, '>' ) ) {
+			$sql = 'CREATE TABLE ' . $wpdb->prefix . 'wc_stancer_subscription (
+				`stancer_subscription_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT "Unique ID in this table",
+				`is_active` tinyint(1) UNSIGNED DEFAULT 1 COMMENT "Is still",
+				`subscription_id` int(10) UNSIGNED NOT NULL COMMENT "Subscription order ID (see posts table)",
+				`payment_id` binary(29) NOT NULL COMMENT "Source payment identifier",
+				`card_id` binary(29) NOT NULL COMMENT "ID of the card used",
+				`customer_id` binary(29) DEFAULT NULL COMMENT "ID of the customer used",
+				`datetime_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT "Creation date and time",
+				`datetime_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
+				PRIMARY KEY (`stancer_subscription_id`),
+				INDEX `subscription_id-is_active` (`subscription_id`, `is_active`)
+			);';
+
+			dbDelta( $sql );
+		}
+
+		update_option( 'stancer-version', STANCER_WC_VERSION );
 	}
 
 	/**
@@ -179,8 +168,7 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	private function load_actions() {
-		add_action( 'plugins_loaded', [ $this, 'load_gateway' ], 0 );
-		add_action( 'admin_init', [ $this, 'init_admin' ] );
+		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 	}
@@ -221,9 +209,68 @@ class WC_Stancer {
 	}
 
 	/**
+	 * Load the plugin.
+	 *
+	 * @since 1.1.0
+	 */
+	public function load_plugin() {
+		$this->upgrade_plugin();
+		$this->load_gateway();
+	}
+
+	/**
 	 * Fake run method.
 	 *
 	 * @since 1.0.0
 	 */
 	public function run() { }
+
+	/**
+	 * Upgrade the plugin.
+	 *
+	 * @since 1.1.0
+	 */
+	public function upgrade_plugin() {
+		$version = get_option( 'stancer-version', '0.0.0' );
+
+		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+			return;
+		}
+
+		$this->install_database();
+
+		$options = get_option( 'woocommerce_stancer_settings' );
+		$replace = [
+			'description' => 'payment_description',
+			'title' => 'payment_option_text',
+		];
+		$updated = false;
+
+		foreach ( $replace as $key => $value ) {
+			if ( array_key_exists( $key, $options ) ) {
+				$options[ $value ] = $options[ $key ];
+				$updated = true;
+
+				unset( $options[ $key ] );
+			}
+		}
+
+		$new_defaults = [
+			'subscription_payment_change_description' => __(
+				'An authorization request without an amount will be made in order to validate the new method.',
+				'stancer',
+			),
+		];
+
+		foreach ( $new_defaults as $key => $value ) {
+			if ( ! array_key_exists( $key, $options ) ) {
+				$options[ $key ] = $value;
+				$updated = true;
+			}
+		}
+
+		if ( $updated ) {
+			update_option( 'woocommerce_stancer_settings', $options );
+		}
+	}
 }

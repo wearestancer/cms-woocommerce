@@ -26,7 +26,9 @@ if ( defined( 'WC_REMOVE_ALL_DATA' ) && true === WC_REMOVE_ALL_DATA ) {
 	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_card' );
 	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_customer' );
 	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_payment' );
+	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_subscription' );
 
 	// Delete options.
-	delete_option( 'stancer_settings' );
+	delete_option( 'stancer-version' );
+	delete_option( 'woocommerce_stancer_settings' );
 }
