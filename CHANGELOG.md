@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support [WooSubscription](https://woo.com/products/woocommerce-subscriptions/)
 
 ### Changed
+- iFrame security (CMS-66)
 - Optimize autoloader
 
 ### Removed
