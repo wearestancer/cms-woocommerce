@@ -101,8 +101,9 @@ Publish version:
     - .svn-publish
 
   script:
-    - svn cp trunk "tags/${CI_COMMIT_TAG}"
-    - svn ci -m "Version ${CI_COMMIT_TAG}" --username "$SVN_USER" --password "$SVN_PASSWD"
+    - export VERSION="${CI_COMMIT_TAG/v/}"
+    - svn cp trunk "tags/${VERSION}"
+    - svn ci -m "Version ${VERSION}" --username "$SVN_USER" --password "$SVN_PASSWD"
 
   rules:
     - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_TAG && $CI_COMMIT_REF_PROTECTED
