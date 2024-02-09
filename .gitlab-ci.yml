@@ -13,6 +13,16 @@ variables:
   PHP_VERSION: "7.4"
 
 
+.svn-publish:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/wordpress:svn
+
+  before_script:
+    - svn co https://plugins.svn.wordpress.org/stancer svn
+    - cd svn
+
+
 Create archive:
   stage: deploy
 
@@ -64,14 +74,9 @@ phpcs:
       junit: phpcs.junit.xml
 
 
-Publish version:
-  stage: deploy
-
-  image: ${DOCKER_REGISTRY}/wordpress:svn
-
-  before_script:
-    - svn co https://plugins.svn.wordpress.org/stancer svn
-    - cd svn
+Publish main changes:
+  extends:
+    - .svn-publish
 
   script:
     - export TEMP_FOLDER="$(mktemp -d)"
@@ -79,14 +84,25 @@ Publish version:
     - rsync -Sa --delete "${TEMP_FOLDER}/stancer/" trunk/
     - svn add --force trunk/*
     - svn stat
-
-    - svn cp trunk "tags/${CI_COMMIT_TAG}"
-
-    - svn ci -m "Version ${CI_COMMIT_TAG}" --username "$SVN_USER" --password "$SVN_PASSWD"
+    - svn ci -m "$CI_COMMIT_TITLE" --username "$SVN_USER" --password "$SVN_PASSWD"
 
   needs:
     - job: Create archive
       artifacts: true
+
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_REF_PROTECTED
+
+
+Publish version:
+  extends:
+    - .svn-publish
+
+  script:
+    - svn cp trunk "tags/${CI_COMMIT_TAG}"
+    - svn ci -m "Version ${CI_COMMIT_TAG}" --username "$SVN_USER" --password "$SVN_PASSWD"
 
   rules:
     - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_TAG && $CI_COMMIT_REF_PROTECTED
