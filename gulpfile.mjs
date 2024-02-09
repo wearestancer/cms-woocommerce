@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +10,7 @@ import cheerio from 'gulp-cheerio';
 import csso from 'gulp-csso';
 import postcss from 'gulp-postcss';
 import rename from 'gulp-rename';
+import replace from 'gulp-replace';
 import gulpSass from 'gulp-sass';
 import svgmin from 'gulp-svgmin';
 import svgstore from 'gulp-svgstore';
@@ -348,8 +350,11 @@ export const svg = () => {
 };
 
 export const ts = () => {
+  const stancerFlat = readFileSync('public/svg/stancer-flat.svg', { encoding: 'utf-8' }).trim();
+
   return project.src()
     .pipe(project()).js
+    .pipe(replace('<svg:stancer-flat>', stancerFlat))
     .pipe(gulp.dest('public/js'))
     .pipe(terser())
     .pipe(rename({ extname: '.min.js' }))

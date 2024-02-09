@@ -64,7 +64,7 @@ Do you have any questions about Stancer? [Contact us](https://share-eu1.hsforms.
 
 = Minimum Requirements =
 
-* WordPress 6.0 or greater
+* WordPress 6.1 or greater
 
 = Automatic installation =
 
@@ -85,6 +85,9 @@ Updates are done automatically. However, we recommend that you back up your site
 == Changelog ==
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+
+= Version 1.1.1 =
+* Internal version for testing release process.
 
 = Version 1.1.0 =
 * New integration mode "Inside the page"
