@@ -1,0 +1,48 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use './icons';
+
+.stancer-option {
+  $elem: &;
+
+  .payment_method_stancer &__logo {
+    $base-height: 20px;
+
+    display: block;
+    height: $base-height;
+
+    @each $name, $data in icons.$image-map {
+      &#{$elem}__logo--#{$name} {
+        $height: map-get($data, 'height');
+        $width: map-get($data, 'width');
+
+        $ratio: math.div($width, $height) * 100;
+
+        @if math.round($ratio) == $ratio {
+          $ratio: math.div($ratio, 100);
+        }
+        @else {
+          $ratio: list.slash($width, $height);
+        }
+
+        aspect-ratio: $ratio;
+
+        @supports not (aspect-ratio: $ratio) {
+          width: math.round(math.div($width * $base-height, $height));
+        }
+      }
+    }
+  }
+}
+
+.payment_method_stancer {
+  &.payment_box {
+    &:empty {
+      display: none;
+    }
+
+    display: grid;
+    gap: 1ch;
+  }
+}

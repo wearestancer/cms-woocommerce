@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 104">
+  <defs>
+    <filter
+      id="inner-blur"
+      x="24.5342"
+      y="29.2656"
+      width="58.7486"
+      height="44.7335"
+      filterUnits="userSpaceOnUse"
+      color-interpolation-filters="sRGB"
+    >
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend
+        mode="normal"
+        in="SourceGraphic"
+        in2="BackgroundImageFix"
+        result="shape"
+      />
+      <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur" />
+    </filter>
+    <linearGradient
+      id="gradient-0"
+      x1="57.2417"
+      y1="35"
+      x2="1.04096"
+      y2="80.6657"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#215dd2" offset="0" />
+      <stop stop-color="#79a7ff" offset="1" />
+    </linearGradient>
+    <linearGradient
+      id="gradient-1"
+      x1="82.8616"
+      y1="7.24891"
+      x2="41.5286"
+      y2="53.322"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#d0e9ff" offset="0" />
+      <stop stop-color="#ff5b58" offset="1" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M35.6559 32.0001 L24.0866 32.0001 C17.2385 32.0001 11.2793 36.599 9.66347 43.131 L0.667038 83.5091 C -0.305315
+      87.8733 3.09227 92 7.65767 92 L58.9275 92 C63.4549 92 67.3734 88.9102 68.3492 84.5708 L78.3223 40.2229 C79.2718
+      36.0007 76.3133 32.0001 71.9083 32.0001 L35.6559 32.0001Z"
+    fill="url(#gradient-0)"
+  />
+  <path
+    d="M51.5088 12 L62.1834 12 L97.689 12 C102.041 12 105.276 16.0007 104.338 20.2228 L103.373 24.5663 L36.9078 24.5663
+      L37.2586 23.131 C38.8551 16.5989 44.7428 12 51.5088 12 Z M35.1123 31.913 L26.6264 66.6335 C25.9584 69.3667
+      28.0424 71.9999 30.8735 71.9999 L85.1758 71.9999 C89.649 71.9999 93.5205 68.9101 94.4846 64.5707 L101.741 31.913
+      L35.1123 31.913Z"
+    fill="#d0e9ff"
+  />
+  <path
+    d="M71.5633 69.9991 L79.2828 33.2656 L70.6614 33.2656 L36.6953 33.2656 L28.6596 64.6327 C27.9916 67.3659 30.0756
+      69.9991 32.9067 69.9991 L71.5633 69.9991Z"
+    fill="url(#gradient-1)"
+    filter="url(#inner-blur)"
+  />
+</svg>

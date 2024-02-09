@@ -4,16 +4,16 @@
  *
  * See readme for more informations.
  *
- * @link https://www.stancer.com
+ * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023 Stancer / Iliad 78
+ * @copyright 2023-2024 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
  */
 
 /**
- * Payment table representation
+ * Payment table representation.
  *
  * @since 1.0.0
  *
@@ -22,81 +22,91 @@
  */
 class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	/**
-	 * Name of primary key
+	 * Name of primary key.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $primary = 'stancer_payment_id';
 
 	/**
-	 * Table name
+	 * Table name.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $table = 'wc_stancer_payment';
 
 	/**
-	 * API payment ID
+	 * API payment ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $payment_id;
 
 	/**
-	 * API card ID
+	 * API card ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $card_id;
 
 	/**
-	 * API customer ID
+	 * API customer ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $customer_id;
 
 	/**
-	 * Currency used
+	 * Currency used.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $currency;
 
 	/**
-	 * Amount
+	 * Amount.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var integer
 	 */
 	protected $amount;
 
 	/**
-	 * WooCommerce order ID
+	 * WooCommerce order ID.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var integer
 	 */
 	protected $order_id = null;
 
 	/**
-	 * Status
+	 * Status.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $status = 'pending';
 
 	/**
-	 * Card creation date in Stancer Api
+	 * Card creation date in Stancer API.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string
 	 */
 	protected $created;
@@ -106,10 +116,10 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WC_Order $order                Order to find.
-	 * @param array    $payment_data         Payment data used to create a new payment.
-	 * @param bool     $generate_api_payment Do we need to generate a new payment if not already present.
-	 * @param string   $status               Status to find.
+	 * @param WC_Order $order Order to find.
+	 * @param array $payment_data Payment data used to create a new payment.
+	 * @param bool $generate_api_payment Do we need to generate a new payment if not already present.
+	 * @param string[] $status Statuses to find.
 	 *
 	 * @return WC_Stancer_Payment
 	 */
@@ -117,17 +127,27 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		WC_Order $order,
 		array $payment_data = [],
 		bool $generate_api_payment = false,
-		string $status = 'pending'
+		array $status = []
 	) {
 		global $wpdb;
 
-		$row = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}wc_stancer_payment WHERE order_id = %d AND status = %s",
-				absint( $order->get_id() ),
-				esc_sql( $status )
-			)
-		);
+		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+
+		$values = [
+			absint( $order->get_id() ),
+		];
+		$sql = "SELECT * FROM {$wpdb->prefix}wc_stancer_payment WHERE order_id = %d";
+
+		if ( ! empty( $status ) ) {
+			$placeholder = implode( ', ', array_fill( 0, count( $status ), '%s' ) );
+			$sql .= ' AND status IN (' . $placeholder . ')';
+
+			array_push( $values, ...array_map( 'esc_sql', $status ) );
+		}
+
+		$row = $wpdb->get_row( $wpdb->prepare( $sql, $values ) );
+
+		// phpcs:enable
 
 		if ( ! $row && $generate_api_payment ) {
 			$api_payment = static::generate_api_payment( $order, $payment_data );
@@ -141,12 +161,14 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	}
 
 	/**
-	 * Generate API payment
+	 * Generate API payment.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WC_Order $order        Source order.
-	 * @param array    $payment_data Payment data.
+	 * @param WC_Order $order Source order.
+	 * @param array $payment_data Payment data.
+	 *
+	 * @return Stancer\Payment
 	 */
 	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
 		$customer = [
@@ -159,92 +181,66 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$api_customer = WC_Stancer_Customer::get_api_customer( $customer );
 
 		$api_payment = new Stancer\Payment();
-		$api_payment
-			->setOrderId( ( (string) $order->get_id() ) )
-			->setAmount( $payment_data['amount'] )
-			->setCurrency( $payment_data['currency'] )
-			->setCustomer( $api_customer );
+		$api_payment->amount = $payment_data['amount'];
+		$api_payment->capture = false;
+		$api_payment->currency = $payment_data['currency'];
+		$api_payment->customer = $api_customer;
+		$api_payment->order_id = (string) $order->get_id();
+		$api_payment->methods_allowed = [ 'card' ];
 
-		if ( $payment_data['return_url'] ) {
-			$api_payment->setReturnUrl( $payment_data['return_url'] );
+		if ( array_key_exists( 'auth', $payment_data ) && $payment_data['auth'] ) {
+			$api_payment->auth = true;
 		}
 
-		if ( $payment_data['auth'] ) {
-			$api_payment->setAuth( true );
+		if ( array_key_exists( 'description', $payment_data ) && $payment_data['description'] ) {
+			$api_payment->description = $payment_data['description'];
 		}
 
-		if ( $payment_data['description'] ) {
-			$api_payment->setDescription( $payment_data['description'] );
+		if ( array_key_exists( 'return_url', $payment_data ) && $payment_data['return_url'] ) {
+			$api_payment->return_url = $payment_data['return_url'];
 		}
 
-		WC_Stancer_Api::sent_object_to_api( $api_payment );
+		$api_payment->send();
 
 		return $api_payment;
 	}
 
 	/**
-	 * Get API payment
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WC_Stancer_Payment $stancer_payment WooCommerce based payment.
-	 * @return Stancer\Payment
-	 */
-	public static function get_api_payment( $stancer_payment ) {
-		return new Stancer\Payment( $stancer_payment->payment_id );
-	}
-
-	/**
-	 * Retrieves payment
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WC_Order $order                Order to find.
-	 * @param array    $payment_data         Payment data used to create a new payment.
-	 * @param bool     $generate_api_payment Do we need to generate a new payment if not already present.
-	 * @return WC_Stancer_Payment
-	 */
-	public static function get_payment( $order, array $payment_data = [], bool $generate_api_payment = false ) {
-		$stancer_payment = static::find( $order, $payment_data, $generate_api_payment );
-
-		return $stancer_payment;
-	}
-
-	/**
-	 * Update payment status
+	 * Update payment status.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $status New status.
 	 */
-	public function markAs( string $status ) {
+	public function mark_as( string $status ) {
 		$this->status = $status;
 		$this->save();
 	}
 
 	/**
-	 * Create or update an Stancer payment from Stancer API payment object
+	 * Create or update an Stancer payment from Stancer API payment object.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Stancer\Payment $api_payment Object to save.
+	 *
 	 * @return WC_Stancer_Payment
 	 */
 	public static function save_from( Stancer\Payment $api_payment ) {
 		$stancer_payment = new WC_Stancer_Payment();
 
-		$card = $api_payment->getCard();
-		$creation = $api_payment->getCreationDate();
-		$customer = $api_payment->getCustomer();
+		$card = $api_payment->card;
+		$creation = $api_payment->creation_date;
+		$customer = $api_payment->customer;
 
-		$stancer_payment->payment_id = $api_payment->getId();
-		$stancer_payment->currency = $api_payment->getCurrency();
-		$stancer_payment->amount = $api_payment->getAmount();
-		$stancer_payment->status = $api_payment->getStatus() ?? 'pending';
-		$stancer_payment->card_id = $card ? $card->getId() : null;
+		$stancer_payment->payment_id = $api_payment->id;
+		$stancer_payment->currency = $api_payment->currency;
+		$stancer_payment->amount = $api_payment->amount;
+		$stancer_payment->status = $api_payment->status ?? 'pending';
+		$stancer_payment->card_id = $card ? $card->id : null;
 		$stancer_payment->created = $creation ? $creation->format( 'Y-m-d H:i:s' ) : null;
-		$stancer_payment->customer_id = $customer ? $customer->getId() : null;
-		$stancer_payment->order_id = $api_payment->getOrderId();
+		$stancer_payment->customer_id = $customer ? $customer->id : null;
+		$stancer_payment->order_id = $api_payment->order_id;
 
 		$stancer_payment->save();
 

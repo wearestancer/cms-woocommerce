@@ -4,9 +4,9 @@
  *
  * See readme for more informations.
  *
- * @link https://www.stancer.com
+ * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023 Stancer / Iliad 78
+ * @copyright 2023-2024 Stancer / Iliad 78
  *
  * @package stancer
  */
@@ -26,7 +26,9 @@ if ( defined( 'WC_REMOVE_ALL_DATA' ) && true === WC_REMOVE_ALL_DATA ) {
 	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_card' );
 	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_customer' );
 	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_payment' );
+	$wpdb->query( 'DROP TABLE IF EXISTS {$wpdb->prefix}wc_stancer_subscription' );
 
 	// Delete options.
-	delete_option( 'stancer_settings' );
+	delete_option( 'stancer-version' );
+	delete_option( 'woocommerce_stancer_settings' );
 }

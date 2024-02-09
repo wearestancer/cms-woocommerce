@@ -4,16 +4,16 @@
  *
  * See readme for more informations.
  *
- * @link https://www.stancer.com
+ * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023 Stancer / Iliad 78
+ * @copyright 2023-2024 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
  */
 
 /**
- * Stancer plugin
+ * Stancer plugin.
  *
  * @since 1.0.0
  *
@@ -25,6 +25,7 @@ class WC_Stancer {
 	 * The ID of Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string $plugin_name The ID of Stancer plugin.
 	 */
 	private $plugin_name;
@@ -33,25 +34,20 @@ class WC_Stancer {
 	 * The version of Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @var string $version The current version of Stancer plugin.
 	 */
 	private $version;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'STANCER_VERSION' ) ) {
-			$this->version = STANCER_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
-
 		$this->plugin_name = 'stancer';
+		$this->version = STANCER_WC_VERSION;
 
-		$this->load_dependencies();
 		$this->load_actions();
 		$this->load_filters();
 	}
@@ -60,10 +56,12 @@ class WC_Stancer {
 	 * Add Stancer to the list of available gateways.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param array $gateways List of gateways.
 	 */
 	public function add_gateway( $gateways ) {
 		$gateways[] = 'WC_Stancer_Gateway';
+
 		return $gateways;
 	}
 
@@ -75,13 +73,17 @@ class WC_Stancer {
 	public function install_database() {
 		global $wpdb;
 
-		$version = get_option( 'stancer', '1.0.0' );
+		$version = get_option( 'stancer-version', '0.0.0' );
+
+		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+			return;
+		}
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 
-		if ( version_compare( '1.0.0', $version, '>=' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
+		if ( version_compare( '1.0.0', $version, '>' ) ) {
 			$sql = 'CREATE TABLE ' . $wpdb->prefix . 'wc_stancer_card (
 				stancer_card_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT "Unique ID in this table",
 				user_id int(10) UNSIGNED NOT NULL COMMENT "User ID (see users table)",
@@ -96,9 +98,9 @@ class WC_Stancer {
 				tokenized tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT "Is this card tokenized?",
 				datetime_created datetime NULL DEFAULT NULL COMMENT "Creation date and time",
 				datetime_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
-				PRIMARY KEY  (stancer_card_id),
-				UNIQUE INDEX  card_id (card_id),
-				INDEX  user_id (user_id)
+				PRIMARY KEY (stancer_card_id),
+				UNIQUE INDEX card_id (card_id),
+				INDEX user_id (user_id)
 			);';
 
 			dbDelta( $sql );
@@ -113,7 +115,7 @@ class WC_Stancer {
 				created datetime COMMENT "Creation date into the API",
 				datetime_created datetime NULL DEFAULT NULL COMMENT "Creation date and time",
 				datetime_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
-				PRIMARY KEY  (stancer_customer_id),
+				PRIMARY KEY (stancer_customer_id),
 				UNIQUE INDEX customer_id (customer_id),
 				INDEX user_id (user_id)
 			);';
@@ -132,13 +134,32 @@ class WC_Stancer {
 				datetime_created datetime NULL DEFAULT NULL COMMENT "Creation date and time",
 				created datetime COMMENT "Creation date into the API",
 				datetime_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
-				PRIMARY KEY  (stancer_payment_id),
+				PRIMARY KEY (stancer_payment_id),
 				UNIQUE INDEX payment_id (payment_id),
 				INDEX order_id (order_id)
 			);';
 
 			dbDelta( $sql );
 		}
+
+		if ( version_compare( '1.1.0', $version, '>' ) ) {
+			$sql = 'CREATE TABLE ' . $wpdb->prefix . 'wc_stancer_subscription (
+				`stancer_subscription_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT "Unique ID in this table",
+				`is_active` tinyint(1) UNSIGNED DEFAULT 1 COMMENT "Is still",
+				`subscription_id` int(10) UNSIGNED NOT NULL COMMENT "Subscription order ID (see posts table)",
+				`payment_id` binary(29) NOT NULL COMMENT "Source payment identifier",
+				`card_id` binary(29) NOT NULL COMMENT "ID of the card used",
+				`customer_id` binary(29) DEFAULT NULL COMMENT "ID of the customer used",
+				`datetime_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT "Creation date and time",
+				`datetime_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Last modification date and time",
+				PRIMARY KEY (`stancer_subscription_id`),
+				INDEX `subscription_id-is_active` (`subscription_id`, `is_active`)
+			);';
+
+			dbDelta( $sql );
+		}
+
+		update_option( 'stancer-version', STANCER_WC_VERSION );
 	}
 
 	/**
@@ -147,24 +168,9 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	private function load_actions() {
-		add_action( 'plugins_loaded', [ $this, 'load_gateway' ], 0 );
-		add_action( 'admin_init', [ $this, 'install_database' ] );
+		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
-	}
-
-	/**
-	 * Load all dependencies.
-	 *
-	 * @since 1.0.0
-	 */
-	private function load_dependencies() {
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-abstract-table.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-api.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-card.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-customer.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-config.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-payment.php';
 	}
 
 	/**
@@ -195,11 +201,21 @@ class WC_Stancer {
 	public function load_public_hooks() {
 		wp_enqueue_script(
 			$this->plugin_name,
-			plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.js',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
 			[],
 			$this->version,
 			true
 		);
+	}
+
+	/**
+	 * Load the plugin.
+	 *
+	 * @since 1.1.0
+	 */
+	public function load_plugin() {
+		$this->upgrade_plugin();
+		$this->load_gateway();
 	}
 
 	/**
@@ -208,4 +224,60 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function run() { }
+
+	/**
+	 * Upgrade the plugin.
+	 *
+	 * @since 1.1.0
+	 */
+	public function upgrade_plugin() {
+		$version = get_option( 'stancer-version', '0.0.0' );
+
+		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+			return;
+		}
+
+		$this->install_database();
+
+		$options = get_option( 'woocommerce_stancer_settings' );
+		$replace = [
+			'description' => 'payment_description',
+			'title' => 'payment_option_text',
+		];
+		$updated = false;
+
+		if ( is_array( $options ) ) {
+			$replace = [
+				'description' => 'payment_description',
+				'title' => 'payment_option_text',
+			];
+
+			foreach ( $replace as $key => $value ) {
+				if ( array_key_exists( $key, $options ) ) {
+					$options[ $value ] = $options[ $key ];
+					$updated = true;
+
+					unset( $options[ $key ] );
+				}
+			}
+
+			$new_defaults = [
+				'subscription_payment_change_description' => __(
+					'An authorization request without an amount will be made in order to validate the new method.',
+					'stancer',
+				),
+			];
+
+			foreach ( $new_defaults as $key => $value ) {
+				if ( ! array_key_exists( $key, $options ) ) {
+					$options[ $key ] = $value;
+					$updated = true;
+				}
+			}
+		}
+
+		if ( $updated ) {
+			update_option( 'woocommerce_stancer_settings', $options );
+		}
+	}
 }

@@ -1,0 +1,6 @@
+# Browsers that we support
+
+defaults
+last 3 versions and not dead
+unreleased versions
+>= .25%
