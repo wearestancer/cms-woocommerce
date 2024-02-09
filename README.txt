@@ -88,7 +88,7 @@ Updates are done automatically. However, we recommend that you back up your site
 
 = Version 1.1.0 =
 * New integration mode "Inside the page"
-* Support [WooSubscription](https://woo.com/products/woocommerce-subscriptions/)
+* Support [Woo Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
 
 = Version 1.0.0 =
 * First version.
