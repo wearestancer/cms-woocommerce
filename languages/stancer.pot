@@ -136,20 +136,16 @@ msgid "Payment option logos"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "WooSubscription"
-msgstr ""
-
-#: includes/class-stancer-gateway.php
-#: includes/class-stancer.php
-msgid "An authorization request without an amount will be made in order to validate the new method."
-msgstr ""
-
-#: includes/class-stancer-gateway.php
 msgid "Description shown to the customer during payment method change."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Payment method change description"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+#: includes/class-stancer.php
+msgid "An authorization request without an amount will be made in order to validate the new method."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -323,4 +319,8 @@ msgstr ""
 
 #: subscription/change-payment-method.php
 msgid "Payment method changed successfully."
+msgstr ""
+
+#: subscription/change-payment-method.php
+msgid "Incorrect action method"
 msgstr ""

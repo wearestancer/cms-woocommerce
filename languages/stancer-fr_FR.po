@@ -136,8 +136,13 @@ msgid "Payment option logos"
 msgstr "Logos de l’option de paiement"
 
 #: includes/class-stancer-gateway.php
-msgid "WooSubscription"
-msgstr "WooSubscription"
+msgid "Description shown to the customer during payment method change."
+msgstr ""
+"La description présentée au client lors du changement de moyen de paiement."
+
+#: includes/class-stancer-gateway.php
+msgid "Payment method change description"
+msgstr "Description du changement de moyen de paiement"
 
 #: includes/class-stancer-gateway.php includes/class-stancer.php
 msgid ""
@@ -146,15 +151,6 @@ msgid ""
 msgstr ""
 "Une demande d'autorisation sera faite afin de validation la nouvelle méthode "
 "de paiement."
-
-#: includes/class-stancer-gateway.php
-msgid "Description shown to the customer during payment method change."
-msgstr ""
-"La description présentée au client lors du changement de moyen de paiement."
-
-#: includes/class-stancer-gateway.php
-msgid "Payment method change description"
-msgstr "Description du changement de moyen de paiement"
 
 #: includes/class-stancer-gateway.php
 msgid "Authentication"
@@ -364,3 +360,7 @@ msgstr ""
 #: subscription/change-payment-method.php
 msgid "Payment method changed successfully."
 msgstr "Moyen de paiement modifié avec succès."
+
+#: subscription/change-payment-method.php
+msgid "Incorrect action method"
+msgstr "Action incorrecte"
