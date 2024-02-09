@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-publish to WordPress SVN
 - Automatically create an archive for every merge request (CMS-88)
 - New integration mode "Inside the page"
-- Support [WooSubscription](https://woo.com/products/woocommerce-subscriptions/)
+- Support [Woo Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
 
 ### Changed
 - iFrame security (CMS-66)

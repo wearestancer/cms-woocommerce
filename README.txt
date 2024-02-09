@@ -86,5 +86,9 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
+= Version 1.1.0 =
+* New integration mode "Inside the page"
+* Support [Woo Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
+
 = Version 1.0.0 =
 * First version.
