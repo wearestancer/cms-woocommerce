@@ -64,7 +64,7 @@ Do you have any questions about Stancer? [Contact us](https://share-eu1.hsforms.
 
 = Minimum Requirements =
 
-* WordPress 6.0 or greater
+* WordPress 6.1 or greater
 
 = Automatic installation =
 
