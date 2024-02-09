@@ -357,7 +357,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 New page type `pip`.
 	 * @since 1.1.0 New payment description.
 	 * @since 1.1.0 Allow to choose scheme logos.
-	 * @since 1.1.0 WooSubscription method change description.
+	 * @since 1.1.0 Woo Subscriptions method change description.
 	 *
 	 * @return self
 	 */
@@ -391,30 +391,27 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'payment_option_logo',
 		];
 
-		$inputs['subscription_payment_change_description'] = [
-			'default' => __(
-				'An authorization request without an amount will be made in order to validate the new method.',
-				'stancer',
-			),
-			'type' => 'hidden',
-		];
-
 		if ( $this->subscriptions_enabled() ) {
 			$inputs['woosubscription_title'] = [
-				'title' => __( 'WooSubscription', 'stancer' ),
+				'title' => 'Woo Subscriptions',
 				'type' => 'title',
 			];
 
-			$inputs['subscription_payment_change_description']['desc_tip'] = __(
-				'Description shown to the customer during payment method change.',
-				'stancer',
-			);
-			$inputs['subscription_payment_change_description']['title'] = __(
-				'Payment method change description',
-				'stancer',
-			);
-			$inputs['subscription_payment_change_description']['type'] = 'text';
+			$inputs['subscription_payment_change_description'] = [
+				'desc_tip' => __( 'Description shown to the customer during payment method change.', 'stancer' ),
+				'title' => __( 'Payment method change description', 'stancer' ),
+				'type' => 'text',
+			];
+		} else {
+			$inputs['subscription_payment_change_description'] = [
+				'type' => 'hidden',
+			];
 		}
+
+		$inputs['subscription_payment_change_description']['default'] = __(
+			'An authorization request without an amount will be made in order to validate the new method.',
+			'stancer',
+		);
 
 		$inputs['authentication_title'] = [
 			'title' => __( 'Authentication', 'stancer' ),

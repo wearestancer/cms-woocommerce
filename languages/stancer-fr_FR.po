@@ -135,18 +135,6 @@ msgstr "Les logos des cartes sont affichés au client lors du paiement."
 msgid "Payment option logos"
 msgstr "Logos de l’option de paiement"
 
-#: includes/class-stancer-gateway.php includes/class-stancer.php
-msgid ""
-"An authorization request without an amount will be made in order to validate "
-"the new method."
-msgstr ""
-"Une demande d'autorisation sera faite afin de validation la nouvelle méthode "
-"de paiement."
-
-#: includes/class-stancer-gateway.php
-msgid "WooSubscription"
-msgstr "WooSubscription"
-
 #: includes/class-stancer-gateway.php
 msgid "Description shown to the customer during payment method change."
 msgstr ""
@@ -155,6 +143,14 @@ msgstr ""
 #: includes/class-stancer-gateway.php
 msgid "Payment method change description"
 msgstr "Description du changement de moyen de paiement"
+
+#: includes/class-stancer-gateway.php includes/class-stancer.php
+msgid ""
+"An authorization request without an amount will be made in order to validate "
+"the new method."
+msgstr ""
+"Une demande d'autorisation sera faite afin de validation la nouvelle méthode "
+"de paiement."
 
 #: includes/class-stancer-gateway.php
 msgid "Authentication"
