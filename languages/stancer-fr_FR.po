@@ -17,21 +17,41 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Author of the plugin
+#: stancer.php
 msgid "Stancer"
 msgstr "Stancer"
 
 #. Plugin URI of the plugin
+#: stancer.php
 msgid "https://gitlab.com/wearestancer/cms/woocommerce"
 msgstr "https://gitlab.com/wearestancer/cms/woocommerce"
 
 #. Description of the plugin
-#: includes/class-stancer-gateway.php
+#: stancer.php includes/class-stancer-gateway.php
 msgid "Simple payment solution at low prices."
 msgstr "La solution de paiement simple à petit prix."
 
 #. Author URI of the plugin
+#: stancer.php
 msgid "https://www.stancer.com/"
 msgstr "https://www.stancer.com/fr/"
+
+#: includes/class-stancer-api.php
+msgid "You cannot refund a null amount"
+msgstr "Vous devez remboursez une somme non nulle"
+
+#: includes/class-stancer-api.php
+msgid "A refund must be above 50 cents"
+msgstr "Un remboursement doit être supérieur à cinquante centime"
+
+#. translators: %1f: refunded payment sums. %3s: the currency of the transaction, %2f: the amount still refundable.
+#: includes/class-stancer-api.php
+msgid ""
+"You cannot refund %1$.02f %3$s the order total with already acounted refund "
+"is %2$.02f %3$s"
+msgstr ""
+"Vous ne pouvez pas remboursez %1$.02f %3$s le prix total de votre commande "
+"est de %2$.02f %3$s"
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
 #: includes/class-stancer-gateway.php subscription/change-payment-method.php
@@ -126,6 +146,15 @@ msgstr "La description présentée au client lors de la commande."
 #: includes/class-stancer-gateway.php
 msgid "Payment option description"
 msgstr "Description de l’option de paiement"
+
+#: includes/class-stancer-gateway.php
+#, fuzzy
+msgid "Enable Refund"
+msgstr "Activer le remboursement"
+
+#: includes/class-stancer-gateway.php
+msgid "Refund"
+msgstr "Remboursement"
 
 #: includes/class-stancer-gateway.php
 msgid "Card logos displayed to the customer during checkout."
@@ -255,6 +284,7 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 #: includes/traits/trait-stancer-subscription.php
+#: includes/traits/trait_stancer_refunds.php
 msgid "The module is not correctly configured."
 msgstr "Le module n'est pas correctement configuré."
 
@@ -334,6 +364,26 @@ msgstr ""
 msgid "Your subscription renewal transaction has been successfully submitted."
 msgstr ""
 "Votre transaction de renouvellement d’abonnement a été soumise avec succès."
+
+#: includes/traits/trait_stancer_refunds.php
+#, fuzzy
+msgid "The module is not correctly configured"
+msgstr "Le module n'est pas correctement configuré."
+
+#. translators: %1$.2f the amount refunded,  %2s the currency of the payment.
+#: includes/traits/trait_stancer_refunds.php
+msgid "The refund of %1$.2f %2$s has been completed via Stancer, "
+msgstr ""
+"Le remboursement d'une valeur de %1$.2f %2$s à été complété via Stancer."
+
+#. translators: %1$.2f the amount total after all the refund, %2$s the currency.
+#: includes/traits/trait_stancer_refunds.php
+msgid "the Stancer payment is now equal to %1$.2f %2$s."
+msgstr "Le Payment Stancer est maintenant égal à %1$.2f %2$s/"
+
+#: includes/traits/trait_stancer_refunds.php
+msgid "the order has been fully refunded."
+msgstr "La commande à été entièrement remboursé. "
 
 #: stancer.php
 msgid "View Stancer module settings"

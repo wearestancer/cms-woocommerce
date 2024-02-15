@@ -11,25 +11,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: $[first-commit-date]\n"
 "PO-Revision-Date: $[last-commit-date]\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stancer\n"
 
 #. Plugin Name of the plugin
 #. Author of the plugin
+#: stancer.php
 msgid "Stancer"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: stancer.php
 msgid "https://gitlab.com/wearestancer/cms/woocommerce"
 msgstr ""
 
 #. Description of the plugin
+#: stancer.php
 #: includes/class-stancer-gateway.php
 msgid "Simple payment solution at low prices."
 msgstr ""
 
 #. Author URI of the plugin
+#: stancer.php
 msgid "https://www.stancer.com/"
+msgstr ""
+
+#: includes/class-stancer-api.php
+msgid "You cannot refund a null amount"
+msgstr ""
+
+#: includes/class-stancer-api.php
+msgid "A refund must be above 50 cents"
+msgstr ""
+
+#. translators: %1f: refunded payment sums. %3s: the currency of the transaction, %2f: the amount still refundable.
+#: includes/class-stancer-api.php
+msgid "You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s"
 msgstr ""
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
@@ -125,6 +142,14 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Payment option description"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Enable Refund"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Refund"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -235,6 +260,7 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 #: includes/traits/trait-stancer-subscription.php
+#: includes/traits/trait_stancer_refunds.php
 msgid "The module is not correctly configured."
 msgstr ""
 
@@ -295,6 +321,24 @@ msgstr ""
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "Your subscription renewal transaction has been successfully submitted."
+msgstr ""
+
+#: includes/traits/trait_stancer_refunds.php
+msgid "The module is not correctly configured"
+msgstr ""
+
+#. translators: %1$.2f the amount refunded,  %2s the currency of the payment.
+#: includes/traits/trait_stancer_refunds.php
+msgid "The refund of %1$.2f %2$s has been completed via Stancer, "
+msgstr ""
+
+#. translators: %1$.2f the amount total after all the refund, %2$s the currency.
+#: includes/traits/trait_stancer_refunds.php
+msgid "the Stancer payment is now equal to %1$.2f %2$s."
+msgstr ""
+
+#: includes/traits/trait_stancer_refunds.php
+msgid "the order has been fully refunded."
 msgstr ""
 
 #: stancer.php

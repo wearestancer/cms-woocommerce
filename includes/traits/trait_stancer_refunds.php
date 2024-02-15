@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023 Stancer / Iliad 78
+ * @copyright 2023-2024 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes/traits
@@ -82,7 +82,7 @@ trait WC_Stancer_Refunds_Traits {
 		$text = sprintf( __( 'The refund of %1$.2f %2$s has been completed via Stancer, ', 'stancer' ), $amount, strtoupper( $currency ) );
 		if ( 0 !== $refundable ) {
 			// translators: %1$.2f the amount total after all the refund, %2$s the currency.
-			$text .= sprintf( __( 'the Stancer payment is now equal to %1$.2f %2$s.', 'stancer' ), $refundable, strtoupper( $currency ) );
+			$text .= sprintf( __( 'the Stancer payment is now equal to %1$.2f %2$s.', 'stancer' ), ( $refundable / 100 ), strtoupper( $currency ) );
 		} else {
 			$text .= __( 'the order has been fully refunded.', 'stancer' );
 		}

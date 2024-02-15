@@ -154,12 +154,16 @@ class WC_Stancer_Api {
 	 * @param float|null $refund_amount amount to be refund in cents.
 	 * @param string $reason the reason for the refund.
 	 * @return Stancer\Payment
+	 * @throws WC_Stancer_Exception Check that the refund amount is above 50 cents.
 	 * @throws WC_Stancer_Exception Check for minimum sum before accepting refund or showing an error Message to the User.
 	 * @throws WC_Stancer_Exception Catch all api exception and translate it for users.
 	 */
 	public function send_refund( WC_Order $order, ?int $refund_amount, string $reason ): Stancer\Payment {
 		if ( ! $refund_amount || 0 === $refund_amount ) {
-			throw new WC_Stancer_Exception( __( 'you must refound a non zero amount' ) );
+			throw new WC_Stancer_Exception( __( 'You cannot refund a null amount', 'stancer' ) );
+		}
+		if ( $refund_amount < 50 ) {
+			throw new WC_Stancer_Exception( __( 'A refund must be above 50 cents', 'stancer' ) );
 		}
 		$stancer_payment = WC_Stancer_Payment::find( $order );
 		$stancer_payment_api = new Stancer\Payment( $stancer_payment->payment_id );
