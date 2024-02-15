@@ -32,6 +32,19 @@ msgstr ""
 msgid "https://www.stancer.com/"
 msgstr ""
 
+#. translators: %1$s the mode in which our API is (test mode or Live mode).
+#: includes/class-stancer-gateway.php
+msgid "You are on %1$s mode but your %1$s keys are not properly setup. "
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Your clients cannot pay with Stancer ! Setup your API key now!"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Stancer plugin is not properly configured."
+msgstr ""
+
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
 #: includes/class-stancer-gateway.php
 #: subscription/change-payment-method.php
@@ -39,15 +52,6 @@ msgid "%1$s finishing with %2$s"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-#: includes/class-stancer-gateway.php:125
-msgid "You are on %1$s mode but your %1$s keys are not properly setup. "
-msgstr ""
-
-#: includes/class-stancer-gateway.php:127
-msgid "Stancer plugin is not properly configured."
-msgstr ""
-
-#: includes/class-stancer-gateway.php:165
 msgid "No logo."
 msgstr ""
 
