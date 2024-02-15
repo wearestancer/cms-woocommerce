@@ -123,7 +123,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return ?WC_Stancer_Payment
 	 */
-	private static function find_by_order_id(
+	public static function find(
 		WC_Order $order,
 		array $payment_data = [],
 		bool $generate_api_payment = false,
@@ -171,7 +171,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return Stancer\Payment
 	 */
-	private static function generate_api_payment( WC_Order $order, array $payment_data ) {
+	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
 		$customer = [
 			'first_name' => $order->get_billing_first_name(),
 			'last_name' => $order->get_billing_last_name(),

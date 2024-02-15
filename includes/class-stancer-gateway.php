@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage stancer/includes
  */
 class WC_Stancer_Gateway extends WC_Payment_Gateway {
-	use WC_Stancer_Refunds;
+	use WC_Stancer_Refunds_Traits;
 	use WC_Stancer_Subscription_Trait;
 	/**
 	 * Stancer configuration.
@@ -69,10 +69,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->description = $this->get_option( 'payment_option_description' );
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
-
-		$this->supports = [
-			'products',
-		];
 
 		// Add message on checkout.
 		add_action( 'woocommerce_before_checkout_form', array( $this, 'display_notice' ) );
@@ -638,7 +634,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'value="' . esc_attr( $order_button_text ) . '"',
 			'type="submit"',
 			'data-value="' . esc_attr( $order_button_text ) . '"',
-		);
+		];
 		$button = '<button ' . implode( ' ', $attrs ) . '>' . esc_html( $order_button_text ) . '</button>';
 
 		return $button;

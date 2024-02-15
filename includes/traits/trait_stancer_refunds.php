@@ -12,6 +12,8 @@
  * @subpackage stancer/includes/traits
  */
 
+use Stancer\Payment\Status;
+
 /**
  * Stancer Refunds traits.
  *
@@ -20,7 +22,7 @@
  * @package stancer
  * @subpackage stancer/includes/traits
  */
-trait WC_Stancer_Refunds {
+trait WC_Stancer_Refunds_Traits {
 	/**
 	 * Check if we can refund an order this check is done before showing the stancer button.
 	 *
@@ -39,7 +41,7 @@ trait WC_Stancer_Refunds {
 		}
 		$transaction_id = $order->get_transaction_id() ?? null;
 		if ( ! $transaction_id ) {
-			$api_payment = WC_Stancer_Payment::get_payment( $order, Stancer\Payment\Status::TO_CAPTURE );
+			$api_payment = WC_Stancer_Payment::find( $order );
 			$transaction_id = $api_payment->payment_id;
 		}
 		$api_payment = new Stancer\Payment( $transaction_id );

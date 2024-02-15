@@ -154,19 +154,19 @@ class WC_Stancer_Api {
 	 * @param float|null $refund_amount amount to be refund in cents.
 	 * @param string $reason the reason for the refund.
 	 * @return Stancer\Payment
-	 * @throws Exception Check for minimum sum before accepting refund or showing an error Message to the User.
-	 * @throws Exception Catch all api exception and translate it for users.
+	 * @throws WC_Stancer_Exception Check for minimum sum before accepting refund or showing an error Message to the User.
+	 * @throws WC_Stancer_Exception Catch all api exception and translate it for users.
 	 */
 	public function send_refund( WC_Order $order, ?int $refund_amount, string $reason ): Stancer\Payment {
 		if ( ! $refund_amount || 0 === $refund_amount ) {
-			throw new Exception( __( 'you must refound a non zero amount' ) );
+			throw new WC_Stancer_Exception( __( 'you must refound a non zero amount' ) );
 		}
-		$stancer_payment = WC_Stancer_Payment::get_payment( $order, Stancer\Payment\Status::TO_CAPTURE );
+		$stancer_payment = WC_Stancer_Payment::find( $order );
 		$stancer_payment_api = new Stancer\Payment( $stancer_payment->payment_id );
 		try {
 			$stancer_payment_api->refund( (int) ( $refund_amount ) );
 		} catch ( Stancer\Exceptions\InvalidAmountException $e ) {
-			throw new Exception(
+			throw new WC_Stancer_Exception(
 				sprintf(
 					// translators: %1f: refunded payment sums. %3s: the currency of the transaction, %2f: the amount still refundable.
 					__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
