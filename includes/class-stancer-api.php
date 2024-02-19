@@ -95,10 +95,9 @@ class WC_Stancer_Api {
 	 * @return int
 	 */
 	public static function prepare_amount( $amount ) {
-		$price_decimals = wc_get_price_decimals();
-		$price_multiplier = pow( 10, $price_decimals );
+		// /!\ We cannot relie on woo formatting methods! like  wc_get_price_decimals()
 
-		return (int) (string) ( $amount * $price_multiplier );
+		return (int) (string) ( $amount * 100 );
 	}
 
 	/**
