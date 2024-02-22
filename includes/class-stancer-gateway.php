@@ -680,10 +680,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				// We can not mark the payment failed in the API.
 				$status = Stancer\Payment\Status::FAILED;
 			}
-		} else {
-			if ( ! $status && $api_card ) {
-				$status = Stancer\Payment\Status::CAPTURE;
-			}
+		} elseif ( ! $status && $api_card ) {
+			$status = Stancer\Payment\Status::CAPTURE;
 		}
 
 		if ( ! empty( $status ) ) {
