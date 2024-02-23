@@ -146,17 +146,17 @@ class WC_Stancer_Api {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Stancer\Payment $object Object to send.
+	 * @param Stancer\Payment $obj Object to send.
 	 *
 	 * @return bool
 	 */
-	public static function sent_object_to_api( $object ): bool {
-		if ( $object->isNotModified() ) {
+	public static function sent_object_to_api( $obj ): bool {
+		if ( $obj->isNotModified() ) {
 			return true;
 		}
 
 		try {
-			$object->send();
+			$obj->send();
 		} catch ( Exception $exception ) {
 			$log = $exception->getMessage();
 
