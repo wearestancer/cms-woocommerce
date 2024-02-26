@@ -136,14 +136,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$mode = $this->api_config->mode;
 		$is_setting_page = ( null !== $page && 'wc-settings' === $page );
 		// translators: %1$s the mode in which our API is (test mode or Live mode).
-		$message = sprintf( __( 'You are on %1$s mode but your %1$s keys are not properly setup. ', 'stancer' ), $mode );
+		$message = sprintf( __( 'You are on %1$s mode but your %1$s keys are not properly setup.', 'stancer' ), $mode );
 		if ( $this->api_config->is_test_mode() ) {
 			$notice_type = 'warning is-dismissible';
 			$display = $is_setting_page;
 		} else {
 			$notice_type = 'error';
 			if ( ! $is_setting_page ) {
-				$message = __( 'Your clients cannot pay with Stancer ! Setup your API key now!', 'stancer' );
+				$message = __( 'Payments can not be done with Stancer. Please setup your API keys.', 'stancer' );
 			}
 			$display = true;
 		}
