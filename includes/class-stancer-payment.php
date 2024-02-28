@@ -158,7 +158,6 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		}
 
 		return $stancer_payment;
-
 	}
 
 	/**

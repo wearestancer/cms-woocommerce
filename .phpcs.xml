@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <ruleset name="PHPCS ruleset">
-  <config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
-
   <file>includes/</file>
   <file>stancer.php</file>
 
@@ -24,5 +22,7 @@
     <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
     <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
     <exclude name="WordPress.WhiteSpace.SemicolonSpacing.Incorrect" />
+
+    <exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
   </rule>
 </ruleset>

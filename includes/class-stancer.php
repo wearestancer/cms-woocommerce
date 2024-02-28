@@ -179,7 +179,7 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	private function load_filters() {
-		add_filter( 'woocommerce_payment_gateways', array( $this, 'add_gateway' ) );
+		add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateway' ] );
 	}
 
 	/**
@@ -189,7 +189,6 @@ class WC_Stancer {
 	 */
 	public function load_gateway() {
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
-			require_once plugin_dir_path( __DIR__ ) . 'includes/class-stancer-config.php';
 			require_once plugin_dir_path( __DIR__ ) . 'includes/class-stancer-gateway.php';
 		}
 	}
@@ -203,7 +202,7 @@ class WC_Stancer {
 		wp_enqueue_script(
 			$this->plugin_name,
 			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
-			array(),
+			[],
 			$this->version,
 			true
 		);

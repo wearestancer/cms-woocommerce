@@ -146,7 +146,7 @@ class WC_Stancer_Config {
 				$api_config->setHost( $this->host );
 			}
 
-			// phpcs:disable WordPress.WP.CapitalPDangit.Misspelled
+			// phpcs:disable WordPress.WP.CapitalPDangit.MisspelledInText
 			$api_config->addAppData( 'libstancer-woocommerce', STANCER_WC_VERSION );
 			$api_config->addAppData( 'woocommerce', WC_VERSION );
 			$api_config->addAppData( 'wordpress', get_bloginfo( 'version' ) );

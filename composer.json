@@ -18,13 +18,15 @@
             "includes/"
         ]
     },
+    "scripts": {
+        "phpstan": "./vendor/bin/phpstan"
+    },
     "require": {
         "stancer/stancer": "^1.0"
     },
     "require-dev": {
-        "php-stubs/woocommerce-stubs": "^7.3",
+        "php-stubs/woocommerce-stubs": "^8.0",
         "simplesecurewp/php-stubs-woocommerce-subscriptions": "dev-main",
-        "squizlabs/php_codesniffer": "^3.7",
-        "wp-coding-standards/wpcs": "^2.3"
+        "wp-coding-standards/wpcs": "^3.0"
     }
 }

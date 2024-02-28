@@ -10,7 +10,7 @@ workflow:
 
 variables:
   DOCKER_REGISTRY: wearestancer
-  PHP_VERSION: "7.4"
+  PHP_VERSION: "8.1"
 
 
 .svn-publish:
@@ -63,7 +63,6 @@ phpcs:
     - composer --version
 
     - composer install
-    - ./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs/WordPress,vendor/wp-coding-standards/wpcs/WordPress-Core,vendor/wp-coding-standards/wpcs/WordPress-Docs,vendor/wp-coding-standards/wpcs/WordPress-Extra
 
   script:
     - ./vendor/bin/phpcs || true

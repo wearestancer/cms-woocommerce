@@ -54,7 +54,7 @@ trait WC_Stancer_Refunds_Traits {
 				return true;
 			default:
 				return false;
-		};
+		}
 	}
 
 	/**
@@ -72,10 +72,10 @@ trait WC_Stancer_Refunds_Traits {
 		$wc_order = wc_get_order( $order_id );
 		if ( $this->api_config->is_not_configured() ) {
 			WC()->session->set( 'stancer_error_payment', __( 'The module is not correctly configured.', 'stancer' ) );
-			throw new Exception( __( 'The module is not correctly configured', 'stancer' ) );
+			throw new Exception( esc_html( __( 'The module is not correctly configured', 'stancer' ) ) );
 		}
 
-		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) ( $amount * 100 ) : null, $reason );
+		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
 		$currency = $stancer_payment->currency;
 		// translators: %1$.2f the amount refunded,  %2s the currency of the payment.
@@ -86,11 +86,12 @@ trait WC_Stancer_Refunds_Traits {
 		} else {
 			$text .= __( 'the order has been fully refunded.', 'stancer' );
 		}
+		if ( '' !== $reason ) {
+			$text .= __( 'the refund was made because:' ) . $reason;
+		}
 
 		$wc_order->add_order_note( $text );
 
 		return true;
 	}
-
-
 }
