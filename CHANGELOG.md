@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Some errors may not be catch by the module
-- Some errors on payment receipt.
+- Some errors on payment receipt (CMS-50)
 
 
 ## [1.0.0] - 2023-04-18
