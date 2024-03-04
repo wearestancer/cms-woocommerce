@@ -96,10 +96,11 @@ class WC_Stancer_Config {
 	/**
 	 * Enable refund
 	 *
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 * @var bool
 	 */
 	public $refund;
+
 	/**
 	 * Constructor.
 	 *
@@ -112,11 +113,11 @@ class WC_Stancer_Config {
 		$this->description = $settings['payment_description'] ?? '';
 		$this->host = $settings['host'];
 		$this->mode = Stancer\Config::TEST_MODE;
-		$this->page_type = $settings['page_type'] ?? 'pip';
-		$this->pprod = $settings['api_live_public_key'] ?? '';
-		$this->ptest = $settings['api_test_public_key'] ?? '';
-		$this->sprod = $settings['api_live_secret_key'] ?? '';
-		$this->stest = $settings['api_test_secret_key'] ?? '';
+		$this->page_type = $settings['page_type'];
+		$this->pprod = $settings['api_live_public_key'];
+		$this->ptest = $settings['api_test_public_key'];
+		$this->sprod = $settings['api_live_secret_key'];
+		$this->stest = $settings['api_test_secret_key'];
 		$this->refund = 'yes' === $settings['enable_refund'] ? true : false;
 
 		if ( ! empty( $settings['test_mode'] ) && 'no' === $settings['test_mode'] ) {

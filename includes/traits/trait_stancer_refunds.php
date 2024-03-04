@@ -12,12 +12,12 @@
  * @subpackage stancer/includes/traits
  */
 
-use Stancer\Payment\Status;
+use Stancer;
 
 /**
  * Stancer Refunds traits.
  *
- * @since 1.1.0
+ * @since 1.2.0
  *
  * @package stancer
  * @subpackage stancer/includes/traits
@@ -46,15 +46,12 @@ trait WC_Stancer_Refunds_Traits {
 		}
 		$api_payment = new Stancer\Payment( $transaction_id );
 
-		// Here we should use a match when we switch to PHP 8.
-		switch ( $api_payment->getStatus() ) {
-			case Stancer\Payment\Status::TO_CAPTURE
-			|| Stancer\Payment\Status::CAPTURED
-			|| \Stancer\Payment\Status::CAPTURED:
-				return true;
-			default:
-				return false;
-		}
+		$status = [
+			Stancer\Payment\Status::TO_CAPTURE,
+			Stancer\Payment\Status::CAPTURED,
+			Stancer\Payment\Status::CAPTURED,
+		];
+		return in_array( $api_payment->getStatus(), $status, true );
 	}
 
 	/**
@@ -78,19 +75,30 @@ trait WC_Stancer_Refunds_Traits {
 		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
 		$currency = $stancer_payment->currency;
-		// translators: %1$.2f the amount refunded,  %2s the currency of the payment.
-		$text = sprintf( __( 'The refund of %1$.2f %2$s has been completed via Stancer, ', 'stancer' ), $amount, strtoupper( $currency ) );
 		if ( 0 !== $refundable ) {
-			// translators: %1$.2f the amount total after all the refund, %2$s the currency.
-			$text .= sprintf( __( 'the Stancer payment is now equal to %1$.2f %2$s.', 'stancer' ), ( $refundable / 100 ), strtoupper( $currency ) );
+			$text = sprintf(
+				// translators: "%1$.2f": the amount refunded. "%2$s": the currency "%3$.2f": the amount total after all the refund.
+				__(
+					'The payment has been partially refunded of %1$.2f %2$s, the Stancer payment is now of: %3$.2f %2$s.',
+					'stancer'
+				),
+				$amount,
+				strtoupper( $currency ),
+				( $refundable / 100 )
+			);
 		} else {
-			$text .= __( 'the order has been fully refunded.', 'stancer' );
+			$text = sprintf(
+				// translators: "%1$.2f": the amount refunded. "%2$s": the currency.
+				__( 'The payment has been fully refunded of %1$.2f %2$s via Stancer ', 'stancer' ),
+				$amount,
+				strtoupper( $currency )
+			);
 		}
-		if ( '' !== $reason ) {
-			$text .= __( 'the refund was made because:' ) . $reason;
-		}
-
 		$wc_order->add_order_note( $text );
+		if ( '' !== $reason ) {
+			// translators: "%1$s": the reason for the refund process.
+			$wc_order->add_order_note( sprintf( __( 'the refund was made because: %1$s' ), $reason ) );
+		}
 
 		return true;
 	}

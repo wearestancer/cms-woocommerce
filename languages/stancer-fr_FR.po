@@ -148,7 +148,6 @@ msgid "Payment option description"
 msgstr "Description de l’option de paiement"
 
 #: includes/class-stancer-gateway.php
-#, fuzzy
 msgid "Enable Refund"
 msgstr "Activer le remboursement"
 
@@ -366,7 +365,6 @@ msgstr ""
 "Votre transaction de renouvellement d’abonnement a été soumise avec succès."
 
 #: includes/traits/trait_stancer_refunds.php
-#, fuzzy
 msgid "The module is not correctly configured"
 msgstr "Le module n'est pas correctement configuré."
 

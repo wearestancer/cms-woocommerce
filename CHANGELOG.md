@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Added
+- Refund option to woocommerce back-office
+
+
 ## [1.1.2] - 2024-02-19
 
 ### Fixed
@@ -23,12 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically create an archive for every merge request (CMS-88)
 - New integration mode "Inside the page"
 - Support [Woo Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
-- Refund option to woocommerce back-office
 
 ### Changed
 - iFrame security (CMS-66)
 - Optimize autoloader
-
 
 ### Removed
 - `timeout` setting, will be reintegrated later

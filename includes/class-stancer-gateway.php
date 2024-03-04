@@ -87,8 +87,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->init_subscription();
 	}
 
-
-
 	/**
 	 * Create payment.
 	 *

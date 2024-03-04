@@ -12,8 +12,6 @@
  * @subpackage stancer/includes
  */
 
-use Stancer\Payment;
-
 /**
  * Stancer API.
  *
@@ -147,7 +145,7 @@ class WC_Stancer_Api {
 	/**
 	 * Send Refund to our api.
 	 *
-	 * @since 1.1.0
+	 * @since 1.2.0
 	 *
 	 * @param WC_Order $order Wc order.
 	 * @param float|null $refund_amount amount to be refund in cents.
@@ -171,7 +169,7 @@ class WC_Stancer_Api {
 			throw new WC_Stancer_Exception(
 				esc_html(
 					sprintf(
-						// translators: %1f: refunded payment sums. %3s: the currency of the transaction, %2f: the amount still refundable.
+						// translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
 						__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
 						$refund_amount / 100,
 						$stancer_payment_api->getRefundableAmount() / 100,
@@ -184,27 +182,30 @@ class WC_Stancer_Api {
 	}
 
 
-		/**
-		 * Send payment to API.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param Stancer\Payment $obj Object to send.
-		 *
-		 * @return bool
-		 */
+	/**
+	 * Send payment to API.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param Stancer\Payment $obj Object to send.
+	 *
+	 * @return bool
+	 */
 	public static function sent_object_to_api( $obj ): bool {
 		if ( $obj->isNotModified() ) {
 			return true;
 		}
+
 		try {
 			$obj->send();
 		} catch ( Exception $exception ) {
 			$log = $exception->getMessage();
+
 			if ( ! empty( $log ) ) {
 				if ( class_exists( 'WC_Logger' ) ) {
 					wc_get_logger()->debug( 'Stancer --- ' . $log );
 				}
+
 				return false;
 			}
 		}
