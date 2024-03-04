@@ -88,7 +88,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		add_action( 'admin_notices', [ $this, 'display_error_key' ] );
 	}
 
-
 	/**
 	 * Create payment.
 	 *
@@ -131,26 +130,38 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( $this->api_config->is_configured() ) {
 			return;
 		}
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		$page = $_GET['page'];
+		$page = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$mode = $this->api_config->mode;
-		$is_setting_page = ( null !== $page && 'wc-settings' === $page );
+		$is_setting_page = ( is_null( $page ) && 'wc-settings' === $page );
 		// translators: %1$s the mode in which our API is (test mode or Live mode).
 		$message = sprintf( __( 'You are on %1$s mode but your %1$s keys are not properly setup.', 'stancer' ), $mode );
+
 		if ( $this->api_config->is_test_mode() ) {
-			$notice_type = 'warning is-dismissible';
+			$class[] = 'notice-warning';
+			$class[] = 'is-dismissible';
 			$display = $is_setting_page;
 		} else {
-			$notice_type = 'error';
+			$class[] = 'notice-error';
 			if ( ! $is_setting_page ) {
 				$message = __( 'Payments can not be done with Stancer. Please setup your API keys.', 'stancer' );
 			}
 			$display = true;
 		}
-		$class = 'stancer-key-notice notice notice-' . $notice_type;
+
+		$class[] = 'stancer-key-notice';
+		$class[] = 'notice';
 		$url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
 		$urlname = __( 'Stancer plugin is not properly configured.', 'stancer' );
-		$display ? printf( '<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>', esc_attr( $class ), esc_html( $message ), esc_attr( $url ), esc_html( $urlname ) ) : '';
+		if ( $display ) {
+			printf(
+				'<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>',
+				esc_attr( implode( ' ', $class ) ),
+				esc_html( $message ),
+				esc_attr( $url ),
+				esc_html( $urlname )
+			);
+		}
+
 	}
 
 	/**
@@ -556,7 +567,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
 			[],
 			STANCER_ASSETS_VERSION,
-			true
+			true,
 		);
 
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );

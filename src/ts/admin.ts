@@ -12,11 +12,7 @@ const liveKeys: Keys = [
   document.getElementById(prefix + '_api_live_secret_key') as HTMLInputElement,
 ];
 
-const requireKey = (keys :Keys)=>{
-  keys.map((key)=>key.setAttribute('required','required'));
-};
-const unRequireKey = (keys :Keys)=>{
-  keys.map((key)=>key.removeAttribute('required'));
-};
+const requireKey = (keys: Keys) => keys.map((key) => key.setAttribute('required','required'));
+const unRequireKey = (keys: Keys) => keys.map((key) => key.removeAttribute('required'));
 
 testMode?.addEventListener('input',() => testMode.checked ? unRequireKey(liveKeys) : requireKey(liveKeys));

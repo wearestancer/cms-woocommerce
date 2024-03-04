@@ -11,34 +11,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: $[first-commit-date]\n"
 "PO-Revision-Date: $[last-commit-date]\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: stancer\n"
 
 #. Plugin Name of the plugin
 #. Author of the plugin
+#: stancer.php
 msgid "Stancer"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: stancer.php
 msgid "https://gitlab.com/wearestancer/cms/woocommerce"
 msgstr ""
 
 #. Description of the plugin
+#: stancer.php
 #: includes/class-stancer-gateway.php
 msgid "Simple payment solution at low prices."
 msgstr ""
 
 #. Author URI of the plugin
+#: stancer.php
 msgid "https://www.stancer.com/"
 msgstr ""
 
 #. translators: %1$s the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
-msgid "You are on %1$s mode but your %1$s keys are not properly setup. "
+msgid "You are on %1$s mode but your %1$s keys are not properly setup."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Your clients cannot pay with Stancer ! Setup your API key now!"
+msgid "Payments can not be done with Stancer. Please setup your API keys."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
