@@ -130,7 +130,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( $this->api_config->is_configured() ) {
 			return;
 		}
-		$page = $_GET['page'] ?? null ; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$page = $_GET['page'] ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$mode = $this->api_config->mode;
 		$is_setting_page = ( ! is_null( $page ) && 'wc-settings' === $page );
 		// translators: %1$s the mode in which our API is (test mode or Live mode).
