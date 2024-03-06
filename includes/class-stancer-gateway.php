@@ -132,7 +132,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 		$page = $_GET['page']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$mode = $this->api_config->mode;
-		$is_setting_page = ( is_null( $page ) && 'wc-settings' === $page );
+		$is_setting_page = ( ! is_null( $page ) && 'wc-settings' === $page );
 		// translators: %1$s the mode in which our API is (test mode or Live mode).
 		$message = sprintf( __( 'You are on %1$s mode but your %1$s keys are not properly setup.', 'stancer' ), $mode );
 
