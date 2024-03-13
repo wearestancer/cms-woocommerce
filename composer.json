@@ -15,16 +15,22 @@
     },
     "autoload": {
         "classmap": [
-            "includes/"
+            "includes/",
+            "vendor-prefixer/"
         ]
     },
     "scripts": {
-        "phpstan": "./vendor/bin/phpstan"
+        "after:scoping":"bash ./scripts/clean-after-archives.sh && composer require stancer/stancer:^1.0",
+        "phpstan": "./vendor/bin/phpstan",
+        "prefix-stancer": "bash ./scripts/class-prefixer.sh",
+        "prep-vendor": "vendor/bin/php-scoper add-prefix -nf && composer remove stancer/stancer",
+        "scope:dependency": "composer run prep-vendor && composer run prefix-stancer && composer install --no-dev --optimize-autoloader"
     },
     "require": {
         "stancer/stancer": "^1.0"
     },
     "require-dev": {
+        "humbug/php-scoper": "^0.18.7",
         "php-stubs/woocommerce-stubs": "^8.0",
         "simplesecurewp/php-stubs-woocommerce-subscriptions": "dev-main",
         "wp-coding-standards/wpcs": "^3.0"

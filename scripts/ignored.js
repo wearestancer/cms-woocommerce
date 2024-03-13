@@ -20,3 +20,7 @@ module.exports.push("reports/**");
 // Rep stuff
 module.exports.push("**/*.pot");
 module.exports.push("CHANGELOG.md");
+
+//scoper stuff
+module.exports.push('scoper.**');
+module.exports.push('../*.old');
