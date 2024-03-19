@@ -12,6 +12,8 @@
  * @subpackage stancer/includes
  */
 
+use Stancer;
+
 /**
  * Payment table representation.
  *

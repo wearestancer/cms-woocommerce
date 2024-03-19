@@ -12,6 +12,7 @@
  * @subpackage stancer/includes
  */
 
+use Stancer;
 /**
  * Stancer API.
  *

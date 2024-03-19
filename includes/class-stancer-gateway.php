@@ -12,6 +12,8 @@
  * @subpackage stancer/includes
  */
 
+use Stancer;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -99,6 +101,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function create_api_payment( $order, $card_id = null ) {
 		$redirect = $order->get_checkout_payment_url( true );
 		$reload = true;
+
 		$api_payment = $this->api->send_payment( $order, $card_id );
 
 		if ( $api_payment && $api_payment->return_url ) {
