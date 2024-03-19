@@ -12,7 +12,7 @@
     "archive": "env node ./scripts/zip.js",
     "build:archive": "pnpm run build:plugin && composer run scope:dependency && pnpm run archive && composer run after:scoping",
     "build:assets": "gulp build",
-    "build:plugin": "rm -rf vendor && composer install --no-dev && pnpm run build:assets && pnpm run messages:compile && pnpm run versions",
+    "build:plugin": "pnpm run build:assets && pnpm run messages:compile && pnpm run versions",
     "messages": "pnpm run messages:discover && pnpm run messages:merge",
     "messages:discover": "env node ./scripts/messages/discover.js",
     "messages:compile": "env node ./scripts/messages/compile.js",
