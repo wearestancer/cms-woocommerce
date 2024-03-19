@@ -21,8 +21,7 @@ return [
 	'prefix' => 'Stancer\\Scoped\\Isolated',
 	'output-dir' => 'vendor-prefixer',
 	'finders' => [
-		Finder::create()->files()->in( './vendor/psr' ),
-		Finder::create()->files()->in( './vendor/stancer/stancer' ),
+		Finder::create()->files()->in( './vendor/' ),
 		Finder::create()->append( [ './composer.json' ] ),
 	],
 ];

@@ -23,4 +23,4 @@ module.exports.push("CHANGELOG.md");
 
 //scoper stuff
 module.exports.push('scoper.**');
-module.exports.push('../*.old');
+module.exports.push('**/*.old');

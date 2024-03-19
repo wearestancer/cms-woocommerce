@@ -1,6 +1,7 @@
 
 # composer
 vendor/
+*.phar
 
 # node
 node_modules/
@@ -16,8 +17,7 @@ reports/
 # Generated content
 public/
 src/scss/_icons.scss
-*.mo
-*.zip
-
 vendor-prefixer/**
 !**/.gitkeep
+*.mo
+*.zip
