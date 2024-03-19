@@ -12,7 +12,7 @@ curl -Lso scoper.phar.asc "https://github.com/humbug/php-scoper/releases/downloa
 gpg --quiet --keyserver hkps://keys.openpgp.org --recv-keys 74A754C9778AA03AA451D1C1A000F927D67184EE
 
 # Check that the signature matches
-gpg --quiet --verify scoper.phar.asc scoper.phar
+gpg --quiet --verify scoper.phar.asc scoper.phar 2>/dev/null
 result=$?
 
 # Cleaning
