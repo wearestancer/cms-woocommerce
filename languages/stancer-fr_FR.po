@@ -17,21 +17,39 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Author of the plugin
+#: stancer.php
 msgid "Stancer"
 msgstr "Stancer"
 
 #. Plugin URI of the plugin
+#: stancer.php
 msgid "https://gitlab.com/wearestancer/cms/woocommerce"
 msgstr "https://gitlab.com/wearestancer/cms/woocommerce"
 
 #. Description of the plugin
-#: includes/class-stancer-gateway.php
+#: stancer.php includes/class-stancer-gateway.php
 msgid "Simple payment solution at low prices."
 msgstr "La solution de paiement simple à petit prix."
 
 #. Author URI of the plugin
+#: stancer.php
 msgid "https://www.stancer.com/"
 msgstr "https://www.stancer.com/fr/"
+
+#. translators: %1$s the mode in which our API is (test mode or Live mode).
+#: includes/class-stancer-gateway.php
+msgid "You are on %1$s mode but your %1$s keys are not properly setup."
+msgstr ""
+"Vous êtes en mode %1$s mais les clefs %1$s ne sont pas correctement rentrées."
+
+#: includes/class-stancer-gateway.php
+msgid "Payments can not be done with Stancer. Please setup your API keys."
+msgstr ""
+"Vos clients ne peuvent pas payer avec Stancer, configurez vos clés d'API"
+
+#: includes/class-stancer-gateway.php
+msgid "Stancer plugin is not properly configured."
+msgstr "Le module Stancer n'est pas correctement configuré."
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
 #: includes/class-stancer-gateway.php subscription/change-payment-method.php
