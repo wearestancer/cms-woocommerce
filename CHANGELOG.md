@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-### Fixed
-- Scoping dependencies to remove conflicts.
 ### Added
-- Refund option to woocommerce back-office
+- Alert is shown if API keys are missing (CMS-33)
+- Refund option to Woo back-office (CMS-70)
+
+### Fixed
+- Scoping dependencies to prevent conflicts (CMS-109)
 
 
 ## [1.1.2] - 2024-02-19
