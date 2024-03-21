@@ -266,7 +266,6 @@ class WC_Stancer {
 					'An authorization request without an amount will be made in order to validate the new method.',
 					'stancer',
 				),
-				'enable_refund' => false,
 			];
 
 			foreach ( $new_defaults as $key => $value ) {

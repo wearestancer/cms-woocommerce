@@ -386,13 +386,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'text',
 		];
 
-		$inputs['enable_refund'] = [
-			'default' => 'yes',
-			'label' => __( 'Enable Refund', 'stancer' ),
-			'title' => __( 'Refund', 'stancer' ),
-			'type' => 'checkbox',
-		];
-
 		$inputs['payment_option_logo'] = [
 			'default' => 'all-schemes-stancer',
 			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),

@@ -30,7 +30,7 @@ trait WC_Stancer_Refunds_Traits {
 	 * @return boolean
 	 */
 	public function can_refund_order( $order ) {
-		if ( ! $this->api_config->refund || $order->get_payment_method( 'view' ) !== $this->id ) {
+		if ( $order->get_payment_method( 'view' ) !== $this->id ) {
 			return false;
 		}
 		if ( ! $order->payment_complete() ) {
