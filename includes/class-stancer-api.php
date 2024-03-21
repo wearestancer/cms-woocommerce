@@ -22,6 +22,7 @@ use Stancer;
  * @subpackage stancer/includes
  */
 class WC_Stancer_Api {
+
 	/**
 	 * Stancer API configuration.
 	 *
@@ -135,12 +136,52 @@ class WC_Stancer_Api {
 				return null;
 			}
 
-			$api_cutomer = $api_payment->customer;
-			WC_Stancer_Customer::save_from( $api_cutomer );
+			$api_customer = $api_payment->customer;
+			WC_Stancer_Customer::save_from( $api_customer );
 		}
 
 		return $api_payment;
 	}
+
+	/**
+	 * Send Refund to our api.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param WC_Order $order Wc order.
+	 * @param float|null $refund_amount amount to be refund in cents.
+	 * @return Stancer\Payment
+	 * @throws WC_Stancer_Exception Check that the refund amount is above 50 cents.
+	 * @throws WC_Stancer_Exception Check for minimum sum before accepting refund or showing an error Message to the User.
+	 * @throws WC_Stancer_Exception Catch all api exception and translate it for users.
+	 */
+	public function send_refund( WC_Order $order, ?int $refund_amount ): Stancer\Payment {
+		if ( ! $refund_amount || 0 === $refund_amount ) {
+			throw new WC_Stancer_Exception( esc_html( __( 'You cannot refund a null amount', 'stancer' ) ) );
+		}
+		if ( $refund_amount < 50 ) {
+			throw new WC_Stancer_Exception( esc_html( __( 'A refund must be above 50 cents', 'stancer' ) ) );
+		}
+		$stancer_payment = WC_Stancer_Payment::find( $order );
+		$stancer_payment_api = new Stancer\Payment( $stancer_payment->payment_id );
+		try {
+			$stancer_payment_api->refund( (int) ( $refund_amount ) );
+		} catch ( Stancer\Exceptions\InvalidAmountException $e ) {
+			throw new WC_Stancer_Exception(
+				esc_html(
+					sprintf(
+						// translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
+						__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
+						$refund_amount / 100,
+						$stancer_payment_api->getRefundableAmount() / 100,
+						$order->get_currency( 'view' ),
+					)
+				)
+			);
+		}
+		return $stancer_payment_api;
+	}
+
 
 	/**
 	 * Send payment to API.
@@ -169,7 +210,6 @@ class WC_Stancer_Api {
 				return false;
 			}
 		}
-
 		return true;
 	}
 }

@@ -28,6 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage stancer/includes
  */
 class WC_Stancer_Gateway extends WC_Payment_Gateway {
+	use WC_Stancer_Refunds_Traits;
 	use WC_Stancer_Subscription_Trait;
 
 	/**
@@ -59,6 +60,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->has_fields = true;
 		$this->method_title = 'Stancer';
 		$this->method_description = __( 'Simple payment solution at low prices.', 'stancer' );
+		$this->supports = [
+			'payments',
+			'refunds',
+		];
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -67,10 +72,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->description = $this->get_option( 'payment_option_description' );
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
-
-		$this->supports = [
-			'products',
-		];
 
 		// Add message on checkout.
 		add_action( 'woocommerce_before_checkout_form', [ $this, 'display_notice' ] );
@@ -107,6 +108,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$api_payment = $this->api->send_payment( $order, $card_id );
 
 		if ( $api_payment && $api_payment->return_url ) {
+			$order->set_transaction_id( $api_payment->getId() );
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
 					'lang' => str_replace( '_', '-', get_locale() ),
@@ -700,7 +702,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		return $this->create_api_payment( $order, $card_id );
 	}
-
 	/**
 	 * Complete order.
 	 *
@@ -777,7 +778,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				WC()->cart->empty_cart();
 
 				// Complete order.
-				$order->payment_complete();
+				$order->payment_complete( $api_payment->getId() );
 
 				$order->add_order_note(
 					sprintf(

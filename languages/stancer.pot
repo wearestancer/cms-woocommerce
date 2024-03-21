@@ -16,27 +16,36 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #. Author of the plugin
-#: stancer.php
 msgid "Stancer"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: stancer.php
 msgid "https://gitlab.com/wearestancer/cms/woocommerce"
 msgstr ""
 
 #. Description of the plugin
-#: stancer.php
 #: includes/class-stancer-gateway.php
 msgid "Simple payment solution at low prices."
 msgstr ""
 
 #. Author URI of the plugin
-#: stancer.php
 msgid "https://www.stancer.com/"
 msgstr ""
 
-#. translators: %1$s the mode in which our API is (test mode or Live mode).
+#: includes/class-stancer-api.php
+msgid "You cannot refund a null amount"
+msgstr ""
+
+#: includes/class-stancer-api.php
+msgid "A refund must be above 50 cents"
+msgstr ""
+
+#. translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
+#: includes/class-stancer-api.php
+msgid "You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s"
+msgstr ""
+
+#. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
 msgstr ""
@@ -252,6 +261,7 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 #: includes/traits/trait-stancer-subscription.php
+#: includes/traits/trait_stancer_refunds.php
 msgid "The module is not correctly configured."
 msgstr ""
 
@@ -312,6 +322,20 @@ msgstr ""
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "Your subscription renewal transaction has been successfully submitted."
+msgstr ""
+
+#: includes/traits/trait_stancer_refunds.php
+msgid "The module is not correctly configured"
+msgstr ""
+
+#. translators: "%1$.2f": the amount refunded. "%2$s": the currency "%3$.2f": the amount total after all the refund.
+#: includes/traits/trait_stancer_refunds.php
+msgid "The payment has been partially refunded of %1$.2f %2$s, the Stancer payment is now of: %3$.2f %2$s."
+msgstr ""
+
+#. translators: "%1$.2f": the amount refunded. "%2$s": the currency.
+#: includes/traits/trait_stancer_refunds.php
+msgid "The payment has been fully refunded of %1$.2f %2$s via Stancer "
 msgstr ""
 
 #: stancer.php

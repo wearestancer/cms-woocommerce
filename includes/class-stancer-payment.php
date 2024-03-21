@@ -123,7 +123,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @param bool $generate_api_payment Do we need to generate a new payment if not already present.
 	 * @param string[] $status Statuses to find.
 	 *
-	 * @return WC_Stancer_Payment
+	 * @return ?WC_Stancer_Payment
 	 */
 	public static function find(
 		WC_Order $order,
