@@ -23,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Stancer gateway.
  *
  * @since 1.0.0
+ * @since 1.2.0 Refund capabality.
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -53,6 +54,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 Refund capabality.
+	 * @since 1.2.0 Display a message on miss configuration with keys.
 	 */
 	public function __construct() {
 		$this->id = 'stancer';
@@ -95,6 +98,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Create payment.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 Our payment identifier is added to the order.
 	 *
 	 * @param WC_Order $order Order.
 	 * @param string|null $card_id Card identifier.
@@ -127,6 +131,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Display notices if the key are not properly setup.
 	 * The way this hook work highly displeases me but the new function exist only since WordPress 6.4.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @return void
 	 */
@@ -411,6 +417,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 New payment description.
 	 * @since 1.1.0 Allow to choose scheme logos.
 	 * @since 1.1.0 Woo Subscriptions method change description.
+	 * @since 1.2.0 Add admin scripts.
 	 *
 	 * @return self
 	 */

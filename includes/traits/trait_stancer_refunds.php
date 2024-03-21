@@ -26,6 +26,8 @@ trait WC_Stancer_Refunds_Traits {
 	/**
 	 * Check if we can refund an order this check is done before showing the stancer button.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @param WC_Order $order the WooCommerce order to be refunded.
 	 * @return boolean
 	 */
@@ -56,6 +58,8 @@ trait WC_Stancer_Refunds_Traits {
 
 	/**
 	 * Process the refund and return the result
+	 *
+	 * @since 1.2.0
 	 *
 	 * @param int $order_id Order id.
 	 * @param float|null $amount the amount of refund asked.
