@@ -131,10 +131,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function display_error_key() {
-
 		if ( $this->api_config->is_configured() ) {
 			return;
 		}
+
 		$page = $_GET['page'] ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$mode = $this->api_config->mode;
 		$is_setting_page = ( ! is_null( $page ) && 'wc-settings' === $page );
@@ -147,16 +147,18 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$display = $is_setting_page;
 		} else {
 			$class[] = 'notice-error';
+			$display = true;
+
 			if ( ! $is_setting_page ) {
 				$message = __( 'Payments can not be done with Stancer. Please setup your API keys.', 'stancer' );
 			}
-			$display = true;
 		}
 
 		$class[] = 'stancer-key-notice';
 		$class[] = 'notice';
 		$url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
 		$urlname = __( 'Stancer plugin is not properly configured.', 'stancer' );
+
 		if ( $display ) {
 			printf(
 				'<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>',
@@ -166,7 +168,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				esc_html( $urlname )
 			);
 		}
-
 	}
 
 	/**
