@@ -189,7 +189,7 @@ class WC_Stancer {
 	 */
 	public function load_gateway() {
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-stancer-gateway.php';
+			require_once plugin_dir_path( __DIR__ ) . 'includes/class-stancer-gateway.php';
 		}
 	}
 

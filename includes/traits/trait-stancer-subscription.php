@@ -12,7 +12,7 @@
  * @subpackage stancer/includes/traits
  */
 
-use Stancer\Payment\Status;
+use Stancer;
 
 /**
  * Stancer subscription.
@@ -225,9 +225,9 @@ trait WC_Stancer_Subscription_Trait {
 			}
 
 			$allowed_status = [
-				Status::CAPTURE_SENT,
-				Status::CAPTURED,
-				Status::TO_CAPTURE,
+				Stancer\Payment\Status::CAPTURE_SENT,
+				Stancer\Payment\Status::CAPTURED,
+				Stancer\Payment\Status::TO_CAPTURE,
 			];
 
 			if ( in_array( $api_payment->status, $allowed_status, true ) ) {

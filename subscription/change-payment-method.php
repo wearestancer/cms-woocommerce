@@ -12,6 +12,8 @@
  * @subpackage stancer/includes
  */
 
+use Stancer;
+
 define( 'DOING_AJAX', true );
 
 header( 'Content-Type: application/json' );

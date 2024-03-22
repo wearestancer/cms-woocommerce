@@ -12,6 +12,8 @@
  * @subpackage stancer/includes
  */
 
+use Stancer;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -21,11 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Stancer gateway.
  *
  * @since 1.0.0
+ * @since 1.2.0 Refund capabality.
  *
  * @package stancer
  * @subpackage stancer/includes
  */
 class WC_Stancer_Gateway extends WC_Payment_Gateway {
+	use WC_Stancer_Refunds_Traits;
 	use WC_Stancer_Subscription_Trait;
 
 	/**
@@ -50,6 +54,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Constructor.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 Refund capabality.
+	 * @since 1.2.0 Display a message on miss configuration with keys.
 	 */
 	public function __construct() {
 		$this->id = 'stancer';
@@ -57,6 +63,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->has_fields = true;
 		$this->method_title = 'Stancer';
 		$this->method_description = __( 'Simple payment solution at low prices.', 'stancer' );
+		$this->supports = [
+			'payments',
+			'refunds',
+		];
 
 		$this->init_form_fields();
 		$this->init_settings();
@@ -65,10 +75,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->description = $this->get_option( 'payment_option_description' );
 		$this->api_config = new WC_Stancer_Config( $this->settings );
 		$this->api = new WC_Stancer_Api( $this->api_config );
-
-		$this->supports = [
-			'products',
-		];
 
 		// Add message on checkout.
 		add_action( 'woocommerce_before_checkout_form', [ $this, 'display_notice' ] );
@@ -84,12 +90,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		$this->dynamic_title();
 		$this->init_subscription();
+
+		add_action( 'admin_notices', [ $this, 'display_error_key' ] );
 	}
 
 	/**
 	 * Create payment.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.0 Our payment identifier is added to the order.
 	 *
 	 * @param WC_Order $order Order.
 	 * @param string|null $card_id Card identifier.
@@ -99,9 +108,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	public function create_api_payment( $order, $card_id = null ) {
 		$redirect = $order->get_checkout_payment_url( true );
 		$reload = true;
+
 		$api_payment = $this->api->send_payment( $order, $card_id );
 
 		if ( $api_payment && $api_payment->return_url ) {
+			$order->set_transaction_id( $api_payment->getId() );
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
 					'lang' => str_replace( '_', '-', get_locale() ),
@@ -115,6 +126,54 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
 		];
+	}
+
+	/**
+	 * Display notices if the key are not properly setup.
+	 * The way this hook work highly displeases me but the new function exist only since WordPress 6.4.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return void
+	 */
+	public function display_error_key() {
+		if ( $this->api_config->is_configured() ) {
+			return;
+		}
+
+		$page = $_GET['page'] ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$mode = $this->api_config->mode;
+		$is_setting_page = ( ! is_null( $page ) && 'wc-settings' === $page );
+		// translators: "%1$s": the mode in which our API is (test mode or Live mode).
+		$message = sprintf( __( 'You are on %1$s mode but your %1$s keys are not properly setup.', 'stancer' ), $mode );
+
+		if ( $this->api_config->is_test_mode() ) {
+			$class[] = 'notice-warning';
+			$class[] = 'is-dismissible';
+			$display = $is_setting_page;
+		} else {
+			$class[] = 'notice-error';
+			$display = true;
+
+			if ( ! $is_setting_page ) {
+				$message = __( 'Payments can not be done with Stancer. Please setup your API keys.', 'stancer' );
+			}
+		}
+
+		$class[] = 'stancer-key-notice';
+		$class[] = 'notice';
+		$url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
+		$urlname = __( 'Stancer plugin is not properly configured.', 'stancer' );
+
+		if ( $display ) {
+			printf(
+				'<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>',
+				esc_attr( implode( ' ', $class ) ),
+				esc_html( $message ),
+				esc_attr( $url ),
+				esc_html( $urlname )
+			);
+		}
 	}
 
 	/**
@@ -358,6 +417,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 New payment description.
 	 * @since 1.1.0 Allow to choose scheme logos.
 	 * @since 1.1.0 Woo Subscriptions method change description.
+	 * @since 1.2.0 Add admin scripts.
 	 *
 	 * @return self
 	 */
@@ -515,6 +575,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			[],
 			STANCER_ASSETS_VERSION,
 		);
+		wp_enqueue_script(
+			'stancer-admin-ts',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
+			[],
+			STANCER_ASSETS_VERSION,
+			true,
+		);
 
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
 
@@ -643,7 +710,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		return $this->create_api_payment( $order, $card_id );
 	}
-
 	/**
 	 * Complete order.
 	 *
@@ -680,10 +746,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				// We can not mark the payment failed in the API.
 				$status = Stancer\Payment\Status::FAILED;
 			}
-		} else {
-			if ( ! $status && $api_card ) {
-				$status = Stancer\Payment\Status::CAPTURE;
-			}
+		} elseif ( ! $status && $api_card ) {
+			$status = Stancer\Payment\Status::CAPTURE;
 		}
 
 		if ( ! empty( $status ) ) {
@@ -722,7 +786,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				WC()->cart->empty_cart();
 
 				// Complete order.
-				$order->payment_complete();
+				$order->payment_complete( $api_payment->getId() );
 
 				$order->add_order_note(
 					sprintf(
@@ -741,5 +805,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			default:
 				wp_safe_redirect( wc_get_checkout_url() );
 		}
+
+		exit();
 	}
 }
