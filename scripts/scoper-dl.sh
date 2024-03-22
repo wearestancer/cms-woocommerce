@@ -2,7 +2,7 @@
 
 set -eu
 
-scoper_version="0.17.5" # Last version supporting PHP 8.1 with release artifacts
+scoper_version="0.17.5" # Last version supporting PHP 7.4 with release artifacts
 
 # Exit now if the command exists
 exists=$(which scoper &>/dev/null; echo $?)
