@@ -19,7 +19,6 @@ use Isolated\Symfony\Component\Finder\Finder;
 
 return [
 	'prefix' => 'Stancer\\Scoped\\Isolated',
-	'output-dir' => 'vendor-prefixer',
 	'finders' => [
 		Finder::create()->files()->in( './vendor/' ),
 		Finder::create()->append( [ './composer.json' ] ),

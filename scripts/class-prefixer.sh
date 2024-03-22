@@ -11,3 +11,6 @@ files=$(grep -REl '^use Stancer;$' --exclude-dir=node_modules/ --exclude-dir=ven
 for file in $files; do
   sed -i'.old' -e 's/use Stancer;/use Stancer\\Scoped\\Isolated\\Stancer;/g' "$file"
 done
+
+rm -rf vendor-prefixer
+mv build vendor-prefixer
