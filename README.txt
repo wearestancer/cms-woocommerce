@@ -86,6 +86,9 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
+= Version 1.2.1 =
+* Fix installation on PHP 7.4 (please upgrade your PHP version)
+
 = Version 1.2.0 =
 * Allow to refund payments in the shop
 
