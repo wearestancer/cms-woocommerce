@@ -656,17 +656,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'label' => __( 'Page type', 'stancer' ),
 			'title' => __( 'Page type', 'stancer' ),
 			'options' => [
-				'iframe' => __( 'Popup (Deprecated)', 'stancer' ),
 				'pip' => __( 'Inside the page', 'stancer' ),
 				'redirect' => __( 'Redirect to an external page', 'stancer' ),
 			],
 			'type' => 'select',
 		];
-
-		if ( array_key_exists( 'page_type', $this->settings ) && 'iframe' === $this->settings['page_type'] ) {
-			$description = __( 'Popup option is deprecated and will be removed in a future update.', 'stancer' );
-			$inputs['page_type'] = array_merge( $inputs['page_type'], [ 'description' => $description ] );
-		}
 
 		$desc_auth_limit = __(
 			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',
@@ -785,10 +779,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		};
 		echo esc_html( $payment_data['message'] );
 		switch ( $page_type ) {
-			case 'iframe':
-				$add_script( 'popup' );
-				break;
-
 			case 'pip':
 				$dependancy[] = $add_script( 'api', false );
 				$dependancy[] = $add_script( 'change_payment_method', false );

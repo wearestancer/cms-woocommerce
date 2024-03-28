@@ -244,23 +244,6 @@ class WC_Stancer {
 	}
 
 	/**
-	 * Load public hooks (CSS/JS) for Stancer plugin.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function load_public_hooks() {
-		wp_enqueue_script(
-			$this->plugin_name,
-			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
-			[],
-			$this->version,
-			true
-		);
-	}
-
-	/**
 	 * Load the plugin.
 	 *
 	 * @since 1.1.0
@@ -356,6 +339,20 @@ class WC_Stancer {
 			foreach ( $new_defaults as $key => $value ) {
 				if ( ! array_key_exists( $key, $options ) ) {
 					$options[ $key ] = $value;
+					$updated = true;
+				}
+			}
+
+			$modified_options = [
+				'page_type' => [
+					'modified' => 'iframe',
+					'replaced' => 'pip',
+				],
+			];
+
+			foreach ( $modified_options as $key => $value ) {
+				if ( array_key_exists( $key, $options ) && $options[ $key ] === $value['modified'] ) {
+					$options[ $key ] = $value['replaced'];
 					$updated = true;
 				}
 			}

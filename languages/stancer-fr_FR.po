@@ -288,21 +288,12 @@ msgid "Page type"
 msgstr "Mode d'affichage"
 
 #: includes/class-stancer-gateway.php
-msgid "Popup (Deprecated)"
-msgstr "Popup (Déprécié)"
-
-#: includes/class-stancer-gateway.php
 msgid "Inside the page"
 msgstr "Intégré à la page"
 
 #: includes/class-stancer-gateway.php
 msgid "Redirect to an external page"
 msgstr "Rediriger vers une page externe"
-
-#: includes/class-stancer-gateway.php
-msgid "Popup option is deprecated and will be removed in a future update."
-msgstr ""
-"L'option popup est dépréciée et sera retirée dans une future mise à jour."
 
 #: includes/class-stancer-gateway.php
 msgid ""
