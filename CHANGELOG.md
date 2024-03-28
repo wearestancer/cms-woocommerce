@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix config bug (CMS-116)
+## [Unreleased]
+
+## Fixed
+- Fix a bug that changed order statuses. (CMS-117)
+
 
 ## [1.2.1] - 2024-03-22
 

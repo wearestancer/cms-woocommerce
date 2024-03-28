@@ -34,11 +34,13 @@ trait WC_Stancer_Refunds_Traits {
 	 * @return boolean
 	 */
 	public function can_refund_order( $order ) {
+		if ( wp_verify_nonce( $_GET['_wpnonce'] ) && 'wc_order' !== $_GET['page'] && 'edit' !== $_GET['action'] ) {
+			return false;
+		}
 		if ( $order->get_payment_method( 'view' ) !== $this->id ) {
 			return false;
 		}
-
-		if ( ! $order->payment_complete() ) {
+		if ( 'wc_failed' === $order->get_status( 'view' ) ) {
 			return false;
 		}
 
@@ -54,7 +56,6 @@ trait WC_Stancer_Refunds_Traits {
 
 		$status = [
 			Stancer\Payment\Status::TO_CAPTURE,
-			Stancer\Payment\Status::CAPTURED,
 			Stancer\Payment\Status::CAPTURED,
 		];
 
