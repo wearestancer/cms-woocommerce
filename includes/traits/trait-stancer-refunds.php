@@ -30,6 +30,8 @@ trait WC_Stancer_Refunds_Traits {
 	 *
 	 * @param WC_Order $order the WooCommerce order to be refunded.
 	 * @return boolean
+	 *
+	 * @throws WC_Stancer_Exception Throw an exception if the config is misconfigured.
 	 */
 	public function can_refund_order( $order ) {
 		if ( wp_verify_nonce( $_GET['_wpnonce'] ) && 'wc_order' !== $_GET['page'] && 'edit' !== $_GET['action'] ) {
@@ -41,21 +43,36 @@ trait WC_Stancer_Refunds_Traits {
 		if ( 'wc_failed' === $order->get_status( 'view' ) ) {
 			return false;
 		}
+
 		if ( $order->get_total() <= $order->get_total_refunded() ) {
 			return false;
 		}
+
 		$transaction_id = $order->get_transaction_id() ?? null;
 		if ( ! $transaction_id ) {
 			$api_payment = WC_Stancer_Payment::find( $order );
 			$transaction_id = $api_payment->payment_id;
 		}
-		$api_payment = new Stancer\Payment( $transaction_id );
 
 		$status = [
 			Stancer\Payment\Status::TO_CAPTURE,
 			Stancer\Payment\Status::CAPTURED,
 		];
-		return in_array( $api_payment->getStatus(), $status, true );
+
+		try {
+			// Don't know why, but WC does not find the settings if did not do it myself.
+			$settings = get_option( 'woocommerce_stancer_settings' );
+			$wc_config = new WC_Stancer_Config( $settings );
+
+			if ( $wc_config->is_not_configured() ) {
+				throw new WC_Stancer_Exception( 'Your api is not properly configured' );
+			}
+			$api_payment = new Stancer\Payment( $transaction_id );
+
+			return in_array( $api_payment->get_status(), $status, true );
+		} catch ( Exception $e ) {
+			return false;
+		}
 	}
 
 	/**
