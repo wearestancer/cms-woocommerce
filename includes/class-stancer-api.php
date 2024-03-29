@@ -163,8 +163,15 @@ class WC_Stancer_Api {
 		if ( $refund_amount < 50 ) {
 			throw new WC_Stancer_Exception( esc_html( __( 'A refund must be above 50 cents', 'stancer' ) ) );
 		}
-		$stancer_payment = WC_Stancer_Payment::find( $order );
-		$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
+
+		$transaction_id = $order->get_transaction_id() ?? null;
+
+		if ( ! $transaction_id ) {
+			$stancer_payment = WC_Stancer_Payment::find( $order );
+			$transaction_id = $stancer_payment->payment_id;
+		}
+
+		$api_payment = new Stancer\Payment( $transaction_id );
 
 		try {
 			$api_payment->refund( (int) ( $refund_amount ) );
