@@ -29,9 +29,9 @@ trait WC_Stancer_Refunds_Traits {
 	 * @since 1.2.0
 	 *
 	 * @param WC_Order $order the WooCommerce order to be refunded.
+	 * @return boolean
 	 *
 	 * @throws WC_Stancer_Exception Throw an exception if the config is misconfigured.
-	 * @return boolean
 	 */
 	public function can_refund_order( $order ) {
 		if ( wp_verify_nonce( $_GET['_wpnonce'] ) && 'wc_order' !== $_GET['page'] && 'edit' !== $_GET['action'] ) {
