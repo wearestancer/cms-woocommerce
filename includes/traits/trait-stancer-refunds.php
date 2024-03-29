@@ -34,15 +34,11 @@ trait WC_Stancer_Refunds_Traits {
 	 * @throws WC_Stancer_Exception Throw an exception if the config is misconfigured.
 	 */
 	public function can_refund_order( $order ) {
-		if ( wp_verify_nonce( $_GET['_wpnonce'] ) && 'wc_order' !== $_GET['page'] && 'edit' !== $_GET['action'] ) {
-			return false;
-		}
-
 		if ( $order->get_payment_method( 'view' ) !== $this->id ) {
 			return false;
 		}
 
-		if ( 'wc_failed' === $order->get_status( 'view' ) ) {
+		if ( ! in_array( $order->get_status( 'view' ), [ 'completed', 'processing' ], true ) ) {
 			return false;
 		}
 
