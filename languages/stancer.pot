@@ -278,10 +278,6 @@ msgstr ""
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr ""
 
-#: includes/traits/trait-stancer-refunds.php
-msgid "The module is not correctly configured"
-msgstr ""
-
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
 #: includes/traits/trait-stancer-refunds.php
 msgid "The payment has been partially refunded of %1$.2f %2$s, the payment is now of: %3$.2f %2$s."

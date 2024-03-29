@@ -159,13 +159,15 @@ class WC_Stancer_Api {
 		if ( ! $refund_amount || 0 === $refund_amount ) {
 			throw new WC_Stancer_Exception( esc_html( __( 'You cannot refund a null amount', 'stancer' ) ) );
 		}
+
 		if ( $refund_amount < 50 ) {
 			throw new WC_Stancer_Exception( esc_html( __( 'A refund must be above 50 cents', 'stancer' ) ) );
 		}
 		$stancer_payment = WC_Stancer_Payment::find( $order );
-		$stancer_payment_api = new Stancer\Payment( $stancer_payment->payment_id );
+		$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
+
 		try {
-			$stancer_payment_api->refund( (int) ( $refund_amount ) );
+			$api_payment->refund( (int) ( $refund_amount ) );
 		} catch ( Stancer\Exceptions\InvalidAmountException $e ) {
 			throw new WC_Stancer_Exception(
 				esc_html(
@@ -173,13 +175,13 @@ class WC_Stancer_Api {
 						// translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
 						__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
 						$refund_amount / 100,
-						$stancer_payment_api->getRefundableAmount() / 100,
+						$api_payment->getRefundableAmount() / 100,
 						$order->get_currency( 'view' ),
 					)
 				)
 			);
 		}
-		return $stancer_payment_api;
+		return $api_payment;
 	}
 
 
