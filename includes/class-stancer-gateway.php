@@ -753,6 +753,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( ! empty( $status ) ) {
 			$stancer_payment->mark_as( $status );
 		}
+		$order->set_transaction_id( $api_payment->getId() );
 
 		switch ( $status ) {
 			case Stancer\Payment\Status::FAILED:
@@ -762,7 +763,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				}
 
 				$order->update_status( 'failed' );
-
 				WC()->session->set( 'stancer_error_payment', __( 'The payment attempt failed.', 'stancer' ) );
 				wp_safe_redirect( wc_get_checkout_url() );
 
@@ -795,7 +795,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 						$api_payment->getId()
 					)
 				);
-				$order->set_transaction_id( $api_payment->getId() );
 
 				$this->register_subscription_data( $order, $stancer_payment );
 
