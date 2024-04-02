@@ -302,17 +302,14 @@ msgstr "La tentative de paiement a échouée."
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
 
-#: includes/traits/trait-stancer-refunds.php
-msgid "The module is not correctly configured"
-msgstr "Le module n'est pas correctement configuré."
-
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
 #: includes/traits/trait-stancer-refunds.php
 msgid ""
 "The payment has been partially refunded of %1$.2f %2$s, the payment is now "
 "of: %3$.2f %2$s."
 msgstr ""
-"Le paiement a été partiellement remboursé de %1$.2f %2$s, le paiement est désormais de : %3$.2f %2$s."
+"Le paiement a été partiellement remboursé de %1$.2f %2$s, le paiement est "
+"désormais de : %3$.2f %2$s."
 
 #. translators: "%1$.2f": the amount refunded. "%2$s": the currency.
 #: includes/traits/trait-stancer-refunds.php

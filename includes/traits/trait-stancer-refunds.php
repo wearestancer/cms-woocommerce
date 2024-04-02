@@ -34,13 +34,11 @@ trait WC_Stancer_Refunds_Traits {
 	 * @throws WC_Stancer_Exception Throw an exception if the config is misconfigured.
 	 */
 	public function can_refund_order( $order ) {
-		if ( wp_verify_nonce( $_GET['_wpnonce'] ) && 'wc_order' !== $_GET['page'] && 'edit' !== $_GET['action'] ) {
-			return false;
-		}
 		if ( $order->get_payment_method( 'view' ) !== $this->id ) {
 			return false;
 		}
-		if ( 'wc_failed' === $order->get_status( 'view' ) ) {
+
+		if ( ! in_array( $order->get_status( 'view' ), [ 'completed', 'processing' ], true ) ) {
 			return false;
 		}
 
@@ -49,9 +47,10 @@ trait WC_Stancer_Refunds_Traits {
 		}
 
 		$transaction_id = $order->get_transaction_id() ?? null;
+
 		if ( ! $transaction_id ) {
-			$api_payment = WC_Stancer_Payment::find( $order );
-			$transaction_id = $api_payment->payment_id;
+			$stancer_payment = WC_Stancer_Payment::find( $order );
+			$transaction_id = $stancer_payment->payment_id;
 		}
 
 		$status = [
@@ -90,14 +89,19 @@ trait WC_Stancer_Refunds_Traits {
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ): bool {
 		$wc_order = wc_get_order( $order_id );
+
 		if ( $this->api_config->is_not_configured() ) {
-			WC()->session->set( 'stancer_error_payment', __( 'The module is not correctly configured.', 'stancer' ) );
-			throw new Exception( esc_html( __( 'The module is not correctly configured', 'stancer' ) ) );
+			$message = __( 'The module is not correctly configured.', 'stancer' );
+
+			WC()->session->set( 'stancer_error_payment', $message );
+
+			throw new Exception( esc_html( $message ) );
 		}
 
 		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
 		$currency = $stancer_payment->currency;
+
 		if ( 0 !== $refundable ) {
 			$text = sprintf(
 				// translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
