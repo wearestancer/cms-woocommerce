@@ -1,5 +1,4 @@
-import { type Select2Plugin } from 'select2';
-
+import type { StancerSettings } from "./stancer";
 declare global {
   interface AdminData{
     confirmMessage: string;
@@ -26,41 +25,14 @@ declare global {
     checkout_url: string;
   }
 
-  interface JQuery<TElement = HTMLElement> {
-    block: (params?: BlockParams) => this;
-    selectWoo: Select2Plugin<TElement>;
-    unblock: () => this;
-  }
-
-  interface JQueryStatic {
-    scroll_to_notices: (element: JQuery) => this;
-  }
-
-  interface StancerSettings {
-    description: string;
-    label: string;
-    logo:{
-      url: string;
-      class: string;
-    }
-    page_type: string;
-    title: string;
-
-  }
-
   interface WooCommerceEnvironment {
     wcBlocksRegistry:{
       registerPaymentMethod:(arg0: object)=>void
     }
-    wcSettings:{
-      CURRENCY: {
-        code: string;
-      }
-      getPaymentMethodData: (arg0: string, arg1: object)=>StancerSettings,
-      description: string;
-    }
+    wcSettings: WCSettings
   }
-
+  type PaymentMethods = {stancer:StancerSettings}
+  interface React{}
   interface WordPressEnvironment{
     htmlEntities:{
       decodeEntities:(arg0:string)=>string
@@ -73,15 +45,23 @@ declare global {
      {
       payment_status: string;
       redirect_url: string;
+
     }
   }
-
+  interface WCSettings{
+    currency: {
+      code: string;
+    }
+    paymentMethodData: PaymentMethods;
+    description: string;
+  }
   interface Window {
     stancer_admin: AdminData;
     stancer: StancerData;
     wc : WooCommerceEnvironment;
     wc_checkout_params: WooCommerceCheckoutParams;
     wp: WordPressEnvironment;
+    wcSettings :WCSettings;
   }
 
   const stancer: StancerData;
