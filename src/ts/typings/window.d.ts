@@ -11,6 +11,7 @@ declare global {
       url: string;
     };
     initiate: string;
+    checkout_url: string;
   }
 
   interface WooCommerceCheckoutParams {
