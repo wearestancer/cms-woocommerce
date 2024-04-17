@@ -14,6 +14,7 @@
 
   interface CheckoutResponseSuccess extends CheckoutResponseBase {
     order_id: number;
+    receipt: string;
     redirect: string;
     result: 'success';
   }
@@ -27,10 +28,10 @@
 
   type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
 
+  let receipt ='';
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
-  let receipt = '';
   // We create the frame, and set some of their attribute before wrapping it in jQuery.
   const $frame = $(document.createElement('iframe'))
   .addClass('stancer-iframe')
@@ -66,6 +67,7 @@
         $body.addClass('stancer-block-scroll');
         $backdrop.appendTo($body).removeClass('stancer-backdrop--hidden');
         $frame.appendTo($body).attr('src', result.redirect);
+        receipt = result.receipt;
       } else if ('failure' === result.result) {
         throw new Error('Result failure');
       } else {
@@ -124,9 +126,14 @@
       if (typeof data.status === "undefined" || typeof data.width === "undefined" || typeof data.height === "undefined") {
         return;
       }
-      if (messageCallback(data)) {
-        return;
-      }
+        if (messageCallback(data)) {
+          return;
+        }
+      if(data.status === 'finished' && receipt != '')
+        {
+          window.location.href = receipt;
+          return;
+        }
       const maxHeight = $window.height() ?? 100;
       const maxWidth = $window.width() ?? 100;
       let height = 400;
