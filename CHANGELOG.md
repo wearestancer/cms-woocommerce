@@ -32,6 +32,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix the integration of the new payment page
+## [unreleased]
+## [1.2.3] - 2024-04-18
+
+### Fixed
+- Fix a bug that displayed the subscription number instead of the order number in manage (CMS-123).
+
+-Fix the integration of the new payment page.
+- Fix the integration of the new payment page.
+- Fix the integration of the new payment page
+
+## [unreleased]
+## [1.2.3] - 2024-04-25
+
+### Deprecated
+- Deprecate Popup page type Because of security problems, consider using other page types.
+
+### Fixed
+-Fix the integration of the new payment page.
 
 
 ## [1.2.2] - 2024-04-02

@@ -137,7 +137,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		return [
-			'receipt' => $order->get_checkout_payment_url( true ),
+			'receipt' => $order->get_checkout_order_received_url(),
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
@@ -870,7 +870,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'completed',
 		];
 		// We bypass nonce verification, because we don't get a nonce to verify from.
-		$order = wc_get_order( get_query_var( 'order-pay', false ) );
+		$order = wc_get_order( get_query_var( 'order-pay', false ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! is_object( $order ) ) {
 			return;
 		}

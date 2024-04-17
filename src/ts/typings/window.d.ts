@@ -15,6 +15,7 @@ declare global {
   interface StancerData {
     changePaymentMethod?: ChangePaymentMethod
     initiate: string;
+    checkout_url: string;
   }
   interface ChangePaymentMethod {
     nonce: string;

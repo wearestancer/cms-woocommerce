@@ -208,7 +208,7 @@ trait WC_Stancer_Subscription_Trait {
 				do_action( 'processed_subscription_payments_for_order', $order );
 			} else {
 				// translators: 1: Payment status.
-				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ) );
+				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' );
 
 				$message = __(
 					'We regret to inform you that the payment has been declined. Please consider using an alternative card.',

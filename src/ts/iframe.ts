@@ -43,6 +43,7 @@
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
+  let receipt = '';
   // We create the frame, and set some of their attribute before wrapping it in jQuery.
   const $frame = $(document.createElement('iframe'))
     .addClass('stancer-iframe')
@@ -54,6 +55,8 @@
   * We set sandbox = allow-forms;  we need it because we send a form in our Iframe.
   * We set sandbox = top-navigation; we need it to be able to interact with context outside our iframe, more precisely to get the event.data and use it.
   */
+
+  const $stancer_payment_method = $('#payment_method_stancer');
   const $cardSelect = $('#stancer-card');
   const params = Object.fromEntries(window.location.search.slice(1).split('&').map((value) => value.split('=')));
   const STANCER_SVG = '<svg:stancer-flat>';
