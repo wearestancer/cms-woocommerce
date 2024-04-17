@@ -25,17 +25,18 @@
     url: string & Location;
     width: number;
   }
+
   interface PaymentCreationData {
     $button: JQuery<HTMLElement>;
     url: string | undefined;
     data: string | Object;
   }
+
   interface ListenerData {
     button: string;
     url: string | undefined;
     data: string | Object;
   }
-
 
   type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
 
@@ -43,7 +44,6 @@
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
-  let receipt = '';
   // We create the frame, and set some of their attribute before wrapping it in jQuery.
   const $frame = $(document.createElement('iframe'))
     .addClass('stancer-iframe')

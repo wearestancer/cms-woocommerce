@@ -179,6 +179,22 @@ msgid "Payment method change description"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
+msgid "Order reference of your command"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "This will set the command number to reference either the command or the subscription ID"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Woo subscription"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Woo order"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
 #: includes/class-stancer.php
 msgid "An authorization request without an amount will be made in order to validate the new method."
 msgstr ""
@@ -329,6 +345,15 @@ msgstr ""
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "We were unable to locate the subscription."
+msgstr ""
+
+#: includes/traits/trait-stancer-subscription.php
+msgid "No card found for this subscription."
+msgstr ""
+
+#. translators: 1. Subscription ID. 2. Current order ID.
+#: includes/traits/trait-stancer-subscription.php
+msgid "Payment for subscription n°%1$d, order n°%2$d"
 msgstr ""
 
 #: includes/traits/trait-stancer-subscription.php

@@ -2,9 +2,7 @@
 (($) => $(() => {
   'use strict';
 
-
   interface CheckoutResponseBase {
-
     messages?: string;
     refresh: boolean;
     reload: boolean;

@@ -188,6 +188,26 @@ msgstr ""
 msgid "Payment method change description"
 msgstr "Description du changement de moyen de paiement"
 
+#: includes/class-stancer-gateway.php
+msgid "Order reference of your command"
+msgstr "La référence de votre commande"
+
+#: includes/class-stancer-gateway.php
+msgid ""
+"This will set the command number to reference either the command or the "
+"subscription ID"
+msgstr ""
+"Parametrer le numéro de commande pour être celui de la commande Woocommerce"
+"ou celui de l'abonnement Woocommerce"
+
+#: includes/class-stancer-gateway.php
+msgid "Woo subscription"
+msgstr "Abonnement Woo"
+
+#: includes/class-stancer-gateway.php
+msgid "Woo order"
+msgstr "Commande Woo"
+
 #: includes/class-stancer-gateway.php includes/class-stancer.php
 msgid ""
 "An authorization request without an amount will be made in order to validate "
@@ -372,6 +392,15 @@ msgstr ""
 #: includes/traits/trait-stancer-subscription.php
 msgid "We were unable to locate the subscription."
 msgstr "Nous n’avons pas détecté l’abonnement."
+
+#: includes/traits/trait-stancer-subscription.php
+msgid "No card found for this subscription."
+msgstr "Aucune carte trouvé pour cet abonnement."
+
+#. translators: 1. Subscription ID. 2. Current order ID.
+#: includes/traits/trait-stancer-subscription.php
+msgid "Payment for subscription n°%1$d, order n°%2$d"
+msgstr "Paiement pour l'abonnement n°%1$d, commande n°%2$d"
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "Something went wrong, the renewal payment is incomplete."

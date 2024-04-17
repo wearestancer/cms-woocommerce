@@ -517,8 +517,24 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'title' => __( 'Payment method change description', 'stancer' ),
 				'type' => 'text',
 			];
+			$inputs['subscription_command_number'] = [
+				'title' => __( 'Order reference of your command', 'stancer' ),
+				'desc_tip' =>
+				__(
+					'This will set the command number to reference either the command or the subscription ID',
+					'stancer'
+				),
+				'type' => 'select',
+				'options' => [
+					'subscription_id' => __( 'Woo subscription', 'stancer' ),
+					'order_id' => __( 'Woo order', 'stancer' ),
+				],
+			];
 		} else {
 			$inputs['subscription_payment_change_description'] = [
+				'type' => 'hidden',
+			];
+			$inputs['subcription_command_number'] = [
 				'type' => 'hidden',
 			];
 		}

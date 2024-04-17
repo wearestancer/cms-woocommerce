@@ -33,6 +33,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix the integration of the new payment page
 ## [unreleased]
+## [unreleased]
+
+### Add
+- Add an option to chose order_id or subscription_id to be the order_id send to Stancer.
+
 ## [1.2.3] - 2024-04-18
 
 ### Fixed
@@ -50,6 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 -Fix the integration of the new payment page.
+- Fix the integration of the new payment page.
+## [unreleased]
+
+### Fixed
+- Fix a bug that displayed the subscription number instead of the order number in manage (CMS-123).
 
 
 ## [1.2.2] - 2024-04-02
