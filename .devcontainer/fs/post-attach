@@ -116,6 +116,55 @@ for product in "${products[@]}" ; do
 done
 
 
+# Add a default user
+email="shop-user@stancer.com"
+firstname="John"
+lastname="Doe"
+
+command=$(wp --path="$wordpress_dir" wc customer list --user=1 --email="$email" --format=count)
+
+if [ "$command" == 0 ]; then
+  addr=$(cat <<ADDR
+{
+  "first_name": "$firstname",
+  "last_name": "$lastname",
+  "email": "$email",
+  "phone": "+33123456789",
+  "address_1": "42 $firstname $lastname street",
+  "postcode": "99999",
+  "city": "CITY",
+  "country": "FR"
+}
+ADDR
+)
+
+  wp --path="$wordpress_dir" wc customer create --user=1 \
+    --first_name="$firstname" \
+    --last_name="$lastname" \
+    --email="$email" \
+    --username="$email" \
+    --password="shop-user" \
+    --billing="$addr" \
+    --shipping="$addr"
+
+  addr=$(cat <<ADDR
+{
+  "first_name": "$firstname",
+  "last_name": "$lastname",
+  "email": "shop-admin@stancer.com",
+  "phone": "+33123456789",
+  "address_1": "42 $firstname $lastname street",
+  "postcode": "99999",
+  "city": "CITY",
+  "country": "FR"
+}
+ADDR
+)
+
+  wp --path="$wordpress_dir" wc customer update 1 --user=1 --billing="$addr" --shipping="$addr"
+fi
+
+
 # Set some defaults
 wp --path="$wordpress_dir" option update woocommerce_allow_tracking "no"
 wp --path="$wordpress_dir" option update woocommerce_no_sales_tax 1
