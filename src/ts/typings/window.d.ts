@@ -10,6 +10,7 @@ declare global {
       nonce: string;
       url: string;
     };
+    checkout_url: string;
     initiate: string;
   }
 

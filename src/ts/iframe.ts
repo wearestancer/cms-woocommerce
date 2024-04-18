@@ -14,6 +14,7 @@
 
   interface CheckoutResponseSuccess extends CheckoutResponseBase {
     order_id: number;
+    receipt: string;
     redirect: string;
     result: 'success';
   }
@@ -30,19 +31,18 @@
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
+  let receipt = '';
   // We create the frame, and set some of their attribute before wrapping it in jQuery.
   const $frame = $(document.createElement('iframe'))
+  .addClass('stancer-iframe')
+  .attr('allow','payment')
+  .attr('sandbox', 'allow-scripts allow-forms allow-same-origin allow-top-navigation');
   /*
   * We set allow = payment; we want to authorize paymentAPI in our Iframe
   * We set sandbox = allow-scripts ; we need it because we use javascript in the payment page.
   * We set sandbox = allow-forms;  we need it because we send a form in our Iframe.
   * We set sandbox = top-navigation; we need it to be able to interact with context outside our iframe, more precisely to get the event.data and use it.
-  * We MUST not set allow-scripts and allow-same-origin at the same time, as it make sandbox useless!
-  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#sandbox
   */
-    .addClass('stancer-iframe')
-    .attr('allow','payment')
-    .attr('sandbox', 'allow-scripts allow-forms allow-top-navigation');
   const $stancer_payment_method = $('#payment_method_stancer');
   const $cardSelect = $('#stancer-card');
   const params = Object.fromEntries(window.location.search.slice(1).split('&').map((value) => value.split('=')));
@@ -67,6 +67,7 @@
         $body.addClass('stancer-block-scroll');
         $backdrop.appendTo($body).removeClass('stancer-backdrop--hidden');
         $frame.appendTo($body).attr('src', result.redirect);
+        receipt = result.receipt;
       } else if ('failure' === result.result) {
         throw new Error('Result failure');
       } else {
@@ -126,6 +127,10 @@
         return;
       }
 
+      if (data.status === 'finished' && receipt !== '') {
+        window.location.href = receipt;
+        return;
+      }
       if (data.url) {
         if (messageCallback(data)) {
           return;
