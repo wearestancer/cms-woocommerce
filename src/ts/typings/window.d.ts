@@ -10,8 +10,8 @@ declare global {
       nonce: string;
       url: string;
     };
-    initiate: string;
     checkout_url: string;
+    initiate: string;
   }
 
   interface WooCommerceCheckoutParams {

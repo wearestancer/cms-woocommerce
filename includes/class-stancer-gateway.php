@@ -122,10 +122,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		return [
+			'receipt' => $order->get_checkout_order_received_url(),
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
-			'receipt' => $order->get_checkout_order_received_url(),
 		];
 	}
 
