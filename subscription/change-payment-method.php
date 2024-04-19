@@ -109,7 +109,6 @@ try {
 		case 'initiate':
 				$payment = WC_Stancer_Payment::find( $subscription, $data, true, [ 'pending' ] );
 				$api_payment = new Stancer\Payment( $payment->payment_id );
-
 				$lang = str_replace( '_', '-', get_locale() );
 
 				$response['redirect'] = $api_payment->getPaymentPageUrl( [ 'lang' => $lang ] );
