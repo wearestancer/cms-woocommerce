@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -eu
+
 file="$(git rev-parse --show-toplevel)/$1"
 
 current_version=`grep '"version":' package.json | awk -F\" '{ print $4 }'`

@@ -11,10 +11,7 @@ devcontainer_dir="${plugin_dir}/.devcontainer"
 
 # Adding our directory as a safe directory.
 git config --global --add safe.directory "$plugin_dir"
-
-# Adding git filter for traduction meta data
-git config filter.locales.smudge './scripts/locales/smudge.sh %f'
-git config filter.locales.clean './scripts/locales/clean.sh'
+sh "${plugin_dir}/scripts/git-filters.sh"
 
 
 # Install dependencies
