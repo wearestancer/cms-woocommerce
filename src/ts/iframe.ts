@@ -14,7 +14,6 @@
 
   interface CheckoutResponseSuccess extends CheckoutResponseBase {
     order_id: number;
-    receipt: string|null;
     redirect: string;
     result: 'success';
   }
@@ -67,7 +66,6 @@
         $body.addClass('stancer-block-scroll');
         $backdrop.appendTo($body).removeClass('stancer-backdrop--hidden');
         $frame.appendTo($body).attr('src', result.redirect);
-        receipt = result.receipt ?? '';
       } else if ('failure' === result.result) {
         throw new Error('Result failure');
       } else {
@@ -129,18 +127,6 @@
       if (messageCallback(data)) {
         return;
       }
-
-      if (data.status === 'finished' && receipt !== '') {
-        window.location.href = receipt;
-        return;
-      }
-
-      if (data.url) {
-        if (['error', 'finished', 'secure-auth-error'].includes(data.status)) {
-          window.location = data.url;
-        }
-      }
-
       const maxHeight = $window.height() ?? 100;
       const maxWidth = $window.width() ?? 100;
       let height = 400;
