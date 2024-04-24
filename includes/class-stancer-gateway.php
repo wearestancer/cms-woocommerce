@@ -823,8 +823,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 		// We bypass nonce verification, because we don't get a nonce to verify from.
 		$order = wc_get_order( $_GET['order-pay'] );// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! is_object( $order ) ) {
+			return;
+		}
 		$order_key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( hash_equals( $order->get_order_key(), $order_key ) ) {
+		if ( hash_equals( $order->get_order_key(), $order_key ) && $this->id === $order->get_payment_method( 'view' ) ) {
 			if ( in_array( $order->get_status( 'view' ), $finished_status, true ) ) {
 				wp_safe_redirect( $order->get_checkout_order_received_url() );
 				exit();
