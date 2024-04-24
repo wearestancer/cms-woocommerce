@@ -35,6 +35,11 @@ declare global {
 
   const stancer: StancerData;
   const wc_checkout_params: WooCommerceCheckoutParams;
+
+  interface Redirection{
+    receipt: string;
+    thankYouPage: string;
+  }
 }
 
 export {};

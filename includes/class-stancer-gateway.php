@@ -129,6 +129,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
+			'thankYouPage' => $order->get_checkout_order_received_url(),
 		];
 	}
 
@@ -773,12 +774,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				break;
 			case Stancer\Payment\Status::AUTHORIZED:
 				$api_payment->status = Stancer\Payment\Status::CAPTURE;
-				try {
-					$api_payment->send();
-				} catch ( Stancer\Exceptions\ConflictException $e ) {
-					$api_payment->status = Stancer\Payment\Status::CAPTURE;
-				}
-
+				$api_payment->send();
 				// No break, we just need to ask for the capture and leave the "capture" part creating the order.
 
 			case Stancer\Payment\Status::TO_CAPTURE:

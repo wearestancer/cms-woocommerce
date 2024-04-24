@@ -26,9 +26,10 @@
     width: number;
   }
 
+
   type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
 
-  let receipt ='';
+  const redirection = {receipt: ''};
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
@@ -67,7 +68,7 @@
         $body.addClass('stancer-block-scroll');
         $backdrop.appendTo($body).removeClass('stancer-backdrop--hidden');
         $frame.appendTo($body).attr('src', result.redirect);
-        receipt = result.receipt;
+        redirection.receipt = result.receipt
       } else if ('failure' === result.result) {
         throw new Error('Result failure');
       } else {
@@ -129,9 +130,11 @@
         if (messageCallback(data)) {
           return;
         }
-      if(data.status === 'finished' && receipt != '')
+      if(data.status === 'finished' && redirection.receipt != '')
         {
-          window.location.href = receipt;
+          window.postMessage({stopRedirection: true});
+          window.location.href = redirection.receipt;
+          close();
           return;
         }
       const maxHeight = $window.height() ?? 100;
