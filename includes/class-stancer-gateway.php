@@ -88,6 +88,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 
+		// Check Description length and make sure it is correct.
+		add_filter( 'woocommerce_settings_api_sanitized_fields_' . $this->id, [ $this, 'description_verification' ] );
+
 		// Check the order status and redirect us if the payment is already completed.
 		add_action( 'after_woocommerce_pay', [ $this, 'redirect_incorrect_call' ] );
 
@@ -131,6 +134,57 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
 		];
+	}
+
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @param array $settings The settings sent by the user.
+	 * @return void
+	 */
+	public function description_verification( array $settings ) {
+		$params_expected_diff = [
+			'CART_ID' => [
+				'min' => -6,
+				'max' => 0,
+			],
+			'CURRENCY' => [
+				'min' => -5,
+				'max' => -5,
+			],
+			'SHOP_NAME' => [
+				'min' => 2,
+				'max' => 2,
+			],
+			'TOTAL_AMOUNT' => [
+				'min' => -9,
+				'max' => -4,
+			],
+		];
+		$description = $settings['payment_description'];
+		if ( ! $description ) {
+			return;
+		}
+		$description_length_max = strlen( $description );
+		$description_length_min = $description_length_max;
+		foreach ( $params_expected_diff as $key => $diff ) {
+			if ( str_contains( $key, $description ) ) {
+				$description_length_max += $diff['max'];
+				$description_length_min += $diff['min'];
+			}
+		}
+
+		if ( $description_length_max > 64 || $description_length_min < 3 ) {
+			$class[] = 'stancer-description-notice';
+			$class[] = 'notice';
+			$message = 'your description might be too long or too short be sure it is between 3 & 64 character long';
+			printf(
+				'<div class="%1$s"><p>%2$s</p></div>',
+				esc_attr( implode( ' ', $class ) ),
+				esc_html( $message ),
+			);
+		}
+		return $settings;
 	}
 
 	/**
@@ -581,6 +635,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
 			$desc_description .= '<br/>';
 		}
+		$desc_description .= __( 'The description must be between 3 & 64 character after variable replacement.', 'stancer' );
 
 		$inputs['payment_description'] = [
 			'default' => __( 'Your order SHOP_NAME', 'stancer' ),

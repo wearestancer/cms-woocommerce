@@ -58,22 +58,17 @@ class WC_Stancer_Api {
 		$amount = static::prepare_amount( $total );
 		$auth = $force_auth;
 		$currency_code = $order->get_currency();
-		$description = null;
+		$params = [
+			'SHOP_NAME' => 'WooCommerce',
+			'CART_ID' => (int) $order->get_id(),
+			'TOTAL_AMOUNT' => sprintf( '%.02f', $total ),
+			'CURRENCY' => strtoupper( $currency_code ),
+		];
+		$description = $this->api_config->get_valid_description( $params );
 
 		if ( null === $auth ) {
 			$auth_limit = $this->api_config->auth_limit;
 			$auth = is_null( $auth_limit ) || '' === $auth_limit ? false : $total >= $auth_limit;
-		}
-
-		if ( $this->api_config->description ) {
-			$params = [
-				'SHOP_NAME' => 'WooCommerce',
-				'CART_ID' => (int) $order->get_id(),
-				'TOTAL_AMOUNT' => sprintf( '%.02f', $total ),
-				'CURRENCY' => strtoupper( $currency_code ),
-			];
-
-			$description = str_replace( array_keys( $params ), $params, $this->api_config->description );
 		}
 
 		return [
