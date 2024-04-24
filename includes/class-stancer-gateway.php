@@ -88,6 +88,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 
+		// Check the order status and redirect us if the payment is already completed.
+		add_action( 'after_woocommerce_pay', [ $this, 'redirect_incorrect_call' ] );
+
 		$this->dynamic_title();
 		$this->init_subscription();
 
@@ -806,5 +809,26 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		exit();
+	}
+	/**
+	 * Redirect Processing order to order_Checkout .
+	 * We can have multiple redirection but if they scope badly we have a processing Error.
+	 *
+	 * @return void
+	 */
+	public function redirect_incorrect_call() {
+		$finished_status = [
+			'processing',
+			'completed',
+		];
+		// We bypass nonce verification, because we don't get a nonce to verify from.
+		$order = wc_get_order( $_GET['order-pay'] );// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order_key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( hash_equals( $order->get_order_key(), $order_key ) ) {
+			if ( in_array( $order->get_status( 'view' ), $finished_status, true ) ) {
+				wp_safe_redirect( $order->get_checkout_order_received_url() );
+				exit();
+			}
+		}
 	}
 }
