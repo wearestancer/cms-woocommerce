@@ -38,7 +38,6 @@ declare global {
 
   interface Redirection{
     receipt: string;
-    thankYouPage: string;
   }
 }
 

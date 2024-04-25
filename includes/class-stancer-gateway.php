@@ -129,7 +129,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
-			'thankYouPage' => $order->get_checkout_order_received_url(),
 		];
 	}
 
@@ -723,7 +722,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @param int $order_id Order ID.
 	 */
 	public function receipt_page( $order_id ) {
+
 		$order = wc_get_order( $order_id );
+		if ( isset( $_GET['order_payed'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_safe_redirect( $this->get_return_url( $order ) );
+		}
 		$settings = get_option( 'woocommerce_stancer_settings' );
 
 		// Don't know why, but WC does not find the settings if did not do it myself.
@@ -823,7 +826,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'completed',
 		];
 		// We bypass nonce verification, because we don't get a nonce to verify from.
-		$order = wc_get_order( $_GET['order-pay'] );// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$order = wc_get_order( get_query_var( 'order-pay', false ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! is_object( $order ) ) {
 			return;
 		}
