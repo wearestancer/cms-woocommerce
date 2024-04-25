@@ -14,6 +14,7 @@
 
   interface CheckoutResponseSuccess extends CheckoutResponseBase {
     order_id: number;
+    receipt: string;
     redirect: string;
     result: 'success';
   }
@@ -25,8 +26,10 @@
     width: number;
   }
 
+
   type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
 
+  const redirection = {receipt: ''};
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
@@ -65,6 +68,7 @@
         $body.addClass('stancer-block-scroll');
         $backdrop.appendTo($body).removeClass('stancer-backdrop--hidden');
         $frame.appendTo($body).attr('src', result.redirect);
+        redirection.receipt = result.receipt
       } else if ('failure' === result.result) {
         throw new Error('Result failure');
       } else {
@@ -126,6 +130,14 @@
       if (messageCallback(data)) {
         return;
       }
+
+      if (data.status === 'finished' && redirection.receipt != '') {
+        window.postMessage({stopRedirection: true});
+        window.location.href = redirection.receipt;
+        close();
+        return;
+      }
+
       const maxHeight = $window.height() ?? 100;
       const maxWidth = $window.width() ?? 100;
       let height = 400;
