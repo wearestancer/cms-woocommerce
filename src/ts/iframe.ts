@@ -127,16 +127,17 @@
       if (typeof data.status === "undefined" || typeof data.width === "undefined" || typeof data.height === "undefined") {
         return;
       }
-        if (messageCallback(data)) {
-          return;
-        }
-      if(data.status === 'finished' && redirection.receipt != '')
-        {
-          window.postMessage({stopRedirection: true});
-          window.location.href = redirection.receipt;
-          close();
-          return;
-        }
+      if (messageCallback(data)) {
+        return;
+      }
+
+      if (data.status === 'finished' && redirection.receipt != '') {
+        window.postMessage({stopRedirection: true});
+        window.location.href = redirection.receipt;
+        close();
+        return;
+      }
+
       const maxHeight = $window.height() ?? 100;
       const maxWidth = $window.width() ?? 100;
       let height = 400;

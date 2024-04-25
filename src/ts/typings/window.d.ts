@@ -36,7 +36,7 @@ declare global {
   const stancer: StancerData;
   const wc_checkout_params: WooCommerceCheckoutParams;
 
-  interface Redirection{
+  interface Redirection {
     receipt: string;
   }
 }
