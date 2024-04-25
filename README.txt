@@ -88,6 +88,7 @@ Updates are done automatically. However, we recommend that you back up your site
 
 = Version 1.2.3 =
 * Fix the integration of the new payment page
+* The `popup` integration mode is now deprecated, a message in the administration area will be shown in the next release
 
 = Version 1.2.2 =
 * Fix a bug during installation
