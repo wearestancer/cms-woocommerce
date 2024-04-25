@@ -86,6 +86,10 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
+= Version 1.2.3 =
+* Fix the integration of the new payment page
+* The `popup` integration mode is now deprecated, a message in the administration area will be shown in the next release
+
 = Version 1.2.2 =
 * Fix a bug during installation
 * Orders were incorrectly marked as "Pending" on payment errors

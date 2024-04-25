@@ -1,7 +1,10 @@
+
 (($) => $(() => {
   'use strict';
 
+
   interface CheckoutResponseBase {
+
     messages?: string;
     refresh: boolean;
     reload: boolean;
@@ -13,6 +16,7 @@
 
   interface CheckoutResponseSuccess extends CheckoutResponseBase {
     order_id: number;
+    receipt: string;
     redirect: string;
     result: 'success';
   }
@@ -57,7 +61,7 @@
 
     $.ajax({
       url: stancer.initiate,
-      type:'POST',
+      type: 'POST',
       data: $form.serialize(),
       dataType: 'json',
       success: (result: CheckoutResponse) => {
@@ -69,7 +73,7 @@
           } else {
             throw new Error('Invalid response');
           }
-        } catch(err) {
+        } catch (err) {
           popup.close();
 
           // Reload page
@@ -91,9 +95,9 @@
               .removeClass('processing')
               .unblock()
               .find('.input-text, select, input:checkbox')
-                .trigger('validate')
-                .trigger('blur')
-            ;
+              .trigger('validate')
+              .trigger('blur')
+              ;
 
             const $scrollElement = $('.woocommerce-NoticeGroup-updateOrderReview, .woocommerce-NoticeGroup-checkout');
 
@@ -113,3 +117,4 @@
     });
   })
 }))(jQuery);
+

@@ -88,6 +88,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 
+		// Check the order status and redirect us if the payment is already completed.
+		add_action( 'after_woocommerce_pay', [ $this, 'redirect_incorrect_call' ] );
+
 		$this->dynamic_title();
 		$this->init_subscription();
 
@@ -122,6 +125,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		return [
+			'receipt' => $order->get_checkout_payment_url( true ),
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
@@ -718,7 +722,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @param int $order_id Order ID.
 	 */
 	public function receipt_page( $order_id ) {
+
 		$order = wc_get_order( $order_id );
+		if ( isset( $_GET['order_payed'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			wp_safe_redirect( $this->get_return_url( $order ) );
+		}
 		$settings = get_option( 'woocommerce_stancer_settings' );
 
 		// Don't know why, but WC does not find the settings if did not do it myself.
@@ -770,7 +778,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			case Stancer\Payment\Status::AUTHORIZED:
 				$api_payment->status = Stancer\Payment\Status::CAPTURE;
 				$api_payment->send();
-
 				// No break, we just need to ask for the capture and leave the "capture" part creating the order.
 
 			case Stancer\Payment\Status::TO_CAPTURE:
@@ -806,5 +813,29 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		exit();
+	}
+	/**
+	 * Redirect Processing order to order_Checkout .
+	 * We can have multiple redirection but if they scope badly we have a processing Error.
+	 *
+	 * @return void
+	 */
+	public function redirect_incorrect_call() {
+		$finished_status = [
+			'processing',
+			'completed',
+		];
+		// We bypass nonce verification, because we don't get a nonce to verify from.
+		$order = wc_get_order( get_query_var( 'order-pay', false ) );
+		if ( ! is_object( $order ) ) {
+			return;
+		}
+		$order_key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( hash_equals( $order->get_order_key(), $order_key ) && $this->id === $order->get_payment_method( 'view' ) ) {
+			if ( in_array( $order->get_status( 'view' ), $finished_status, true ) ) {
+				wp_safe_redirect( $order->get_checkout_order_received_url() );
+				exit();
+			}
+		}
 	}
 }
