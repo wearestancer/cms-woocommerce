@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix three product's refund considered as partial refund (CMS-118)
 - Fix iframe payment method creating multiple payment when clicked fast enough (CMS-112)
 - Fix Tag number beeing too many according to Wooommerce's guideline (CMS-114)
+## [unreleased]
+
+### Changed
+- Changed Settings to better express the requirement of payment description (CMS-103)
+
+### Fixed
+- Fix Description of bad size can no longer cause problem with the payment process (CMS-103)
 
 
 ## [1.2.3] - 2024-04-25

@@ -32,6 +32,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	use WC_Stancer_Refunds_Traits;
 	use WC_Stancer_Subscription_Trait;
 
+
+	public const MAX_SIZE_DESCRIPTION = 64;
+	public const MIN_SIZE_DESCRIPTION = 3;
+
 	/**
 	 * Stancer configuration.
 	 *
@@ -174,7 +178,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			}
 		}
 
-		if ( $description_length_max > 64 || $description_length_min < 3 ) {
+		if ( $description_length_max > static::MAX_SIZE_DESCRIPTION
+			|| $description_length_min < static::MIN_SIZE_DESCRIPTION ) {
 			$class[] = 'stancer-description-notice';
 			$class[] = 'notice';
 			$message = 'your description might be too long or too short be sure it is between 3 & 64 character long';
@@ -635,9 +640,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
 			$desc_description .= '<br/>';
 		}
-		$desc_description .= __( 'The description must be between 3 & 64 character after variable replacement.', 'stancer' );
+		$desc_description .= sprintf(
+			// Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+			__( 'The description must be between %1$d and %2$d characters after variable replacement.', 'stancer' ),
+			self::MIN_SIZE_DESCRIPTION,
+			self::MAX_SIZE_DESCRIPTION,
+		);
 
 		$inputs['payment_description'] = [
+			'custom_attributes' => [ 'required' => 'required' ],
 			'default' => __( 'Your order SHOP_NAME', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',

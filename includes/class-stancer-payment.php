@@ -23,6 +23,7 @@ use Stancer;
  * @subpackage stancer/includes
  */
 class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
+
 	/**
 	 * Name of primary key.
 	 *

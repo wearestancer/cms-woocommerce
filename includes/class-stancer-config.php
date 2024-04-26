@@ -190,22 +190,4 @@ class WC_Stancer_Config {
 	public function is_not_configured() {
 		return ! $this->is_configured();
 	}
-
-	/**
-	 * Return a valid payment description.
-	 *
-	 * @param array $params Variable parameter for dynamic description.
-	 * @return string|null
-	 */
-	public function get_valid_description( $params ) {
-		if ( ! $this->description ) {
-			return;
-		}
-
-		$description = str_replace( array_keys( $params ), $params, $this->description );
-		if ( strlen( $description ) > 64 || strlen( $description ) < 3 ) {
-			return;
-		}
-		return $description;
-	}
 }
