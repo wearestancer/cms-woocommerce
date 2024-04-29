@@ -35,6 +35,16 @@ require_once STANCER_DIRECTORY_PATH . '/vendor/autoload.php';
 
 add_action( 'plugins_loaded', 'load_translations' );
 
+// Declare compatibility with Hpos.
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( AutomatticWooCommerceUtilitiesFeaturesUtil::class ) ) {
+			AutomatticWooCommerceUtilitiesFeaturesUtil::declare_compatibility( 'custom_order_tables', STANCER_FILE, true );
+		}
+	}
+);
+
 // Add links on plugins.
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'plugin_action_links' );
 
