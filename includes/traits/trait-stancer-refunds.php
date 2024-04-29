@@ -98,7 +98,7 @@ trait WC_Stancer_Refunds_Traits {
 			throw new Exception( esc_html( $message ) );
 		}
 
-		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) ( $amount * 100 ) : null );
+		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) (string) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
 		$currency = $stancer_payment->currency;
 
