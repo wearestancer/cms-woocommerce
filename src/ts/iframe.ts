@@ -25,11 +25,21 @@
     url: string & Location;
     width: number;
   }
+  interface PaymentCreationData {
+    $button: JQuery<HTMLElement>;
+    url: string | undefined;
+    data: string | Object;
+  }
+  interface ListenerData {
+    button: string;
+    url: string | undefined;
+    data: string | Object;
+  }
 
 
   type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
 
-  const redirection = {receipt: ''};
+  const redirection = { receipt: '' };
   const $window = $(window);
   const $body = $(document.body);
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
@@ -44,11 +54,10 @@
   * We set sandbox = allow-forms;  we need it because we send a form in our Iframe.
   * We set sandbox = top-navigation; we need it to be able to interact with context outside our iframe, more precisely to get the event.data and use it.
   */
-  const $stancer_payment_method = $('#payment_method_stancer');
   const $cardSelect = $('#stancer-card');
   const params = Object.fromEntries(window.location.search.slice(1).split('&').map((value) => value.split('=')));
   const STANCER_SVG = '<svg:stancer-flat>';
-  let messageCallback: (data: MessageData) => boolean = () => false;
+
 
   if ($cardSelect.selectWoo) {
     $cardSelect.selectWoo({
@@ -57,25 +66,51 @@
     });
   }
 
+  // #region Shared Function
   const close = () => {
     $body.removeClass('stancer-block-scroll');
     $backdrop.detach().addClass('stancer-backdrop--hidden');
     $('.js-stancer-place-order').removeAttr('disabled');
     $frame.detach();
   };
-  const processResponse = ($this: JQuery<HTMLElement>, result: CheckoutResponse) => {
+  const isChangePaymentMethod = () => $('.js-stancer-change-payment-method').length ?? false;
+
+  const onSubmit = ({ button, url, data }: ListenerData, canSubmit : () => Boolean = () => true) => {
+    $body
+      .on('click', button, function (this: HTMLElement, event): boolean {
+        if(! canSubmit()) {
+          return true;
+        }
+
+        event.preventDefault();
+
+        const $button = $(button);
+
+        $button.attr('disabled', 'disabled');
+        $button.block({ message: null });
+        requestApiPaymentCreation({ $button, url, data });
+
+        return false;
+      });
+    $backdrop
+      .append($(document.createElement('div')).addClass('stancer-logo').append(STANCER_SVG))
+      .on('click', close)
+      ;
+  };
+
+  const processResponse = ($button: JQuery<HTMLElement>, result: CheckoutResponse) => {
     try {
       if ('success' === result.result && result.redirect && result.redirect !== '') {
         $body.addClass('stancer-block-scroll');
         $backdrop.appendTo($body).removeClass('stancer-backdrop--hidden');
         $frame.appendTo($body).attr('src', result.redirect);
-        redirection.receipt = result.receipt
+        redirection.receipt = result.receipt;
       } else if ('failure' === result.result) {
         throw new Error('Result failure');
       } else {
         throw new Error('Invalid response');
       }
-    } catch(err) {
+    } catch (err) {
       // Reload page
       if (result.reload) {
         window.location.reload();
@@ -95,9 +130,9 @@
           .removeClass('processing')
           .unblock()
           .find('.input-text, select, input:checkbox')
-            .trigger('validate')
-            .trigger('blur')
-        ;
+          .trigger('validate')
+          .trigger('blur')
+          ;
 
         const $scrollElement = $('.woocommerce-NoticeGroup-updateOrderReview, .woocommerce-NoticeGroup-checkout');
 
@@ -110,16 +145,24 @@
         $body.trigger('checkout_error', [result.messages]);
       }
     } finally {
-      $this.unblock();
+      $button.unblock();
     }
   };
 
-  $backdrop
-    .append($(document.createElement('div')).addClass('stancer-logo').append(STANCER_SVG))
-    .on('click', close)
-  ;
+  const requestApiPaymentCreation = ({ $button, url, data }: PaymentCreationData) => {
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: data,
+      dataType: 'json',
+      success: (result: CheckoutResponse) => processResponse($button, result),
+      error: (_jqXHR, _textStatus, errorThrown) => {
+        $body.trigger('checkout_error', [errorThrown]);
+      }
+    });
 
-  // We don't get any messages from window, so we can't resize the iframe. (and maybe cannot load the payment form)
+  }
+
   $window
     .on('message', (event) => {
       const { data } = event.originalEvent as MessageEvent<MessageData>;
@@ -128,12 +171,14 @@
       if (typeof data.status === "undefined" || typeof data.width === "undefined" || typeof data.height === "undefined") {
         return;
       }
-      if (messageCallback(data)) {
-        return;
+
+      if (isChangePaymentMethod() && validatePaymentChange(data)) {
+        close();
+        return
       }
 
       if (data.status === 'finished' && redirection.receipt != '') {
-        window.postMessage({stopRedirection: true});
+        window.postMessage({ stopRedirection: true });
         window.location.href = redirection.receipt;
         close();
         return;
@@ -172,16 +217,40 @@
         close();
       }
     })
-  ;
+    ;
 
-  if ($('.js-stancer-change-payment-method').length) {
+  // #endregion
+  // #region place order
+  const placeOrder = () => {
+    const button = '.js-stancer-place-order';
+    const $form = $(button).parents('form');
+    const canSubmit = () => $('#payment_method_stancer').is(':checked');
+    onSubmit({ button: button, url: stancer.initiate, data: $form.serialize() }, canSubmit  );
+  };
+
+  // #endregion
+  // #region Change payment method
+  const changePaymentMethod = () => {
+    const button = '.js-stancer-change-payment-method';
+    const data = {
+      action: 'initiate',
+      nonce: stancer.changePaymentMethod?.nonce,
+      subscription: params.change_payment_method,
+    };
+    // We can cast it as ChangePaymentMethod because we know we are in a change payment situation
+    informationPaymentChange(stancer.changePaymentMethod as ChangePaymentMethod, params.change_payment_method);
+
+    onSubmit({ button, url: stancer.changePaymentMethod?.url, data })
+  };
+
+  const informationPaymentChange = ({ url, nonce }: ChangePaymentMethod, change_payment_method: string) => {
     $.ajax({
-      url: stancer.changePaymentMethod?.url,
+      url: url,
       type: 'POST',
       data: {
         action: 'information',
-        nonce: stancer.changePaymentMethod?.nonce,
-        subscription: params.change_payment_method,
+        nonce: nonce,
+        subscription: change_payment_method,
       },
       dataType: 'json',
       success: (result: CheckoutResponse) => {
@@ -191,103 +260,57 @@
       },
       error: (_jqXHR, _textStatus, errorThrown) => $body.trigger('checkout_error', [errorThrown]),
     });
-  }
+  };
 
-  $body
-    .on('click', '.js-stancer-place-order', function (this: HTMLElement, event): boolean {
-      if (!$stancer_payment_method.is(':checked')) {
-        return true;
-      }
-      $('.js-stancer-place-order').attr('disabled', 'disabled');
-      event.preventDefault();
-
-      const $this = $(this);
-      const $form = $this.parents('form');
-
-      $this.block({ message: null });
-
-      $.ajax({
-        url: stancer.initiate,
-        type: 'POST',
-        data: $form.serialize(),
-        dataType: 'json',
-        success: (result: CheckoutResponse) => processResponse($this, result),
-        error: (_jqXHR, _textStatus, errorThrown) => {
-          $body.trigger('checkout_error', [errorThrown]);
-        }
-      });
-
+  const validatePaymentChange = (data: MessageData) => {
+    if (data.status !== 'finished' && data.status !== 'error') {
       return false;
-    })
-    .on('click', '.js-stancer-change-payment-method', function (this: HTMLElement, event): boolean {
-      const $this = $(this);
+    }
 
-      $('.js-stancer-place-order').attr('disabled', 'disabled');
-      event.preventDefault();
+    close();
 
-      messageCallback = (data) => {
-        if (data.status !== 'finished' && data.status !== 'error') {
-          return false;
+    $.ajax({
+      url: stancer.changePaymentMethod?.url,
+      type: 'POST',
+      data: {
+        action: 'validate',
+        nonce: stancer.changePaymentMethod?.nonce,
+        subscription: params.change_payment_method,
+      },
+      dataType: 'json',
+      success: (result: CheckoutResponse) => {
+        if (result.result === 'success') {
+          if (result.card) {
+            $('#order_review .shop_table tfoot tr:nth-child(2) td.product-total').text(result.card);
+          }
+
+          $('#payment').empty();
         }
 
-        close();
+        if (result.messages) {
+          const $message = $(document.createElement('div')).text(result.messages);
 
-        $.ajax({
-          url: stancer.changePaymentMethod?.url,
-          type: 'POST',
-          data: {
-            action: 'validate',
-            nonce: stancer.changePaymentMethod?.nonce,
-            subscription: params.change_payment_method,
-          },
-          dataType: 'json',
-          success: (result: CheckoutResponse) => {
-            if (result.result === 'success') {
-              if (result.card) {
-                $('#order_review .shop_table tfoot tr:nth-child(2) td.product-total').text(result.card);
-              }
+          $('.woocommerce-notices-wrapper')
+            .siblings('.wc-block-components-notice-banner, .woocommerce-error, .woocommerce-info')
+            .remove()
+            .end()
+            .after($message)
+            ;
 
-              $('#payment').empty();
-            }
+          if (result.result === 'success') {
+            $message.addClass('woocommerce-info');
+          } else {
+            $message.addClass('woocommerce-error');
+          }
+        }
+      },
+    });
 
-            if (result.messages) {
-              const $message = $(document.createElement('div')).text(result.messages);
+    return true;
 
-              $('.woocommerce-notices-wrapper')
-                .siblings('.wc-block-components-notice-banner, .woocommerce-error, .woocommerce-info')
-                  .remove()
-                  .end()
-                .after($message)
-              ;
+  };
 
-              if (result.result === 'success') {
-                $message.addClass('woocommerce-info');
-              } else {
-                $message.addClass('woocommerce-error');
-              }
-            }
-          },
-        });
+  // #endregion
 
-        return true;
-      };
-
-      $this.block({ message: null });
-
-      $.ajax({
-        url: stancer.changePaymentMethod?.url,
-        type: 'POST',
-        data: {
-          action: 'initiate',
-          nonce: stancer.changePaymentMethod?.nonce,
-          subscription: params.change_payment_method,
-        },
-        dataType: 'json',
-        success: (result: CheckoutResponse) => processResponse($this, result),
-        error: (_jqXHR, _textStatus, errorThrown) => $body.trigger('checkout_error', [errorThrown]),
-      });
-
-      return false;
-    })
-  ;
+  isChangePaymentMethod() ? changePaymentMethod() : placeOrder();
 }))(jQuery);
