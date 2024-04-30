@@ -35,9 +35,9 @@
   const $backdrop = $(document.createElement('div')).addClass('stancer-backdrop');
   // We create the frame, and set some of their attribute before wrapping it in jQuery.
   const $frame = $(document.createElement('iframe'))
-  .addClass('stancer-iframe')
-  .attr('allow','payment')
-  .attr('sandbox', 'allow-scripts allow-forms allow-same-origin allow-top-navigation');
+    .addClass('stancer-iframe')
+    .attr('allow', 'payment')
+    .attr('sandbox', 'allow-scripts allow-forms allow-same-origin allow-top-navigation');
   /*
   * We set allow = payment; we want to authorize paymentAPI in our Iframe
   * We set sandbox = allow-scripts ; we need it because we use javascript in the payment page.
@@ -60,6 +60,7 @@
   const close = () => {
     $body.removeClass('stancer-block-scroll');
     $backdrop.detach().addClass('stancer-backdrop--hidden');
+    $('.js-stancer-place-order').removeAttr('disabled');
     $frame.detach();
   };
   const processResponse = ($this: JQuery<HTMLElement>, result: CheckoutResponse) => {
@@ -197,7 +198,7 @@
       if (!$stancer_payment_method.is(':checked')) {
         return true;
       }
-
+      $('.js-stancer-place-order').attr('disabled', 'disabled');
       event.preventDefault();
 
       const $this = $(this);
@@ -221,6 +222,7 @@
     .on('click', '.js-stancer-change-payment-method', function (this: HTMLElement, event): boolean {
       const $this = $(this);
 
+      $('.js-stancer-place-order').attr('disabled', 'disabled');
       event.preventDefault();
 
       messageCallback = (data) => {
