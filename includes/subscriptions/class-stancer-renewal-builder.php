@@ -111,7 +111,7 @@ class WCS_Stancer_Renewal_Builder {
 			$description = static::get_valid_description(
 				[],
 				sprintf(
-				// translators: 1. Subscription ID. 2. Current order ID.
+				// translators: 1. Subscription ID. 2. Current order ID. This text shouldn't be longer than 64 character!
 					__( 'Renewal payment for subscription n°%1$d, order n°%2$d', 'stancer' ),
 					$subscription->get_id(),
 					$this->order->get_id(),

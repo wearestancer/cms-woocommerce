@@ -251,12 +251,22 @@ msgstr ""
 msgid "Cart identifier"
 msgstr ""
 
+#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+#: includes/class-stancer-gateway.php
+msgid "The description must be between %1$d and %2$d characters after variable replacement."
+msgstr ""
+
 #: includes/class-stancer-gateway.php
 msgid "Your order SHOP_NAME"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Description"
+msgstr ""
+
+#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+#: includes/class-stancer-gateway.php
+msgid "The description must be between %1$d and %2$d characters after variable replacement. Do you still wish submit your settings ?"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -276,6 +286,19 @@ msgstr ""
 #. translators: %s: Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
+msgstr ""
+
+#: includes/class-stancer-payment-builder.php
+msgid "your Order WooCommerce"
+msgstr ""
+
+#: includes/subscriptions/class-stancer-renewal-builder.php
+msgid "No card found for this subscription."
+msgstr ""
+
+#. translators: 1. Subscription ID. 2. Current order ID. This text shouldn't be longer than 64 character!
+#: includes/subscriptions/class-stancer-renewal-builder.php
+msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
 msgstr ""
 
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
@@ -300,15 +323,6 @@ msgstr ""
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "We were unable to locate the subscription."
-msgstr ""
-
-#: includes/traits/trait-stancer-subscription.php
-msgid "No card found for this subscription."
-msgstr ""
-
-#. translators: 1. Subscription ID. 2. Current order ID.
-#: includes/traits/trait-stancer-subscription.php
-msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
 msgstr ""
 
 #: includes/traits/trait-stancer-subscription.php

@@ -147,32 +147,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function description_verification( array $settings ) {
-		$params_expected_diff = [
-			'CART_ID' => [
-				'min' => -6,
-				'max' => 0,
-			],
-			'CURRENCY' => [
-				'min' => -5,
-				'max' => -5,
-			],
-			'SHOP_NAME' => [
-				'min' => 2,
-				'max' => 2,
-			],
-			'TOTAL_AMOUNT' => [
-				'min' => -9,
-				'max' => -4,
-			],
-		];
+		$params_expected_diff = $this->get_description_parameters_diff();
 		$description = $settings['payment_description'];
 		if ( ! $description ) {
 			return;
 		}
 		$description_length_max = strlen( $description );
 		$description_length_min = $description_length_max;
-		foreach ( $params_expected_diff as $key => $diff ) {
-			if ( str_contains( $key, $description ) ) {
+		foreach ( $params_expected_diff as $diff ) {
+			if ( str_contains( $diff['name'], $description ) ) {
 				$description_length_max += $diff['max'];
 				$description_length_min += $diff['min'];
 			}
@@ -493,6 +476,38 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'description' => sprintf( $desc, 'stest_' ),
 				'pattern' => 'stest_',
 				'title' => __( 'Secret test API key', 'stancer' ),
+			],
+		];
+	}
+
+	/**
+	 * Function that return the array of diff between variable length and variable name length
+	 *
+	 * It must be reworked, it is used in js and php.
+	 *
+	 * @return array
+	 */
+	public function get_description_parameters_diff(): array {
+		return [
+			[
+				'name' => 'CART_ID',
+				'min' => -6,
+				'max' => 0,
+			],
+			[
+				'name' => 'CURRENCY',
+				'min' => -5,
+				'max' => -5,
+			],
+			[
+				'name' => 'SHOP_NAME',
+				'min' => 2,
+				'max' => 2,
+			],
+			[
+				'name' => 'TOTAL_AMOUNT',
+				'min' => -9,
+				'max' => -4,
 			],
 		];
 	}
