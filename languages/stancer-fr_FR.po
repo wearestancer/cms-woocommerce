@@ -99,6 +99,15 @@ msgstr "La description du payment de renouvellement"
 msgid "Description"
 msgstr "La description"
 
+#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+#: includes/class-stancer-gateway.php
+msgid ""
+"The description must be between %1$d and %2$d characters after variable "
+"replacement. Do you still wish submit your settings ?"
+msgstr ""
+"La description doit être comprise entre %1$d et %2$d après remplacement des "
+"variables. Voulez vous tout de même enregistrer vos paramètres ?"
+
 #: includes/class-stancer-gateway.php
 msgid "No logo."
 msgstr "Aucun logo."
@@ -369,12 +378,16 @@ msgstr "Identifiant de la commande"
 #. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
 #: includes/class-stancer-gateway.php
 msgid "The description must be between %1$d and %2$d characters."
+#, fuzzy
+msgid "The description must be between %1$d and %2$d characters."
 msgstr ""
 "La description doit être comprise entre %1$d et %2$d caractères."
 
 #: includes/class-stancer-gateway.php
 msgid "Payment for order n°ORDER_ID"
 msgstr "Paiement pour la commande n°ORDER_ID"
+msgid "Payment for order n°CART_ID"
+msgstr "Payment pour la commande n°CART_ID"
 
 #: includes/class-stancer-gateway.php
 msgid "Description"
@@ -423,17 +436,27 @@ msgstr ""
 "caractères, cela peut entrainer l'utilisation de la description par defaut."
 
 #. translators: "%s": The order ID.
+#: includes/class-stancer-gateway.php
+msgid ""
+"Your payment description is not between 3 and 45 characters,it could result in the use of default description: 'your order "
+"Woocommerce'."
+msgstr "Votre description de paiement n'est pas comprise entre 3 et 45 charactères, cela peut entrainer l'utilisation de la description par defaut: 'your order'"
+
+#. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
 msgid "Payment for order n°%s"
 msgstr "Payment pour la commande n°%s"
 msgid "Your order WooCommerce"
 msgstr "Votre Commande WooCommerce"
+msgid "Payment for order n°%s"
+msgstr "Payment pour la commande n°$s"
 
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
 msgstr "Aucune carte trouvé pour cet abonnement."
 
 #. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
+#. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 character!
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
 msgstr "Renouvellement de l'abonnement n°%1$d, commande n°%2$d"
