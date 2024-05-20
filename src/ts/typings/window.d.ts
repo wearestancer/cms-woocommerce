@@ -3,17 +3,15 @@ import { type Select2Plugin } from 'select2';
 declare global {
   interface AdminData{
     confirmMessage: string;
-    descriptionDiff: ExpectedReplacementSize[] ;
+    descriptionVariables: string[];
+    minSize:number;
+    maxSize:number;
   }
 
   interface BlockParams {
     message?: string | null;
   }
-  type ExpectedReplacementSize = {
-    name: string;
-    min: number;
-    max: number;
-  };
+
   interface StancerData {
     changePaymentMethod?: ChangePaymentMethod
     initiate: string;
@@ -40,7 +38,6 @@ declare global {
     stancer_admin: AdminData;
     stancer: StancerData;
     wc_checkout_params: WooCommerceCheckoutParams;
-
   }
 
   const stancer: StancerData;

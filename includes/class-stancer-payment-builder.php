@@ -74,15 +74,16 @@ class WC_Stancer_Payment_Builder {
 		$params = [
 			'CURRENCY' => strtoupper( $currency_code ),
 			'CART_ID' => (int) $this->order->get_id(),
+			'ORDER_ID' => (int) $this->order->get_id(),
 			'SHOP_NAME' => 'WooCommerce',
 			'TOTAL_AMOUNT' => sprintf( '%.02f', $total ),
 		];
 		$description = $this->get_valid_description(
 			$params,
 			$this->api_config->description,
-			__( 'your Order WooCommerce', 'stancer' )
+			// translators: "%s": The order ID.
+			sprintf( __( 'Payment for order n°%s', 'stancer' ), $this->order->get_id() )
 		);
-
 		if ( null === $auth ) {
 			$auth_limit = $this->api_config->auth_limit;
 			$auth = is_null( $auth_limit ) || '' === $auth_limit ? false : $total >= $auth_limit;

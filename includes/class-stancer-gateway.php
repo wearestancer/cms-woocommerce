@@ -33,8 +33,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	use WC_Stancer_Subscription_Trait;
 
 
-	public const MAX_SIZE_DESCRIPTION = 64;
+	public const MAX_SIZE_DESCRIPTION = 45;
 	public const MIN_SIZE_DESCRIPTION = 3;
+	public const DESCRIPTION_VARIABLES =
+		[
+			'SHOP_NAME',
+			'TOTAL_AMOUNT',
+			'CURRENCY',
+			'ORDER_ID',
+		];
 
 	/**
 	 * Stancer configuration.
@@ -92,9 +99,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		// Update settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 
-		// Check Description length and make sure it is correct.
-		add_filter( 'woocommerce_settings_api_sanitized_fields_' . $this->id, [ $this, 'description_verification' ] );
-
 		// Check the order status and redirect us if the payment is already completed.
 		add_action( 'after_woocommerce_pay', [ $this, 'redirect_incorrect_call' ] );
 
@@ -138,41 +142,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
 		];
-	}
-
-	/**
-	 * Check for the Description and make sure it's length is correct.
-	 *
-	 * @param array $settings The settings sent by the user.
-	 * @return void
-	 */
-	public function description_verification( array $settings ) {
-		$params_expected_diff = $this->get_description_parameters_diff();
-		$description = $settings['payment_description'];
-		if ( ! $description ) {
-			return;
-		}
-		$description_length_max = strlen( $description );
-		$description_length_min = $description_length_max;
-		foreach ( $params_expected_diff as $diff ) {
-			if ( str_contains( $diff['name'], $description ) ) {
-				$description_length_max += $diff['max'];
-				$description_length_min += $diff['min'];
-			}
-		}
-
-		if ( $description_length_max > static::MAX_SIZE_DESCRIPTION
-			|| $description_length_min < static::MIN_SIZE_DESCRIPTION ) {
-			$class[] = 'stancer-description-notice';
-			$class[] = 'notice';
-			$message = 'your description might be too long or too short be sure it is between 3 & 64 character long';
-			printf(
-				'<div class="%1$s"><p>%2$s</p></div>',
-				esc_attr( implode( ' ', $class ) ),
-				esc_html( $message ),
-			);
-		}
-		return $settings;
 	}
 
 	/**
@@ -343,6 +312,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			[],
 			STANCER_ASSETS_VERSION,
 		);
+		wp_localize_script(
+			'stancer-admin-ts',
+			'stancer_admin',
+			[
+				'confirmMessage' => sprintf(
+					// Translators: "%1$d": The minimum size of the description. "%2$d": The maximum size of the description.
+					__( 'The description must be between %1$d and %2$d characters after variable replacement. Do you still wish to submit your settings?', 'stancer' ),
+					self::MIN_SIZE_DESCRIPTION,
+					self::MAX_SIZE_DESCRIPTION,
+				),
+				'minSize' => self::MIN_SIZE_DESCRIPTION,
+				'maxSize' => self::MAX_SIZE_DESCRIPTION,
+			],
+		);
 	}
 
 	/**
@@ -476,38 +459,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'description' => sprintf( $desc, 'stest_' ),
 				'pattern' => 'stest_',
 				'title' => __( 'Secret test API key', 'stancer' ),
-			],
-		];
-	}
-
-	/**
-	 * Function that return the array of diff between variable length and variable name length
-	 *
-	 * It must be reworked, it is used in js and php.
-	 *
-	 * @return array
-	 */
-	public function get_description_parameters_diff(): array {
-		return [
-			[
-				'name' => 'CART_ID',
-				'min' => -6,
-				'max' => 0,
-			],
-			[
-				'name' => 'CURRENCY',
-				'min' => -5,
-				'max' => -5,
-			],
-			[
-				'name' => 'SHOP_NAME',
-				'min' => 2,
-				'max' => 2,
-			],
-			[
-				'name' => 'TOTAL_AMOUNT',
-				'min' => -9,
-				'max' => -4,
 			],
 		];
 	}
@@ -648,7 +599,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
 			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
 			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
-			'CART_ID' => __( 'Cart identifier', 'stancer' ),
+			'ORDER_ID' => __( 'Order identifier', 'stancer' ),
 		];
 
 		foreach ( $vars as $key => $value ) {
@@ -657,14 +608,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 		$desc_description .= sprintf(
 			// Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
-			__( 'The description must be between %1$d and %2$d characters after variable replacement.', 'stancer' ),
+			__( 'The description must be between %1$d and %2$d characters.', 'stancer' ),
 			self::MIN_SIZE_DESCRIPTION,
 			self::MAX_SIZE_DESCRIPTION,
 		);
 
 		$inputs['payment_description'] = [
 			'custom_attributes' => [ 'required' => 'required' ],
-			'default' => __( 'Your order SHOP_NAME', 'stancer' ),
+			'default' => __( 'Payment for order n°ORDER_ID', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',
 			'description' => $desc_description,
@@ -930,5 +881,33 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				exit();
 			}
 		}
+	}
+
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @param string $key the key of the settings.
+	 * @param string $value the value of payment description.
+	 * @return string The value of payment description.
+	 */
+	public function validate_payment_description_field( $key, $value ) {
+		if ( ! $value ) {
+			return;
+		}
+		if ( strlen( $value ) > static::MAX_SIZE_DESCRIPTION
+			|| strlen( $value ) < static::MIN_SIZE_DESCRIPTION ) {
+			$message = sprintf(
+				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size.
+				esc_html__(
+					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description.',
+					'stancer'
+				),
+				static::MIN_SIZE_DESCRIPTION,
+				static::MAX_SIZE_DESCRIPTION,
+			);
+			WC_Admin_Settings::add_error( $message );
+		}
+
+		return $value;
 	}
 }

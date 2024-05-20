@@ -78,7 +78,6 @@ trait WC_Stancer_Subscription_Trait {
 		);
 		add_action( 'woocommerce_subscription_status_cancelled', [ $this, 'cancel_subscription' ] );
 		add_action( 'woocommerce_subscription_status_expired', [ $this, 'cancel_subscription' ] );
-
 		add_filter( 'woocommerce_change_payment_button_html', [ $this, 'format_change_payment_button' ] );
 	}
 

@@ -14,6 +14,12 @@
 
 use Stancer;
 
+/**
+ * Trait that add validator for API parameters.
+ * For now we only check for description.
+ *
+ * @since unreleased
+ */
 trait WC_Stancer_Payment_Validator_Traits {
 
 	/**
@@ -33,7 +39,7 @@ trait WC_Stancer_Payment_Validator_Traits {
 		}
 
 		$description = str_replace( array_keys( $params ), $params, $custom_description );
-		if ( strlen( $description ) > WC_Stancer_Gateway::MAX_SIZE_DESCRIPTION || strlen( $description ) < WC_Stancer_Gateway::MIN_SIZE_DESCRIPTION ) {
+		if ( strlen( $description ) > 64 || strlen( $description ) < 3 ) {
 			return $default_description;
 		}
 		return $description;
