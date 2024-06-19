@@ -4,19 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [unreleased]
-
-### Fixed
-- Declaring Hpos compatibility (CMS-126)
-
-## [unreleased]
-
-### Fixed
-- Fix three product's refund considered as partial refund (CMS-118)
 ## [Unreleased]
 
 ### Changed
 - Refact devcontainer
+
+### Fixed
+- Declaring Hpos compatibility (CMS-126)
+- Fix three product's refund considered as partial refund (CMS-118)
 
 
 ## [1.2.3] - 2024-04-25
