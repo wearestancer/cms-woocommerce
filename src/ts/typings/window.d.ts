@@ -6,13 +6,13 @@ declare global {
   }
 
   interface StancerData {
-    changePaymentMethod?: {
-      nonce: string;
-      url: string;
-    };
+    changePaymentMethod?: ChangePaymentMethod
     initiate: string;
   }
-
+  interface ChangePaymentMethod {
+    nonce: string;
+    url:string;
+  }
   interface WooCommerceCheckoutParams {
     checkout_url: string;
   }
