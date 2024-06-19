@@ -1,5 +1,7 @@
 #! /bin/sh
 
+set -eu
+
 cat <&0 \
   | sed 's/^"Project-Id-Version.*"/"Project-Id-Version: $[last-commit-hash]\\n"/' \
   | sed 's/^"POT-Creation-Date.*"/"POT-Creation-Date: $[first-commit-date]\\n"/' \

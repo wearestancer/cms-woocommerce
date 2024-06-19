@@ -1,0 +1,19 @@
+{
+  http_port 10021
+  https_port 10020
+  admin 0.0.0.0:2019
+}
+
+mailtrap.localtest.stancer.network {
+  reverse_proxy http://mailtrap
+  tls internal
+}
+
+woocommerce.localtest.stancer.network {
+  root * /var/www/html
+  php_fastcgi wordpress:9000
+
+  file_server
+  encode gzip
+  tls internal
+}
