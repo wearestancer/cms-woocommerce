@@ -27,13 +27,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Currently plugin version.
  */
 define( 'STANCER_WC_VERSION', '1.2.0' );
-define( 'STANCER_ASSETS_VERSION', '0000000' );
+define( 'STANCER_ASSETS_VERSION', '$[current-timestamp]' );
 define( 'STANCER_FILE', __FILE__ );
 define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
 
 require_once STANCER_DIRECTORY_PATH . '/vendor/autoload.php';
 
 add_action( 'plugins_loaded', 'load_translations' );
+
+// Declare compatibility with Hpos.
+add_action(
+	'before_woocommerce_init',
+	function () {
+		if ( class_exists( AutomatticWooCommerceUtilitiesFeaturesUtil::class ) ) {
+			AutomatticWooCommerceUtilitiesFeaturesUtil::declare_compatibility( 'custom_order_tables', STANCER_FILE, true );
+		}
+	}
+);
 
 // Add links on plugins.
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'plugin_action_links' );

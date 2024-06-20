@@ -1,18 +1,16 @@
 
-# composer
-vendor/
-*.phar
-
-# node
+# Dependencies
 node_modules/
-.pnpm-store
+vendor/
 
-# Tests report
-reports/
+# Local
+.vscode/
+*.local.sh
 
-# macOS specific files
+# OS specific files
 .DS_Store
 ._*
+.directory
 
 # Generated content
 public/
@@ -21,3 +19,4 @@ vendor-prefixer/**
 !**/.gitkeep
 *.mo
 *.zip
+*.crt

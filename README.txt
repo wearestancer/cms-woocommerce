@@ -1,5 +1,5 @@
 === Stancer for WooCommerce ===
-Tags: stancer, payment, credit card, fast, simple, sepa, woocommerce, ecommerce, e-commerce, checkout
+Tags: stancer, payment, credit card, sepa, ecommerce
 Requires at least: 6.1.0
 Tested up to: 6.4.3
 Requires PHP: 7.4
@@ -85,6 +85,11 @@ Updates are done automatically. However, we recommend that you back up your site
 == Changelog ==
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+
+= Version 1.2.4 =
+* Support HPOS
+* Fixing multiple payment on iframe and a bug for multiple item refunds
+* Adding devcontainer for easy development.
 
 = Version 1.2.3 =
 * Fix the integration of the new payment page

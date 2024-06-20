@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.4] - 2024-06-20
+
+### Changed
+- Refact devcontainer (CMS-98)
+
+### Fixed
+- Declaring Hpos compatibility (CMS-126)
+- Fix three product's refund considered as partial refund (CMS-118)
+- Fix iframe payment method creating multiple payment when clicked fast enough (CMS-112)
+- Fix Tag number beeing too many according to Wooommerce's guideline (CMS-114)
+
+
 ## [1.2.3] - 2024-04-25
 
 ### Deprecated
