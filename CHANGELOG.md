@@ -7,15 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- Refact devcontainer
+- Refact devcontainer (CMS-98)
 
 ### Fixed
 - Declaring Hpos compatibility (CMS-126)
 - Fix three product's refund considered as partial refund (CMS-118)
-## [unreleased]
-
-### Fixed
-- Fix Iframe payment method creating multiple payment when clicked fast enough (CMS)
+- Fix iframe payment method creating multiple payment when clicked fast enough (CMS-112)
+- Fix Tag number beeing too many according to Wooommerce's guideline (CMS-114)
 
 
 ## [1.2.3] - 2024-04-25
