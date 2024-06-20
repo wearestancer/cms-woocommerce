@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refact devcontainer (CMS-98)
 
 ### Fixed
-- Declaring Hpos compatibility (CMS-126)
+- Declaring [HPOS](https://woocommerce.com/document/high-performance-order-storage/) compatibility (CMS-126)
 - Fix three product's refund considered as partial refund (CMS-118)
 - Fix iframe payment method creating multiple payment when clicked fast enough (CMS-112)
 - Fix Tag number beeing too many according to Wooommerce's guideline (CMS-114)
@@ -19,10 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.3] - 2024-04-25
 
 ### Deprecated
-- Deprecate Popup page type Because of security problems, consider using other page types.
+- Deprecate Popup page type Because of security problems, consider using other page types
 
 ### Fixed
-- Fix the integration of the new payment page.
+- Fix the integration of the new payment page
 
 
 ## [1.2.2] - 2024-04-02

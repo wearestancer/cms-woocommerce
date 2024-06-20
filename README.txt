@@ -89,7 +89,7 @@ Updates are done automatically. However, we recommend that you back up your site
 = Version 1.2.4 =
 * Support [HPOS](https://woocommerce.com/document/high-performance-order-storage/)
 * Fixing multiple payment on iframe and a bug for multiple item refunds
-* Adding devcontainer for easy development.
+* Adding devcontainer for easy development
 
 = Version 1.2.3 =
 * Fix the integration of the new payment page
@@ -109,11 +109,11 @@ Updates are done automatically. However, we recommend that you back up your site
 * Amount could not have decimals depending on Woo settings
 
 = Version 1.1.1 =
-* Internal version for testing release process.
+* Internal version for testing release process
 
 = Version 1.1.0 =
 * New integration mode "Inside the page"
 * Support [Woo Subscriptions](https://woo.com/products/woocommerce-subscriptions/)
 
 = Version 1.0.0 =
-* First version.
+* First version
