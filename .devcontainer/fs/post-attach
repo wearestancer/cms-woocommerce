@@ -2,11 +2,22 @@
 
 set -eu -o pipefail
 
-site_host="woocommerce.localtest.stancer.network"
+base_host="localtest.stancer.network"
+site_host="woocommerce.${base_host}"
 site_port=10020
+site_title="WooCommerce Testing"
+
 wordpress_dir=/var/www/html
 plugin_dir="${wordpress_dir}/wp-content/plugins/stancer"
 devcontainer_dir="${plugin_dir}/.devcontainer"
+
+admin_email="shop-admin@stancer.com"
+admin_password="shop-admin"
+
+user_email="shop-user@stancer.com"
+user_password="shop-user"
+user_firstname="John"
+user_lastname="Doe"
 
 
 # Adding our directory as a safe directory.
@@ -43,10 +54,10 @@ wp --path="$wordpress_dir" config set WP_DEBUG_LOG true --raw
 # Run the installer (similar to the browser install)
 wp --path="$wordpress_dir" core install \
   --url="${site_host}:${site_port}" \
-  --title="WooCommerce Testing" \
-  --admin_user='shop-admin@stancer.com' \
-  --admin_password='shop-admin' \
-  --admin_email='shop-admin@stancer.com'
+  --title="$site_title" \
+  --admin_user="$admin_email" \
+  --admin_password="$admin_password" \
+  --admin_email="$admin_email"
 
 # Make HTTPS the default
 wp --path="$wordpress_dir" option update siteurl "https://${site_host}:${site_port}"
@@ -117,20 +128,16 @@ done
 
 
 # Add a default user
-email="shop-user@stancer.com"
-firstname="John"
-lastname="Doe"
-
-command=$(wp --path="$wordpress_dir" wc customer list --user=1 --email="$email" --format=count)
+command=$(wp --path="$wordpress_dir" wc customer list --user=1 --email="$user_email" --format=count)
 
 if [ "$command" == 0 ]; then
   addr=$(cat <<ADDR
 {
-  "first_name": "$firstname",
-  "last_name": "$lastname",
-  "email": "$email",
+  "first_name": "$user_firstname",
+  "last_name": "$user_lastname",
+  "email": "$user_email",
   "phone": "+33123456789",
-  "address_1": "42 $firstname $lastname street",
+  "address_1": "42 $user_firstname $user_lastname street",
   "postcode": "99999",
   "city": "CITY",
   "country": "FR"
@@ -139,21 +146,21 @@ ADDR
 )
 
   wp --path="$wordpress_dir" wc customer create --user=1 \
-    --first_name="$firstname" \
-    --last_name="$lastname" \
-    --email="$email" \
-    --username="$email" \
-    --password="shop-user" \
+    --first_name="$user_firstname" \
+    --last_name="$user_lastname" \
+    --email="$user_email" \
+    --username="$user_email" \
+    --password="$user_password" \
     --billing="$addr" \
     --shipping="$addr"
 
   addr=$(cat <<ADDR
 {
-  "first_name": "$firstname",
-  "last_name": "$lastname",
+  "first_name": "$user_firstname",
+  "last_name": "$user_lastname",
   "email": "shop-admin@stancer.com",
   "phone": "+33123456789",
-  "address_1": "42 $firstname $lastname street",
+  "address_1": "42 $user_firstname $user_lastname street",
   "postcode": "99999",
   "city": "CITY",
   "country": "FR"
@@ -237,4 +244,35 @@ fi
 # Local configuration
 if [ -f "${wordpress_dir}/wp-content/plugins/stancer/.devcontainer/post-attach.local.sh" ]; then
   /bin/bash "${wordpress_dir}/wp-content/plugins/stancer/.devcontainer/post-attach.local.sh"
+fi
+
+
+
+# Output
+underline=$(tput smul)
+nounderline=$(tput rmul)
+bold=$(tput bold)
+normal=$(tput sgr0)
+red="\033[38;5;9m"
+
+echo ""
+echo "${underline}${bold}Default settings${normal}${nounderline}"
+echo ""
+echo "Website accessible at:      https://${site_host}:${site_port}"
+echo "Admin panel accessible at:  https://${site_host}:${site_port}/wp-admin"
+echo ""
+echo "Admin login:                $admin_email"
+echo "Admin password:             $admin_password"
+echo ""
+echo "Test user login:            $user_email"
+echo "Test user password:         $user_password"
+echo ""
+echo "Webmail:                    https://mailtrap.${base_host}:${site_port}"
+echo "Webmail login:              mailtrap"
+echo "Webmail password:           mailtrap"
+
+if [ -z "${API_PUBLIC_KEY:-}" ] || [ -z "${API_SECRET_KEY:-}" ]; then
+  echo ""
+  echo -e "${bold}${red}Your Stancer API keys are not properly setup do not forget to set them.${normal}"
+  echo ""
 fi
