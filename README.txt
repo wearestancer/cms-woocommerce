@@ -87,7 +87,7 @@ Updates are done automatically. However, we recommend that you back up your site
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
 = Version 1.2.4 =
-* Specifing support for HPOS
+* Support HPOS
 * Fixing multiple payment on iframe and a bug for multiple item refunds
 * Adding devcontainer for easy development.
 
