@@ -2,7 +2,8 @@
 
 set -eu -o pipefail
 
-site_host="woocommerce.localtest.stancer.network"
+base_host="localtest.stancer.network"
+site_host="woocommerce.${base_host}"
 site_port=10020
 site_title="WooCommerce Testing"
 
@@ -265,6 +266,10 @@ echo "Admin password:             $admin_password"
 echo ""
 echo "Test user login:            $user_email"
 echo "Test user password:         $user_password"
+echo ""
+echo "Webmail:                    https://mailtrap.${base_host}:${site_port}"
+echo "Webmail login:              mailtrap"
+echo "Webmail password:           mailtrap"
 
 if [ -z "${API_PUBLIC_KEY:-}" ] || [ -z "${API_SECRET_KEY:-}" ]; then
   echo ""
