@@ -24,6 +24,8 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodTyp
  */
 final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 
+	use WC_Stancer_Refunds_Traits;
+
 	/**
 	 * Name of our payment method
 	 *
@@ -70,53 +72,104 @@ final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 	}
 
 	/**
-	 * Get the js file and add it to the WordPress scripts list.
-	 *
-	 * @return array<string>
-	 */
-	public function get_payment_method_script_handles() {
-		wp_register_script(
-			'block_iframe',
-			plugin_dir_url( STANCER_FILE ) . 'public/js/block.min.js',
-			[],
-			STANCER_ASSETS_VERSION,
-			true
-		);
-		wp_enqueue_style(
-			'stancer-iframe',
-			plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
-			[],
-			STANCER_ASSETS_VERSION,
-		);
-		wp_enqueue_style(
-			'stancer-option',
-			plugin_dir_url( STANCER_FILE ) . 'public/css/option.min.css',
-			[],
-			STANCER_ASSETS_VERSION,
-		);
-		return [ 'block_iframe' ];
-	}
-
-	/**
 	 * Get the Stancer gateway settings, and restructure it for easy use in our frontend.
 	 *
 	 * @return array
 	 */
 	public function get_payment_method_data() {
 		$logo = $this->gateway->settings['payment_option_logo'] ?? 'no-logo';
-		return [
-			'title' => $this->get_setting( 'payment_option_text' ),
-			'description' => $this->get_setting( 'payment_option_description' ),
-			'label' => $this->get_setting(
-				'button_label',
-				__( 'Pay by card', 'stancer' ),
-			),
-			'logo' => [
-				'url' => plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $logo,
-				'class' => 'stancer-option__logo stancer-option__logo--' . $logo,
-			],
-			'page_type' => $this->get_setting( 'page_type', 'pip' ),
+		if ( $this->gateway instanceof WC_Stancer_Gateway ) {
+			$payment_data = $this->gateway->get_payment_data(
+				$this->get_setting( 'page_type', 'pip' ) === 'redirect' ? 'redirect' : 'pip'
+			);
+			return [
+				'title' => $this->get_setting( 'payment_option_text' ),
+				'description' => $this->get_setting( 'payment_option_description' ),
+				'label' => $this->get_setting(
+					'button_label',
+					__( 'Pay by card', 'stancer' ),
+				),
+				'logo' => [
+					'url' => plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $logo,
+					'class' => 'stancer-option__logo stancer-option__logo--' . $logo,
+				],
+				'page_type' => $payment_data['page_type'],
+				'stancer' => $payment_data['data'],
+				'supports' => $this->gateway->supports,
+			];
+		}
+	}
 
+	/**
+	 * Get the js file and add it to the WordPress scripts list.
+	 *
+	 * @return array<string>
+	 */
+	public function get_payment_method_script_handles() {
+		if ( ! $this->gateway instanceof WC_Stancer_Gateway ) {
+			return;
+		}
+		wp_register_script(
+			'stancer-api',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/api.min.js',
+			[ 'jquery' ],
+			STANCER_ASSETS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'stancer-iframe',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/iframe.min.js',
+			[ 'jquery' ],
+			STANCER_ASSETS_VERSION,
+			true
+		);
+		wp_register_script(
+			'stancer-change-payment-method',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/change_payment_method.min.js',
+			[ 'jquery' ],
+			STANCER_ASSETS_VERSION,
+			true
+		);
+		wp_localize_script(
+			'stancer-api',
+			'stancer_data',
+			$this->gateway->get_payment_data( $this->get_setting( 'page_type', 'pip' ) )['data'],
+		);
+		wp_register_script(
+			'stancer-block',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/block.min.js',
+			[
+				'stancer-api',
+				'stancer-change-payment-method',
+				'stancer-iframe',
+				'wp-api-fetch',
+				'wc-blocks-checkout',
+				'wp-html-entities',
+				'wp-plugins',
+				'wc-settings',
+			],
+			STANCER_ASSETS_VERSION,
+			true
+		);
+
+		wp_enqueue_style(
+			'stancer-iframe-style',
+			plugin_dir_url( STANCER_FILE ) . 'public/css/iframe.min.css',
+			[],
+			STANCER_ASSETS_VERSION,
+		);
+		wp_enqueue_style(
+			'stancer-option-style',
+			plugin_dir_url( STANCER_FILE ) . 'public/css/option.min.css',
+			[],
+			STANCER_ASSETS_VERSION,
+		);
+		return [
+			'stancer-api',
+			'stancer-change-payment-method',
+			'stancer-iframe',
+			'stancer-block',
 		];
 	}
 }

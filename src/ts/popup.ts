@@ -56,7 +56,7 @@
     }
 
     $.ajax({
-      url: stancer.initiate,
+      url: stancer_data.initiate,
       type: 'POST',
       data: $form.serialize(),
       dataType: 'json',

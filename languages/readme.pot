@@ -158,7 +158,13 @@ msgstr ""
 msgid "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md\">See complete changelog file on GitLab</a>."
 msgstr ""
 
-#. Found in changelog paragraph.
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Add support for WooCommerce blocks"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
 msgid "Fix subscription description warning showing even when no subscription"
 msgstr ""
 

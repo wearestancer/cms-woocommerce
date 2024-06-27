@@ -8,22 +8,19 @@
  * There is also some custom defined types
  *
  */
-import type { BillingDataProps,ShippingDataProps,ShippingStatusProps,BillingAddressShippingAddress } from "./payment-data";
-// Must be declared first as they are used in other interfaces
-declare global {
-  // Interfaces/types alphabetically ordered
+import type { BillingDataProps, ShippingDataProps, ShippingStatusProps, BillingAddressShippingAddress } from "./payment-data";
 
+declare global {
+
+  interface BlockApiResponse extends PaymentResult {
+    payment_result: PaymentResult;
+  }
   // Create a data type with the data structured as needed by the wc API for a POST checkout
   interface BlockParams {
     message?: string | null;
   }
   interface CompletePaymentData extends BillingAddressShippingAddress {
-    payment_method: string;
-  }
-  interface StancerPaymentInterface  {
-    billing?: BillingDataProps;
-    shippingData?: ShippingDataProps;
-    activePaymentMethod?: string;
+    payment_method: 'stancer';
   }
 
   interface CheckoutStatusProps {
@@ -36,6 +33,19 @@ declare global {
     // If true then checkout is processing (finalizing) the order with the server.
     isProcessing: boolean;
   }
+
+  interface PaymentResult {
+    payment_status: string;
+    redirect_url: string;
+    payment_details: Array<{ key: string, value: string }>;
+  }
+
+  interface StancerPaymentInterface {
+    billing?: BillingDataProps;
+    shippingData?: ShippingDataProps;
+    activePaymentMethod?: string;
+  }
+  type SubmitType = (data: ListenerData, callback?: () => boolean) => void;
   // This TypeDef is incomplete please refers to woocommerce doc for the complete typedef
   type PaymentMethodInterface = {
     // Indicates what the active payment method is.
@@ -68,5 +78,6 @@ declare global {
     // A boolean which indicates whether the shopper has checked the save payment method checkbox.
     shouldSavePayment: boolean;
   };
+
 }
-export {};
+export { };

@@ -1,4 +1,5 @@
 (($) => $(() => {
+
   type Input = JQuery<HTMLInputElement>;
 
   const prefix = 'woocommerce_stancer';

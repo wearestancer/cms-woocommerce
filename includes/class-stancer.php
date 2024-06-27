@@ -85,7 +85,6 @@ class WC_Stancer {
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
-
 		if ( version_compare( '1.0.0', $version, '>' ) ) {
 			$sql = 'CREATE TABLE ' . $wpdb->prefix . 'wc_stancer_card (
 				stancer_card_id int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT "Unique ID in this table",
@@ -174,8 +173,15 @@ class WC_Stancer {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
+		add_action( 'woocommerce_blocks_loaded', [ $this, 'gateway_block_support' ] );
+		add_action(
+			'rest_api_init',
+			function () {
+				$payment_change_controller = new WCS_Stancer_Change_Payment_Method();
+				$payment_change_controller->register_routes();
+			}
+		);
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
-		add_action( 'woocommerce_blocks_loaded', array( $this, 'gateway_block_support' ) );
 	}
 
 	/**
@@ -259,7 +265,6 @@ class WC_Stancer {
 	 */
 	public function gateway_block_support() {
 		if ( class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
-			require_once $this->plugin_abspath() . 'includes/class-stancer-gateway-block-support.php';
 			add_action(
 				'woocommerce_blocks_payment_method_type_registration',
 				function ( PaymentMethodRegistry $payment_method_registry ) {

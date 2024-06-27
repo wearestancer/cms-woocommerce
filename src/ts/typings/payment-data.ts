@@ -1,4 +1,4 @@
-// Must be declared first as they are used in other interfaces
+
 interface BaseAddress {
   address_1: string;
   address_2: string;
@@ -8,27 +8,24 @@ interface BaseAddress {
   state: string;
 }
 
-interface FirstNameLastName {
-  first_name: string;
-  last_name: string;
+export interface BillingAddressShippingAddress {
+  billing_address?: Partial<CartBillingAddress>;
+  shipping_address?: Partial<CartShippingAddress>;
 }
 
-export interface ShippingStatusProps {
-  // Current error status for shipping.
-  shippingErrorStatus: {
-    // Whether an error has happened.
-    hasError: boolean;
-    // Whether the address is invalid.
-    hasInvalidAddress: boolean;
-    // Whether the status is pristine.
-    isPristine: boolean;
-    // Whether the status is valid.
-    isValid: boolean;
-  };
+export interface BillingDataProps {
+  // The address used for billing.
+  billingAddress: CartBillingAddress;
+  billingData: CartBillingAddress;
+  // The customer Id the order belongs to.
+  customerId: number;
+  // True means that the site is configured to display prices including tax.
+  displayPricesIncludingTax: boolean;
 }
 
-
-// Must be declared second as they are used in other interfaces but use first interfaces.
+interface CartBillingAddress extends CartShippingAddress {
+  email: string;
+}
 
 // Types of the addresses fields for billing & shipping addresses
 interface CartShippingAddress extends BaseAddress, FirstNameLastName {
@@ -36,11 +33,11 @@ interface CartShippingAddress extends BaseAddress, FirstNameLastName {
   phone: string;
 }
 
-// Must be declare third as it use the interface declared second
-
-interface CartBillingAddress extends CartShippingAddress {
-  email: string;
+interface FirstNameLastName {
+  first_name: string;
+  last_name: string;
 }
+
 export interface ShippingDataProps {
   // True when rates are being selected.
   isSelectingRate: boolean;
@@ -56,22 +53,16 @@ export interface ShippingDataProps {
   shippingRatesLoading: boolean;
 }
 
-// Must be declared fourth as it use the CartBillingAddress & CartShippingAddress
-
-// Type of both addresses needed for the ApiPaymentData
-export interface BillingAddressShippingAddress {
-  billing_address: Partial<CartBillingAddress>;
-  shipping_address: Partial<CartShippingAddress>;
+export interface ShippingStatusProps {
+  // Current error status for shipping.
+  shippingErrorStatus: {
+    // Whether an error has happened.
+    hasError: boolean;
+    // Whether the address is invalid.
+    hasInvalidAddress: boolean;
+    // Whether the status is pristine.
+    isPristine: boolean;
+    // Whether the status is valid.
+    isValid: boolean;
+  };
 }
-
-export interface BillingDataProps {
-  // The address used for billing.
-  billingAddress: CartBillingAddress;
-  billingData: CartBillingAddress;
-  // The customer Id the order belongs to.
-  customerId: number;
-  // True means that the site is configured to display prices including tax.
-  displayPricesIncludingTax: boolean;
-}
-
-// Must be declared fifth as it use the interface declared fourth.

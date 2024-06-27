@@ -76,6 +76,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->method_description = __( 'Simple payment solution at low prices.', 'stancer' );
 		$this->supports = [
 			'payments',
+			'products',
 			'refunds',
 		];
 
@@ -298,7 +299,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 */
 	public function form_fields_scripts() {
 		wp_enqueue_script(
-			'stancer-admin-ts',
+			'stancer-admin',
 			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
 			[ 'jquery' ],
 			STANCER_ASSETS_VERSION,
@@ -306,13 +307,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		);
 
 		wp_enqueue_style(
-			'stancer-admin',
+			'stancer-admin-style',
 			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
 			[],
 			STANCER_ASSETS_VERSION,
 		);
 		wp_localize_script(
-			'stancer-admin-ts',
+			'stancer-admin',
 			'stancer_admin',
 			[
 				'confirmMessage' => sprintf(
@@ -427,6 +428,35 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		return implode( ' ', $default_classes );
+	}
+
+	/**
+	 * Get the payment Data to be send to our frontEnd.
+	 *
+	 * @param string $page_type the page type chosen by the user.
+	 * @return array
+	 */
+	public function get_payment_data( string $page_type ): array {
+		$data = [
+			'initiate' => WC_AJAX::get_endpoint( 'checkout' ),
+		];
+
+		if ( isset( $_GET['change_payment_method'] ) && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'] ) ) {
+			$page_type = 'pip'; // Picture in picture is forced for payment method change.
+			$data['changePaymentMethod'] = [
+				'nonce' => wp_create_nonce( 'change-method-' . $_GET['change_payment_method'] ),
+				'url' => plugins_url( $this->id . '/subscription/change-payment-method.php' ),
+			];
+
+			$message = esc_html( $this->settings['subscription_payment_change_description'] );
+		} else {
+			$message = esc_html( $this->settings['payment_option_description'] );
+		}
+		return [
+			'data' => $data,
+			'page_type' => $page_type,
+			'message' => $message,
+		];
 	}
 
 	/**
@@ -676,20 +706,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'hidden',
 		];
 
-		wp_enqueue_style(
-			'stancer-admin',
-			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
-			[],
-			STANCER_ASSETS_VERSION,
-		);
-		wp_enqueue_script(
-			'stancer-admin-ts',
-			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
-			[],
-			STANCER_ASSETS_VERSION,
-			true,
-		);
-
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
 
 		return $this;
@@ -721,7 +737,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		if ( 'no-logo' !== $logo ) {
 			wp_enqueue_style(
-				'stancer-option',
+				'stancer-option-style',
 				plugin_dir_url( STANCER_FILE ) . 'public/css/option.min.css',
 				[],
 				STANCER_ASSETS_VERSION,
@@ -738,41 +754,44 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		$page_type = $this->settings['page_type'];
-		$data = [
-			'initiate' => WC_AJAX::get_endpoint( 'checkout' ),
-		];
-
-		if ( isset( $_GET['change_payment_method'] ) && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'] ) ) {
-			$page_type = 'pip'; // Picture in picture is forced for payment method change.
-			$data['changePaymentMethod'] = [
-				'nonce' => wp_create_nonce( 'change-method-' . $_GET['change_payment_method'] ),
-				'url' => plugins_url( $this->id . '/subscription/change-payment-method.php' ),
-			];
-
-			echo esc_html( $this->settings['subscription_payment_change_description'] );
-		} else {
-			echo esc_html( $this->settings['payment_option_description'] );
-		}
+		$payment_data = $this->get_payment_data( $page_type );
+		$page_type = $payment_data['page_type'];
+		$data = $payment_data['data'];
 
 		$script_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
 		$style_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
 
-		$add_script = function ( string $script ) use ( $data, $script_path ) {
+		$add_script = function ( string $script, bool $localize = true, array $dependancy = [] ) use ( $data, $script_path ) {
 			$name = 'stancer-' . $script;
 
-			wp_register_script( $name, $script_path( $script ), [ 'jquery' ], STANCER_ASSETS_VERSION, true );
-			wp_localize_script( $name, 'stancer', $data );
+			wp_register_script(
+				$name,
+				$script_path( $script ),
+				array_merge( [ 'jquery' ], $dependancy ),
+				STANCER_ASSETS_VERSION,
+				true
+			);
+			if ( $localize ) {
+				wp_localize_script( $name, 'stancer_data', $data );
+			}
 			wp_enqueue_script( $name );
+			return $name;
 		};
-
+		echo esc_html( $payment_data['message'] );
 		switch ( $page_type ) {
 			case 'iframe':
 				$add_script( 'popup' );
 				break;
 
 			case 'pip':
-				$add_script( 'iframe' );
-				wp_enqueue_style( 'stancer-iframe', $style_path( 'iframe' ), [], STANCER_ASSETS_VERSION );
+				$dependancy[] = $add_script( 'api', false );
+				$dependancy[] = $add_script( 'change_payment_method', false );
+				$dependancy[] = $add_script( 'iframe', false );
+				$dependancy[] = 'wp-api-fetch';
+				$dependancy[] = 'wp-html-entities';
+
+				$add_script( 'shortcode', false, $dependancy );
+				wp_enqueue_style( 'stancer-iframe-style', $style_path( 'iframe' ), [], STANCER_ASSETS_VERSION );
 
 				break;
 

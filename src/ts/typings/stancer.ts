@@ -15,6 +15,7 @@ export interface StancerSettings {
   };
   page_type: string;
   title: string;
+  supports: string[]
 }
 
 
