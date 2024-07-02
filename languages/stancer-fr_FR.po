@@ -278,8 +278,8 @@ msgid "Page type"
 msgstr "Mode d'affichage"
 
 #: includes/class-stancer-gateway.php
-msgid "Popup"
-msgstr "Popup"
+msgid "Popup (Deprecated)"
+msgstr "Popup (Déprécié)"
 
 #: includes/class-stancer-gateway.php
 msgid "Inside the page"
@@ -288,6 +288,11 @@ msgstr "Intégré à la page"
 #: includes/class-stancer-gateway.php
 msgid "Redirect to an external page"
 msgstr "Rediriger vers une page externe"
+
+#: includes/class-stancer-gateway.php
+msgid "Popup option is deprecated and will be removed in a future update."
+msgstr ""
+"L'option popup est dépréciée et sera retirée dans une future mise à jour."
 
 #: includes/class-stancer-gateway.php
 msgid ""
@@ -363,6 +368,17 @@ msgstr "Aucune carte trouvé pour cet abonnement."
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
 msgstr "Renouvellement de l'abonnement n°%1$d, commande n°%2$d"
+
+#: includes/class-stancer.php
+msgid ""
+"Stancer payment by popup is deprecated, please change the option in your"
+msgstr ""
+"Le paiement Stancer par Popup est déprécié, merci de changer cette option "
+"dans vos"
+
+#: includes/class-stancer.php
+msgid "plugin settings"
+msgstr "réglages de module"
 
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
 #: includes/traits/trait-stancer-refunds.php

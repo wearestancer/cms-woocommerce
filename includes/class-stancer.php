@@ -171,6 +171,34 @@ class WC_Stancer {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
+		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
+	}
+
+	/**
+	 * Display deprecated settings parameters
+	 *
+	 * @return void
+	 */
+	public function display_depreciation() {
+
+		$options = get_option( 'woocommerce_stancer_settings' );
+		if ( is_array( $options ) && array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
+			$message = __(
+				'Stancer payment by popup is deprecated, please change the option in your',
+				'stancer'
+			);
+
+			$class = [ 'notice', 'notice-warning' ];
+			// translators: directly follow: "Stancer payment by popup is deprecated, please change the option in your".
+			$urlname = __( 'plugin settings', 'stancer' );
+			printf(
+				'<div class="%1$s"><p>%2$s <a href="%3$s">%4$s</a>.</p></div>',
+				esc_attr( implode( ' ', $class ) ),
+				esc_html( $message ),
+				esc_attr( stancer_setting_url() ),
+				esc_html( $urlname )
+			);
+		}
 	}
 
 	/**

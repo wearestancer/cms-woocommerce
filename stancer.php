@@ -83,7 +83,7 @@ function plugin_action_links( array $links ) {
 		'settings' => vsprintf(
 			'<a href="%s" aria-label="%s">%s</a>',
 			[
-				admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' ),
+				stancer_setting_url(),
 				esc_attr__( 'View Stancer module settings', 'stancer' ),
 				esc_html__( 'Settings', 'stancer' ),
 			],
@@ -99,6 +99,15 @@ function plugin_action_links( array $links ) {
 	];
 
 	return array_merge( $new, $links );
+}
+
+/**
+ * Return the URL of our settings panel
+ *
+ * @return string
+ */
+function stancer_setting_url() {
+	return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
 }
 
 /**
