@@ -280,7 +280,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Load scripts For the admin panel
+	 * Load scripts For the admin panel.
 	 *
 	 * @since unreleased
 	 *
@@ -447,7 +447,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 Allow to choose scheme logos.
 	 * @since 1.1.0 Woo Subscriptions method change description.
 	 * @since 1.2.0 Add admin scripts.
-	 * @since unreleased admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
+	 * @since unreleased Admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
 	 *
 	 * @return self
 	 */
