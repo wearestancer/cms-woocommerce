@@ -95,6 +95,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->init_subscription();
 
 		add_action( 'admin_notices', [ $this, 'display_error_key' ] );
+		add_action( 'admin_head', [ $this, 'form_fields_scripts' ] );
 	}
 
 	/**
@@ -279,6 +280,30 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
+	 * Load scripts For the admin panel.
+	 *
+	 * @since unreleased
+	 *
+	 * @return void
+	 */
+	public function form_fields_scripts() {
+		wp_enqueue_script(
+			'stancer-admin-ts',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
+			[ 'jquery' ],
+			STANCER_ASSETS_VERSION,
+			true,
+		);
+
+		wp_enqueue_style(
+			'stancer-admin',
+			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
+			[],
+			STANCER_ASSETS_VERSION,
+		);
+	}
+
+	/**
 	 * Generate the payment option logo selector.
 	 *
 	 * @since 1.1.0
@@ -422,6 +447,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 Allow to choose scheme logos.
 	 * @since 1.1.0 Woo Subscriptions method change description.
 	 * @since 1.2.0 Add admin scripts.
+	 * @since unreleased Admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
 	 *
 	 * @return self
 	 */
@@ -572,20 +598,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'default' => 0,
 			'type' => 'hidden',
 		];
-
-		wp_enqueue_style(
-			'stancer-admin',
-			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
-			[],
-			STANCER_ASSETS_VERSION,
-		);
-		wp_enqueue_script(
-			'stancer-admin-ts',
-			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
-			[],
-			STANCER_ASSETS_VERSION,
-			true,
-		);
 
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
 
