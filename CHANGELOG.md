@@ -6,12 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Added
+
+- Add Choice for order ID or subscription ID for renewal payments (CMS-123)
+- Add renewal description customization for admins (CMS-123)
+
 ### Changed
 - Changed Settings to better express the requirement of payment description (CMS-103)
 
 ### Fixed
 - Fix Description of bad size can no longer cause problem with the payment process (CMS-103)
 - Fix Admin scripts having a broader scope than intended (CMS-159)
+
 
 ## [1.2.4] - 2024-06-20
 
@@ -32,34 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix the integration of the new payment page
-## [unreleased]
-## [unreleased]
-
-### Add
-- Add an option to chose order_id or subscription_id to be the order_id send to Stancer.
-
-## [1.2.3] - 2024-04-18
-
-### Fixed
-- Fix a bug that displayed the subscription number instead of the order number in manage (CMS-123).
-
--Fix the integration of the new payment page.
-- Fix the integration of the new payment page.
-- Fix the integration of the new payment page
-
-## [unreleased]
-## [1.2.3] - 2024-04-25
-
-### Deprecated
-- Deprecate Popup page type Because of security problems, consider using other page types.
-
-### Fixed
--Fix the integration of the new payment page.
-- Fix the integration of the new payment page.
-## [unreleased]
-
-### Fixed
-- Fix a bug that displayed the subscription number instead of the order number in manage (CMS-123).
 
 
 ## [1.2.2] - 2024-04-02

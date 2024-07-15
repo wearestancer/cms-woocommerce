@@ -40,6 +40,15 @@ class WC_Stancer_Config {
 	public $description;
 
 	/**
+	 * Renewal Description
+	 *
+	 * @since unreleased
+	 * @var string
+	 */
+	public $renewal_description;
+
+
+	/**
 	 * API Host.
 	 *
 	 * @since 1.0.0

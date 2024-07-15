@@ -1,6 +1,4 @@
-
 (($) => $(() => {
-  'use strict';
 
   interface CheckoutResponseBase {
     messages?: string;

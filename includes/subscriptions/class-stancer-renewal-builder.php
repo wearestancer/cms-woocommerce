@@ -80,10 +80,11 @@ class WCS_Stancer_Renewal_Builder {
 	 * @since 1.0.0
 	 * @since unreleased Moved from `WC_Stancer_Subscription_Trait` to `WC_Stancer_Renewal_Builder`.
 	 *
+	 * @param array $descriptions the description parameters that we will use in our api request.
 	 * @return void
 	 * @throws WC_Stancer_Exception No Card linked to the subscription.
 	 */
-	public function build_payment_data(): void {
+	public function build_payment_data( array $descriptions ): void {
 		global $wpdb;
 
 		foreach ( $this->subscriptions as $subscription ) {
@@ -99,31 +100,44 @@ class WCS_Stancer_Renewal_Builder {
 				throw new WC_Stancer_Exception( __( 'No card found for this subscription.', 'stancer' ), 7803 );
 			}
 
-			$card = new Stancer\Card( $result->card_id );
+			$this->parameters['card'] = new Stancer\Card( $result->card_id );
 
 			if ( $result->customer_id ) {
-				$this->parameters['customers'] = new Stancer\Customer( $result->customer_id );
+				$this->parameters['customer'] = new Stancer\Customer( $result->customer_id );
 			}
 
-			$description = static::get_valid_description(
-				[],
+			$this->parameters['description'] = static::get_valid_description(
+				[
+					'SHOP_NAME' => 'WooCommerce',
+					'TOTAL_AMOUNT' => sprintf( '%.02f', $this->amount / 100 ),
+					'CURRENCY' => strtoupper( $this->order->get_currency() ),
+					'ORDER_ID' => (int) $this->order->get_id(),
+					'SUBSCRIPTION_ID' => $subscription->get_id(),
+				],
+				$descriptions['description'],
 				sprintf(
-				// translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
+					// translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
 					__( 'Renewal payment for subscription n°%1$d, order n°%2$d', 'stancer' ),
 					$subscription->get_id(),
 					$this->order->get_id(),
 				),
-				__( 'Renewal payment for your subscription', 'Stancer' ),
 			);
-			$order_id = (string) $subscription->get_id();
+			if ( 'order_id' === $descriptions['id'] ) {
+				$order_id = $this->order->get_id();
+			} else {
+				$order_id = $subscription->get_id();
+			}
+			$this->parameters['order_id'] = (string) $order_id;
 		}
-		$this->parameters = [
-			'amount' => $this->amount,
-			'card' => $card,
-			'currency' => $this->order->get_currency(),
-			'description' => $description,
-			'order_id' => $order_id,
-		];
+
+		$this->parameters = array_merge(
+			$this->parameters,
+			[
+				'amount' => $this->amount,
+				'currency' => $this->order->get_currency(),
+				'capture' => true,
+			]
+		);
 	}
 
 	/**

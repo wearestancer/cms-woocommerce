@@ -53,6 +53,14 @@ msgstr ""
 "Vous ne pouvez pas remboursez %1$.02f %3$s le prix total de votre commande "
 "est de %2$.02f %3$s"
 
+#: includes/class-stancer-gateway.php
+msgid ""
+"your payment description isn't correct it has been replaced with default "
+"payment description"
+msgstr ""
+"Votre description n'est pas correct elle a été remplacé par la description "
+"de paiement par défaut"
+
 #. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
@@ -78,6 +86,15 @@ msgstr "%1$s finissant par %2$s"
 msgid ""
 "The description must be between %1$d and %2$d characters after variable "
 "replacement. Do you still wish to submit your settings?"
+msgstr ""
+"La description doit être comprise entre %1$d et %2$d après remplacement des "
+"variables. Voulez vous tout de même enregistrer vos paramètres ?"
+
+#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+#: includes/class-stancer-gateway.php
+msgid ""
+"The description must be between %1$d and %2$d characters after variable "
+"replacement. Do you still wish submit your settings?"
 msgstr ""
 "La description doit être comprise entre %1$d et %2$d après remplacement des "
 "variables. Voulez vous tout de même enregistrer vos paramètres ?"
@@ -144,6 +161,31 @@ msgid "Secret test API key"
 msgstr "Clé de test privée"
 
 #: includes/class-stancer-gateway.php
+msgid "List of available variables:"
+msgstr "Liste des variables disponibles :"
+
+#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+#: includes/class-stancer-gateway.php
+msgid "The description must be between %1$d and %2$d characters."
+msgstr "La description doit être comprise entre %1$d et %2$d charactères."
+
+#: includes/class-stancer-gateway.php
+msgid "Shop name configured in WooCommerce"
+msgstr "Nom de la boutique configuré dans WooCommerce"
+
+#: includes/class-stancer-gateway.php
+msgid "Total amount"
+msgstr "Montant total"
+
+#: includes/class-stancer-gateway.php
+msgid "Currency of the order"
+msgstr "Devise de la commande"
+
+#: includes/class-stancer-gateway.php
+msgid "Cart identifier"
+msgstr "Identifiant du panier"
+
+#: includes/class-stancer-gateway.php
 msgid "Enable Stancer"
 msgstr "Activer Stancer"
 
@@ -189,24 +231,40 @@ msgid "Payment method change description"
 msgstr "Description du changement de moyen de paiement"
 
 #: includes/class-stancer-gateway.php
-msgid "Order reference of your command"
-msgstr "La référence de votre commande"
+msgid "Order reference of your renewal payment"
+msgstr "Référence de commande de votre renouvellement de paiement"
 
 #: includes/class-stancer-gateway.php
 msgid ""
 "This will set the command number to reference either the command or the "
 "subscription ID"
 msgstr ""
-"Parametrer le numéro de commande pour être celui de la commande Woocommerce"
+"Parametrer le numéro de commande pour être celui de la commande Woocommerce "
 "ou celui de l'abonnement Woocommerce"
 
 #: includes/class-stancer-gateway.php
-msgid "Woo subscription"
-msgstr "Abonnement Woo"
+msgid "Subscription number"
+msgstr "Numéro d'abonnement"
 
 #: includes/class-stancer-gateway.php
-msgid "Woo order"
-msgstr "Commande Woo"
+msgid "Order number"
+msgstr "Numéro de commande"
+
+#: includes/class-stancer-gateway.php
+msgid "Will be used as description for every renewal made."
+msgstr "Sera utilisé comme description pour chaque renouvellement."
+
+#: includes/class-stancer-gateway.php
+msgid "Subscription Identifier"
+msgstr "Identifiant de l'abonnement"
+
+#: includes/class-stancer-gateway.php
+msgid "Renewal for subscription n°SUBSCRIPTION_ID, order n°CART_ID"
+msgstr "Renouvellement de l'abonnement n°SUBSCRIPTION_ID, order n°CART_ID"
+
+#: includes/class-stancer-gateway.php
+msgid "Description shown to the user on renewal payment"
+msgstr "Description présentée au client lors d'un renouvellement de paiement"
 
 #: includes/class-stancer-gateway.php includes/class-stancer.php
 msgid ""
@@ -350,6 +408,8 @@ msgstr ""
 #: includes/class-stancer-payment-builder.php
 msgid "Payment for order n°%s"
 msgstr "Payment pour la commande n°%s"
+msgid "Your order WooCommerce"
+msgstr "Votre Commande WooCommerce"
 
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
@@ -380,6 +440,10 @@ msgstr ""
 msgid "Reason for refund: %1$s"
 msgstr "Raison du remboursement : %1$s"
 
+#: includes/traits/trait-stancer-subscription.php
+msgid "We were unable to locate the subscription."
+msgstr "Nous n’avons pas détecté l’abonnement."
+
 #. translators: 1: Currency.
 #: includes/traits/trait-stancer-subscription.php
 msgid ""
@@ -388,19 +452,6 @@ msgid ""
 msgstr ""
 "Pour utiliser ce mode de paiement le minimum de commande requis est de 0,50 "
 "%s."
-
-#: includes/traits/trait-stancer-subscription.php
-msgid "We were unable to locate the subscription."
-msgstr "Nous n’avons pas détecté l’abonnement."
-
-#: includes/traits/trait-stancer-subscription.php
-msgid "No card found for this subscription."
-msgstr "Aucune carte trouvé pour cet abonnement."
-
-#. translators: 1. Subscription ID. 2. Current order ID.
-#: includes/traits/trait-stancer-subscription.php
-msgid "Payment for subscription n°%1$d, order n°%2$d"
-msgstr "Paiement pour l'abonnement n°%1$d, commande n°%2$d"
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "Something went wrong, the renewal payment is incomplete."
@@ -415,7 +466,7 @@ msgid ""
 msgstr ""
 "Votre paiement a été traité avec succès par Stancer. (Transaction ID: %s)"
 
-#. translators: 1: Payment status.
+#. translators: "%s": Payment status.
 #: includes/traits/trait-stancer-subscription.php
 msgid "The payment is not in a valid status (%s)."
 msgstr "Le paiement ne semble pas avoir un statut valide (%s)."
@@ -477,3 +528,7 @@ msgstr "Moyen de paiement modifié avec succès."
 #: subscription/change-payment-method.php
 msgid "Incorrect action method"
 msgstr "Action incorrecte"
+
+#~ msgid "Subscription description shown to the user on payment renewal."
+#~ msgstr ""
+#~ "La description présentée au client lors du renouvellement d'un paiement."

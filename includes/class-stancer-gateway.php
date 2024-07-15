@@ -137,7 +137,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		return [
-			'receipt' => $order->get_checkout_order_received_url(),
+			'receipt' => $order->get_checkout_payment_url( true ),
 			'redirect' => $redirect,
 			'reload' => $reload,
 			'result' => $reload ? 'failed' : 'success',
@@ -477,6 +477,32 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return self
 	 */
 	public function init_form_fields() {
+
+		$desc_description = function ( $detail, $params ): string {
+			$desc_description = $detail;
+			$desc_description .= ' ';
+			$desc_description .= __( 'List of available variables:', 'stancer' );
+			$desc_description .= '<br/>';
+
+			foreach ( $params as $key => $value ) {
+				$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
+				$desc_description .= '<br/>';
+			}
+			$desc_description .= sprintf(
+				// Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+				__( 'The description must be between %1$d and %2$d characters.', 'stancer' ),
+				self::MIN_SIZE_DESCRIPTION,
+				self::MAX_SIZE_DESCRIPTION,
+			);
+			return $desc_description;
+		};
+		$desc_base_parameters = [
+			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
+			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
+			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
+			'ORDER_ID' => __( 'Order identifier', 'stancer' ),
+		];
+
 		$inputs = [];
 
 		$inputs['enabled'] = [
@@ -518,7 +544,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'type' => 'text',
 			];
 			$inputs['subscription_command_number'] = [
-				'title' => __( 'Order reference of your command', 'stancer' ),
+				'title' => __( 'Order reference of your renewal payment', 'stancer' ),
 				'desc_tip' =>
 				__(
 					'This will set the command number to reference either the command or the subscription ID',
@@ -526,15 +552,35 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				),
 				'type' => 'select',
 				'options' => [
-					'subscription_id' => __( 'Woo subscription', 'stancer' ),
-					'order_id' => __( 'Woo order', 'stancer' ),
+					'subscription_id' => __( 'Subscription number', 'stancer' ),
+					'order_id' => __( 'Order number', 'stancer' ),
 				],
+			];
+			$renewal_desc_description = $desc_description(
+				__(
+					'Will be used as description for every renewal made.',
+					'stancer',
+				),
+				array_merge(
+					$desc_base_parameters,
+					[ 'SUBSCRIPTION_ID' => __( 'Subscription Identifier', 'stancer' ) ]
+				),
+			);
+			$inputs['subscription_renewal_description'] = [
+				'custom_attributes' => [ 'required' => 'required' ],
+				'default' => __( 'Renewal for subscription n°SUBSCRIPTION_ID, order n°CART_ID', 'stancer' ),
+				'description' => $renewal_desc_description,
+				'title' => __( 'Description shown to the user on renewal payment', 'stancer' ),
+				'type' => 'text',
 			];
 		} else {
 			$inputs['subscription_payment_change_description'] = [
 				'type' => 'hidden',
 			];
-			$inputs['subcription_command_number'] = [
+			$inputs['subscription_command_number'] = [
+				'type' => 'hidden',
+			];
+			$inputs['subscription_renewal_description'] = [
 				'type' => 'hidden',
 			];
 		}
@@ -602,31 +648,12 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'text',
 			'description' => $desc_auth_limit,
 		];
-
-		$desc_description = __(
-			'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
-			'stancer',
-		);
-		$desc_description .= ' ';
-		$desc_description .= __( 'List of available variables:', 'stancer' );
-		$desc_description .= '<br/>';
-
-		$vars = [
-			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
-			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
-			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
-			'ORDER_ID' => __( 'Order identifier', 'stancer' ),
-		];
-
-		foreach ( $vars as $key => $value ) {
-			$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
-			$desc_description .= '<br/>';
-		}
-		$desc_description .= sprintf(
-			// Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
-			__( 'The description must be between %1$d and %2$d characters.', 'stancer' ),
-			self::MIN_SIZE_DESCRIPTION,
-			self::MAX_SIZE_DESCRIPTION,
+		$paym_desc_description = $desc_description(
+			__(
+				'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
+				'stancer',
+			),
+			$desc_base_parameters,
 		);
 
 		$inputs['payment_description'] = [
@@ -634,7 +661,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'default' => __( 'Payment for order n°ORDER_ID', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',
-			'description' => $desc_description,
+			'description' => $paym_desc_description,
 		];
 
 		$inputs['host'] = [
