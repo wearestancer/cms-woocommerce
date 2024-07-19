@@ -322,6 +322,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 					self::MIN_SIZE_DESCRIPTION,
 					self::MAX_SIZE_DESCRIPTION,
 				),
+				'renewalDescriptionMessage' => __( 'Payment renewal description', 'stancer' ),
+				'paymentDescriptionMessage' => __( 'Description', 'stancer' ),
 				'minSize' => self::MIN_SIZE_DESCRIPTION,
 				'maxSize' => self::MAX_SIZE_DESCRIPTION,
 			],
@@ -568,9 +570,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			);
 			$inputs['subscription_renewal_description'] = [
 				'custom_attributes' => [ 'required' => 'required' ],
-				'default' => __( 'Renewal for subscription n°SUBSCRIPTION_ID, order n°CART_ID', 'stancer' ),
+				'default' => __( 'Renewal for subscription n°SUBSCRIPTION_ID', 'stancer' ),
 				'description' => $renewal_desc_description,
-				'title' => __( 'Description shown to the user on renewal payment', 'stancer' ),
+				'desc_tip' => __( 'Description shown to the user on renewal payment', 'stancer' ),
+				'title' => __( 'Renewal payment description', 'stancer' ),
 				'type' => 'text',
 			];
 		} else {
@@ -927,13 +930,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Check for the Description and make sure it's length is correct.
+	 * Validate descriptions sent to the API.
 	 *
-	 * @param string $key the key of the settings.
-	 * @param string $value the value of payment description.
-	 * @return string The value of payment description.
+	 * @param string $value The value of the description.
+	 * @param string $default_message The default message, if description is not valid.
+	 * @return void
 	 */
-	public function validate_payment_description_field( $key, $value ) {
+	protected function validate_description( $value, $default_message ) {
 		if ( ! $value ) {
 			return;
 		}
@@ -952,5 +955,28 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		return $value;
+	}
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @param string $key the key of the settings.
+	 * @param string $value the value of payment description.
+	 * @return string The value of payment description.
+	 */
+	public function validate_payment_description_field( $key, $value ) {
+		return $this->validate_description( $value, __( 'your order Woocommerce.', 'stancer' ) );
+	}
+		/**
+		 * Check for the Description and make sure it's length is correct.
+		 *
+		 * @param string $key the key of the settings.
+		 * @param string $value the value of payment description.
+		 * @return string The value of payment description.
+		 */
+	public function validate_subscription_renewal_description_field( $key, $value ) {
+		return $this->validate_description(
+			$value,
+			__( 'Renewal for subscription n°SUBSCRIPTION_ID', 'stancer' )
+		);
 	}
 }

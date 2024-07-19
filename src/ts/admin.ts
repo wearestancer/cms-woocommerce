@@ -3,17 +3,24 @@
 
   const prefix = 'woocommerce_stancer';
 
-  const validateDescription = ($description: Input): boolean => {
+  const validateDescription = ($description: Input, descriptionType: string): boolean => {
     if (!$description.length){
       return true;
     }
-    const {maxSize,minSize,confirmMessage} = window.stancer_admin;
+    const {
+      confirmMessage,
+      descriptionMessage,
+      maxSize,
+      minSize,
+      renewalDescriptionMessage
+    } = window.stancer_admin;
+    const typeMessage = descriptionType === 'descriptionMessage ' ? descriptionMessage : renewalDescriptionMessage;
     const length = $description.val()?.length ?? 0;
     let isValid = (length < maxSize && length > minSize);
 
     if (!isValid) {
       $description.prop("isValid", false);
-      isValid = confirm(confirmMessage);
+      isValid = confirm(`${typeMessage} ${confirmMessage}`);
     }
 
     return isValid;
@@ -35,7 +42,13 @@
   validateKey();
 
   $('#mainform').on('submit', (event: JQuery.Event): void => {
-    if (!validateDescription(($(`#${prefix}_payment_description`)) as Input)) {
+    if (
+      !validateDescription(($(`#${prefix}_payment_description`)) as Input,
+     'descriptionMessage') ||
+      !validateDescription(
+        ($(`#${prefix}_subscription_renewal_description`)) as Input,
+      'renewalDescriptionMessage')
+      ) {
       event.stopPropagation();
       event.preventDefault();
     }

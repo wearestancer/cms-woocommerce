@@ -49,10 +49,6 @@ msgstr ""
 msgid "You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s"
 msgstr ""
 
-#: includes/class-stancer-gateway.php
-msgid "your payment description isn't correct it has been replaced with default payment description"
-msgstr ""
-
 #. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
@@ -79,7 +75,16 @@ msgstr ""
 
 #. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
 #: includes/class-stancer-gateway.php
-msgid "The description must be between %1$d and %2$d characters after variable replacement. Do you still wish submit your settings?"
+msgid "must be between %1$d and %2$d characters after variable replacement. Do you still wish submit your settings ?"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Payment renewal description"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+#: includes/class-stancer-gateway.php
+msgid "Description"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -237,11 +242,16 @@ msgid "Subscription Identifier"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Renewal for subscription n°SUBSCRIPTION_ID, order n°CART_ID"
+#: includes/class-stancer-gateway.php
+msgid "Renewal for subscription n°SUBSCRIPTION_ID"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Description shown to the user on renewal payment"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Renewal payment description"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -333,6 +343,7 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Description"
+msgid "Your order SHOP_NAME"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -352,6 +363,14 @@ msgstr ""
 #. translators: %s: Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Your payment description is not between 3 and 45 characters, it could result in the use of default description:"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "your order Woocommerce."
 msgstr ""
 
 #. translators: "$1%d": The minimum description size. "$2%d": The maximum description size.

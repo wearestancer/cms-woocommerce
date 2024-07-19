@@ -3,9 +3,10 @@ import { type Select2Plugin } from 'select2';
 declare global {
   interface AdminData{
     confirmMessage: string;
-    descriptionVariables: string[];
-    minSize:number;
-    maxSize:number;
+    descriptionMessage: string;
+    minSize: number;
+    maxSize: number;
+    renewalDescriptionMessage: string;
   }
 
   interface BlockParams {
