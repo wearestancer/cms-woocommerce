@@ -86,14 +86,14 @@ msgstr ""
 #: includes/class-stancer-gateway.php
 msgid ""
 "must be between %1$d and %2$d characters after variable replacement. Do you "
-"still wish submit your settings ?"
+"still wish to submit your settings ?"
 msgstr ""
 "doit être comprise entre %1$d et %2$d après remplacement des variables. "
 "Voulez vous tout de même enregistrer vos paramètres ?"
 
 #: includes/class-stancer-gateway.php
-msgid "Payment renewal description"
-msgstr "La description du payment de renouvellement"
+msgid "Renewal payment description"
+msgstr "Description du paiement de renouvellement"
 
 #: includes/class-stancer-gateway.php
 msgid "Description"
@@ -275,10 +275,6 @@ msgstr "Renouvellement de l'abonnement n°SUBSCRIPTION_ID"
 msgid "Description shown to the user on renewal payment"
 msgstr "Description présentée au client lors d'un renouvellement de paiement"
 
-#: includes/class-stancer-gateway.php
-msgid "Renewal payment description"
-msgstr "Description du renouvellement de payment"
-
 #: includes/class-stancer-gateway.php includes/class-stancer.php
 msgid ""
 "An authorization request without an amount will be made in order to validate "
@@ -441,6 +437,8 @@ msgid ""
 "Your payment description is not between 3 and 45 characters,it could result in the use of default description: 'your order "
 "Woocommerce'."
 msgstr "Votre description de paiement n'est pas comprise entre 3 et 45 charactères, cela peut entrainer l'utilisation de la description par defaut: 'your order'"
+"Votre description de paiement n'est pas comprise entre 3 et 45 charactères, "
+"cela peut entrainer l'utilisation de la description par defaut:"
 
 #. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
@@ -569,7 +567,3 @@ msgstr "Moyen de paiement modifié avec succès."
 #: subscription/change-payment-method.php
 msgid "Incorrect action method"
 msgstr "Action incorrecte"
-
-#~ msgid "Subscription description shown to the user on payment renewal."
-#~ msgstr ""
-#~ "La description présentée au client lors du renouvellement d'un paiement."

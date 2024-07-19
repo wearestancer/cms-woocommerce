@@ -20,7 +20,7 @@
 
     if (!isValid) {
       $description.prop("isValid", false);
-      isValid = confirm(`${typeMessage} ${confirmMessage}`);
+      isValid = confirm(`"${typeMessage}" ${confirmMessage}`);
     }
 
     return isValid;

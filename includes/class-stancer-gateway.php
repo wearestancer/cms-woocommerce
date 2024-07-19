@@ -322,7 +322,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 					self::MIN_SIZE_DESCRIPTION,
 					self::MAX_SIZE_DESCRIPTION,
 				),
-				'renewalDescriptionMessage' => __( 'Payment renewal description', 'stancer' ),
+				'renewalDescriptionMessage' => __( 'Renewal payment description', 'stancer' ),
 				'paymentDescriptionMessage' => __( 'Description', 'stancer' ),
 				'minSize' => self::MIN_SIZE_DESCRIPTION,
 				'maxSize' => self::MAX_SIZE_DESCRIPTION,
@@ -951,7 +951,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				static::MIN_SIZE_DESCRIPTION,
 				static::MAX_SIZE_DESCRIPTION,
 			);
-			WC_Admin_Settings::add_error( $message );
+			$message .= ' ' . $default_message;
+			WC_Admin_Settings::add_error( esc_html( $message ) );
+
 		}
 
 		return $value;
@@ -964,7 +966,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return string The value of payment description.
 	 */
 	public function validate_payment_description_field( $key, $value ) {
-		return $this->validate_description( $value, __( 'your order Woocommerce.', 'stancer' ) );
+		return $this->validate_description(
+			$value,
+			__( 'Payment for order n°ORDER_ID', 'stancer' )
+		);
 	}
 		/**
 		 * Check for the Description and make sure it's length is correct.
