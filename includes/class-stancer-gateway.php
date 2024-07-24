@@ -693,7 +693,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			return false;
 		}
 
-		return $this->api_config->is_configured();
+		return parent::is_available() && $this->api_config->is_configured();
 	}
 
 	/**
