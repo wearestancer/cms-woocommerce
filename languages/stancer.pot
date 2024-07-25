@@ -332,6 +332,15 @@ msgstr ""
 msgid "Payment for order n°%s"
 msgstr ""
 
+#. translators: "%s" link to plugin settings.
+#: includes/class-stancer.php
+msgid "Stancer payment by popup is deprecated, please change the option in your %s."
+msgstr ""
+
+#: includes/class-stancer.php
+msgid "plugin settings"
+msgstr ""
+
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
 msgstr ""
@@ -339,14 +348,6 @@ msgstr ""
 #. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
-msgstr ""
-
-#: includes/class-stancer.php
-msgid "Stancer payment by popup is deprecated, please change the option in your."
-msgstr ""
-
-#: includes/class-stancer.php
-msgid "plugin settings"
 msgstr ""
 
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.

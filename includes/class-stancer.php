@@ -177,26 +177,27 @@ class WC_Stancer {
 	/**
 	 * Display deprecated settings parameters
 	 *
+	 * @since unreleased
+	 *
 	 * @return void
 	 */
 	public function display_depreciation() {
 
 		$options = get_option( 'woocommerce_stancer_settings' );
 		if ( is_array( $options ) && array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
-			$message = __(
-				'Stancer payment by popup is deprecated, please change the option in your',
-				'stancer'
-			);
 
 			$class = [ 'notice', 'notice-warning' ];
-			// translators: directly follow: "Stancer payment by popup is deprecated, please change the option in your".
-			$urlname = __( 'plugin settings', 'stancer' );
 			printf(
-				'<div class="%1$s"><p>%2$s <a href="%3$s">%4$s</a>.</p></div>',
+				'<div class="%1$s"><p>%2$s</p></div>',
 				esc_attr( implode( ' ', $class ) ),
-				esc_html( $message ),
-				esc_attr( stancer_setting_url() ),
-				esc_html( $urlname )
+				sprintf(
+					// translators: "%s": Link to plugin settings.
+					esc_html__(
+						'Stancer payment by popup is deprecated, please change the option in your %s.',
+						'stancer'
+					),
+					'<a href="' . esc_attr( stancer_setting_url() ) . '">' . esc_html__( 'plugin settings', 'stancer' ) . '</a>',
+				),
 			);
 		}
 	}
