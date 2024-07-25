@@ -79,6 +79,7 @@ class WCS_Stancer_Renewal_Builder {
 	 *
 	 * @since 1.0.0
 	 * @since unreleased Moved from `WC_Stancer_Subscription_Trait` to `WC_Stancer_Renewal_Builder`.
+	 * @since unreleased Adding description parameter to our method, for better contruction.
 	 *
 	 * @param array $descriptions the description parameters that we will use in our api request.
 	 * @return void

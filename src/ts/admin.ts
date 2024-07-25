@@ -12,9 +12,9 @@
       descriptionMessage,
       maxSize,
       minSize,
-      renewalDescriptionMessage
+      renewalDescriptionMessage,
     } = window.stancer_admin;
-    const typeMessage = descriptionType === 'descriptionMessage ' ? descriptionMessage : renewalDescriptionMessage;
+    const typeMessage = descriptionType === 'descriptionMessage' ? descriptionMessage : renewalDescriptionMessage;
     const length = $description.val()?.length ?? 0;
     let isValid = (length < maxSize && length > minSize);
 
@@ -36,18 +36,18 @@
     const requireKey = (keys: Input[]) => keys.map((key) => key.prop('required', true));
     const unRequireKey = (keys: Input[]) => keys.map((key) => key.prop('required', false));
 
-    $testMode?.on('input', () => $testMode.is(':checked') ? unRequireKey($liveKeys) : requireKey($liveKeys));
+    $testMode?.on('input', () => $testMode.prop('checked') ? unRequireKey($liveKeys) : requireKey($liveKeys));
   }
 
   validateKey();
 
   $('#mainform').on('submit', (event: JQuery.Event): void => {
+    const $payment_description = $(`#${prefix}_payment_description`) as Input;
+    const $renewal_description = $(`#${prefix}_subscription_renewal_description`) as Input;
+
     if (
-      !validateDescription(($(`#${prefix}_payment_description`)) as Input,
-     'descriptionMessage') ||
-      !validateDescription(
-        ($(`#${prefix}_subscription_renewal_description`)) as Input,
-      'renewalDescriptionMessage')
+      !validateDescription( $payment_description, 'descriptionMessage') ||
+      !validateDescription( $renewal_description, 'renewalDescriptionMessage')
       ) {
       event.stopPropagation();
       event.preventDefault();

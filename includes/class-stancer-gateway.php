@@ -547,15 +547,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			];
 			$inputs['subscription_command_number'] = [
 				'title' => __( 'Order reference of your renewal payment', 'stancer' ),
-				'desc_tip' =>
-				__(
+				'desc_tip' => __(
 					'This will set the command number to reference either the command or the subscription ID',
 					'stancer'
 				),
 				'type' => 'select',
 				'options' => [
-					'subscription_id' => __( 'Subscription number', 'stancer' ),
-					'order_id' => __( 'Order number', 'stancer' ),
+					'subscription_id' => __( 'Subscription identifier', 'stancer' ),
+					'order_id' => __( 'Order identifier', 'stancer' ),
 				],
 			];
 			$renewal_desc_description = $desc_description(
@@ -565,7 +564,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				),
 				array_merge(
 					$desc_base_parameters,
-					[ 'SUBSCRIPTION_ID' => __( 'Subscription Identifier', 'stancer' ) ]
+					[ 'SUBSCRIPTION_ID' => __( 'Subscription identifier', 'stancer' ) ]
 				),
 			);
 			$inputs['subscription_renewal_description'] = [
@@ -943,13 +942,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( strlen( $value ) > static::MAX_SIZE_DESCRIPTION
 			|| strlen( $value ) < static::MIN_SIZE_DESCRIPTION ) {
 			$message = sprintf(
-				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size.
+				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 				esc_html__(
-					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description.',
+					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s',
 					'stancer'
 				),
 				static::MIN_SIZE_DESCRIPTION,
 				static::MAX_SIZE_DESCRIPTION,
+				$default_message,
 			);
 			$message .= ' ' . $default_message;
 			WC_Admin_Settings::add_error( esc_html( $message ) );
@@ -958,6 +958,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		return $value;
 	}
+
 	/**
 	 * Check for the Description and make sure it's length is correct.
 	 *
@@ -971,13 +972,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			__( 'Payment for order n°ORDER_ID', 'stancer' )
 		);
 	}
-		/**
-		 * Check for the Description and make sure it's length is correct.
-		 *
-		 * @param string $key the key of the settings.
-		 * @param string $value the value of payment description.
-		 * @return string The value of payment description.
-		 */
+
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @param string $key the key of the settings.
+	 * @param string $value the value of payment description.
+	 * @return string The value of payment description.
+	 */
 	public function validate_subscription_renewal_description_field( $key, $value ) {
 		return $this->validate_description(
 			$value,

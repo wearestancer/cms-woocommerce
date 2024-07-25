@@ -188,7 +188,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$api_payment->capture = isset( $payment_data['capture'] ) ? $payment_data['capture'] : false;
 		$api_payment->currency = $payment_data['currency'];
 		$api_payment->customer = $api_customer;
-		$api_payment->order_id = $payment_data['order_id'];
+		$api_payment->order_id = (string) $payment_data['order_id'];
 		$api_payment->methods_allowed = [ 'card' ];
 
 		if ( array_key_exists( 'auth', $payment_data ) && $payment_data['auth'] ) {

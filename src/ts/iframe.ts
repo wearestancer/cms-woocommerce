@@ -55,7 +55,6 @@
   * We set sandbox = top-navigation; we need it to be able to interact with context outside our iframe, more precisely to get the event.data and use it.
   */
 
-  const $stancer_payment_method = $('#payment_method_stancer');
   const $cardSelect = $('#stancer-card');
   const params = Object.fromEntries(window.location.search.slice(1).split('&').map((value) => value.split('=')));
   const STANCER_SVG = '<svg:stancer-flat>';

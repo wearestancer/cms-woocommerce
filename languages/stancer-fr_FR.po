@@ -82,31 +82,13 @@ msgstr ""
 "La description doit être comprise entre %1$d et %2$d après remplacement des "
 "variables. Voulez vous tout de même enregistrer vos paramètres ?"
 
-#. Translators: "%1$d": The minimum size of the description. "%2$d": The maximum size of the description.
-#: includes/class-stancer-gateway.php
-msgid ""
-"must be between %1$d and %2$d characters after variable replacement. Do you "
-"still wish to submit your settings ?"
-msgstr ""
-"doit être comprise entre %1$d et %2$d après remplacement des variables. "
-"Voulez vous tout de même enregistrer vos paramètres ?"
-
 #: includes/class-stancer-gateway.php
 msgid "Renewal payment description"
 msgstr "Description du paiement de renouvellement"
 
 #: includes/class-stancer-gateway.php
 msgid "Description"
-msgstr "La description"
-
-#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
-#: includes/class-stancer-gateway.php
-msgid ""
-"The description must be between %1$d and %2$d characters after variable "
-"replacement. Do you still wish submit your settings ?"
-msgstr ""
-"La description doit être comprise entre %1$d et %2$d après remplacement des "
-"variables. Voulez vous tout de même enregistrer vos paramètres ?"
+msgstr "Description"
 
 #: includes/class-stancer-gateway.php
 msgid "No logo."
@@ -176,7 +158,7 @@ msgstr "Liste des variables disponibles :"
 #. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
 #: includes/class-stancer-gateway.php
 msgid "The description must be between %1$d and %2$d characters."
-msgstr "La description doit être comprise entre %1$d et %2$d charactères."
+msgstr "La description doit être comprise entre %1$d et %2$d caractères."
 
 #: includes/class-stancer-gateway.php
 msgid "Shop name configured in WooCommerce"
@@ -191,8 +173,8 @@ msgid "Currency of the order"
 msgstr "Devise de la commande"
 
 #: includes/class-stancer-gateway.php
-msgid "Cart identifier"
-msgstr "Identifiant du panier"
+msgid "Order identifier"
+msgstr "Identifiant de la commande"
 
 #: includes/class-stancer-gateway.php
 msgid "Enable Stancer"
@@ -252,20 +234,12 @@ msgstr ""
 "ou celui de l'abonnement Woocommerce"
 
 #: includes/class-stancer-gateway.php
-msgid "Subscription number"
-msgstr "Numéro d'abonnement"
-
-#: includes/class-stancer-gateway.php
-msgid "Order number"
-msgstr "Numéro de commande"
+msgid "Subscription identifier"
+msgstr "Identifiant de l'abonnement"
 
 #: includes/class-stancer-gateway.php
 msgid "Will be used as description for every renewal made."
 msgstr "Sera utilisé comme description pour chaque renouvellement."
-
-#: includes/class-stancer-gateway.php
-msgid "Subscription Identifier"
-msgstr "Identifiant de l'abonnement"
 
 #: includes/class-stancer-gateway.php
 msgid "Renewal for subscription n°SUBSCRIPTION_ID"
@@ -352,44 +326,8 @@ msgstr ""
 "pour vos clients en mode redirection."
 
 #: includes/class-stancer-gateway.php
-msgid "List of available variables:"
-msgstr "Liste des variables disponibles :"
-
-#: includes/class-stancer-gateway.php
-msgid "Shop name configured in WooCommerce"
-msgstr "Nom de la boutique configuré dans WooCommerce"
-
-#: includes/class-stancer-gateway.php
-msgid "Total amount"
-msgstr "Montant total"
-
-#: includes/class-stancer-gateway.php
-msgid "Currency of the order"
-msgstr "Devise de la commande"
-
-#: includes/class-stancer-gateway.php
-msgid "Order identifier"
-msgstr "Identifiant de la commande"
-
-#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
-#: includes/class-stancer-gateway.php
-msgid "The description must be between %1$d and %2$d characters."
-#, fuzzy
-msgid "The description must be between %1$d and %2$d characters."
-msgstr ""
-"La description doit être comprise entre %1$d et %2$d caractères."
-
-#: includes/class-stancer-gateway.php
 msgid "Payment for order n°ORDER_ID"
 msgstr "Paiement pour la commande n°ORDER_ID"
-msgid "Payment for order n°CART_ID"
-msgstr "Payment pour la commande n°CART_ID"
-
-#: includes/class-stancer-gateway.php
-msgid "Description"
-msgstr "Description"
-msgid "Your order SHOP_NAME"
-msgstr "Votre commande SHOP_NAME"
 
 #: includes/class-stancer-gateway.php
 msgid "You will be redirected to our partner's portal to make the payment."
@@ -410,51 +348,26 @@ msgstr "La tentative de paiement a échouée."
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
 
-#: includes/class-stancer-gateway.php
-msgid ""
-"Your payment description is not between 3 and 45 characters, it could result "
-"in the use of default description:"
-msgstr ""
-"Votre description n'est pas comprise entre 3 et 45 charactères, elle risque "
-"d'être remplacé par la déscription par défaut:"
-
-#: includes/class-stancer-gateway.php
-msgid "your order Woocommerce."
-msgstr "votre Commande WooCommerce"
-
-#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size.
+#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 msgid ""
 "Your payment description is not between %1$d and %2$d characters, it could "
-"result in the use of default description."
+"result in the use of default description: %3$s"
 msgstr ""
 "Votre description de paiement n'est pas comprise entre %1$d et %2$d "
-"caractères, cela peut entrainer l'utilisation de la description par defaut."
-
-#. translators: "%s": The order ID.
-#: includes/class-stancer-gateway.php
-msgid ""
-"Your payment description is not between 3 and 45 characters,it could result in the use of default description: 'your order "
-"Woocommerce'."
-msgstr "Votre description de paiement n'est pas comprise entre 3 et 45 charactères, cela peut entrainer l'utilisation de la description par defaut: 'your order'"
-"Votre description de paiement n'est pas comprise entre 3 et 45 charactères, "
-"cela peut entrainer l'utilisation de la description par defaut:"
+"caractères, cela peut entrainer l'utilisation de la description par defaut : "
+"%3$s"
 
 #. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
 msgid "Payment for order n°%s"
 msgstr "Payment pour la commande n°%s"
-msgid "Your order WooCommerce"
-msgstr "Votre Commande WooCommerce"
-msgid "Payment for order n°%s"
-msgstr "Payment pour la commande n°$s"
 
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
 msgstr "Aucune carte trouvé pour cet abonnement."
 
 #. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
-#. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 character!
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
 msgstr "Renouvellement de l'abonnement n°%1$d, commande n°%2$d"
