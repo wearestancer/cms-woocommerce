@@ -32,6 +32,17 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	use WC_Stancer_Refunds_Traits;
 	use WC_Stancer_Subscription_Trait;
 
+
+	public const MAX_SIZE_DESCRIPTION = 45;
+	public const MIN_SIZE_DESCRIPTION = 3;
+	public const DESCRIPTION_VARIABLES =
+		[
+			'SHOP_NAME',
+			'TOTAL_AMOUNT',
+			'CURRENCY',
+			'ORDER_ID',
+		];
+
 	/**
 	 * Stancer configuration.
 	 *
@@ -300,6 +311,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
 			[],
 			STANCER_ASSETS_VERSION,
+		);
+		wp_localize_script(
+			'stancer-admin-ts',
+			'stancer_admin',
+			[
+				'confirmMessage' => sprintf(
+					// Translators: "%1$d": The minimum size of the description. "%2$d": The maximum size of the description.
+					__( 'The description must be between %1$d and %2$d characters after variable replacement. Do you still wish to submit your settings?', 'stancer' ),
+					self::MIN_SIZE_DESCRIPTION,
+					self::MAX_SIZE_DESCRIPTION,
+				),
+				'minSize' => self::MIN_SIZE_DESCRIPTION,
+				'maxSize' => self::MAX_SIZE_DESCRIPTION,
+			],
 		);
 	}
 
@@ -574,16 +599,23 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
 			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
 			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
-			'CART_ID' => __( 'Cart identifier', 'stancer' ),
+			'ORDER_ID' => __( 'Order identifier', 'stancer' ),
 		];
 
 		foreach ( $vars as $key => $value ) {
 			$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
 			$desc_description .= '<br/>';
 		}
+		$desc_description .= sprintf(
+			// Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+			__( 'The description must be between %1$d and %2$d characters.', 'stancer' ),
+			self::MIN_SIZE_DESCRIPTION,
+			self::MAX_SIZE_DESCRIPTION,
+		);
 
 		$inputs['payment_description'] = [
-			'default' => __( 'Your order SHOP_NAME', 'stancer' ),
+			'custom_attributes' => [ 'required' => 'required' ],
+			'default' => __( 'Payment for order n°ORDER_ID', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',
 			'description' => $desc_description,
@@ -849,5 +881,33 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				exit();
 			}
 		}
+	}
+
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @param string $key the key of the settings.
+	 * @param string $value the value of payment description.
+	 * @return string The value of payment description.
+	 */
+	public function validate_payment_description_field( $key, $value ) {
+		if ( ! $value ) {
+			return;
+		}
+		if ( strlen( $value ) > static::MAX_SIZE_DESCRIPTION
+			|| strlen( $value ) < static::MIN_SIZE_DESCRIPTION ) {
+			$message = sprintf(
+				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size.
+				esc_html__(
+					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description.',
+					'stancer'
+				),
+				static::MIN_SIZE_DESCRIPTION,
+				static::MAX_SIZE_DESCRIPTION,
+			);
+			WC_Admin_Settings::add_error( $message );
+		}
+
+		return $value;
 	}
 }

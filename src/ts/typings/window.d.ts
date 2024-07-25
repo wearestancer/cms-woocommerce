@@ -1,6 +1,13 @@
 import { type Select2Plugin } from 'select2';
 
 declare global {
+  interface AdminData{
+    confirmMessage: string;
+    descriptionVariables: string[];
+    minSize:number;
+    maxSize:number;
+  }
+
   interface BlockParams {
     message?: string | null;
   }
@@ -28,6 +35,7 @@ declare global {
   }
 
   interface Window {
+    stancer_admin: AdminData;
     stancer: StancerData;
     wc_checkout_params: WooCommerceCheckoutParams;
   }

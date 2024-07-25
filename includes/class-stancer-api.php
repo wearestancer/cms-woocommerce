@@ -43,64 +43,6 @@ class WC_Stancer_Api {
 		$this->api_config = $api_config;
 	}
 
-	/**
-	 * Prepare payment data for send a payment to Stancer.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WC_Order $order Order.
-	 * @param bool|null $force_auth Do we need to force authentication.
-	 *
-	 * @return array
-	 */
-	public function build_payment_data( WC_Order $order, $force_auth = null ) {
-		$total = $order->get_total();
-		$amount = static::prepare_amount( $total );
-		$auth = $force_auth;
-		$currency_code = $order->get_currency();
-		$description = null;
-
-		if ( null === $auth ) {
-			$auth_limit = $this->api_config->auth_limit;
-			$auth = is_null( $auth_limit ) || '' === $auth_limit ? false : $total >= $auth_limit;
-		}
-
-		if ( $this->api_config->description ) {
-			$params = [
-				'SHOP_NAME' => 'WooCommerce',
-				'CART_ID' => (int) $order->get_id(),
-				'TOTAL_AMOUNT' => sprintf( '%.02f', $total ),
-				'CURRENCY' => strtoupper( $currency_code ),
-			];
-
-			$description = str_replace( array_keys( $params ), $params, $this->api_config->description );
-		}
-
-		return [
-			'amount' => $amount,
-			'auth' => $auth,
-			'capture' => false,
-			'currency' => strtolower( $currency_code ),
-			'description' => $description,
-			'order_id' => (string) $order->get_id(),
-			'return_url' => $order->get_checkout_payment_url( true ),
-		];
-	}
-
-	/**
-	 * Prepare amount.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param int|float $amount Amount of the order.
-	 *
-	 * @return int
-	 */
-	public static function prepare_amount( $amount ) {
-		// /!\ We cannot relie on woo formatting methods! like  wc_get_price_decimals()
-
-		return (int) (string) ( $amount * 100 );
-	}
 
 	/**
 	 * Send payment to Stancer API.
@@ -114,31 +56,15 @@ class WC_Stancer_Api {
 	 * @return Stancer\Payment|null
 	 */
 	public function send_payment( WC_Order $order, $card_id = null, $force_auth = null ): ?Stancer\Payment {
-		$payment_data = $this->build_payment_data( $order, $force_auth );
-
-		$api_payment = null;
-		$stancer_payment = WC_Stancer_Payment::find( $order, $payment_data, true, [ 'pending' ] );
-
-		if ( $stancer_payment ) {
-			$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
-
-			if ( $card_id ) {
-				if ( $payment_data['auth'] ) {
-					$api_payment->set_auth( $api_payment->getPaymentPageUrl() );
-				} else {
-					$api_payment->set_status( Stancer\Payment\Status::CAPTURE );
-				}
-
-				$api_payment->set_card( new Stancer\Card( $card_id ) );
-			}
-
+		$data_builder = new WC_Stancer_Payment_Builder( $order, $this->api_config );
+		$data_builder->build_payment_data( $force_auth );
+		$api_payment = $data_builder->create_api_payment( $card_id );
+		if ( $api_payment ) {
 			if ( $api_payment->isModified() && ! static::sent_object_to_api( $api_payment ) ) {
 				return null;
 			}
-
-			$api_customer = $api_payment->customer;
-			WC_Stancer_Customer::save_from( $api_customer );
 		}
+		WC_Stancer_Customer::save_from( $api_payment->customer );
 
 		return $api_payment;
 	}
