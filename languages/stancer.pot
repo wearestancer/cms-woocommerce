@@ -215,11 +215,7 @@ msgid "Payment method change description"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Order reference of your renewal payment"
-msgstr ""
-
-#: includes/class-stancer-gateway.php
-msgid "This will set the command number to reference either the command or the subscription ID"
+msgid "Order number for renewal payments"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -324,7 +320,7 @@ msgstr ""
 
 #. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 #: includes/class-stancer-gateway.php
-msgid "Your payment description is not between %1$d and %2$d characters, it could result in the use of default description : %3$s"
+msgid "Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s"
 msgstr ""
 
 #. translators: "%s": The order ID.

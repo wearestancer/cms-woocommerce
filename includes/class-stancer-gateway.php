@@ -487,7 +487,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$desc_description .= '<br/>';
 
 			foreach ( $params as $key => $value ) {
-				$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
+				$desc_description .= '<b>' . $key . '</b>: ' . $value;
 				$desc_description .= '<br/>';
 			}
 			$desc_description .= sprintf(
@@ -546,11 +546,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'type' => 'text',
 			];
 			$inputs['subscription_command_number'] = [
-				'title' => __( 'Order reference of your renewal payment', 'stancer' ),
-				'desc_tip' => __(
-					'This will set the command number to reference either the command or the subscription ID',
-					'stancer'
-				),
+				'title' => __( 'Order number for renewal payments', 'stancer' ),
 				'type' => 'select',
 				'options' => [
 					'subscription_id' => __( 'Subscription identifier', 'stancer' ),
@@ -951,9 +947,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				static::MAX_SIZE_DESCRIPTION,
 				$default_message,
 			);
-			$message .= ' ' . $default_message;
-			WC_Admin_Settings::add_error( esc_html( $message ) );
-
+			WC_Admin_Settings::add_error( $message );
 		}
 
 		return $value;

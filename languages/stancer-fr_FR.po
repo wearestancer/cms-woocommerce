@@ -222,16 +222,8 @@ msgid "Payment method change description"
 msgstr "Description du changement de moyen de paiement"
 
 #: includes/class-stancer-gateway.php
-msgid "Order reference of your renewal payment"
-msgstr "Référence de commande de votre renouvellement de paiement"
-
-#: includes/class-stancer-gateway.php
-msgid ""
-"This will set the command number to reference either the command or the "
-"subscription ID"
-msgstr ""
-"Parametrer le numéro de commande pour être celui de la commande Woocommerce "
-"ou celui de l'abonnement Woocommerce"
+msgid "Order number for renewal payments"
+msgstr "Numéro de commande pour les renouvellements d'abonnement"
 
 #: includes/class-stancer-gateway.php
 msgid "Subscription identifier"
