@@ -157,8 +157,16 @@ trait WC_Stancer_Subscription_Trait {
 				throw new WC_Stancer_Exception( __( 'The module is not correctly configured.', 'stancer' ), 7804 );
 			}
 
+			$subscriptions = wcs_get_subscriptions_for_order( $order, [ 'order_type' => 'any' ] );
+
+			if ( count( $subscriptions ) !== 1 ) {
+				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
+			}
+
 			$renewal_builder = new WCS_Stancer_Renewal_Builder( $order, $wc_config, $charge );
-			$renewal_builder->build_payment_data();
+			$parameter['id'] = $this->settings['subscription_command_number'];
+			$parameter['description'] = $this->settings['subscription_renewal_description'];
+			$renewal_builder->build_payment_data( $parameter );
 			$api_payment = $renewal_builder->create_api_payment();
 			$api_payment->send();
 
@@ -172,12 +180,6 @@ trait WC_Stancer_Subscription_Trait {
 					strtoupper( $order->get_currency() ),
 				);
 				throw new WC_Stancer_Exception( $message, 7801 );
-			}
-
-			$subscriptions = wcs_get_subscriptions_for_order( $this->order, [ 'order_type' => 'any' ] );
-
-			if ( count( $subscriptions ) !== 1 ) {
-				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
 			}
 
 			if ( null === $api_payment->status ) {
@@ -207,8 +209,8 @@ trait WC_Stancer_Subscription_Trait {
 
 				do_action( 'processed_subscription_payments_for_order', $order );
 			} else {
-				// translators: 1: Payment status.
-				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ) );
+				// translators: "%s": Payment status.
+				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' );
 
 				$message = __(
 					'We regret to inform you that the payment has been declined. Please consider using an alternative card.',

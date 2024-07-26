@@ -83,6 +83,14 @@ msgstr ""
 "variables. Voulez vous tout de même enregistrer vos paramètres ?"
 
 #: includes/class-stancer-gateway.php
+msgid "Renewal payment description"
+msgstr "Description du paiement de renouvellement"
+
+#: includes/class-stancer-gateway.php
+msgid "Description"
+msgstr "Description"
+
+#: includes/class-stancer-gateway.php
 msgid "No logo."
 msgstr "Aucun logo."
 
@@ -144,6 +152,31 @@ msgid "Secret test API key"
 msgstr "Clé de test privée"
 
 #: includes/class-stancer-gateway.php
+msgid "List of available variables:"
+msgstr "Liste des variables disponibles :"
+
+#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+#: includes/class-stancer-gateway.php
+msgid "The description must be between %1$d and %2$d characters."
+msgstr "La description doit être comprise entre %1$d et %2$d caractères."
+
+#: includes/class-stancer-gateway.php
+msgid "Shop name configured in WooCommerce"
+msgstr "Nom de la boutique configuré dans WooCommerce"
+
+#: includes/class-stancer-gateway.php
+msgid "Total amount"
+msgstr "Montant total"
+
+#: includes/class-stancer-gateway.php
+msgid "Currency of the order"
+msgstr "Devise de la commande"
+
+#: includes/class-stancer-gateway.php
+msgid "Order identifier"
+msgstr "Identifiant de la commande"
+
+#: includes/class-stancer-gateway.php
 msgid "Enable Stancer"
 msgstr "Activer Stancer"
 
@@ -187,6 +220,26 @@ msgstr ""
 #: includes/class-stancer-gateway.php
 msgid "Payment method change description"
 msgstr "Description du changement de moyen de paiement"
+
+#: includes/class-stancer-gateway.php
+msgid "Order number for renewal payments"
+msgstr "Numéro de commande pour les renouvellements d'abonnement"
+
+#: includes/class-stancer-gateway.php
+msgid "Subscription identifier"
+msgstr "Identifiant de l'abonnement"
+
+#: includes/class-stancer-gateway.php
+msgid "Will be used as description for every renewal made."
+msgstr "Sera utilisé comme description pour chaque renouvellement."
+
+#: includes/class-stancer-gateway.php
+msgid "Renewal for subscription n°SUBSCRIPTION_ID"
+msgstr "Renouvellement de l'abonnement n°SUBSCRIPTION_ID"
+
+#: includes/class-stancer-gateway.php
+msgid "Description shown to the user on renewal payment"
+msgstr "Description présentée au client lors d'un renouvellement de paiement"
 
 #: includes/class-stancer-gateway.php includes/class-stancer.php
 msgid ""
@@ -265,38 +318,8 @@ msgstr ""
 "pour vos clients en mode redirection."
 
 #: includes/class-stancer-gateway.php
-msgid "List of available variables:"
-msgstr "Liste des variables disponibles :"
-
-#: includes/class-stancer-gateway.php
-msgid "Shop name configured in WooCommerce"
-msgstr "Nom de la boutique configuré dans WooCommerce"
-
-#: includes/class-stancer-gateway.php
-msgid "Total amount"
-msgstr "Montant total"
-
-#: includes/class-stancer-gateway.php
-msgid "Currency of the order"
-msgstr "Devise de la commande"
-
-#: includes/class-stancer-gateway.php
-msgid "Order identifier"
-msgstr "Identifiant de la commande"
-
-#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
-#: includes/class-stancer-gateway.php
-msgid "The description must be between %1$d and %2$d characters."
-msgstr ""
-"La description doit être comprise entre %1$d et %2$d caractères."
-
-#: includes/class-stancer-gateway.php
 msgid "Payment for order n°ORDER_ID"
 msgstr "Paiement pour la commande n°ORDER_ID"
-
-#: includes/class-stancer-gateway.php
-msgid "Description"
-msgstr "Description"
 
 #: includes/class-stancer-gateway.php
 msgid "You will be redirected to our partner's portal to make the payment."
@@ -317,14 +340,15 @@ msgstr "La tentative de paiement a échouée."
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
 
-#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size.
+#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 msgid ""
 "Your payment description is not between %1$d and %2$d characters, it could "
-"result in the use of default description."
+"result in the use of default description: %3$s"
 msgstr ""
 "Votre description de paiement n'est pas comprise entre %1$d et %2$d "
-"caractères, cela peut entrainer l'utilisation de la description par defaut."
+"caractères, cela peut entrainer l'utilisation de la description par defaut : "
+"%3$s"
 
 #. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
@@ -360,6 +384,10 @@ msgstr ""
 msgid "Reason for refund: %1$s"
 msgstr "Raison du remboursement : %1$s"
 
+#: includes/traits/trait-stancer-subscription.php
+msgid "We were unable to locate the subscription."
+msgstr "Nous n’avons pas détecté l’abonnement."
+
 #. translators: 1: Currency.
 #: includes/traits/trait-stancer-subscription.php
 msgid ""
@@ -368,10 +396,6 @@ msgid ""
 msgstr ""
 "Pour utiliser ce mode de paiement le minimum de commande requis est de 0,50 "
 "%s."
-
-#: includes/traits/trait-stancer-subscription.php
-msgid "We were unable to locate the subscription."
-msgstr "Nous n’avons pas détecté l’abonnement."
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "Something went wrong, the renewal payment is incomplete."
@@ -386,7 +410,7 @@ msgid ""
 msgstr ""
 "Votre paiement a été traité avec succès par Stancer. (Transaction ID: %s)"
 
-#. translators: 1: Payment status.
+#. translators: "%s": Payment status.
 #: includes/traits/trait-stancer-subscription.php
 msgid "The payment is not in a valid status (%s)."
 msgstr "Le paiement ne semble pas avoir un statut valide (%s)."

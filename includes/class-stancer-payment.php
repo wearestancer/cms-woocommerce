@@ -185,10 +185,10 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 
 		$api_payment = new Stancer\Payment();
 		$api_payment->amount = $payment_data['amount'];
-		$api_payment->capture = false;
+		$api_payment->capture = isset( $payment_data['capture'] ) ? $payment_data['capture'] : false;
 		$api_payment->currency = $payment_data['currency'];
 		$api_payment->customer = $api_customer;
-		$api_payment->order_id = (string) $order->get_id();
+		$api_payment->order_id = (string) $payment_data['order_id'];
 		$api_payment->methods_allowed = [ 'card' ];
 
 		if ( array_key_exists( 'auth', $payment_data ) && $payment_data['auth'] ) {
@@ -201,6 +201,10 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 
 		if ( array_key_exists( 'return_url', $payment_data ) && $payment_data['return_url'] ) {
 			$api_payment->return_url = $payment_data['return_url'];
+		}
+
+		if ( array_key_exists( 'card', $payment_data ) && $payment_data['card'] ) {
+			$api_payment->card = $payment_data['card'];
 		}
 
 		$api_payment->send();
