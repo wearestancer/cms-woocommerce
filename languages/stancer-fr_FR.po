@@ -278,8 +278,8 @@ msgid "Page type"
 msgstr "Mode d'affichage"
 
 #: includes/class-stancer-gateway.php
-msgid "Popup"
-msgstr "Popup"
+msgid "Popup (Deprecated)"
+msgstr "Popup (Déprécié)"
 
 #: includes/class-stancer-gateway.php
 msgid "Inside the page"
@@ -288,6 +288,11 @@ msgstr "Intégré à la page"
 #: includes/class-stancer-gateway.php
 msgid "Redirect to an external page"
 msgstr "Rediriger vers une page externe"
+
+#: includes/class-stancer-gateway.php
+msgid "Popup option is deprecated and will be removed in a future update."
+msgstr ""
+"L'option popup est dépréciée et sera retirée dans une future mise à jour."
 
 #: includes/class-stancer-gateway.php
 msgid ""
@@ -354,6 +359,21 @@ msgstr ""
 #: includes/class-stancer-payment-builder.php
 msgid "Payment for order n°%s"
 msgstr "Payment pour la commande n°%s"
+
+#. translators: "%s": Link to plugin settings.
+#: includes/class-stancer.php
+msgid ""
+"Stancer payment by popup is deprecated since 31st July 2024, it will be "
+"deleted in the next major version (1.3.0). We advise you to change the "
+"option in your %s."
+msgstr ""
+"Le paiement Stancer par Popup est déprécié depuis le 31 juillet 2024, il "
+"sera supprimé à la prochaine version majeur (1.3.0), nous vous conseillons "
+"de changer l'option dans les %s. "
+
+#: includes/class-stancer.php
+msgid "plugin settings"
+msgstr "réglages du module"
 
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."

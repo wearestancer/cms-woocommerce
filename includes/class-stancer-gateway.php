@@ -79,8 +79,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'refunds',
 		];
 
-		$this->init_form_fields();
 		$this->init_settings();
+		$this->init_form_fields();
 
 		$this->title = $this->get_option( 'payment_option_text' );
 		$this->description = $this->get_option( 'payment_option_description' );
@@ -178,7 +178,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		$class[] = 'stancer-key-notice';
 		$class[] = 'notice';
-		$url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
 		$urlname = __( 'Stancer plugin is not properly configured.', 'stancer' );
 
 		if ( $display ) {
@@ -186,7 +185,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>',
 				esc_attr( implode( ' ', $class ) ),
 				esc_html( $message ),
-				esc_attr( $url ),
+				esc_attr( stancer_setting_url() ),
 				esc_html( $urlname )
 			);
 		}
@@ -619,16 +618,21 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		$inputs['page_type'] = [
-			'default' => 'iframe',
+			'default' => 'pip',
 			'label' => __( 'Page type', 'stancer' ),
 			'title' => __( 'Page type', 'stancer' ),
 			'options' => [
-				'iframe' => __( 'Popup', 'stancer' ),
+				'iframe' => __( 'Popup (Deprecated)', 'stancer' ),
 				'pip' => __( 'Inside the page', 'stancer' ),
 				'redirect' => __( 'Redirect to an external page', 'stancer' ),
 			],
 			'type' => 'select',
 		];
+
+		if ( array_key_exists( 'page_type', $this->settings ) && 'iframe' === $this->settings['page_type'] ) {
+			$description = __( 'Popup option is deprecated and will be removed in a future update.', 'stancer' );
+			$inputs['page_type'] = array_merge( $inputs['page_type'], [ 'description' => $description ] );
+		}
 
 		$desc_auth_limit = __(
 			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',

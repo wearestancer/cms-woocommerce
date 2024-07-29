@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Changed Settings to better express the requirement of payment description (CMS-103)
+- Adding deprecation messages for Popup (CMS-145)
 
 ### Fixed
 - Fix Description of bad size can no longer cause problem with the payment process (CMS-103)

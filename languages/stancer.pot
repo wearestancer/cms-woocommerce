@@ -267,7 +267,7 @@ msgid "Page type"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Popup"
+msgid "Popup (Deprecated)"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -276,6 +276,10 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Redirect to an external page"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Popup option is deprecated and will be removed in a future update."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -326,6 +330,15 @@ msgstr ""
 #. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
 msgid "Payment for order n°%s"
+msgstr ""
+
+#. translators: "%s": Link to plugin settings.
+#: includes/class-stancer.php
+msgid "Stancer payment by popup is deprecated since 31st July 2024, it will be deleted in the next major version (1.3.0). We advise you to change the option in your %s."
+msgstr ""
+
+#: includes/class-stancer.php
+msgid "plugin settings"
 msgstr ""
 
 #: includes/subscriptions/class-stancer-renewal-builder.php
