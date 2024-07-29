@@ -332,7 +332,7 @@ msgstr ""
 msgid "Payment for order n°%s"
 msgstr ""
 
-#. translators: "%s" link to plugin settings.
+#. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php
 msgid "Stancer payment by popup is deprecated, please change the option in your %s."
 msgstr ""

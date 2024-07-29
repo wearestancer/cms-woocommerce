@@ -323,31 +323,6 @@ msgstr ""
 "pour vos clients en mode redirection."
 
 #: includes/class-stancer-gateway.php
-msgid "List of available variables:"
-msgstr "Liste des variables disponibles :"
-
-#: includes/class-stancer-gateway.php
-msgid "Shop name configured in WooCommerce"
-msgstr "Nom de la boutique configuré dans WooCommerce"
-
-#: includes/class-stancer-gateway.php
-msgid "Total amount"
-msgstr "Montant total"
-
-#: includes/class-stancer-gateway.php
-msgid "Currency of the order"
-msgstr "Devise de la commande"
-
-#: includes/class-stancer-gateway.php
-msgid "Order identifier"
-msgstr "Identifiant de la commande"
-
-#. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
-#: includes/class-stancer-gateway.php
-msgid "The description must be between %1$d and %2$d characters."
-msgstr "La description doit être comprise entre %1$d et %2$d caractères."
-
-#: includes/class-stancer-gateway.php
 msgid "Payment for order n°ORDER_ID"
 msgstr "Paiement pour la commande n°ORDER_ID"
 
@@ -385,17 +360,17 @@ msgstr ""
 msgid "Payment for order n°%s"
 msgstr "Payment pour la commande n°%s"
 
-#. translators: "%s" link to plugin settings.
+#. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php
 msgid ""
 "Stancer payment by popup is deprecated, please change the option in your %s."
 msgstr ""
 "Le paiement Stancer par Popup est déprécié, merci de changer cette option "
-"dans vos %s "
+"dans les %s "
 
 #: includes/class-stancer.php
 msgid "plugin settings"
-msgstr "réglages de module"
+msgstr "réglages du module"
 
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."

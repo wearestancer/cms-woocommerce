@@ -87,9 +87,9 @@ Updates are done automatically. However, we recommend that you back up your site
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
 = Version unreleased =
-* Add notification for deprecated `popup` option.
-* Adding validation on payment description.
-* Fix a script having a wider scope than expected.
+* Add notification for deprecated `popup` option
+* Adding validation on payment description
+* Fix a script having a wider scope than expected
 
 = Version 1.2.4 =
 * Support [HPOS](https://woocommerce.com/document/high-performance-order-storage/)
