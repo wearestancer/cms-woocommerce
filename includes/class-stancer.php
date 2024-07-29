@@ -193,7 +193,7 @@ class WC_Stancer {
 				sprintf(
 					// translators: "%s": Link to plugin settings.
 					esc_html__(
-						'Stancer payment by popup is deprecated, please change the option in your %s.',
+						'Stancer payment by popup is deprecated since 31st July 2024, it will be deleted in the next major version (1.3.0). We advise you to change the option in your %s.',
 						'stancer'
 					),
 					'<a href="' . esc_attr( stancer_setting_url() ) . '">' . esc_html__( 'plugin settings', 'stancer' ) . '</a>',

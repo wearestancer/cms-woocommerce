@@ -363,10 +363,13 @@ msgstr "Payment pour la commande n°%s"
 #. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php
 msgid ""
-"Stancer payment by popup is deprecated, please change the option in your %s."
+"Stancer payment by popup is deprecated since 31st July 2024, it will be "
+"deleted in the next major version (1.3.0). We advise you to change the "
+"option in your %s."
 msgstr ""
-"Le paiement Stancer par Popup est déprécié, merci de changer cette option "
-"dans les %s "
+"Le paiement Stancer par Popup est déprécié depuis le 31 juillet 2024, il "
+"sera supprimé à la prochaine version majeur (1.3.0), nous vous conseillons "
+"de changer l'option dans les %s. "
 
 #: includes/class-stancer.php
 msgid "plugin settings"
