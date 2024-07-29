@@ -17,7 +17,7 @@ use Stancer;
 /**
  * Class who create the payments to be send to our API.
  *
- * @since unreleased
+ * @since 1.2.5
  */
 class WC_Stancer_Payment_Builder {
 
@@ -47,7 +47,7 @@ class WC_Stancer_Payment_Builder {
 	/**
 	 * Get the order and Config.
 	 *
-	 * @since unreleased
+	 * @since 1.2.5
 	 *
 	 * @param WC_Order $order The Order that will be payed.
 	 * @param WC_Stancer_Config $api_config our configuration.
@@ -61,7 +61,7 @@ class WC_Stancer_Payment_Builder {
 	 * Prepare payment data for send a payment to Stancer.
 	 *
 	 * @since 1.0.0
-	 * @since unreleased Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
+	 * @since 1.2.5 Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
 	 *
 	 * @param bool|null $force_auth Do we need to force authentication.
 	 * @return void
@@ -104,7 +104,7 @@ class WC_Stancer_Payment_Builder {
 	 * Create a Stancer\Payment Ready to be send.
 	 *
 	 * @since 1.0.0
-	 * @since unreleased Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
+	 * @since 1.2.5 Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
 	 *
 	 * @param string|null $card_id the id of a registered card if it exist.
 	 * @return Stancer\Payment|null

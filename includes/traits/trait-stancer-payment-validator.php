@@ -18,14 +18,14 @@ use Stancer;
  * Trait that add validator for API parameters.
  * For now we only check for description.
  *
- * @since unreleased
+ * @since 1.2.5
  */
 trait WC_Stancer_Payment_Validator_Traits {
 
 	/**
 	 * Return a valid payment description.
 	 *
-	 * @since unreleased
+	 * @since 1.2.5
 	 *
 	 * @param array $params Variable parameter for dynamic description.
 	 * @param string|null $custom_description A custom description to use instead of the api_config one.
@@ -49,7 +49,7 @@ trait WC_Stancer_Payment_Validator_Traits {
 	 * Prepare amount.
 	 *
 	 * @since 1.1.0
-	 * @since unreleased Moved From `WC_Stancer_Api` to `WC_Stancer_Payment_Validator_Traits`
+	 * @since 1.2.5 Moved From `WC_Stancer_Api` to `WC_Stancer_Payment_Validator_Traits`
 	 *
 	 * @param int|float $amount Amount of the order.
 	 *

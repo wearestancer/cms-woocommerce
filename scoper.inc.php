@@ -5,7 +5,7 @@
  * For more Information on Scopping see:
  * https://github.com/humbug/php-scoper/blob/master/docs/configuration.md
  *
- * @since unreleased
+ * @since 1.2.1
  * @link https://www.stancer.com/
  * @license MIT
  *

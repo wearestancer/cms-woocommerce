@@ -177,7 +177,7 @@ class WC_Stancer {
 	/**
 	 * Display deprecated settings parameters
 	 *
-	 * @since unreleased
+	 * @since 1.2.5
 	 *
 	 * @return void
 	 */

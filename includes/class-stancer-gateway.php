@@ -292,7 +292,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Load scripts For the admin panel.
 	 *
-	 * @since unreleased
+	 * @since 1.2.5
 	 *
 	 * @return void
 	 */
@@ -473,7 +473,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 Allow to choose scheme logos.
 	 * @since 1.1.0 Woo Subscriptions method change description.
 	 * @since 1.2.0 Add admin scripts.
-	 * @since unreleased Admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
+	 * @since 1.2.5 Admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
 	 *
 	 * @return self
 	 */
@@ -931,6 +931,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Validate descriptions sent to the API.
 	 *
+	 * @since 1.2.5
+	 *
 	 * @param string $value The value of the description.
 	 * @param string $default_message The default message, if description is not valid.
 	 * @return void
@@ -960,6 +962,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Check for the Description and make sure it's length is correct.
 	 *
+	 * @since 1.2.5
+	 *
 	 * @param string $key the key of the settings.
 	 * @param string $value the value of payment description.
 	 * @return string The value of payment description.
@@ -973,6 +977,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 	/**
 	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @since 1.2.5
 	 *
 	 * @param string $key the key of the settings.
 	 * @param string $value the value of payment description.

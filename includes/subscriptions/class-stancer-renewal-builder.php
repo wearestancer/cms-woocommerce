@@ -17,7 +17,7 @@ use Stancer;
 /**
  * Class who create the payments to be send to our API.
  *
- * @since unreleased
+ * @since 1.2.5
  */
 class WCS_Stancer_Renewal_Builder {
 
@@ -61,7 +61,7 @@ class WCS_Stancer_Renewal_Builder {
 	/**
 	 * Get the order, config and charge value.
 	 *
-	 * @since unreleased
+	 * @since 1.2.5
 	 *
 	 * @param WC_Order $order The Order that will be payed.
 	 * @param WC_Stancer_Config $api_config our configuration.
@@ -78,8 +78,8 @@ class WCS_Stancer_Renewal_Builder {
 	 * Build the renewal data from the subscription.
 	 *
 	 * @since 1.0.0
-	 * @since unreleased Moved from `WC_Stancer_Subscription_Trait` to `WC_Stancer_Renewal_Builder`.
-	 * @since unreleased Adding description parameter to our method, for better contruction.
+	 * @since 1.2.5 Moved from `WC_Stancer_Subscription_Trait` to `WC_Stancer_Renewal_Builder`.
+	 * @since 1.2.5 Adding description parameter to our method, for better contruction.
 	 *
 	 * @param array $descriptions the description parameters that we will use in our api request.
 	 * @return void
@@ -145,7 +145,7 @@ class WCS_Stancer_Renewal_Builder {
 	 * Create a Stancer\Payment Ready to be send.
 	 *
 	 * @since 1.0.0
-	 * @since unreleased Moved from `WC_Stancer_Subscription_Trait` to `WC_Stancer_Renewal_Builder`
+	 * @since 1.2.5 Moved from `WC_Stancer_Subscription_Trait` to `WC_Stancer_Renewal_Builder`
 	 *
 	 * @return Stancer\Payment|null
 	 */
