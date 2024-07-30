@@ -171,6 +171,35 @@ class WC_Stancer {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
+		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
+	}
+
+	/**
+	 * Display deprecated settings parameters
+	 *
+	 * @since 1.2.5
+	 *
+	 * @return void
+	 */
+	public function display_depreciation() {
+
+		$options = get_option( 'woocommerce_stancer_settings' );
+		if ( is_array( $options ) && array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
+
+			$class = [ 'notice', 'notice-warning' ];
+			printf(
+				'<div class="%1$s"><p>%2$s</p></div>',
+				esc_attr( implode( ' ', $class ) ),
+				sprintf(
+					// translators: "%s": Link to plugin settings.
+					esc_html__(
+						'Stancer payment by popup is deprecated since 31st July 2024, it will be deleted in the next major version (1.3.0). We advise you to change the option in your %s.',
+						'stancer'
+					),
+					'<a href="' . esc_attr( stancer_setting_url() ) . '">' . esc_html__( 'plugin settings', 'stancer' ) . '</a>',
+				),
+			);
+		}
 	}
 
 	/**

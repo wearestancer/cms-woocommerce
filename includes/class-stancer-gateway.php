@@ -32,6 +32,17 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	use WC_Stancer_Refunds_Traits;
 	use WC_Stancer_Subscription_Trait;
 
+
+	public const MAX_SIZE_DESCRIPTION = 45;
+	public const MIN_SIZE_DESCRIPTION = 3;
+	public const DESCRIPTION_VARIABLES =
+		[
+			'SHOP_NAME',
+			'TOTAL_AMOUNT',
+			'CURRENCY',
+			'ORDER_ID',
+		];
+
 	/**
 	 * Stancer configuration.
 	 *
@@ -68,8 +79,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'refunds',
 		];
 
-		$this->init_form_fields();
 		$this->init_settings();
+		$this->init_form_fields();
 
 		$this->title = $this->get_option( 'payment_option_text' );
 		$this->description = $this->get_option( 'payment_option_description' );
@@ -95,6 +106,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$this->init_subscription();
 
 		add_action( 'admin_notices', [ $this, 'display_error_key' ] );
+		add_action( 'admin_head', [ $this, 'form_fields_scripts' ] );
 	}
 
 	/**
@@ -166,7 +178,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		$class[] = 'stancer-key-notice';
 		$class[] = 'notice';
-		$url = admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
 		$urlname = __( 'Stancer plugin is not properly configured.', 'stancer' );
 
 		if ( $display ) {
@@ -174,7 +185,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'<div class="%1$s"><p><a href="%3$s">%4$s</a> %2$s</p></div>',
 				esc_attr( implode( ' ', $class ) ),
 				esc_html( $message ),
-				esc_attr( $url ),
+				esc_attr( stancer_setting_url() ),
 				esc_html( $urlname )
 			);
 		}
@@ -276,6 +287,46 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Load scripts For the admin panel.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @return void
+	 */
+	public function form_fields_scripts() {
+		wp_enqueue_script(
+			'stancer-admin-ts',
+			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
+			[ 'jquery' ],
+			STANCER_ASSETS_VERSION,
+			true,
+		);
+
+		wp_enqueue_style(
+			'stancer-admin',
+			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
+			[],
+			STANCER_ASSETS_VERSION,
+		);
+		wp_localize_script(
+			'stancer-admin-ts',
+			'stancer_admin',
+			[
+				'confirmMessage' => sprintf(
+					// Translators: "%1$d": The minimum size of the description. "%2$d": The maximum size of the description.
+					__( 'The description must be between %1$d and %2$d characters after variable replacement. Do you still wish to submit your settings?', 'stancer' ),
+					self::MIN_SIZE_DESCRIPTION,
+					self::MAX_SIZE_DESCRIPTION,
+				),
+				'renewalDescriptionMessage' => __( 'Renewal payment description', 'stancer' ),
+				'paymentDescriptionMessage' => __( 'Description', 'stancer' ),
+				'minSize' => self::MIN_SIZE_DESCRIPTION,
+				'maxSize' => self::MAX_SIZE_DESCRIPTION,
+			],
+		);
 	}
 
 	/**
@@ -422,10 +473,37 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0 Allow to choose scheme logos.
 	 * @since 1.1.0 Woo Subscriptions method change description.
 	 * @since 1.2.0 Add admin scripts.
+	 * @since 1.2.5 Admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
 	 *
 	 * @return self
 	 */
 	public function init_form_fields() {
+
+		$desc_description = function ( $detail, $params ): string {
+			$desc_description = $detail;
+			$desc_description .= ' ';
+			$desc_description .= __( 'List of available variables:', 'stancer' );
+			$desc_description .= '<br/>';
+
+			foreach ( $params as $key => $value ) {
+				$desc_description .= '<b>' . $key . '</b>: ' . $value;
+				$desc_description .= '<br/>';
+			}
+			$desc_description .= sprintf(
+				// Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
+				__( 'The description must be between %1$d and %2$d characters.', 'stancer' ),
+				self::MIN_SIZE_DESCRIPTION,
+				self::MAX_SIZE_DESCRIPTION,
+			);
+			return $desc_description;
+		};
+		$desc_base_parameters = [
+			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
+			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
+			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
+			'ORDER_ID' => __( 'Order identifier', 'stancer' ),
+		];
+
 		$inputs = [];
 
 		$inputs['enabled'] = [
@@ -466,8 +544,40 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'title' => __( 'Payment method change description', 'stancer' ),
 				'type' => 'text',
 			];
+			$inputs['subscription_command_number'] = [
+				'title' => __( 'Order number for renewal payments', 'stancer' ),
+				'type' => 'select',
+				'options' => [
+					'subscription_id' => __( 'Subscription identifier', 'stancer' ),
+					'order_id' => __( 'Order identifier', 'stancer' ),
+				],
+			];
+			$renewal_desc_description = $desc_description(
+				__(
+					'Will be used as description for every renewal made.',
+					'stancer',
+				),
+				array_merge(
+					$desc_base_parameters,
+					[ 'SUBSCRIPTION_ID' => __( 'Subscription identifier', 'stancer' ) ]
+				),
+			);
+			$inputs['subscription_renewal_description'] = [
+				'custom_attributes' => [ 'required' => 'required' ],
+				'default' => __( 'Renewal for subscription n°SUBSCRIPTION_ID', 'stancer' ),
+				'description' => $renewal_desc_description,
+				'desc_tip' => __( 'Description shown to the user on renewal payment', 'stancer' ),
+				'title' => __( 'Renewal payment description', 'stancer' ),
+				'type' => 'text',
+			];
 		} else {
 			$inputs['subscription_payment_change_description'] = [
+				'type' => 'hidden',
+			];
+			$inputs['subscription_command_number'] = [
+				'type' => 'hidden',
+			];
+			$inputs['subscription_renewal_description'] = [
 				'type' => 'hidden',
 			];
 		}
@@ -508,16 +618,21 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 
 		$inputs['page_type'] = [
-			'default' => 'iframe',
+			'default' => 'pip',
 			'label' => __( 'Page type', 'stancer' ),
 			'title' => __( 'Page type', 'stancer' ),
 			'options' => [
-				'iframe' => __( 'Popup', 'stancer' ),
+				'iframe' => __( 'Popup (Deprecated)', 'stancer' ),
 				'pip' => __( 'Inside the page', 'stancer' ),
 				'redirect' => __( 'Redirect to an external page', 'stancer' ),
 			],
 			'type' => 'select',
 		];
+
+		if ( array_key_exists( 'page_type', $this->settings ) && 'iframe' === $this->settings['page_type'] ) {
+			$description = __( 'Popup option is deprecated and will be removed in a future update.', 'stancer' );
+			$inputs['page_type'] = array_merge( $inputs['page_type'], [ 'description' => $description ] );
+		}
 
 		$desc_auth_limit = __(
 			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',
@@ -535,32 +650,20 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'type' => 'text',
 			'description' => $desc_auth_limit,
 		];
-
-		$desc_description = __(
-			'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
-			'stancer',
+		$paym_desc_description = $desc_description(
+			__(
+				'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
+				'stancer',
+			),
+			$desc_base_parameters,
 		);
-		$desc_description .= ' ';
-		$desc_description .= __( 'List of available variables:', 'stancer' );
-		$desc_description .= '<br/>';
-
-		$vars = [
-			'SHOP_NAME' => __( 'Shop name configured in WooCommerce', 'stancer' ),
-			'TOTAL_AMOUNT' => __( 'Total amount', 'stancer' ),
-			'CURRENCY' => __( 'Currency of the order', 'stancer' ),
-			'CART_ID' => __( 'Cart identifier', 'stancer' ),
-		];
-
-		foreach ( $vars as $key => $value ) {
-			$desc_description .= '<b>' . $key . '</b> : ' . $value . '';
-			$desc_description .= '<br/>';
-		}
 
 		$inputs['payment_description'] = [
-			'default' => __( 'Your order SHOP_NAME', 'stancer' ),
+			'custom_attributes' => [ 'required' => 'required' ],
+			'default' => __( 'Payment for order n°ORDER_ID', 'stancer' ),
 			'title' => __( 'Description', 'stancer' ),
 			'type' => 'text',
-			'description' => $desc_description,
+			'description' => $paym_desc_description,
 		];
 
 		$inputs['host'] = [
@@ -572,20 +675,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'default' => 0,
 			'type' => 'hidden',
 		];
-
-		wp_enqueue_style(
-			'stancer-admin',
-			plugin_dir_url( STANCER_FILE ) . 'public/css/admin.min.css',
-			[],
-			STANCER_ASSETS_VERSION,
-		);
-		wp_enqueue_script(
-			'stancer-admin-ts',
-			plugin_dir_url( STANCER_FILE ) . 'public/js/admin.min.js',
-			[],
-			STANCER_ASSETS_VERSION,
-			true,
-		);
 
 		$this->form_fields = apply_filters( 'stancer_form_fields', $inputs );
 
@@ -826,7 +915,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			'completed',
 		];
 		// We bypass nonce verification, because we don't get a nonce to verify from.
-		$order = wc_get_order( get_query_var( 'order-pay', false ) );
+		$order = wc_get_order( get_query_var( 'order-pay', false ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! is_object( $order ) ) {
 			return;
 		}
@@ -837,5 +926,68 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				exit();
 			}
 		}
+	}
+
+	/**
+	 * Validate descriptions sent to the API.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @param string $value The value of the description.
+	 * @param string $default_message The default message, if description is not valid.
+	 * @return void
+	 */
+	protected function validate_description( $value, $default_message ) {
+		if ( ! $value ) {
+			return;
+		}
+		if ( strlen( $value ) > static::MAX_SIZE_DESCRIPTION
+			|| strlen( $value ) < static::MIN_SIZE_DESCRIPTION ) {
+			$message = sprintf(
+				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+				esc_html__(
+					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s',
+					'stancer'
+				),
+				static::MIN_SIZE_DESCRIPTION,
+				static::MAX_SIZE_DESCRIPTION,
+				$default_message,
+			);
+			WC_Admin_Settings::add_error( $message );
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @param string $key the key of the settings.
+	 * @param string $value the value of payment description.
+	 * @return string The value of payment description.
+	 */
+	public function validate_payment_description_field( $key, $value ) {
+		return $this->validate_description(
+			$value,
+			__( 'Payment for order n°ORDER_ID', 'stancer' )
+		);
+	}
+
+	/**
+	 * Check for the Description and make sure it's length is correct.
+	 *
+	 * @since 1.2.5
+	 *
+	 * @param string $key the key of the settings.
+	 * @param string $value the value of payment description.
+	 * @return string The value of payment description.
+	 */
+	public function validate_subscription_renewal_description_field( $key, $value ) {
+		return $this->validate_description(
+			$value,
+			__( 'Renewal for subscription n°SUBSCRIPTION_ID', 'stancer' )
+		);
 	}
 }

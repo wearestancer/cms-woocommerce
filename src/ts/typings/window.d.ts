@@ -1,12 +1,21 @@
 import { type Select2Plugin } from 'select2';
 
 declare global {
+  interface AdminData{
+    confirmMessage: string;
+    descriptionMessage: string;
+    minSize: number;
+    maxSize: number;
+    renewalDescriptionMessage: string;
+  }
+
   interface BlockParams {
     message?: string | null;
   }
 
   interface StancerData {
     changePaymentMethod?: ChangePaymentMethod
+    checkout_url: string;
     initiate: string;
   }
   interface ChangePaymentMethod {
@@ -28,6 +37,7 @@ declare global {
   }
 
   interface Window {
+    stancer_admin: AdminData;
     stancer: StancerData;
     wc_checkout_params: WooCommerceCheckoutParams;
   }

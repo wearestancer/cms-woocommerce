@@ -78,7 +78,6 @@ trait WC_Stancer_Subscription_Trait {
 		);
 		add_action( 'woocommerce_subscription_status_cancelled', [ $this, 'cancel_subscription' ] );
 		add_action( 'woocommerce_subscription_status_expired', [ $this, 'cancel_subscription' ] );
-
 		add_filter( 'woocommerce_change_payment_button_html', [ $this, 'format_change_payment_button' ] );
 	}
 
@@ -147,7 +146,6 @@ trait WC_Stancer_Subscription_Trait {
 	 * @return bool|Payment|WP_Error|null
 	 */
 	public function scheduled_subscription_payment( $charge, WC_Order $order ) {
-		global $wpdb;
 
 		try {
 			$settings = get_option( 'woocommerce_stancer_settings' );
@@ -159,10 +157,20 @@ trait WC_Stancer_Subscription_Trait {
 				throw new WC_Stancer_Exception( __( 'The module is not correctly configured.', 'stancer' ), 7804 );
 			}
 
-			$amount = WC_Stancer_Api::prepare_amount( $charge );
-			$currency = strtolower( $order->get_currency() );
+			$subscriptions = wcs_get_subscriptions_for_order( $order, [ 'order_type' => 'any' ] );
 
-			if ( $amount < 50 ) {
+			if ( count( $subscriptions ) !== 1 ) {
+				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
+			}
+
+			$renewal_builder = new WCS_Stancer_Renewal_Builder( $order, $wc_config, $charge );
+			$parameter['id'] = $this->settings['subscription_command_number'];
+			$parameter['description'] = $this->settings['subscription_renewal_description'];
+			$renewal_builder->build_payment_data( $parameter );
+			$api_payment = $renewal_builder->create_api_payment();
+			$api_payment->send();
+
+			if ( $api_payment->amount < 50 ) {
 				$message = sprintf(
 					// translators: 1: Currency.
 					__(
@@ -171,51 +179,8 @@ trait WC_Stancer_Subscription_Trait {
 					),
 					strtoupper( $order->get_currency() ),
 				);
-
 				throw new WC_Stancer_Exception( $message, 7801 );
 			}
-
-			$subscriptions = wcs_get_subscriptions_for_order( $order, [ 'order_type' => 'any' ] );
-
-			if ( count( $subscriptions ) !== 1 ) {
-				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
-			}
-
-			$api_payment = new Stancer\Payment(
-				[
-					'amount' => $amount,
-					'currency' => $currency,
-				],
-			);
-
-			foreach ( $subscriptions as $subscription ) {
-				$result = $wpdb->get_row(
-					$wpdb->prepare(
-						'SELECT `card_id`, `customer_id` FROM `' . $wpdb->prefix . 'wc_stancer_subscription` WHERE `is_active` = 1 AND `subscription_id` = %d;',
-						$subscription->get_id(),
-					),
-				);
-
-				if ( ! $result->card_id ) {
-					throw new WC_Stancer_Exception( __( 'No card found for this subscription.', 'stancer' ), 7803 );
-				}
-
-				$api_payment->card = new Stancer\Card( $result->card_id );
-
-				if ( $result->customer_id ) {
-					$api_payment->customer = new Stancer\Customer( $result->customer_id );
-				}
-
-				$api_payment->description = sprintf(
-					// translators: 1. Subscription ID. 2. Current order ID.
-					__( 'Renewal payment for subscription n°%1$d, order n°%2$d', 'stancer' ),
-					$subscription->get_id(),
-					$order->get_id(),
-				);
-				$api_payment->order_id = (string) $subscription->get_id();
-			}
-
-			$api_payment->send();
 
 			if ( null === $api_payment->status ) {
 				throw new WC_Stancer_Exception(
@@ -244,8 +209,8 @@ trait WC_Stancer_Subscription_Trait {
 
 				do_action( 'processed_subscription_payments_for_order', $order );
 			} else {
-				// translators: 1: Payment status.
-				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ) );
+				// translators: "%s": Payment status.
+				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' );
 
 				$message = __(
 					'We regret to inform you that the payment has been declined. Please consider using an alternative card.',

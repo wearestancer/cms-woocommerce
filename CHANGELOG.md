@@ -4,13 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.5] - 2024-07-30
+
+### Added
+- Add Choice for order ID or subscription ID for renewal payments (CMS-123)
+- Add renewal description customization for admins (CMS-123)
+
+### Changed
+- Changed Settings to better express the requirement of payment description (CMS-103)
+- Adding deprecation messages for Popup (CMS-145)
+
+### Fixed
+- Fix Description of bad size can no longer cause problem with the payment process (CMS-103)
+- Fix Admin scripts having a broader scope than intended (CMS-159)
+
+
 ## [1.2.4] - 2024-06-20
 
 ### Changed
 - Refact devcontainer (CMS-98)
 
 ### Fixed
-- Declaring Hpos compatibility (CMS-126)
+- Declaring [HPOS](https://woocommerce.com/document/high-performance-order-storage/) compatibility (CMS-126)
 - Fix three product's refund considered as partial refund (CMS-118)
 - Fix iframe payment method creating multiple payment when clicked fast enough (CMS-112)
 - Fix Tag number beeing too many according to Wooommerce's guideline (CMS-114)
@@ -19,10 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.3] - 2024-04-25
 
 ### Deprecated
-- Deprecate Popup page type Because of security problems, consider using other page types.
+- Deprecate Popup page type Because of security problems, consider using other page types
 
 ### Fixed
-- Fix the integration of the new payment page.
+- Fix the integration of the new payment page
 
 
 ## [1.2.2] - 2024-04-02

@@ -10,7 +10,7 @@
  * Plugin Name: Stancer
  * Plugin URI:  https://gitlab.com/wearestancer/cms/woocommerce
  * Description: Simple payment solution at low prices.
- * Version:     1.2.0
+ * Version:     1.2.5
  * Author:      Stancer
  * Author URI:  https://www.stancer.com/
  * License:     MIT
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'STANCER_WC_VERSION', '1.2.0' );
+define( 'STANCER_WC_VERSION', '1.2.5' );
 define( 'STANCER_ASSETS_VERSION', '$[current-timestamp]' );
 define( 'STANCER_FILE', __FILE__ );
 define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
@@ -83,7 +83,7 @@ function plugin_action_links( array $links ) {
 		'settings' => vsprintf(
 			'<a href="%s" aria-label="%s">%s</a>',
 			[
-				admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' ),
+				stancer_setting_url(),
 				esc_attr__( 'View Stancer module settings', 'stancer' ),
 				esc_html__( 'Settings', 'stancer' ),
 			],
@@ -99,6 +99,17 @@ function plugin_action_links( array $links ) {
 	];
 
 	return array_merge( $new, $links );
+}
+
+/**
+ * Return the URL of our settings panel
+ *
+ * @since 1.2.5
+ *
+ * @return string
+ */
+function stancer_setting_url() {
+	return admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stancer' );
 }
 
 /**
