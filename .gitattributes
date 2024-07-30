@@ -1,4 +1,5 @@
 *.mo	binary
 *.po	filter=locales
 *.pot	filter=locales
-stancer.php		filter=assets
+stancer.php filter=version
+README.txt  filter=version
