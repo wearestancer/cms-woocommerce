@@ -1,0 +1,244 @@
+# Copyright (C) 2023-2024 Stancer / Iliad 78
+# This file is distributed under the MIT.
+msgid ""
+msgstr ""
+"Project-Id-Version: $[last-commit-hash]\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/wearestancer/cms/woocommerce/-/issues\n"
+"Last-Translator: $[last-commit-author]\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: $[first-commit-date]\n"
+"PO-Revision-Date: $[last-commit-date]\n"
+
+#. Plugin name.
+#, gp-priority: high
+msgid "Stancer for WooCommerce"
+msgstr ""
+
+#. Found in description paragraph.
+#, gp-priority: high
+msgid "With Stancer, develop business online in a secure way. No commitment, no subscription, no hidden costs."
+msgstr ""
+
+#. Found in description header.
+msgid "The ideal payment solution for your WooCommerce shop"
+msgstr ""
+
+#. Found in description header.
+msgid "Accept a multitude of payment methods"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "The Stancer module for WooCommerce allows you to accept the most common payment methods used by your customers such as credit cards, classic or instant SEPA transfers, or SEPA direct debits, to collect them from your WooCommerce merchant site."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "In order to make the shopping experience smoother, customers have the possibility to register a credit card during the checkout process in order to quickly pay their next purchases."
+msgstr ""
+
+#. Found in description header.
+msgid "Easy integration"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "To integrate our solution on your WooCommerce website, you must <a href=\"https://manage.stancer.com/en/sign-up\">create a Stancer account</a>."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "After your account has been validated by our team, you will be able to opt for the different integration modes available:"
+msgstr ""
+
+#. Found in description list item.
+msgid "Via a Stancer pop-in integrated on your merchant site:\nWhen the customer clicks on \"Order\", the Stancer payment module pop-in opens on the page of your site and allows the customer to enter their bank details."
+msgstr ""
+
+#. Found in description list item.
+msgid "Via a redirection:\nAfter clicking on \"Checkout\", the user automatically leaves your merchant site and is directed to a Stancer payment page. Once the payment has been accepted, the user is redirected to the order confirmation page of your shop site."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Find out more in our <a href=\"https://www.stancer.com/documentation/\">technical documentation</a>."
+msgstr ""
+
+#. Found in description header.
+msgid "Guarantee the security of your payments"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Secure transactions enhance your website's reputation and help your business grow. This is why we have set up robust and reliable protection systems to protect you from fraud attempts."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Payments are 3D-Secure compatible. The amount at which the 3D-Secure is adjustable from the back-office module in WooCommerce."
+msgstr ""
+
+#. Found in description header.
+msgid "A dashboard to follow your activity"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Manage and control your business from a Dashboard. This unique dashboard gives you a consolidated view of cash receipts, refunds and claims. Keep a history of activity and get statistics on your recurring revenues."
+msgstr ""
+
+#. Found in description header.
+msgid "Develop your online business, at lower cost"
+msgstr ""
+
+#. Found in description header.
+msgid "A simple, affordable offer"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "We have designed our solution to be as accessible as possible so that every company can get the most out of it and grow serenely."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Discover our <a href=\"https://www.stancer.com/en/pricing/\">pricing</a>."
+msgstr ""
+
+#. Found in description header.
+msgid "A flexible offer, without commitment"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Benefit from a lower-cost online payment solution, with no subscription and no commitment. You are free to suspend or terminate the offer at any time, at no cost."
+msgstr ""
+
+#. Found in description paragraph.
+msgid "Do you have any questions about Stancer? <a href=\"https://share-eu1.hsforms.com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contact us</a>"
+msgstr ""
+
+#. Found in installation header.
+msgid "Installation"
+msgstr ""
+
+#. Found in installation header.
+msgid "Minimum Requirements"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "WordPress 6.1 or greater"
+msgstr ""
+
+#. Found in installation header.
+msgid "Automatic installation"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser.\nTo do an automatic install, log in to your WordPress dashboard, navigate to the \"Plugins\" menu and click \"Add New\"."
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "In the search field type \"Stancer\", you will see the plugin. You can install it by simply clicking \"Install Now\"."
+msgstr ""
+
+#. Found in installation header.
+msgid "Manual installation"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "The manual installation method involves downloading our plugin and uploading it to your webserver via your favorite FTP application.\nThe WordPress codex contains <a href=\"http://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation\">instructions on how to do this</a>."
+msgstr ""
+
+#. Found in installation header.
+msgid "Updating"
+msgstr ""
+
+#. Found in installation paragraph.
+msgid "Updates are done automatically. However, we recommend that you back up your site before each update."
+msgstr ""
+
+#. Found in changelog header.
+msgid "Changelog"
+msgstr ""
+
+#. Found in changelog paragraph.
+msgid "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md\">See complete changelog file on GitLab</a>."
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Add notification for deprecated `popup` option"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Adding validation on payment description"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fix a script having a wider scope than expected"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Support <a href=\"https://woocommerce.com/document/high-performance-order-storage/\">HPOS</a>"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fixing multiple payment on iframe and a bug for multiple item refunds"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Adding devcontainer for easy development"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fix the integration of the new payment page"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "The `popup` integration mode is now deprecated, a message in the administration area will be shown in the next release"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fix a bug during installation"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Orders were incorrectly marked as \"Pending\" on payment errors"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fix installation on PHP 7.4 (please upgrade your PHP version)"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Allow to refund payments in the shop"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Amount could not have decimals depending on Woo settings"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Internal version for testing release process"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "New integration mode \"Inside the page\""
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Support <a href=\"https://woo.com/products/woocommerce-subscriptions/\">Woo Subscriptions</a>"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "First version"
+msgstr ""

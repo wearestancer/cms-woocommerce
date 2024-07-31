@@ -14,7 +14,7 @@
     "build:assets": "gulp build",
     "build:plugin": "pnpm run build:assets && pnpm run messages:compile && pnpm run versions",
     "messages": "pnpm run messages:discover && pnpm run messages:merge",
-    "messages:discover": "env node ./scripts/messages/discover.js",
+    "messages:discover": "env node ./scripts/messages/discover.js && env node ./scripts/messages/readme.js",
     "messages:compile": "env node ./scripts/messages/compile.js",
     "messages:merge": "env node ./scripts/messages/merge.js",
     "versions": "env node ./scripts/version.js"
