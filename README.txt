@@ -7,8 +7,7 @@ Stable tag: 1.2.5
 License: MIT
 Contributors: stancer
 
-With Stancer, develop business online in a secure way.
-No commitment, no subscription, no hidden costs.
+With Stancer, develop business online in a secure way. No commitment, no subscription, no hidden costs.
 
 == The ideal payment solution for your WooCommerce shop ==
 
