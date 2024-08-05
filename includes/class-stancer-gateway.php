@@ -985,9 +985,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return string The value of payment description.
 	 */
 	public function validate_subscription_renewal_description_field( $key, $value ) {
-		return $this->validate_description(
-			$value,
-			__( 'Renewal for subscription n°SUBSCRIPTION_ID', 'stancer' )
-		);
+		if ( $this->subscriptions_enabled() ) {
+			return $this->validate_description(
+				$value,
+				__( 'Renewal for subscription n°SUBSCRIPTION_ID', 'stancer' )
+			);
+		}
 	}
 }

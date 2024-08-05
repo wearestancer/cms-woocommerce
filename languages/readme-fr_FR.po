@@ -24,8 +24,8 @@ msgid ""
 "With Stancer, develop business online in a secure way. No commitment, no "
 "subscription, no hidden costs."
 msgstr ""
-"Avec Stancer, développez votre activité en ligne de façon sécurisée. "
-"Sans engagement, sans abonnement, sans frais cachés."
+"Avec Stancer, développez votre activité en ligne de façon sécurisée. Sans "
+"engagement, sans abonnement, sans frais cachés."
 
 #. Found in description header.
 msgid "The ideal payment solution for your WooCommerce shop"
@@ -274,6 +274,11 @@ msgid ""
 msgstr ""
 "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
+
+#. Found in changelog paragraph.
+msgid "Fix subscription description warning showing even when no subscription"
+msgstr "Correction d'un avertissement de description d'abonnement"
+"qui apparaissait même sans module d'abonnement"
 
 #. Found in changelog list item.
 msgid "Add notification for deprecated `popup` option"
