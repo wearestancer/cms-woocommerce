@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - An automated script to help translation on `README` (CMS-179)
 
+### Fixed
+- Fix subscription description warning appearing when not useful (CMS-184)
 
 ## [1.2.5] - 2024-07-30
 
