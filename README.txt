@@ -85,8 +85,7 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
-= Version Unreleased =
-
+= Version 1.2.6 =
 * Fix subscription description warning showing even when no subscription
 
 = Version 1.2.5 =

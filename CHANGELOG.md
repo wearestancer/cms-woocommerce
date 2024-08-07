@@ -4,13 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.2.6] - 2024-08-08
 
 ### Added
 - An automated script to help translation on `README` (CMS-179)
 
 ### Fixed
 - Fix subscription description warning appearing when not useful (CMS-184)
+
 
 ## [1.2.5] - 2024-07-30
 
