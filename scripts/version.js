@@ -11,8 +11,9 @@ const globOptions = {
     "vendor/**",
   ],
 };
-
 const currentYear = String((new Date()).getFullYear());
+const currentDate = (new Date()).toISOString().split('T').at(0);
+
 
 glob("**/*.php", globOptions, (err, files) => {
   if (err) {
@@ -30,8 +31,9 @@ glob("**/*.php", globOptions, (err, files) => {
       }
 
       const data = content
-        .replace(/define\( 'STANCER_WC_VERSION'.+/, `define( 'STANCER_WC_VERSION', '${pack.version}' );`)
         .replace(/define\( 'STANCER_ASSETS_VERSION'.+/, `define( 'STANCER_ASSETS_VERSION', '${now}' );`)
+        .replace(/define\( 'STANCER_WC_VERSION'.+/, `define( 'STANCER_WC_VERSION', '${pack.version}' );`)
+        .replaceAll(/\* @since unreleased/g,`* @since ${pack.version}`)
         .replace(/\* Version:.+/, `* Version:     ${pack.version}`)
         .replace(/\* @copyright (\d{4})(?:-\d{4})?\s+Stancer.+/, (_match, date) => {
           if (date === currentYear) {
@@ -51,12 +53,36 @@ glob("**/*.php", globOptions, (err, files) => {
   });
 });
 
+fs.readFile('CHANGELOG.md', {encoding:"utf-8"}, (err,content) => {
+  if (err) {
+    throw err;
+  }
+
+  fs.writeFile(
+    'CHANGELOG.md',
+    content.replace(
+      /##\s*\[?[uU]nreleased?\]?/,
+      `## [${pack.version}] - ${currentDate}`
+    ),
+    (err) => {
+      if (err) {
+        throw err;
+      }
+    }
+  )
+});
+
 fs.readFile('README.txt', { encoding: "utf8" }, (err, content) => {
   if (err) {
     throw err;
   }
 
-  fs.writeFile('README.txt', content.replace(/Stable tag:.+/, `Stable tag: ${pack.version}`), (err) => {
+  const data = content
+    .replace(/Stable tag:.+/, `Stable tag: ${pack.version}`)
+    .replace(/=\s+[uU]nreleased?\s+=/,`= ${pack.version} =`)
+    ;
+
+  fs.writeFile('README.txt', data, (err) => {
     if (err) {
       throw err;
     }

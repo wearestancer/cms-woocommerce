@@ -10,7 +10,7 @@
  * Plugin Name: Stancer
  * Plugin URI:  https://gitlab.com/wearestancer/cms/woocommerce
  * Description: Simple payment solution at low prices.
- * Version:     1.2.5
+ * Version:     $[current-version]
  * Author:      Stancer
  * Author URI:  https://www.stancer.com/
  * License:     MIT
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'STANCER_WC_VERSION', '1.2.5' );
+define( 'STANCER_WC_VERSION', '$[current-version]' );
 define( 'STANCER_ASSETS_VERSION', '$[current-timestamp]' );
 define( 'STANCER_FILE', __FILE__ );
 define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
