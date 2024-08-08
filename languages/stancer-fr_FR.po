@@ -369,7 +369,7 @@ msgid ""
 msgstr ""
 "Le paiement Stancer par Popup est déprécié depuis le 31 juillet 2024, il "
 "sera supprimé à la prochaine version majeur (1.3.0), nous vous conseillons "
-"de changer l'option dans les %s. "
+"de changer l'option dans les %s."
 
 #: includes/class-stancer.php
 msgid "plugin settings"

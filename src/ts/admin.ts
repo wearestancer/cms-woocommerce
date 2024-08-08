@@ -4,7 +4,7 @@
   const prefix = 'woocommerce_stancer';
 
   const validateDescription = ($description: Input, descriptionType: string): boolean => {
-    if (!$description.length){
+    if (!$description.length || $description.attr('type') !== 'text'){
       return true;
     }
     const {

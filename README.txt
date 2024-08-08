@@ -3,12 +3,11 @@ Tags: stancer, payment, credit card, sepa, ecommerce
 Requires at least: 6.1.0
 Tested up to: 6.6.1
 Requires PHP: 7.4
-Stable tag: 1.2.5
+Stable tag: $[current-version]
 License: MIT
 Contributors: stancer
 
-With Stancer, develop business online in a secure way.
-No commitment, no subscription, no hidden costs.
+With Stancer, develop business online in a secure way. No commitment, no subscription, no hidden costs.
 
 == The ideal payment solution for your WooCommerce shop ==
 
@@ -85,6 +84,9 @@ Updates are done automatically. However, we recommend that you back up your site
 == Changelog ==
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+
+= Version 1.2.6 =
+* Fix subscription description warning showing even when no subscription
 
 = Version 1.2.5 =
 * Add notification for deprecated `popup` option

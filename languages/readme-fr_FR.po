@@ -1,0 +1,369 @@
+# Copyright (C) 2023-2024 Stancer / Iliad 78
+# This file is distributed under the MIT.
+msgid ""
+msgstr ""
+"Project-Id-Version: $[last-commit-hash]\n"
+"Report-Msgid-Bugs-To: https://gitlab.com/wearestancer/cms/woocommerce/-/"
+"issues\n"
+"POT-Creation-Date: $[first-commit-date]\n"
+"PO-Revision-Date: $[last-commit-date]\n"
+"Last-Translator: $[last-commit-author]\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Plugin name.
+msgid "Stancer for WooCommerce"
+msgstr "Stancer pour WooCommerce"
+
+#. Found in description paragraph.
+msgid ""
+"With Stancer, develop business online in a secure way. No commitment, no "
+"subscription, no hidden costs."
+msgstr ""
+"Avec Stancer, développez votre activité en ligne de façon sécurisée. Sans "
+"engagement, sans abonnement, sans frais cachés."
+
+#. Found in description header.
+msgid "The ideal payment solution for your WooCommerce shop"
+msgstr "La solution de paiement idéale pour votre boutique WooCommerce"
+
+#. Found in description header.
+msgid "Accept a multitude of payment methods"
+msgstr "Acceptez une multitude de moyens de paiement"
+
+#. Found in description paragraph.
+msgid ""
+"The Stancer module for WooCommerce allows you to accept the most common "
+"payment methods used by your customers such as credit cards, classic or "
+"instant SEPA transfers, or SEPA direct debits, to collect them from your "
+"WooCommerce merchant site."
+msgstr ""
+"Le module Stancer pour WooCommerce vous permet d’accepter les moyens de "
+"paiement les plus utilisés par vos clients tels que les cartes bancaires, "
+"les virements SEPA classiques ou instantanés, ou encore les prélèvements "
+"SEPA, pour les encaisser depuis votre site marchand WooCommerce."
+
+#. Found in description paragraph.
+msgid ""
+"In order to make the shopping experience smoother, customers have the "
+"possibility to register a credit card during the checkout process in order "
+"to quickly pay their next purchases."
+msgstr ""
+"Afin de fluidifier l’expérience d’achat, les clients ont la possibilité "
+"d’enregistrer une carte bancaire lors du paiement de la commande afin de "
+"pouvoir régler rapidement leurs prochains achats."
+
+#. Found in description header.
+msgid "Easy integration"
+msgstr "Une intégration simpifiée"
+
+#. Found in description paragraph.
+msgid ""
+"To integrate our solution on your WooCommerce website, you must <a "
+"href=\"https://manage.stancer.com/en/sign-up\">create a Stancer account</a>."
+msgstr ""
+"Pour intégrer notre solution sur votre site marchand WooCommerce, vous devez "
+"vous <a href=\"https://manage.stancer.com/fr/inscription/\">créer un compte "
+"Stancer</a>."
+
+#. Found in description paragraph.
+msgid ""
+"After your account has been validated by our team, you will be able to opt "
+"for the different integration modes available:"
+msgstr ""
+"Après validation de votre compte par nos équipes, vous pourrez opter pour "
+"les différents modes d’intégration disponibles :"
+
+#. Found in description list item.
+msgid ""
+"Via a Stancer pop-in integrated on your merchant site:\n"
+"When the customer clicks on \"Order\", the Stancer payment module pop-in "
+"opens on the page of your site and allows the customer to enter their bank "
+"details."
+msgstr ""
+"Via un pop-in Stancer intégré sur votre site marchand : \n"
+"Lorsque le client clique sur \"Commander\", le \"pop-in\" du module de "
+"paiement Stancer s’ouvre sur la page de votre site et permet au client de "
+"renseigner ses coordonnées bancaires."
+
+#. Found in description list item.
+msgid ""
+"Via a redirection:\n"
+"After clicking on \"Checkout\", the user automatically leaves your merchant "
+"site and is directed to a Stancer payment page. Once the payment has been "
+"accepted, the user is redirected to the order confirmation page of your shop "
+"site."
+msgstr ""
+"Via une redirection :\n"
+"Après avoir cliqué sur \"Commander\", l’utilisateur quitte automatiquement "
+"votre site marchand pour être dirigé vers une page de paiement Stancer, puis "
+"une fois le paiement accepté, il est redirigé sur la page de confirmation de "
+"commande de votre site boutique."
+
+#. Found in description paragraph.
+msgid ""
+"Find out more in our <a href=\"https://www.stancer.com/documentation/"
+"\">technical documentation</a>."
+msgstr ""
+"Découvrez notre <a href=\"https://www.stancer.com/documentation/fr/"
+"\">documentation technique</a> pour en savoir plus."
+
+#. Found in description header.
+msgid "Guarantee the security of your payments"
+msgstr "Garantissez la sécurité de vos encaissements"
+
+#. Found in description paragraph.
+msgid ""
+"Secure transactions enhance your website's reputation and help your business "
+"grow. This is why we have set up robust and reliable protection systems to "
+"protect you from fraud attempts."
+msgstr ""
+"La sécurisation des transactions améliore la réputation de votre site et "
+"favorise la croissance de votre business. C'est pourquoi, nous avons mis en "
+"place des systèmes de protections robustes et fiables pour vous prémunir au "
+"mieux des tentatives de fraude."
+
+#. Found in description paragraph.
+msgid ""
+"Payments are 3D-Secure compatible. The amount at which the 3D-Secure is "
+"adjustable from the back-office module in WooCommerce."
+msgstr ""
+"Les paiements sont compatibles 3D-Secure. Le montant à partir duquel se "
+"déclenche le 3D-Secure est configurable depuis le module dans le back-office "
+"WooCommerce."
+
+#. Found in description header.
+msgid "A dashboard to follow your activity"
+msgstr "Un tableau de bord pour suivre votre activité"
+
+#. Found in description paragraph.
+msgid ""
+"Manage and control your business from a Dashboard. This unique dashboard "
+"gives you a consolidated view of cash receipts, refunds and claims. Keep a "
+"history of activity and get statistics on your recurring revenues."
+msgstr ""
+"Gérez et pilotez votre activité à partir d’un Dashboard. Ce tableau de bord "
+"unique vous offre une vue consolidée des encaissements, des remboursements "
+"et des réclamations. Conservez un historique de l’activité et obtenez des "
+"statistiques de vos revenus récurrents."
+
+#. Found in description header.
+msgid "Develop your online business, at lower cost"
+msgstr "Développez votre activité en ligne, à moindre coût"
+
+#. Found in description header.
+msgid "A simple, affordable offer"
+msgstr "Une offre simple, à petit prix"
+
+#. Found in description paragraph.
+msgid ""
+"We have designed our solution to be as accessible as possible so that every "
+"company can get the most out of it and grow serenely."
+msgstr ""
+"Nous avons conçu notre solution pour être la plus accessible possible afin "
+"que chaque entreprise puisse en bénéficier et grandir sereinement."
+
+#. Found in description paragraph.
+msgid ""
+"Discover our <a href=\"https://www.stancer.com/en/pricing/\">pricing</a>."
+msgstr ""
+"Découvrir notre <a href=\"https://www.stancer.com/fr/tarifs/\">tarification</"
+"a>."
+
+#. Found in description header.
+msgid "A flexible offer, without commitment"
+msgstr "Une offre flexible, sans engagement"
+
+#. Found in description paragraph.
+msgid ""
+"Benefit from a lower-cost online payment solution, with no subscription and "
+"no commitment. You are free to suspend or terminate the offer at any time, "
+"at no cost."
+msgstr ""
+"Bénéficiez d’une solution de paiement en ligne à moindre coût, sans "
+"abonnement et sans engagement. Vous êtes libre de suspendre ou résilier "
+"l’offre lorsque vous le souhaitez, sans frais."
+
+#. Found in description paragraph.
+msgid ""
+"Do you have any questions about Stancer? <a href=\"https://share-eu1.hsforms."
+"com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contact us</a>"
+msgstr ""
+"Vous avez des questions sur Stancer ? <a href=\"https://share-eu1.hsforms."
+"com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contactez-nous</a>"
+
+#. Found in installation header.
+msgid "Installation"
+msgstr "Installation"
+
+#. Found in installation header.
+msgid "Minimum Requirements"
+msgstr "Minimum requis"
+
+#. Found in installation paragraph.
+msgid "WordPress 6.1 or greater"
+msgstr "WordPress 6.1 ou supérieur"
+
+#. Found in installation header.
+msgid "Automatic installation"
+msgstr "Installation automatique"
+
+#. Found in installation paragraph.
+msgid ""
+"Automatic installation is the easiest option as WordPress handles the file "
+"transfers itself and you don’t need to leave your web browser.\n"
+"To do an automatic install, log in to your WordPress dashboard, navigate to "
+"the \"Plugins\" menu and click \"Add New\"."
+msgstr ""
+"L’installation automatique est l’option la plus simple car WordPress gère "
+"lui-même les transferts de fichiers et vous n’avez pas besoin de quitter "
+"votre navigateur.\n"
+"Pour effectuer une installation automatique, connectez-vous à votre tableau "
+"de bord WordPress, accédez au menu \"Extensions\" et cliquez sur \"Ajouter\"."
+
+#. Found in installation paragraph.
+msgid ""
+"In the search field type \"Stancer\", you will see the plugin. You can "
+"install it by simply clicking \"Install Now\"."
+msgstr ""
+"Dans le champ de recherche tapez \"Stancer\", vous trouverez le module. Vous "
+"pourrez l'installer en cliquant sur \"Installer maintenant\"."
+
+#. Found in installation header.
+msgid "Manual installation"
+msgstr "Installation manuelle"
+
+#. Found in installation paragraph.
+msgid ""
+"The manual installation method involves downloading our plugin and uploading "
+"it to your webserver via your favorite FTP application.\n"
+"The WordPress codex contains <a href=\"http://codex.wordpress.org/"
+"Managing_Plugins#Manual_Plugin_Installation\">instructions on how to do "
+"this</a>."
+msgstr ""
+"L'installation manuelle implique le téléchargement de notre module et le "
+"téléverser sur votre server avec votre client FTP favori.\n"
+"Le codex WordPress contient <a href=\"http://codex.wordpress.org/"
+"Managing_Plugins#Manual_Plugin_Installation\">des instructions sur les "
+"manipulations nécessaires pour cela</a>."
+
+#. Found in installation header.
+msgid "Updating"
+msgstr "Mise à jour"
+
+#. Found in installation paragraph.
+msgid ""
+"Updates are done automatically. However, we recommend that you back up your "
+"site before each update."
+msgstr ""
+"Les mises à jour sont faites automatiquement. Nous vous conseillons tout de "
+"même de sauvegarder votre site avant chaque mise à jour."
+
+#. Found in changelog header.
+msgid "Changelog"
+msgstr "Changements"
+
+#. Found in changelog paragraph.
+msgid ""
+"<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
+"CHANGELOG.md\">See complete changelog file on GitLab</a>."
+msgstr ""
+"<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
+"CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
+
+#. Found in changelog paragraph.
+msgid "Fix subscription description warning showing even when no subscription"
+msgstr "Correction d'un avertissement de description d'abonnement"
+"qui apparaissait même sans module d'abonnement"
+
+#. Found in changelog list item.
+msgid "Add notification for deprecated `popup` option"
+msgstr ""
+"Ajout d'une notification de dépréciation de l'option <code>popup</code>"
+
+#. Found in changelog list item.
+msgid "Adding validation on payment description"
+msgstr "Ajout d'une validation de la description des paiements"
+
+#. Found in changelog list item.
+msgid "Fix a script having a wider scope than expected"
+msgstr "Correction sur un script ajouté à tort sur trop de page"
+
+#. Found in changelog list item.
+msgid ""
+"Support <a href=\"https://woocommerce.com/document/high-performance-order-"
+"storage/\">HPOS</a>"
+msgstr ""
+"Support de <a href=\"https://woocommerce.com/document/high-performance-order-"
+"storage/\">HPOS</a>"
+
+#. Found in changelog list item.
+msgid "Fixing multiple payment on iframe and a bug for multiple item refunds"
+msgstr ""
+"Correction d'un bug sur les remboursements multiples, ainsi que d'un bug "
+"d'affichage de l'iframe"
+
+#. Found in changelog list item.
+msgid "Adding devcontainer for easy development"
+msgstr "Ajout d'un devcontainer pour faciliter le développement"
+
+#. Found in changelog list item.
+msgid "Fix the integration of the new payment page"
+msgstr "Correction de l'intégration de la nouvelle page de paiement"
+
+#. Found in changelog list item.
+msgid ""
+"The `popup` integration mode is now deprecated, a message in the "
+"administration area will be shown in the next release"
+msgstr ""
+"Le mode d'intégration <code>popup</code> est maintenant déprécié, un message "
+"dans la zone d'administration sera affiché dans une prochaine version"
+
+#. Found in changelog list item.
+msgid "Fix a bug during installation"
+msgstr "Correction d'un bogue lors de l'installation du module"
+
+#. Found in changelog list item.
+msgid "Orders were incorrectly marked as \"Pending\" on payment errors"
+msgstr ""
+"Les commandes pouvaient être marquées \"En cours\" à tort lors d'erreurs de "
+"paiement"
+
+#. Found in changelog list item.
+msgid "Fix installation on PHP 7.4 (please upgrade your PHP version)"
+msgstr ""
+"Correction de l'installation sous PHP 7.4 (pensez à mettre à jour votre "
+"version de PHP)"
+
+#. Found in changelog list item.
+msgid "Allow to refund payments in the shop"
+msgstr "Ajout des remboursements depuis la boutique"
+
+#. Found in changelog list item.
+msgid "Amount could not have decimals depending on Woo settings"
+msgstr ""
+"Le montant pouvait ne pas avoir de décimales en fonction des réglages de Woo"
+
+#. Found in changelog list item.
+msgid "Internal version for testing release process"
+msgstr "Version interne pour tester le mécanisme de déploiement"
+
+#. Found in changelog list item.
+msgid "New integration mode \"Inside the page\""
+msgstr "Nouveau mode d'intégration \"Intégré à la page\""
+
+#. Found in changelog list item.
+msgid ""
+"Support <a href=\"https://woo.com/products/woocommerce-subscriptions/\">Woo "
+"Subscriptions</a>"
+msgstr ""
+"Support de <a href=\"https://woo.com/fr-fr/products/woocommerce-"
+"subscriptions/\">Woo Subscriptions</a>"
+
+#. Found in changelog list item.
+msgid "First version"
+msgstr "Première version"
