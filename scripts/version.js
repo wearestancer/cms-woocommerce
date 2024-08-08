@@ -79,7 +79,7 @@ fs.readFile('README.txt', { encoding: "utf8" }, (err, content) => {
 
   const data = content
     .replace(/Stable tag:.+/, `Stable tag: ${pack.version}`)
-    .replace(/=\s+[uU]nreleased?\s+=/,`= ${pack.version} =`)
+    .replace(/=\s+(Version\s+)?[uU]nreleased?\s+=/,`= Version ${pack.version} =`)
     ;
 
   fs.writeFile('README.txt', data, (err) => {
