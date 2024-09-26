@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023 Stancer / Iliad 78
+ * @copyright 2023-2024 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -17,7 +17,7 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodTyp
 /**
  * Block support for Stancer gateway
  *
- * @since unreleased
+ * @since 1.3.0
  *
  * @package  stancer
  * @subpackage  stancer/includes

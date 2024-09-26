@@ -259,7 +259,7 @@ class WC_Stancer {
 	/**
 	 * Register the Gateway Block support to the approriate action hooks
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -276,7 +276,7 @@ class WC_Stancer {
 	/**
 	 * Get the plugin absolute path
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return string
 	 */

@@ -18,7 +18,7 @@ use Stancer;
  * ChangePayment Controller used to change payment with WP API.
  * For now the controller is not restfull and the request are more SOAP.
  *
- * @since unreleased
+ * @since 1.3.0
  */
 class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 
@@ -26,7 +26,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Our Payment Gateway
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @var WC_Stancer_Gateway
 	 */
@@ -35,7 +35,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Our Subscription.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @var WC_Subscription
 	 */
@@ -44,7 +44,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Instanciation method.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 */
 	public function __construct() {
 		$this->gateway = new WC_Stancer_Gateway();
@@ -53,7 +53,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Register Routes to be called by our frontend.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -92,7 +92,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Handle an Information request.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return array
 	 */
@@ -106,7 +106,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Handle an Initiation request.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return array
 	 */
@@ -124,7 +124,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Handle a Validation request.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return array
 	 */
@@ -183,7 +183,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Get the payment data from the current subscription.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @return array
 	 */
@@ -208,7 +208,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Helper to format the card informations.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @param Stancer\Payment $payment Payment used.
 	 *
@@ -225,7 +225,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	/**
 	 * Validate the permission( notably the nonce token) to make sure to process the change payment method.
 	 *
-	 * @since unreleased
+	 * @since 1.3.0
 	 *
 	 * @param WP_REST_Request $request the request to be treated by our controller.
 	 * @return boolean|WP_error
