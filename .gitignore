@@ -2,6 +2,8 @@
 # Dependencies
 node_modules/
 vendor/
+.pnpm-store
+.cache/
 
 # Local
 .vscode/
