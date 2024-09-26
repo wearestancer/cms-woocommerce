@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Added
+- Support of woocommerce checkout blocks. (CMS-68)
+
+### Changed
+- Change the cb logo to the new logo (CMS-173)
+
 ### Fixed
 - Fix plugin sometimes being active when is shouldn't (CMS-171)
 

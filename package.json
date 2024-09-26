@@ -13,18 +13,26 @@
     "build:archive": "pnpm run build:plugin && composer run scope:dependency && pnpm run archive && composer run after:scoping",
     "build:assets": "gulp build",
     "build:plugin": "pnpm run build:assets && pnpm run messages:compile && pnpm run versions",
+    "lint": "eslint . --ext .mjs,.js,.ts,.tsx --cache --cache-location node_modules/.cache/eslint",
     "messages": "pnpm run messages:discover && pnpm run messages:merge",
     "messages:discover": "env node ./scripts/messages/discover.js && env node ./scripts/messages/readme.js",
     "messages:compile": "env node ./scripts/messages/compile.js",
     "messages:merge": "env node ./scripts/messages/merge.js",
     "versions": "env node ./scripts/version.js"
   },
+  "dependencies": {
+    "@wordpress/api-fetch": "^6.47.0"
+  },
   "devDependencies": {
     "@types/jquery": "^3.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@types/select2": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
     "archiver": "^5.0.0",
     "autoprefixer": "^10.0.0",
     "del": "^7.0.0",
+    "eslint": "^8.0.0",
     "glob": "^8.0.0",
     "gulp": "^4.0.0",
     "gulp-cheerio": "^1.0.0",
@@ -39,6 +47,7 @@
     "gulp-terser": "^2.0.0",
     "gulp-typescript": "6.0.0-alpha.1",
     "postcss": "^8.0.0",
+    "react": "^18.2.0",
     "sass": "^1.0.0",
     "through2": "^4.0.0",
     "typescript": "^5.0.0"
