@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix plugin sometimes being active when is shouldn't (CMS-171)
+- Fix payment description not showing correctly on redirect mode (CMS-137)
 
 
 ## [1.2.6] - 2024-08-08

@@ -794,9 +794,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				wp_enqueue_style( 'stancer-iframe-style', $style_path( 'iframe' ), [], STANCER_ASSETS_VERSION );
 
 				break;
-
 			default:
-				echo esc_html__( 'You will be redirected to our partner\'s portal to make the payment.', 'stancer' );
+				printf( '<p>%s</p>', esc_html__( 'You will be redirected to our partner\'s portal to make the payment.', 'stancer' ) );
 		}
 	}
 
