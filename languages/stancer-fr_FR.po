@@ -53,6 +53,10 @@ msgstr ""
 "Vous ne pouvez pas remboursez %1$.02f %3$s le prix total de votre commande "
 "est de %2$.02f %3$s"
 
+#: includes/class-stancer-gateway-block-support.php
+msgid "Pay by card"
+msgstr "Payer par carte"
+
 #. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
@@ -69,7 +73,10 @@ msgid "Stancer plugin is not properly configured."
 msgstr "Le module Stancer n'est pas correctement configuré."
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
-#: includes/class-stancer-gateway.php subscription/change-payment-method.php
+#. translators: "%1$s": Card brand. "%2$d" Last 4.
+#: includes/class-stancer-gateway.php
+#: includes/Controller/class-stancer-change-payment-method.php
+#: subscription/change-payment-method.php
 msgid "%1$s finishing with %2$s"
 msgstr "%1$s finissant par %2$s"
 
@@ -375,6 +382,18 @@ msgstr ""
 msgid "plugin settings"
 msgstr "réglages du module"
 
+#: includes/Controller/class-stancer-change-payment-method.php
+#: subscription/change-payment-method.php
+msgid "This method has not been validated. Please try a new one."
+msgstr ""
+"Ce moyen de paiement n'a pu être validé. Merci d'essayer avec un autre moyen "
+"de paiement."
+
+#: includes/Controller/class-stancer-change-payment-method.php
+#: subscription/change-payment-method.php
+msgid "Payment method changed successfully."
+msgstr "Moyen de paiement modifié avec succès."
+
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
 msgstr "Aucune carte trouvé pour cet abonnement."
@@ -478,16 +497,6 @@ msgstr "Aller à l'Espace Client Stancer"
 #: stancer.php
 msgid "Customer Account"
 msgstr "Espace Client"
-
-#: subscription/change-payment-method.php
-msgid "This method has not been validated. Please try a new one."
-msgstr ""
-"Ce moyen de paiement n'a pu être validé. Merci d'essayer avec un autre moyen "
-"de paiement."
-
-#: subscription/change-payment-method.php
-msgid "Payment method changed successfully."
-msgstr "Moyen de paiement modifié avec succès."
 
 #: subscription/change-payment-method.php
 msgid "Incorrect action method"
