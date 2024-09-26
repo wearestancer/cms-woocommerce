@@ -12,6 +12,8 @@
  * @subpackage stancer/includes
  */
 
+ // phpcs:disable Generic.Files.OneObjectStructurePerFile.MultipleFound
+
 /**
  * Generic exception for the module.
  *
@@ -22,3 +24,8 @@
  */
 class WC_Stancer_Exception extends Exception {
 }
+
+/**
+ * Bad request exception, for stancer controllers
+ */
+class WC_Stancer_Request_Exception extends WC_Stancer_Exception{}

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: $[first-commit-date]\n"
 "PO-Revision-Date: $[last-commit-date]\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: stancer\n"
 
 #. Plugin Name of the plugin
@@ -49,6 +49,10 @@ msgstr ""
 msgid "You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s"
 msgstr ""
 
+#: includes/class-stancer-gateway-block-support.php
+msgid "Pay by card"
+msgstr ""
+
 #. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
@@ -63,7 +67,9 @@ msgid "Stancer plugin is not properly configured."
 msgstr ""
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
+#. translators: "%1$s": Card brand. "%2$d" Last 4.
 #: includes/class-stancer-gateway.php
+#: includes/Controller/class-stancer-change-payment-method.php
 #: subscription/change-payment-method.php
 msgid "%1$s finishing with %2$s"
 msgstr ""
@@ -341,6 +347,16 @@ msgstr ""
 msgid "plugin settings"
 msgstr ""
 
+#: includes/Controller/class-stancer-change-payment-method.php
+#: subscription/change-payment-method.php
+msgid "This method has not been validated. Please try a new one."
+msgstr ""
+
+#: includes/Controller/class-stancer-change-payment-method.php
+#: subscription/change-payment-method.php
+msgid "Payment method changed successfully."
+msgstr ""
+
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
 msgstr ""
@@ -420,14 +436,6 @@ msgstr ""
 
 #: stancer.php
 msgid "Customer Account"
-msgstr ""
-
-#: subscription/change-payment-method.php
-msgid "This method has not been validated. Please try a new one."
-msgstr ""
-
-#: subscription/change-payment-method.php
-msgid "Payment method changed successfully."
 msgstr ""
 
 #: subscription/change-payment-method.php

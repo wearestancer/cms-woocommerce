@@ -353,8 +353,8 @@ export const ts = () => {
   const stancerFlat = readFileSync('public/svg/stancer-flat.svg', { encoding: 'utf-8' }).trim();
 
   return project.src()
+    .pipe(replace('<svg stancer-flat></svg>', stancerFlat))
     .pipe(project()).js
-    .pipe(replace('<svg:stancer-flat>', stancerFlat))
     .pipe(gulp.dest('public/js'))
     .pipe(terser())
     .pipe(rename({ extname: '.min.js' }))
@@ -362,5 +362,6 @@ export const ts = () => {
   ;
 };
 
+export const watch = () => gulp.watch(['./src/ts/**/*.ts','./src/ts/**/*.tsx'],ts);
 export const build = gulp.series(clean, svg, gulp.parallel(scss, ts));
 export default build;
