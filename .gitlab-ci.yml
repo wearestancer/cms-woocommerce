@@ -29,7 +29,7 @@ Create archive:
   image: ${DOCKER_REGISTRY}/wordpress:php${PHP_VERSION}
 
   before_script:
-    - php -v
+    - php --version
     - composer --version
     - pnpm --version
 
@@ -49,13 +49,31 @@ Create archive:
       - '*.zip'
 
 
+phpstan:
+  stage: test
+
+  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
+
+  before_script:
+    - php --version
+    - composer --version
+
+    - composer install
+  script:
+    - composer run phpstan || true
+    - composer run phpstan -- --error-format=gitlab > gl-static-analysis-report.json
+
+  artifacts:
+    reports:
+      codequality: gl-static-analysis-report.json
+
 phpcs:
   stage: test
 
   image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
 
   before_script:
-    - php -v
+    - php --version
     - composer --version
 
     - composer install
