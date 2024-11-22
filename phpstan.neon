@@ -1,0 +1,193 @@
+
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+  - phar://phpstan.phar/conf/bleedingEdge.neon
+  - phpstan-baseline.neon
+
+parameters:
+  bootstrapFiles:
+    - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+  scanFiles:
+    - vendor/stancer/php-stubs-woo-subscriptions/stubs.php
+  level: 6
+  paths:
+    - includes/
+    - subscription/
+    - stancer.php
+    - uninstall.php
+
+  phpVersion: 80100
+
+  treatPhpDocTypesAsCertain: false
+
+  tmpDir: vendor/.cache/phpstan
+
+  typeAliases:
+
+  # MARK: Change Payment Method
+
+    ChangePaymentInitiate: '''
+      array{
+        'redirect': string,
+        'result': 'success',
+      }
+    '''
+
+    ChangePaymentInformation: '''
+      array{
+        'card': string,
+        'result': 'success',
+      }
+    '''
+    ChangePaymentMethodData: '''
+      array{
+        'nonce': string,
+        'url': string,
+      }
+    '''
+
+    ChangePaymentValidate: '''
+      array{
+        'card': string,
+        'messages': string,
+        'result': 'success',
+      }
+    '''
+
+    RequestChangePayment: '''
+      array{
+        'subscription':string,
+        'nonce',string
+      }
+    '''
+
+    # MARK: Payment Front Response
+
+    BlockPaymentMethodData: '''
+      array{
+        'title': string,
+        'description': string,
+        'label': string,
+        'logo': array{
+            'url': string,
+            'class': string,
+          },
+        'page_type': string,
+        'stancer': GetPaymentData,
+        'supports': string[],
+      }
+    '''
+
+    CheckoutResponse: '''
+      array{
+        'receipt': string,
+        'redirect': string,
+        'reload': bool,
+        'result': 'failed'|'success',
+      }
+    '''
+
+    GetPaymentData: '''
+      array{
+        'data': array<string,mixed>,
+        'page_type': 'pip',
+        'message': string,
+      }
+    '''
+
+    # MARK: Payment API Request
+
+    BuildPaymentData: '''
+      array{
+        'amount': int,
+        'auth': bool,
+        'capture'?: bool,
+        'currency': string,
+        'description'?: string,
+        'order_id': string,
+        'return_url': string,
+      }
+    '''
+
+    CustomerData: '''
+      array{
+        'first_name':string,
+        'last_name':string,
+        'email':string,
+        'id':int,
+      }
+    '''
+
+    PaymentData: '''
+      array{
+        'amount'?: int,
+        'auth'?: bool,
+        'currency'?: string,
+        'description'?: string,
+        'return_url'?: string,
+        'order_id'?: string,
+      }
+    '''
+
+    RenewalData: '''
+      array{
+        'amount': int,
+        'currency': string,
+        'capture':bool,
+        'card'?: object,
+        'customer'?: object,
+        'description'?: string,
+        'order_id'?: string,
+      }
+      '''
+
+  # MARK: Description
+
+    DescriptionData: '''
+      array{
+        'CURRENCY': string,
+			  'CART_ID'?: string,
+			  'ORDER_ID': string,
+			  'SHOP_NAME': string,
+        'SUBSCRIPTION_ID'?: string,
+        'TOTAL_AMOUNT': string,
+      }
+    '''
+
+    SubscriptionDescriptionParameter: '''
+      array{
+        'description': string,
+        'id': 'order_id'|'subscription_id',
+      }
+    '''
+
+    # MARK: Settings Parameters
+    FormField: '''
+      array{
+        'default'?: string,
+        'desc_tip'?: string,
+        'title': string,
+        'type': 'text'|'title'|'checkbox'|'payment_option_logo'|'hidden'|'select',
+      }
+    '''
+
+    KeyConfigurationInnerData: '''
+      array{
+        'description': string,
+        'pattern': string,
+        'title': string,
+      }
+    '''
+
+    KeyConfigurationData: '''
+      array{
+        'api_live_public_key': KeyConfigurationInnerData,
+        'api_live_secret_key': KeyConfigurationInnerData,
+        'api_test_public_key': KeyConfigurationInnerData,
+        'api_test_secret_key': KeyConfigurationInnerData,
+      }
+    '''
+
+
+
+

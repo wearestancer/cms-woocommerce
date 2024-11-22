@@ -40,7 +40,9 @@ function create_card_info( Stancer\Payment $payment ): string {
 /**
  * Helper to send the response.
  *
- * @param array $data Response data.
+ * @param array<mixed> $data Response data.
+ *
+ * @return void
  */
 function send_response( array $data ) {
 	echo wp_json_encode( $data );

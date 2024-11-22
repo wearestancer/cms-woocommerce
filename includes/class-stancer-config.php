@@ -51,7 +51,7 @@ class WC_Stancer_Config {
 	 * Mode Live or Test.
 	 *
 	 * @since 1.0.0
-	 * @var string
+	 * @var string|null
 	 */
 	public $mode;
 
@@ -100,7 +100,7 @@ class WC_Stancer_Config {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $settings Base settings.
+	 * @param string[] $settings Base settings.
 	 */
 	public function __construct( $settings ) {
 		$this->auth_limit = $settings['auth_limit'] ?? 0;
@@ -122,6 +122,8 @@ class WC_Stancer_Config {
 	 * Get API configuration.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return Stancer\Config
 	 */
 	private function get_config() {
 		$keys = [
@@ -133,19 +135,17 @@ class WC_Stancer_Config {
 
 		$api_config = Stancer\Config::init( array_filter( $keys ) );
 
-		if ( $api_config ) {
-			$api_config->setMode( $this->mode ?? Stancer\Config::TEST_MODE );
+		$api_config->setMode( $this->mode ?? Stancer\Config::TEST_MODE );
 
-			if ( $this->host ) {
-				$api_config->setHost( $this->host );
-			}
-
-			// phpcs:disable WordPress.WP.CapitalPDangit.MisspelledInText
-			$api_config->addAppData( 'libstancer-woocommerce', STANCER_WC_VERSION );
-			$api_config->addAppData( 'woocommerce', WC_VERSION );
-			$api_config->addAppData( 'wordpress', get_bloginfo( 'version' ) );
-			// phpcs:enable
+		if ( $this->host ) {
+			$api_config->setHost( $this->host );
 		}
+
+		// phpcs:disable WordPress.WP.CapitalPDangit.MisspelledInText
+		$api_config->addAppData( 'libstancer-woocommerce', STANCER_WC_VERSION );
+		$api_config->addAppData( 'woocommerce', WC_VERSION );
+		$api_config->addAppData( 'wordpress', get_bloginfo( 'version' ) );
+		// phpcs:enable
 
 		return $api_config;
 	}
@@ -154,6 +154,8 @@ class WC_Stancer_Config {
 	 * Checks if on test mode.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return bool
 	 */
 	public function is_test_mode() {
 		return Stancer\Config::TEST_MODE === $this->mode;
@@ -163,6 +165,8 @@ class WC_Stancer_Config {
 	 * Checks if it is configured.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return bool
 	 */
 	public function is_configured() {
 		$api_config = $this->get_config();
@@ -186,6 +190,8 @@ class WC_Stancer_Config {
 	 * Checks if it is NOT configured.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return bool
 	 */
 	public function is_not_configured() {
 		return ! $this->is_configured();

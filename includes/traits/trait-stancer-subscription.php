@@ -27,6 +27,7 @@ trait WC_Stancer_Subscription_Trait {
 	 * Format change payment button.
 	 *
 	 * @since 1.1.0
+	 *
 	 * @param string $base The base HTML button.
 	 *
 	 * @return string
@@ -46,6 +47,8 @@ trait WC_Stancer_Subscription_Trait {
 	 * Initialise subscriptions.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return void
 	 */
 	public function init_subscription() {
 		if ( $this->subscriptions_disabled() ) {
@@ -87,6 +90,8 @@ trait WC_Stancer_Subscription_Trait {
 	 * @since 1.1.0
 	 *
 	 * @param WC_Subscription $subscription An object representing the subscription that just had its status changed.
+	 *
+	 * @return void
 	 */
 	public function cancel_subscription( WC_Subscription $subscription ) {
 		global $wpdb;
@@ -107,6 +112,8 @@ trait WC_Stancer_Subscription_Trait {
 	 *
 	 * @param WC_Order $order The subscription order.
 	 * @param WC_Stancer_Payment $stancer_payment The payment used for initiate the subscription.
+	 *
+	 * @return void
 	 */
 	public function register_subscription_data( WC_Order $order, WC_Stancer_Payment $stancer_payment ) {
 		global $wpdb;
@@ -143,7 +150,7 @@ trait WC_Stancer_Subscription_Trait {
 	 * @param float $charge The amount to charge.
 	 * @param WC_Order $order A WC_Order object created to record the renewal payment.
 	 *
-	 * @return bool|Payment|WP_Error|null
+	 * @return void
 	 */
 	public function scheduled_subscription_payment( $charge, WC_Order $order ) {
 
@@ -210,7 +217,7 @@ trait WC_Stancer_Subscription_Trait {
 				do_action( 'processed_subscription_payments_for_order', $order );
 			} else {
 				// translators: "%s": Payment status.
-				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' );
+				$order->add_order_note( sprintf( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' ) );
 
 				$message = __(
 					'We regret to inform you that the payment has been declined. Please consider using an alternative card.',
@@ -236,7 +243,7 @@ trait WC_Stancer_Subscription_Trait {
 				sprintf( $message, $error->getCode(), $error->getMessage(), get_class( $error ) ),
 			);
 
-			return false;
+			return;
 		} catch ( WC_Stancer_Exception $error ) {
 			// translators: "%1$s": Error code. "%2$s": Error message.
 			$message = __( 'The transaction for renewing your subscription has failed. (%1$s: %2$s)', 'stancer' );
@@ -245,9 +252,9 @@ trait WC_Stancer_Subscription_Trait {
 				sprintf( $message, $error->getCode(), $error->getMessage() ),
 			);
 
-			return false;
+			return;
 		} finally {
-			if ( $api_payment ) {
+			if ( isset( $api_payment ) ) {
 				WC_Stancer_Payment::save_from( $api_payment );
 			}
 		}

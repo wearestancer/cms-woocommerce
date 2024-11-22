@@ -98,6 +98,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		add_filter( 'woocommerce_order_button_html', [ $this, 'place_order_button_html' ] );
 
 		// Update settings.
+		// @phpstan-ignore-next-line we won't use the return value here but it still can be usefull.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 
 		// Check the order status and redirect us if the payment is already completed.
@@ -119,7 +120,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @param WC_Order $order Order.
 	 * @param string|null $card_id Card identifier.
 	 *
-	 * @return array
+	 * @return CheckoutResponse
 	 */
 	public function create_api_payment( $order, $card_id = null ) {
 		$redirect = $order->get_checkout_payment_url( true );
@@ -196,6 +197,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Display notice when payment failed.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function display_notice() {
 		$notice = WC()->session->get( 'stancer_error_payment' );
@@ -211,7 +214,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function dynamic_title() {
 		global $wpdb;
@@ -225,7 +228,9 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$this->title = 'Stancer';
 		}
 
-		$table = fn( string $name ) => '`' . $wpdb->prefix . 'wc_stancer_' . $name . '`';
+		$table = function ( string $name ) use ( $wpdb ) {
+			return '`' . $wpdb->prefix . 'wc_stancer_' . $name . '`';
+		};
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 
@@ -286,7 +291,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				],
 			);
 		}
-
 		return $this;
 	}
 
@@ -336,7 +340,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.1.0
 	 *
 	 * @param string $key Field key.
-	 * @param array $data Field data.
+	 * @param FormField $data Field data.
+	 *
 	 * @return string
 	 */
 	public function generate_payment_option_logo_html( $key, $data ) {
@@ -434,7 +439,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Get the payment Data to be send to our frontEnd.
 	 *
 	 * @param string $page_type the page type chosen by the user.
-	 * @return array
+	 *
+	 * @return GetPaymentData
 	 */
 	public function get_payment_data( string $page_type ): array {
 		$data = [
@@ -464,7 +470,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array
+	 * @return KeyConfigurationData
 	 */
 	public function get_configurations() {
 		// translators: "%s": Key prefixes (aka sprod, pprod, stest or ptest).
@@ -505,7 +511,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.2.0 Add admin scripts.
 	 * @since 1.2.5 Admin scripts moved to WC_Stancer_Gateway::form_fields_scripts.
 	 *
-	 * @return self
+	 * @return static
 	 */
 	public function init_form_fields() {
 
@@ -731,6 +737,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.0 Add logos and description.
+	 *
+	 * @return void
 	 */
 	public function payment_fields() {
 		$logo = $this->settings['payment_option_logo'] ?? 'no-logo';
@@ -758,8 +766,12 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$page_type = $payment_data['page_type'];
 		$data = $payment_data['data'];
 
-		$script_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
-		$style_path = fn( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
+		$script_path = function ( string $name ) {
+			return plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
+		};
+		$style_path = function ( string $name ) {
+			return plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
+		};
 
 		$add_script = function ( string $script, bool $localize = true, array $dependancy = [] ) use ( $data, $script_path ) {
 			$name = 'stancer-' . $script;
@@ -827,7 +839,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param int $order_id Order ID.
 	 *
-	 * @return array
+	 * @return CheckoutResponse
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
@@ -841,6 +853,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @since 1.0.0
 	 *
 	 * @param int $order_id Order ID.
+	 *
+	 * @return void|never
 	 */
 	public function receipt_page( $order_id ) {
 
@@ -939,7 +953,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * Redirect Processing order to order_Checkout .
 	 * We can have multiple redirection but if they scope badly we have a processing Error.
 	 *
-	 * @return void
+	 * @return void|never
 	 */
 	public function redirect_incorrect_call() {
 		$finished_status = [
@@ -967,7 +981,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param string $value The value of the description.
 	 * @param string $default_message The default message, if description is not valid.
-	 * @return void
+	 *
+	 * @return void|string
 	 */
 	protected function validate_description( $value, $default_message ) {
 		if ( ! $value ) {
@@ -998,6 +1013,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param string $key the key of the settings.
 	 * @param string $value the value of payment description.
+	 *
 	 * @return string The value of payment description.
 	 */
 	public function validate_payment_description_field( $key, $value ) {
@@ -1014,7 +1030,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 *
 	 * @param string $key the key of the settings.
 	 * @param string $value the value of payment description.
-	 * @return string The value of payment description.
+	 *
+	 * @return void|string The value of payment description.
 	 */
 	public function validate_subscription_renewal_description_field( $key, $value ) {
 		if ( $this->subscriptions_enabled() ) {
