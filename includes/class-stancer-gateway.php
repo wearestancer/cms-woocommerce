@@ -467,7 +467,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return array
 	 */
 	public function get_configurations() {
-		// translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
+		// translators: "%s": Key prefixes (aka sprod, pprod, stest or ptest).
 		$desc = __( 'Starts with "%s"', 'stancer' );
 
 		return [
@@ -918,7 +918,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				$order->add_order_note(
 					sprintf(
-						// translators: %s: Stancer payment identifier.
+						// translators: "%s": Stancer payment identifier.
 						__( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ),
 						$api_payment->getId()
 					)
