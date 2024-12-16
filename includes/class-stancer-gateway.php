@@ -277,7 +277,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 			$this->title = vsprintf(
 				// translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
-				__( '%1$s finishing with %2$s', 'stancer' ),
+				__( '%1$s ending with %2$s', 'stancer' ),
 				[
 					$result['brand_name'],
 					$result['last4'],

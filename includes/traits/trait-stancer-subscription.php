@@ -160,7 +160,7 @@ trait WC_Stancer_Subscription_Trait {
 			$subscriptions = wcs_get_subscriptions_for_order( $order, [ 'order_type' => 'any' ] );
 
 			if ( count( $subscriptions ) !== 1 ) {
-				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
+				throw new WC_Stancer_Exception( __( 'We were unable to find the subscription.', 'stancer' ), 7802 );
 			}
 
 			$renewal_builder = new WCS_Stancer_Renewal_Builder( $order, $wc_config, $charge );
@@ -174,7 +174,7 @@ trait WC_Stancer_Subscription_Trait {
 				$message = sprintf(
 					// translators: "%s": Currency.
 					__(
-						'In order to utilize this payment method, the minimum required order total is 0.50 %s.',
+						'In order to use this payment method, the minimum required order total is 0.50 %s.',
 						'stancer',
 					),
 					strtoupper( $order->get_currency() ),

@@ -164,7 +164,7 @@ try {
 
 			break;
 		default:
-			throw new Stancer\Exceptions\Exception( __( 'Incorrect action method', 'stancer' ) );
+			throw new Stancer\Exceptions\Exception( __( 'Incorrect action', 'stancer' ) );
 	}
 } catch ( Stancer\Exceptions\Exception $exception ) {
 	$response['reason'] = $exception->getMessage();

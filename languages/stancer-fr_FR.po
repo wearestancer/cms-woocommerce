@@ -347,7 +347,7 @@ msgstr "Le module n'est pas correctement configuré."
 msgid "The payment attempt failed."
 msgstr "La tentative de paiement a échouée."
 
-#. translators: %s: Stancer payment identifier.
+#. translators: "%s"": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
@@ -427,7 +427,7 @@ msgstr "Raison du remboursement : %1$s"
 msgid "We were unable to locate the subscription."
 msgstr "Nous n’avons pas détecté l’abonnement."
 
-#. translators: 1: Currency.
+#. translators: "%s": Currency.
 #: includes/traits/trait-stancer-subscription.php
 msgid ""
 "In order to utilize this payment method, the minimum required order total is "
