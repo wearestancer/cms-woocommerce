@@ -347,7 +347,7 @@ msgstr "Le module n'est pas correctement configuré."
 msgid "The payment attempt failed."
 msgstr "La tentative de paiement a échouée."
 
-#. translators: "%s"": Stancer payment identifier.
+#. translators: "%s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
