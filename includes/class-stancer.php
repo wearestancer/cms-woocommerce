@@ -179,7 +179,6 @@ class WC_Stancer {
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 		add_action( 'woocommerce_blocks_loaded', [ $this, 'gateway_block_support' ] );
 		add_action(
 			'rest_api_init',
@@ -343,18 +342,9 @@ class WC_Stancer {
 				}
 			}
 
-			$modified_options = [
-				'page_type' => [
-					'modified' => 'iframe',
-					'replaced' => 'pip',
-				],
-			];
-
-			foreach ( $modified_options as $key => $value ) {
-				if ( array_key_exists( $key, $options ) && $options[ $key ] === $value['modified'] ) {
-					$options[ $key ] = $value['replaced'];
-					$updated = true;
-				}
+			if ( array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
+				$options['page_type'] = 'pip';
+				$updated = true;
 			}
 		}
 
