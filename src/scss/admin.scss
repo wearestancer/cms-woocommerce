@@ -17,7 +17,7 @@
 .stancer-admin {
   $elem: &;
 
-  .woocommerce table.form-table & & {
+  .woocommerce .form-table & & {
     &__form-control {
       display: grid ;
       grid-template-columns: 1fr;

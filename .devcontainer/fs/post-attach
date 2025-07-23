@@ -46,6 +46,9 @@ sudo mkdir --mode=775 -p "${wordpress_dir}/wp-content/upgrade"
 sudo chown -R www-data:www-data "${wordpress_dir}/wp-content/upgrade"
 sudo chmod g+w "${wordpress_dir}/wp-content/plugins"
 sudo chmod g+w "${wordpress_dir}/wp-content/themes"
+if [ -f .devcontainer/.env ]; then
+  source .devcontainer/.env
+fi
 
 # Activate debug
 wp --path="$wordpress_dir" config set WP_DEBUG true --raw
@@ -95,7 +98,11 @@ wp --path="$wordpress_dir" option patch update "$configuration_name" mail mailer
 # Install woocommerce
 command=$(wp --path="$wordpress_dir" plugin list --field=name --status=active | grep woocommerce || true)
 if [ -z "$command" ]; then
-  wp --path="$wordpress_dir" plugin install --activate woocommerce
+  if [ -n "${WOOCOMMERCE_VERSION:-}" ]; then
+    wp --path="$wordpress_dir" plugin install --activate woocommerce --version="$WOOCOMMERCE_VERSION"
+  else
+    wp --path="$wordpress_dir" plugin install --activate woocommerce
+  fi
 fi
 
 # Create some example products
@@ -186,14 +193,13 @@ pnpm run build:assets
 
 # Install our plugin
 command=$(wp --path="$wordpress_dir" plugin list --field=name --status=active | grep stancer || true)
+
 if [ -z "$command" ]; then
   wp --path="$wordpress_dir" plugin activate stancer
 fi
 
 # Configure it
 if [ -f .devcontainer/.env ]; then
-  source .devcontainer/.env
-
   configuration_name="woocommerce_stancer_settings"
   command=$(wp --path="$wordpress_dir" option list --search="$configuration_name" --format=count)
 
