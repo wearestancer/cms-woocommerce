@@ -30,8 +30,6 @@ const main = () => {
   // Declare React function & wordpress,woocommerce constants.
 
   const useEffect = React.useEffect;
-  const useState = React.useState;
-  const useRef = React.useRef;
 
   /**
    *  Set the Button Label
@@ -50,13 +48,16 @@ const main = () => {
    * @param IsisClosed
    * @returns void
    */
-  const buttonListener = (data: MutableRefObject<CompletePaymentData> | {}, button: Element): void => useEffect(() => {
-
+  const buttonListener = (data: () => CompletePaymentData): void => useEffect(() => {
+    const button = document.querySelector('.wc-block-components-checkout-place-order-button');
+    if (
+      data().payment_method !== 'stancer' ||
+      settings.page_type !== 'pip' ||
+      button === null
+    ) {
+      return;
+    }
     button.addEventListener('click', (e: Event) => {
-
-      if (!('current' in data)) {
-        return;
-      }
       const checkedPaymentMethod = document.querySelector('.wc-block-components-radio-control__option-checked');
 
       if (
@@ -69,8 +70,7 @@ const main = () => {
 
       e.preventDefault();
       e.stopImmediatePropagation();
-
-      callApi(data.current)
+      callApi(data())
         .then(
           (response) => {
             // Block checkout doesn't give us an easy acess to the checkout data that we sent.
@@ -113,14 +113,9 @@ const main = () => {
    */
   const Content = (props: StancerPaymentInterface): React.ReactNode => {
     const { activePaymentMethod, billing, shippingData } = props;
-
-    if (
-      activePaymentMethod !== 'stancer' ||
-      settings.page_type !== 'pip'
-    ) {
-      return <Description />;
+    if (typeof activePaymentMethod === 'undefined') {
+      throw Error('Undefined payment method, cannot process.');
     }
-
     const formdata = () => {
       const formdata: CompletePaymentData = {
         billing_address: billing?.billingAddress,
@@ -129,9 +124,10 @@ const main = () => {
       };
       return formdata;
     }
+
+    buttonListener(formdata);
     return <div>
       <Description />
-      <Iframe data={formdata} />
     </div>;
   };
 
@@ -143,28 +139,6 @@ const main = () => {
   const Description = (): React.ReactNode => {
     return wordPress.htmlEntities.decodeEntities(settings.description);
   };
-
-  /**
-   * Call a buttonListener, when we get the paymentUrl we create the Iframe
-   *
-   * @param param IframeProps
-   * @returns ReactNode
-   */
-  const Iframe: React.FC<IframeProps> = ({ data }: IframeProps): React.ReactNode => {
-    const [result, setResult]: [CheckoutResponseReact, SetReactResponse] = useState(
-      {
-        redirect: '',
-        receipt: '',
-        result: '',
-      });
-    const activeData = useRef({});
-    activeData.current = data();
-    const button = document.querySelector('.wc-block-components-checkout-place-order-button');
-    if (button !== null) {
-      buttonListener(activeData, button);
-    }
-    return <div />;
-  }
 
   /**
    * Set the Label to be displayed

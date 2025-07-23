@@ -2,7 +2,7 @@
 Tags: stancer, payment, credit card, sepa, ecommerce
 Requires at least: 6.5.0
 Tested up to: 6.8.0
-Requires PHP: 7.4
+Requires PHP: 8.1
 Stable tag: $[current-version]
 License: MIT
 Contributors: stancer
