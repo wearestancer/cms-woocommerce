@@ -20,7 +20,7 @@ declare global {
     message?: string | null;
   }
   interface CompletePaymentData extends BillingAddressShippingAddress {
-    payment_method: 'stancer';
+    payment_method: string;
   }
 
   interface CheckoutStatusProps {

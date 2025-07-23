@@ -1,7 +1,7 @@
 === Stancer for WooCommerce ===
 Tags: stancer, payment, credit card, sepa, ecommerce
 Requires at least: 6.1.0
-Tested up to: 6.6.1
+Tested up to: 6.8.0
 Requires PHP: 7.4
 Stable tag: $[current-version]
 License: MIT
