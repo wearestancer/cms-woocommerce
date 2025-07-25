@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ### Fixed
-- Iframe sometimes didn't displayed properly on blocks (CMS-376)
-- Logo choice didn't showed properly
+- Iframe sometimes didn't display properly on blocks (CMS-376)
+- Logo choice didn't show properly
 
 
 ## [1.3.0] - 2024-09-26
