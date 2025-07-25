@@ -46,6 +46,7 @@ sudo mkdir --mode=775 -p "${wordpress_dir}/wp-content/upgrade"
 sudo chown -R www-data:www-data "${wordpress_dir}/wp-content/upgrade"
 sudo chmod g+w "${wordpress_dir}/wp-content/plugins"
 sudo chmod g+w "${wordpress_dir}/wp-content/themes"
+
 if [ -f .devcontainer/.env ]; then
   source .devcontainer/.env
 fi
