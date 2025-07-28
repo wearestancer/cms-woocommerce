@@ -85,7 +85,7 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
-= Version Unreleased =
+= Version 1.3.1 =
 * Fix a bug regarding iframe display
 
 = Version 1.3.0 =
