@@ -75,7 +75,7 @@ class WC_Stancer_Api {
 	 * @since 1.2.0
 	 *
 	 * @param WC_Order $order Wc order.
-	 * @param int|null $refund_amount amount to be refund in cents.
+	 * @param int|null $refund_amount amount to refund in cents.
 	 *
 	 * @return Stancer\Payment
 	 * @throws WC_Stancer_Exception Check that the refund amount is above 50 cents.
