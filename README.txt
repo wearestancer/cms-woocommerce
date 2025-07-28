@@ -1,7 +1,7 @@
 === Stancer for WooCommerce ===
 Tags: stancer, payment, credit card, sepa, ecommerce
 Requires at least: 6.1.0
-Tested up to: 6.6.1
+Tested up to: 6.8.0
 Requires PHP: 7.4
 Stable tag: $[current-version]
 License: MIT
@@ -84,6 +84,9 @@ Updates are done automatically. However, we recommend that you back up your site
 == Changelog ==
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+
+= Version Unreleased =
+* Fix a bug regarding iframe display
 
 = Version 1.3.0 =
 * Add support for WooCommerce blocks
