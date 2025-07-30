@@ -35,17 +35,17 @@ abstract class WC_Stancer_Abstract_Table {
 	 * Creation date and time.
 	 *
 	 * @since 1.0.0
-	 * @var DateTime
+	 * @var DateTime|string
 	 */
-	protected DateTime $datetime_created;
+	protected DateTime|string $datetime_created;
 
 	/**
 	 * Last modification date and time.
 	 *
 	 * @since 1.0.0
-	 * @var DateTime
+	 * @var DateTime|string
 	 */
-	protected DateTime $datetime_modified;
+	protected DateTime|string $datetime_modified;
 
 	/**
 	 * Name of primary key.
@@ -172,9 +172,7 @@ abstract class WC_Stancer_Abstract_Table {
 		];
 
 		$data = array_diff_key( $properties, array_flip( $defaults ) );
-		$key_callback = function ( $key ) {
-			return '`' . esc_sql( $key ) . '`';
-		};
+		$key_callback = fn( $key ) => '`' . esc_sql( $key ) . '`';
 
 		$keys = array_map( $key_callback, array_keys( $data ) );
 
@@ -203,9 +201,7 @@ abstract class WC_Stancer_Abstract_Table {
 					VALUES
 						(' . implode( ', ', $values ) . ', NOW());';
 		} else {
-			$fields_callback = function ( $key, $value ) {
-				return '`' . esc_sql( $key ) . '` = ' . $value;
-			};
+			$fields_callback = fn ( $key, $value ) => '`' . esc_sql( $key ) . '` = ' . $value;
 
 			$fields = array_map( $fields_callback, array_keys( $values ), $values );
 
@@ -239,9 +235,7 @@ abstract class WC_Stancer_Abstract_Table {
 		$values = implode(
 			' AND ',
 			array_map(
-				function ( $k ) {
-					return "`{$k}` = %s";
-				},
+				fn ( $k ) =>"`{$k}` = %s",
 				array_keys( $data )
 			)
 		);

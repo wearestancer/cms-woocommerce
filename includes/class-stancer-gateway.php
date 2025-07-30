@@ -228,9 +228,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$this->title = 'Stancer';
 		}
 
-		$table = function ( string $name ) use ( $wpdb ) {
-			return '`' . $wpdb->prefix . 'wc_stancer_' . $name . '`';
-		};
+		$table = fn ( string $name ) => '`' . $wpdb->prefix . 'wc_stancer_' . $name . '`';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 
@@ -766,12 +764,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$page_type = $payment_data['page_type'];
 		$data = $payment_data['data'];
 
-		$script_path = function ( string $name ) {
-			return plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
-		};
-		$style_path = function ( string $name ) {
-			return plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
-		};
+		$script_path = fn ( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/js/' . $name . '.min.js';
+		$style_path = fn ( string $name ) => plugin_dir_url( STANCER_FILE ) . 'public/css/' . $name . '.min.css';
 
 		$add_script = function ( string $script, bool $localize = true, array $dependancy = [] ) use ( $data, $script_path ) {
 			$name = 'stancer-' . $script;

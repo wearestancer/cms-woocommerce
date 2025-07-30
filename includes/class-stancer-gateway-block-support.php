@@ -54,7 +54,7 @@ final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 	 * @return void
 	 */
 	public function initialize() {
-		// @phpstan-ignore-next-line
+		// @phpstan-ignore-next-line global function "WC" trigger phpstan error.
 		$gateways = WC()->payment_gateways->payment_gateways();
 		$this->gateway = $gateways[ $this->name ];
 		$this->settings = $this->gateway->settings;
