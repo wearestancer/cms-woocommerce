@@ -215,7 +215,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 * @return string
 	 */
 	public function create_card_info( Stancer\Payment $payment ): string {
-		// translators: "%1$s": Card brand. "%2$d" Last 4.
+		// translators: "%1$s": Card brand. "%2$s": Last 4.
 		$trad = __( '%1$s finishing with %2$s', 'stancer' );
 		$card = $payment->card;
 

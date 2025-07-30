@@ -160,6 +160,11 @@ msgstr ""
 
 #. Found in changelog list item.
 #, gp-priority: low
+msgid "Fix a bug regarding iframe display"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
 msgid "Add support for WooCommerce blocks"
 msgstr ""
 

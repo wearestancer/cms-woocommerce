@@ -1,4 +1,4 @@
-# Copyright (C) 2023-2024 Stancer / Iliad 78
+# Copyright (C) 2023-2025 Stancer / Iliad 78
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
@@ -46,9 +46,10 @@ msgstr "Un remboursement doit être supérieur à cinquante centime"
 
 #. translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
 #: includes/class-stancer-api.php
+#, php-format
 msgid ""
-"You cannot refund %1$.02f %3$s the order total with already acounted refund "
-"is %2$.02f %3$s"
+"You cannot refund %1$.02f %3$s, the order total with the already accounted "
+"refund is %2$.02f %3$s."
 msgstr ""
 "Vous ne pouvez pas remboursez %1$.02f %3$s le prix total de votre commande "
 "est de %2$.02f %3$s"
@@ -59,6 +60,7 @@ msgstr "Payer par carte"
 
 #. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
+#, php-format
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
 msgstr ""
 "Vous êtes en mode %1$s mais les clefs %1$s ne sont pas correctement rentrées."
@@ -73,15 +75,14 @@ msgid "Stancer plugin is not properly configured."
 msgstr "Le module Stancer n'est pas correctement configuré."
 
 #. translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
-#. translators: "%1$s": Card brand. "%2$d" Last 4.
 #: includes/class-stancer-gateway.php
-#: includes/Controller/class-stancer-change-payment-method.php
-#: subscription/change-payment-method.php
-msgid "%1$s finishing with %2$s"
+#, php-format
+msgid "%1$s ending with %2$s"
 msgstr "%1$s finissant par %2$s"
 
 #. Translators: "%1$d": The minimum size of the description. "%2$d": The maximum size of the description.
 #: includes/class-stancer-gateway.php
+#, php-format
 msgid ""
 "The description must be between %1$d and %2$d characters after variable "
 "replacement. Do you still wish to submit your settings?"
@@ -137,8 +138,9 @@ msgstr "Tous les types de cartes supportés suivi du logo Stancer."
 msgid "Every supported schemes logos with full Stancer logo."
 msgstr "Tous les types de cartes supportés suivi du logo complet Stancer."
 
-#. translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
+#. translators: "%s": Key prefixes (aka sprod, pprod, stest or ptest).
 #: includes/class-stancer-gateway.php
+#, php-format
 msgid "Starts with \"%s\""
 msgstr "Commence avec \"%s\""
 
@@ -164,6 +166,7 @@ msgstr "Liste des variables disponibles :"
 
 #. Translators: "%1$d": the minimum size of the description "%2$d": the maximum size of the description.
 #: includes/class-stancer-gateway.php
+#, php-format
 msgid "The description must be between %1$d and %2$d characters."
 msgstr "La description doit être comprise entre %1$d et %2$d caractères."
 
@@ -349,11 +352,13 @@ msgstr "La tentative de paiement a échouée."
 
 #. translators: "%s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
+#, php-format
 msgid "Payment was completed via Stancer (Transaction ID: %s)"
 msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
 
 #. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 #: includes/class-stancer-gateway.php
+#, php-format
 msgid ""
 "Your payment description is not between %1$d and %2$d characters, it could "
 "result in the use of default description: %3$s"
@@ -364,11 +369,13 @@ msgstr ""
 
 #. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
+#, php-format
 msgid "Payment for order n°%s"
 msgstr "Payment pour la commande n°%s"
 
 #. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php
+#, php-format
 msgid ""
 "Stancer payment by popup is deprecated since 31st July 2024, it will be "
 "deleted in the next major version (1.3.0). We advise you to change the "
@@ -394,17 +401,26 @@ msgstr ""
 msgid "Payment method changed successfully."
 msgstr "Moyen de paiement modifié avec succès."
 
+#. translators: "%1$s": Card brand. "%2$s": Last 4.
+#: includes/Controller/class-stancer-change-payment-method.php
+#: subscription/change-payment-method.php
+#, php-format
+msgid "%1$s finishing with %2$s"
+msgstr "%1$s finissant par %2$s"
+
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid "No card found for this subscription."
 msgstr "Aucune carte trouvé pour cet abonnement."
 
 #. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
 #: includes/subscriptions/class-stancer-renewal-builder.php
+#, php-format
 msgid "Renewal payment for subscription n°%1$d, order n°%2$d"
 msgstr "Renouvellement de l'abonnement n°%1$d, commande n°%2$d"
 
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
 #: includes/traits/trait-stancer-refunds.php
+#, php-format
 msgid ""
 "The payment has been partially refunded of %1$.2f %2$s, the payment is now "
 "of: %3$.2f %2$s."
@@ -414,23 +430,26 @@ msgstr ""
 
 #. translators: "%1$.2f": the amount refunded. "%2$s": the currency.
 #: includes/traits/trait-stancer-refunds.php
+#, php-format
 msgid "The payment has been fully refunded of %1$.2f %2$s via Stancer."
 msgstr ""
 "Le remboursement d'une valeur de %1$.2f %2$s à été complété via Stancer."
 
 #. translators: "%1$s": the reason for the refund process.
 #: includes/traits/trait-stancer-refunds.php
+#, php-format
 msgid "Reason for refund: %1$s"
 msgstr "Raison du remboursement : %1$s"
 
 #: includes/traits/trait-stancer-subscription.php
-msgid "We were unable to locate the subscription."
+msgid "We were unable to find the subscription."
 msgstr "Nous n’avons pas détecté l’abonnement."
 
 #. translators: "%s": Currency.
 #: includes/traits/trait-stancer-subscription.php
+#, php-format
 msgid ""
-"In order to utilize this payment method, the minimum required order total is "
+"In order to use this payment method, the minimum required order total is "
 "0.50 %s."
 msgstr ""
 "Pour utiliser ce mode de paiement le minimum de commande requis est de 0,50 "
@@ -441,8 +460,9 @@ msgid "Something went wrong, the renewal payment is incomplete."
 msgstr ""
 "Une erreur est survenue, le paiement de renouvellement semble incomplet."
 
-#. translators: 1: Payment id or transaction id.
+#. translators: "%s": Payment id or transaction id.
 #: includes/traits/trait-stancer-subscription.php
+#, php-format
 msgid ""
 "Your payment has been successfully processed through Stancer. (Transaction "
 "ID: %s)"
@@ -451,6 +471,7 @@ msgstr ""
 
 #. translators: "%s": Payment status.
 #: includes/traits/trait-stancer-subscription.php
+#, php-format
 msgid "The payment is not in a valid status (%s)."
 msgstr "Le paiement ne semble pas avoir un statut valide (%s)."
 
@@ -462,8 +483,9 @@ msgstr ""
 "Nous avons le regret de vous informer que le paiement a été refusé. Veuillez "
 "envisager d’utiliser une autre carte."
 
-#. translators: 1: Error code. 2: Error message. 3. Exception name.
+#. translators: "%1$s": Error code. "%2$s": Error message. "%3$s". Exception name.
 #: includes/traits/trait-stancer-subscription.php
+#, php-format
 msgid ""
 "The transaction for renewing your subscription has failed. (%3$s: [%1$s] "
 "%2$s)"
@@ -471,8 +493,9 @@ msgstr ""
 "La transaction de renouvellement de votre abonnement a échoué. (%3$s : "
 "[%1$s] %2$s)"
 
-#. translators: 1: Error code. 2: Error message.
+#. translators: "%1$s": Error code. "%2$s": Error message.
 #: includes/traits/trait-stancer-subscription.php
+#, php-format
 msgid "The transaction for renewing your subscription has failed. (%1$s: %2$s)"
 msgstr ""
 "La transaction de renouvellement de votre abonnement a échoué. (%1$s : %2$s)"
@@ -499,5 +522,5 @@ msgid "Customer Account"
 msgstr "Espace Client"
 
 #: subscription/change-payment-method.php
-msgid "Incorrect action method"
+msgid "Incorrect action"
 msgstr "Action incorrecte"
