@@ -30,7 +30,7 @@ nocache_headers();
  * @param Stancer\Payment $payment Payment used.
  */
 function create_card_info( Stancer\Payment $payment ): string {
-	// translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
+	// translators: "%1$s": Card brand. "%2$s": Last 4.
 	$trad = __( '%1$s finishing with %2$s', 'stancer' );
 	$card = $payment->card;
 
@@ -164,7 +164,7 @@ try {
 
 			break;
 		default:
-			throw new Stancer\Exceptions\Exception( __( 'Incorrect action method', 'stancer' ) );
+			throw new Stancer\Exceptions\Exception( __( 'Incorrect action', 'stancer' ) );
 	}
 } catch ( Stancer\Exceptions\Exception $exception ) {
 	$response['reason'] = $exception->getMessage();

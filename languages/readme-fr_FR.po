@@ -1,4 +1,4 @@
-# Copyright (C) 2023-2024 Stancer / Iliad 78
+# Copyright (C) 2023-2025 Stancer / Iliad 78
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
@@ -274,6 +274,10 @@ msgid ""
 msgstr ""
 "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
+
+#. Found in changelog list item.
+msgid "Fix a bug regarding iframe display"
+msgstr "Réparation d'un bug d'affichage des paiements intégré à la page"
 
 #. Found in changelog list item.
 msgid "Add support for WooCommerce blocks"

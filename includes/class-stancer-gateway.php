@@ -277,7 +277,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 			$this->title = vsprintf(
 				// translators: $1 Card brand. $2 Last 4. $3 Expiration month. $4 Expiration year.
-				__( '%1$s finishing with %2$s', 'stancer' ),
+				__( '%1$s ending with %2$s', 'stancer' ),
 				[
 					$result['brand_name'],
 					$result['last4'],
@@ -467,7 +467,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return array
 	 */
 	public function get_configurations() {
-		// translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
+		// translators: "%s": Key prefixes (aka sprod, pprod, stest or ptest).
 		$desc = __( 'Starts with "%s"', 'stancer' );
 
 		return [
@@ -918,7 +918,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				$order->add_order_note(
 					sprintf(
-						// translators: %s: Stancer payment identifier.
+						// translators: "%s": Stancer payment identifier.
 						__( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ),
 						$api_payment->getId()
 					)

@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ### Added
-  - Support for Wordpress version 6.7 and 6.8 (CMS-374)
-  - Better versionning for the devcontainer
+- Support for Wordpress version 6.7 and 6.8 (CMS-374)
+- Better versionning for the devcontainer
+
+### Fixed
+- Translation harmonization between CMS (CMS-273)
 
 ### Removed
-  - Support for Wordpress version 6.1 to 6.4 (CMS-374)
+- Support for Wordpress version 6.1 to 6.4 (CMS-374)
 
 
 ## [1.3.1] - 2025-07-28

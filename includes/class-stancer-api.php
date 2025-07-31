@@ -106,7 +106,7 @@ class WC_Stancer_Api {
 				esc_html(
 					sprintf(
 						// translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
-						__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
+						__( 'You cannot refund %1$.02f %3$s, the order total with the already accounted refund is %2$.02f %3$s.', 'stancer' ),
 						$refund_amount / 100,
 						$api_payment->getRefundableAmount() / 100,
 						$order->get_currency( 'view' ),

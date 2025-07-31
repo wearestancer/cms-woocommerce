@@ -160,7 +160,7 @@ trait WC_Stancer_Subscription_Trait {
 			$subscriptions = wcs_get_subscriptions_for_order( $order, [ 'order_type' => 'any' ] );
 
 			if ( count( $subscriptions ) !== 1 ) {
-				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
+				throw new WC_Stancer_Exception( __( 'We were unable to find the subscription.', 'stancer' ), 7802 );
 			}
 
 			$renewal_builder = new WCS_Stancer_Renewal_Builder( $order, $wc_config, $charge );
@@ -172,9 +172,9 @@ trait WC_Stancer_Subscription_Trait {
 
 			if ( $api_payment->amount < 50 ) {
 				$message = sprintf(
-					// translators: 1: Currency.
+					// translators: "%s": Currency.
 					__(
-						'In order to utilize this payment method, the minimum required order total is 0.50 %s.',
+						'In order to use this payment method, the minimum required order total is 0.50 %s.',
 						'stancer',
 					),
 					strtoupper( $order->get_currency() ),
@@ -196,7 +196,7 @@ trait WC_Stancer_Subscription_Trait {
 			];
 
 			if ( in_array( $api_payment->status, $allowed_status, true ) ) {
-				// translators: 1: Payment id or transaction id.
+				// translators: "%s": Payment id or transaction id.
 				$message = __(
 					'Your payment has been successfully processed through Stancer. (Transaction ID: %s)',
 					'stancer',
@@ -226,7 +226,7 @@ trait WC_Stancer_Subscription_Trait {
 				throw new WC_Stancer_Exception( $message, 7810 );
 			}
 		} catch ( Stancer\Exceptions\Exception $error ) {
-			// translators: 1: Error code. 2: Error message. 3. Exception name.
+			// translators: "%1$s": Error code. "%2$s": Error message. "%3$s". Exception name.
 			$message = __(
 				'The transaction for renewing your subscription has failed. (%3$s: [%1$s] %2$s)',
 				'stancer',
@@ -238,7 +238,7 @@ trait WC_Stancer_Subscription_Trait {
 
 			return false;
 		} catch ( WC_Stancer_Exception $error ) {
-			// translators: 1: Error code. 2: Error message.
+			// translators: "%1$s": Error code. "%2$s": Error message.
 			$message = __( 'The transaction for renewing your subscription has failed. (%1$s: %2$s)', 'stancer' );
 			$order->update_status(
 				'failed',
