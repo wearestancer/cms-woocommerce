@@ -13,6 +13,17 @@ variables:
   PHP_VERSION: "8.1"
 
 
+.base-php-job:
+  stage: test
+
+  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
+
+  before_script:
+    - php --version
+    - composer --version
+    - composer install
+
+
 .svn-publish:
   stage: deploy
 
@@ -49,42 +60,30 @@ Create archive:
       - '*.zip'
 
 
-phpstan:
-  stage: test
-
-  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
-
-  before_script:
-    - php --version
-    - composer --version
-
-    - composer install
-  script:
-    - composer run phpstan || true
-    - composer run phpstan -- --error-format=gitlab > gl-static-analysis-report.json
-
-  artifacts:
-    reports:
-      codequality: gl-static-analysis-report.json
-
 phpcs:
-  stage: test
-
-  image: ${DOCKER_REGISTRY}/php:${PHP_VERSION}
-
-  before_script:
-    - php --version
-    - composer --version
-
-    - composer install
+  extends:
+    - .base-php-job
 
   script:
-    - ./vendor/bin/phpcs || true
-    - ./vendor/bin/phpcs --report=junit --report-file=phpcs.junit.xml
+    - composer run phpcs || true
+    - composer run phpcs -- --report=junit --report-file=phpcs.junit.xml
 
   artifacts:
     reports:
       junit: phpcs.junit.xml
+
+
+phpstan:
+  extends:
+    - .base-php-job
+
+  script:
+    - composer run phpstan -- --no-progress || true
+    - composer run phpstan -- --no-progress --error-format=gitlab > gl-static-analysis-report.json
+
+  artifacts:
+    reports:
+      codequality: gl-static-analysis-report.json
 
 
 Publish main changes:

@@ -24,7 +24,7 @@ parameters:
 
   typeAliases:
 
-  # MARK: Change Payment Method
+    # MARK: Change Method
 
     ChangePaymentInitiate: '''
       array{
@@ -39,6 +39,7 @@ parameters:
         'result': 'success',
       }
     '''
+
     ChangePaymentMethodData: '''
       array{
         'nonce': string,
@@ -61,7 +62,7 @@ parameters:
       }
     '''
 
-    # MARK: Payment Front Response
+    # MARK: Payment Response
 
     BlockPaymentMethodData: '''
       array{
@@ -139,16 +140,16 @@ parameters:
         'description'?: string,
         'order_id'?: string,
       }
-      '''
+    '''
 
-  # MARK: Description
+    # MARK: Description
 
     DescriptionData: '''
       array{
         'CURRENCY': string,
-			  'CART_ID'?: string,
-			  'ORDER_ID': string,
-			  'SHOP_NAME': string,
+        'CART_ID'?: string,
+        'ORDER_ID': string,
+        'SHOP_NAME': string,
         'SUBSCRIPTION_ID'?: string,
         'TOTAL_AMOUNT': string,
       }
@@ -162,6 +163,7 @@ parameters:
     '''
 
     # MARK: Settings Parameters
+
     FormField: '''
       array{
         'default'?: string,
@@ -187,7 +189,3 @@ parameters:
         'api_test_secret_key': KeyConfigurationInnerData,
       }
     '''
-
-
-
-

@@ -135,7 +135,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return ?WC_Stancer_Payment
 	 *
-	 * @phan-param PaymentData $payment_data
+	 * @phpstan-param PaymentData $payment_data
 	 */
 	public static function find(
 		WC_Order $order,
@@ -184,7 +184,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return Stancer\Payment
 	 *
-	 * @phan-param BuildPaymentData $payment_data
+	 * @phpstan-param BuildPaymentData $payment_data
 	 */
 	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
 		$customer = [

@@ -33,7 +33,7 @@ trait WC_Stancer_Payment_Validator_Traits {
 	 *
 	 * @return string
 	 *
-	 * @phan-param DescriptionData $params
+	 * @phpstan-param DescriptionData $params
 	 */
 	public static function get_valid_description( array $params, ?string $custom_description, string $default_description ) {
 

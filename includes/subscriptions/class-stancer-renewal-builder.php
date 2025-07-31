@@ -86,7 +86,7 @@ class WCS_Stancer_Renewal_Builder {
 	 * @return void
 	 * @throws WC_Stancer_Exception No Card linked to the subscription.
 	 *
-	 * @phan-param SubscriptionDescriptionParameter $descriptions
+	 * @phpstan-param SubscriptionDescriptionParameter $descriptions
 	 */
 	public function build_payment_data( array $descriptions ): void {
 		global $wpdb;

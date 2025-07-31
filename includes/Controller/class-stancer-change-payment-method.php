@@ -231,7 +231,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 *
 	 * @return bool
 	 *
-	 * @phan-param WP_REST_Request<RequestChangePayment> $request
+	 * @phpstan-param WP_REST_Request<RequestChangePayment> $request
 	 */
 	public function validate_permission( WP_REST_Request $request ): bool {
 		if ( $this->gateway->api->api_config->is_not_configured() ) {

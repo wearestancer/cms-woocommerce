@@ -8,12 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Support for Wordpress version 6.7 and 6.8 (CMS-374)
-- Better versionning for the devcontainer (CMS-374)
+- Better versionning for the devcontainer
 - PHPStan static analysis (CMS-96)
 
 ### Fixed
 - Translation harmonization between CMS (CMS-273)
-- Iframe didn't displayed properly when preselected (CMS-374)
 
 ### Removed
 - Support for Wordpress version 6.1 to 6.4 (CMS-374)
