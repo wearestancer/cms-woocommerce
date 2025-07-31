@@ -1,2 +1,9 @@
 parameters:
+	ignoreErrors:
+	# This is used in an Abstract class that will never be called (only their child will be.)
+		-
+			message: '#^Unsafe usage of new static\(\) in abstract class WC_Stancer_Abstract_Table in static method search\(\)\.$#'
+			identifier: new.staticInAbstractClassStaticMethod
+			count: 2
+			path: includes/class-stancer-abstract-table.php
 
