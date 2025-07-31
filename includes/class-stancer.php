@@ -60,7 +60,9 @@ class WC_Stancer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $gateways List of gateways.
+	 * @param string[] $gateways List of gateways.
+	 *
+	 * @return string[]
 	 */
 	public function add_gateway( $gateways ) {
 		$gateways[] = 'WC_Stancer_Gateway';
@@ -72,6 +74,8 @@ class WC_Stancer {
 	 * Create database at plugin activation.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function install_database() {
 		global $wpdb;
@@ -82,6 +86,7 @@ class WC_Stancer {
 			return;
 		}
 
+		// @phpstan-ignore-next-line ABSPATH is not what phpstan think
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
@@ -168,6 +173,8 @@ class WC_Stancer {
 	 * Load all actions for Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
@@ -216,6 +223,8 @@ class WC_Stancer {
 	 * Load all filters for Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	private function load_filters() {
 		add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateway' ] );
@@ -225,6 +234,8 @@ class WC_Stancer {
 	 * Load Stancer gateway.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function load_gateway() {
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
@@ -236,6 +247,8 @@ class WC_Stancer {
 	 * Load public hooks (CSS/JS) for Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function load_public_hooks() {
 		wp_enqueue_script(
@@ -251,6 +264,8 @@ class WC_Stancer {
 	 * Load the plugin.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return void
 	 */
 	public function load_plugin() {
 		$this->upgrade_plugin();
@@ -288,6 +303,8 @@ class WC_Stancer {
 	 * Fake run method.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function run() { }
 
@@ -295,6 +312,8 @@ class WC_Stancer {
 	 * Upgrade the plugin.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return void
 	 */
 	public function upgrade_plugin() {
 		$version = get_option( 'stancer-version', '0.0.0' );

@@ -30,7 +30,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $primary = 'stancer_card_id';
+	protected string $primary = 'stancer_card_id';
 
 	/**
 	 * Table name.
@@ -39,7 +39,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $table = 'wc_stancer_card';
+	protected string $table = 'wc_stancer_card';
 
 	/**
 	 * WooCommerce user ID.
@@ -152,7 +152,8 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param Stancer\Card $api_card Card to find.
-	 * @return static
+	 *
+	 * @return static|null
 	 */
 	public static function find_by_api_card( Stancer\Card $api_card ) {
 		global $wpdb;
@@ -180,6 +181,7 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param WC_Customer $customer Customer.
+	 *
 	 * @return array<static>
 	 */
 	public static function get_customer_cards( WC_Customer $customer ) {
@@ -216,7 +218,8 @@ class WC_Stancer_Card extends WC_Stancer_Abstract_Table {
 	 *
 	 * @param Stancer\Card $api_card Card.
 	 * @param WC_Customer $customer Customer.
-	 * @return static
+	 *
+	 * @return static|void
 	 */
 	public static function save_from( Stancer\Card $api_card, WC_Customer $customer ) {
 		if ( empty( $customer->get_id() ) ) {

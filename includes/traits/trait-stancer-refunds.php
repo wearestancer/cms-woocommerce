@@ -29,8 +29,8 @@ trait WC_Stancer_Refunds_Traits {
 	 * @since 1.2.0
 	 *
 	 * @param WC_Order $order the WooCommerce order to be refunded.
-	 * @return boolean
 	 *
+	 * @return boolean
 	 * @throws WC_Stancer_Exception Throw an exception if the config is misconfigured.
 	 */
 	public function can_refund_order( $order ) {
@@ -83,9 +83,8 @@ trait WC_Stancer_Refunds_Traits {
 	 * @param float|null $amount the amount of refund asked.
 	 * @param string $reason the reason of the refund.
 	 *
-	 * @throws Exception Throw an exception when they are no proper public and private keys setup.
-	 *
 	 * @return boolean
+	 * @throws Exception Throw an exception when they are no proper public and private keys setup.
 	 */
 	public function process_refund( $order_id, $amount = null, $reason = '' ): bool {
 		$wc_order = wc_get_order( $order_id );

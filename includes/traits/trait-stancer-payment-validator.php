@@ -30,7 +30,10 @@ trait WC_Stancer_Payment_Validator_Traits {
 	 * @param array $params Variable parameter for dynamic description.
 	 * @param string|null $custom_description A custom description to use instead of the api_config one.
 	 * @param string $default_description A default description if the custom description doesn't fit our criteria.
+	 *
 	 * @return string
+	 *
+	 * @phpstan-param DescriptionData $params
 	 */
 	public static function get_valid_description( array $params, ?string $custom_description, string $default_description ) {
 

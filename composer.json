@@ -20,8 +20,9 @@
         ]
     },
     "scripts": {
-        "after:scoping":"bash ./scripts/clean-after-archives.sh && composer install",
+        "after:scoping": "bash ./scripts/clean-after-archives.sh && composer install",
         "phpstan": "./vendor/bin/phpstan",
+        "phpcs": "./vendor/bin/phpcs",
         "prefix-stancer": "bash ./scripts/class-prefixer.sh",
         "prep-vendor": "bash ./scripts/scoper-dl.sh && scoper add-prefix -nf && rm -rf vendor/*",
         "scope:dependency": "composer install --no-dev && composer run prep-vendor && composer run prefix-stancer && composer du"
@@ -30,8 +31,10 @@
         "stancer/stancer": "^1.0"
     },
     "require-dev": {
-        "php-stubs/woocommerce-stubs": "^8.0",
+        "php-stubs/woocommerce-stubs": "^8.9",
+        "phpstan/phpstan": "^2.1",
         "stancer/php-stubs-woo-subscriptions": "^6.0",
+        "szepeviktor/phpstan-wordpress": "^2.0",
         "wp-coding-standards/wpcs": "^3.0"
     }
 }

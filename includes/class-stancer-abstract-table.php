@@ -19,37 +19,59 @@
  *
  * @package stancer
  * @subpackage stancer/includes
+ *
+ * @phpstan-consistent-constructor
  */
-class WC_Stancer_Abstract_Table {
+abstract class WC_Stancer_Abstract_Table {
 	/**
 	 * Primary key value.
 	 *
 	 * @since 1.0.0
-	 * @var integer
+	 * @var integer|null
 	 */
 	protected $id;
 
 	/**
-	 * Creation ate and time.
+	 * Creation date and time.
 	 *
 	 * @since 1.0.0
-	 * @var DateTime
+	 * @var DateTime|string
 	 */
-	protected $datetime_created;
+	protected DateTime|string $datetime_created;
 
 	/**
-	 * Last modification ate and time.
+	 * Last modification date and time.
 	 *
 	 * @since 1.0.0
-	 * @var DateTime
+	 * @var DateTime|string
 	 */
-	protected $datetime_modified;
+	protected DateTime|string $datetime_modified;
+
+	/**
+	 * Name of primary key.
+	 *
+	 * @since unreleased
+	 * @var string
+	 */
+	protected string $primary;
+
+	/**
+	 * Table name.
+	 *
+	 * @since unreleased
+	 * @var string
+	 */
+	protected string $table;
+
 
 	/**
 	 * Model constructor.
 	 *
 	 * @since 1.1.0
+	 *
 	 * @param int $id Object identifier.
+	 *
+	 * @return void
 	 */
 	public function __construct( $id = null ) {
 		global $wpdb;
@@ -76,9 +98,12 @@ class WC_Stancer_Abstract_Table {
 	 * Return properties value.
 	 *
 	 * @since 1.0.0
+	 *
 	 * @param string $property Property name.
+	 *
+	 * @return mixed
 	 */
-	public function __get( $property ) {
+	public function __get( string $property ) {
 		if ( property_exists( $this, $property ) ) {
 			return $this->$property;
 		}
@@ -89,23 +114,31 @@ class WC_Stancer_Abstract_Table {
 	/**
 	 * Update a property value.
 	 *
+	 * @template PropertyType
+	 *
 	 * @since 1.0.0
+	 *
 	 * @param string $property Property name.
-	 * @param mixed $value New value.
+	 * @param PropertyType $value New value.
+	 *
+	 * @return void
 	 */
-	public function __set( $property, $value ) {
+	public function __set( string $property, $value ) {
 		if ( property_exists( $this, $property ) ) {
-			return $this->$property = $value;
+			$this->$property = $value;
 		}
-
-		return null;
 	}
 
 	/**
 	 * Hydrate class.
 	 *
+	 * @template PropertyType
+	 *
 	 * @since 1.0.0
-	 * @param array $data Data to hydrate.
+	 *
+	 * @param array<string,PropertyType> $data Data to hydrate.
+	 *
+	 * @return void
 	 */
 	public function hydrate( array $data ) {
 		if ( isset( $data[ $this->primary ] ) ) {
@@ -123,6 +156,8 @@ class WC_Stancer_Abstract_Table {
 	 * Save to database.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return static
 	 */
 	public function save() {
 		global $wpdb;
@@ -137,9 +172,7 @@ class WC_Stancer_Abstract_Table {
 		];
 
 		$data = array_diff_key( $properties, array_flip( $defaults ) );
-		$key_callback = function ( $key ) {
-			return '`' . esc_sql( $key ) . '`';
-		};
+		$key_callback = fn( $key ) => '`' . esc_sql( $key ) . '`';
 
 		$keys = array_map( $key_callback, array_keys( $data ) );
 
@@ -168,9 +201,7 @@ class WC_Stancer_Abstract_Table {
 					VALUES
 						(' . implode( ', ', $values ) . ', NOW());';
 		} else {
-			$fields_callback = function ( $key, $value ) {
-				return '`' . esc_sql( $key ) . '` = ' . $value;
-			};
+			$fields_callback = fn ( $key, $value ) => '`' . esc_sql( $key ) . '` = ' . $value;
 
 			$fields = array_map( $fields_callback, array_keys( $values ), $values );
 
@@ -192,15 +223,22 @@ class WC_Stancer_Abstract_Table {
 	 * Search an object.
 	 *
 	 * @since 1.1.0
-	 * @param array $data Search parameters.
-	 * @return WC_Stancer_Abstract_Table[]
+	 *
+	 * @param array<string,mixed> $data Search parameters.
+	 *
+	 * @return static[]
 	 */
 	public static function search( $data ) {
 		global $wpdb;
 
 		$obj = new static();
-
-		$values = implode( ' AND ', array_map( fn( $k ) => "`{$k}` = %s", array_keys( $data ) ) );
+		$values = implode(
+			' AND ',
+			array_map(
+				fn ( $k ) =>"`{$k}` = %s",
+				array_keys( $data )
+			)
+		);
 		$sql = "SELECT * FROM `{$wpdb->prefix}{$obj->table}` WHERE {$values}";
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared

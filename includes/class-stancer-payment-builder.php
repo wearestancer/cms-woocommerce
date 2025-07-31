@@ -26,7 +26,7 @@ class WC_Stancer_Payment_Builder {
 	/**
 	 * Parameters for API payments.
 	 *
-	 * @var array
+	 * @var PaymentData
 	 */
 	public array $parameters = [];
 
@@ -64,6 +64,7 @@ class WC_Stancer_Payment_Builder {
 	 * @since 1.2.5 Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
 	 *
 	 * @param bool|null $force_auth Do we need to force authentication.
+	 *
 	 * @return void
 	 */
 	public function build_payment_data( $force_auth = null ): void {
@@ -72,9 +73,9 @@ class WC_Stancer_Payment_Builder {
 		$auth = $force_auth;
 		$currency_code = $this->order->get_currency();
 		$params = [
+			'CART_ID' => (string) $this->order->get_id(),
 			'CURRENCY' => strtoupper( $currency_code ),
-			'CART_ID' => (int) $this->order->get_id(),
-			'ORDER_ID' => (int) $this->order->get_id(),
+			'ORDER_ID' => (string) $this->order->get_id(),
 			'SHOP_NAME' => 'WooCommerce',
 			'TOTAL_AMOUNT' => sprintf( '%.02f', $total ),
 		];
@@ -107,6 +108,7 @@ class WC_Stancer_Payment_Builder {
 	 * @since 1.2.5 Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
 	 *
 	 * @param string|null $card_id the id of a registered card if it exist.
+	 *
 	 * @return Stancer\Payment|null
 	 */
 	public function create_api_payment( ?string $card_id = null ): ?Stancer\Payment {

@@ -94,7 +94,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return ChangePaymentInformation
 	 */
 	public function create_change_payment_information(): array {
 
@@ -108,10 +108,10 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return ChangePaymentInitiate
 	 */
 	public function create_change_payment_initiate(): array {
-		$data = $this->get_payment_data( $this->subscription );
+		$data = $this->get_payment_data();
 		$payment = WC_Stancer_Payment::find( $this->subscription, $data, true, [ 'pending' ] );
 		$api_payment = new Stancer\Payment( $payment->payment_id );
 		$lang = str_replace( '_', '-', get_locale() );
@@ -126,10 +126,10 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return ChangePaymentValidate
 	 */
 	public function create_change_payment_validate(): array {
-		$data = $this->get_payment_data( $this->subscription );
+		$data = $this->get_payment_data();
 		$payment = WC_Stancer_Payment::find( $this->subscription, $data, false, [ 'pending' ] );
 		$api_payment = new Stancer\Payment( $payment->payment_id );
 
@@ -185,7 +185,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return array
+	 * @return BuildPaymentData
 	 */
 	public function get_payment_data(): array {
 		$customer = [
@@ -228,7 +228,10 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 * @since 1.3.0
 	 *
 	 * @param WP_REST_Request $request the request to be treated by our controller.
-	 * @return boolean|WP_error
+	 *
+	 * @return bool
+	 *
+	 * @phpstan-param WP_REST_Request<RequestChangePayment> $request
 	 */
 	public function validate_permission( WP_REST_Request $request ): bool {
 		if ( $this->gateway->api->api_config->is_not_configured() ) {
