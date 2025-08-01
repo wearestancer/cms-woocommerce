@@ -33,7 +33,7 @@ glob("**/*.php", globOptions, (err, files) => {
       const data = content
         .replace(/define\( 'STANCER_ASSETS_VERSION'.+/, `define( 'STANCER_ASSETS_VERSION', '${now}' );`)
         .replace(/define\( 'STANCER_WC_VERSION'.+/, `define( 'STANCER_WC_VERSION', '${pack.version}' );`)
-        .replaceAll(/\* @since unreleased/g,`* @since ${pack.version}`)
+        .replaceAll(/\* @since unreleased/g, `* @since ${pack.version}`)
         .replace(/\* Version:.+/, `* Version:     ${pack.version}`)
         .replace(/\* @copyright (\d{4})(?:-\d{4})?\s+Stancer.+/, (_match, date) => {
           if (date === currentYear) {
@@ -42,7 +42,7 @@ glob("**/*.php", globOptions, (err, files) => {
 
           return `* @copyright ${date}-${currentYear} Stancer / Iliad 78`;
         })
-      ;
+        ;
 
       fs.writeFile(file, data, (err) => {
         if (err) {
@@ -53,7 +53,7 @@ glob("**/*.php", globOptions, (err, files) => {
   });
 });
 
-fs.readFile('CHANGELOG.md', {encoding:"utf-8"}, (err,content) => {
+fs.readFile('CHANGELOG.md', { encoding: "utf-8" }, (err, content) => {
   if (err) {
     throw err;
   }
@@ -79,7 +79,7 @@ fs.readFile('README.txt', { encoding: "utf8" }, (err, content) => {
 
   const data = content
     .replace(/Stable tag:.+/, `Stable tag: ${pack.version}`)
-    .replace(/=\s+(Version\s+)?[uU]nreleased?\s+=/,`= Version ${pack.version} =`)
+    .replace(/=\s+(Version\s+)?[uU]nreleased?\s+=/, `= Version ${pack.version} =`)
     ;
 
   fs.writeFile('README.txt', data, (err) => {
@@ -102,7 +102,7 @@ fs.readFile('LICENSE', { encoding: "utf8" }, (err, content) => {
 
       return `Copyright (c) ${date}-${currentYear} Stancer / Iliad 78`;
     })
-  ;
+    ;
 
   fs.writeFile('LICENSE', data, (err) => {
     if (err) {
