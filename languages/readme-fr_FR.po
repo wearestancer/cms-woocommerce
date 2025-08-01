@@ -276,6 +276,18 @@ msgstr ""
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
 
 #. Found in changelog list item.
+msgid "Remove `popup` option"
+msgstr "Suppression de l'option `popup`"
+
+#. Found in changelog list item.
+msgid "Update support for wordpress version to 6.5 and up"
+msgstr "Mise à jour du support des version wordpress 6.5 et supérieures"
+
+#. Found in changelog list item.
+msgid "Remove support for wordpress version from 6.4 and below"
+msgstr "Suppression du support des version wordpress 6.4 et inférieures"
+
+#. Found in changelog list item.
 msgid "Fix a bug regarding iframe display"
 msgstr "Réparation d'un bug d'affichage des paiements intégré à la page"
 

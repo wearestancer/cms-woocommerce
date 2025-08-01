@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## [1.4.0] - 2025-08-01
 
 ### Added
 - Support for Wordpress version 6.7 and 6.8 (CMS-374)
@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Translation harmonization between CMS (CMS-273)
-- Iframe didn't displayed properly when preselected (CMS-374)
 
 ### Removed
 - Support for Wordpress version 6.1 to 6.4 (CMS-374)
