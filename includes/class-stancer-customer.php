@@ -30,7 +30,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $primary = 'stancer_customer_id';
+	protected string $primary = 'stancer_customer_id';
 
 	/**
 	 * Table name.
@@ -39,7 +39,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $table = 'wc_stancer_customer';
+	protected string $table = 'wc_stancer_customer';
 
 	/**
 	 * WooCommerce user ID.
@@ -100,7 +100,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param integer $customer_id WooCommerce customer ID.
+	 * @param int $customer_id WooCommerce customer ID.
 	 *
 	 * @return object|null
 	 */
@@ -122,7 +122,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $customer Customer data.
+	 * @param CustomerData $customer Customer data.
 	 *
 	 * @return Stancer\Customer
 	 */
@@ -144,7 +144,9 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $customer Customer data.
+	 * @param CustomerData $customer Customer data.
+	 *
+	 * @return Stancer\Customer
 	 */
 	public static function get_api_customer( $customer ) {
 		$stancer_customer = null;
@@ -169,22 +171,22 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @param Stancer\Customer|null $api_customer Customer to update.
 	 *
-	 * @return static|null
+	 * @return static|void
 	 */
 	public static function save_from( ?Stancer\Customer $api_customer = null ) {
 		if ( ! $api_customer || ! $api_customer->external_id ) {
-			return null;
+			return;
 		}
 
-		$existing_customer = static::find( $api_customer->external_id );
+		$existing_customer = static::find( (int) $api_customer->external_id );
 
 		if ( $existing_customer ) {
-			$stancer_customer = new WC_Stancer_Customer( $existing_customer->stancer_customer_id );
+			$stancer_customer = new static( $existing_customer->stancer_customer_id );
 		} else {
-			$stancer_customer = new WC_Stancer_Customer();
+			$stancer_customer = new static();
 		}
 
-		$stancer_customer->user_id = $api_customer->external_id;
+		$stancer_customer->user_id = (int) $api_customer->external_id;
 		$stancer_customer->customer_id = $api_customer->id;
 		$stancer_customer->name = $api_customer->name;
 		$stancer_customer->email = $api_customer->email;
@@ -193,6 +195,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 		$creation = $api_customer->creation_date;
 		$stancer_customer->created = $creation ? $creation->format( 'Y-m-d H:i:s' ) : null;
 
-		return $stancer_customer->save();
+		$stancer_customer->save();
+		return $stancer_customer;
 	}
 }

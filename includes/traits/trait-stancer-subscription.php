@@ -27,6 +27,7 @@ trait WC_Stancer_Subscription_Trait {
 	 * Format change payment button.
 	 *
 	 * @since 1.1.0
+	 *
 	 * @param string $base The base HTML button.
 	 *
 	 * @return string
@@ -46,6 +47,8 @@ trait WC_Stancer_Subscription_Trait {
 	 * Initialise subscriptions.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return void
 	 */
 	public function init_subscription() {
 		if ( $this->subscriptions_disabled() ) {
@@ -87,6 +90,8 @@ trait WC_Stancer_Subscription_Trait {
 	 * @since 1.1.0
 	 *
 	 * @param WC_Subscription $subscription An object representing the subscription that just had its status changed.
+	 *
+	 * @return void
 	 */
 	public function cancel_subscription( WC_Subscription $subscription ) {
 		global $wpdb;
@@ -107,6 +112,8 @@ trait WC_Stancer_Subscription_Trait {
 	 *
 	 * @param WC_Order $order The subscription order.
 	 * @param WC_Stancer_Payment $stancer_payment The payment used for initiate the subscription.
+	 *
+	 * @return void
 	 */
 	public function register_subscription_data( WC_Order $order, WC_Stancer_Payment $stancer_payment ) {
 		global $wpdb;
@@ -143,7 +150,7 @@ trait WC_Stancer_Subscription_Trait {
 	 * @param float $charge The amount to charge.
 	 * @param WC_Order $order A WC_Order object created to record the renewal payment.
 	 *
-	 * @return bool|Payment|WP_Error|null
+	 * @return void
 	 */
 	public function scheduled_subscription_payment( $charge, WC_Order $order ) {
 
@@ -160,7 +167,7 @@ trait WC_Stancer_Subscription_Trait {
 			$subscriptions = wcs_get_subscriptions_for_order( $order, [ 'order_type' => 'any' ] );
 
 			if ( count( $subscriptions ) !== 1 ) {
-				throw new WC_Stancer_Exception( __( 'We were unable to locate the subscription.', 'stancer' ), 7802 );
+				throw new WC_Stancer_Exception( __( 'We were unable to find the subscription.', 'stancer' ), 7802 );
 			}
 
 			$renewal_builder = new WCS_Stancer_Renewal_Builder( $order, $wc_config, $charge );
@@ -172,9 +179,9 @@ trait WC_Stancer_Subscription_Trait {
 
 			if ( $api_payment->amount < 50 ) {
 				$message = sprintf(
-					// translators: 1: Currency.
+					// translators: "%s": Currency.
 					__(
-						'In order to utilize this payment method, the minimum required order total is 0.50 %s.',
+						'In order to use this payment method, the minimum required order total is 0.50 %s.',
 						'stancer',
 					),
 					strtoupper( $order->get_currency() ),
@@ -196,7 +203,7 @@ trait WC_Stancer_Subscription_Trait {
 			];
 
 			if ( in_array( $api_payment->status, $allowed_status, true ) ) {
-				// translators: 1: Payment id or transaction id.
+				// translators: "%s": Payment id or transaction id.
 				$message = __(
 					'Your payment has been successfully processed through Stancer. (Transaction ID: %s)',
 					'stancer',
@@ -210,7 +217,7 @@ trait WC_Stancer_Subscription_Trait {
 				do_action( 'processed_subscription_payments_for_order', $order );
 			} else {
 				// translators: "%s": Payment status.
-				$order->add_order_note( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' );
+				$order->add_order_note( sprintf( __( 'The payment is not in a valid status (%s).', 'stancer' ), $api_payment->status ?? 'no status found' ) );
 
 				$message = __(
 					'We regret to inform you that the payment has been declined. Please consider using an alternative card.',
@@ -226,7 +233,7 @@ trait WC_Stancer_Subscription_Trait {
 				throw new WC_Stancer_Exception( $message, 7810 );
 			}
 		} catch ( Stancer\Exceptions\Exception $error ) {
-			// translators: 1: Error code. 2: Error message. 3. Exception name.
+			// translators: "%1$s": Error code. "%2$s": Error message. "%3$s". Exception name.
 			$message = __(
 				'The transaction for renewing your subscription has failed. (%3$s: [%1$s] %2$s)',
 				'stancer',
@@ -236,18 +243,18 @@ trait WC_Stancer_Subscription_Trait {
 				sprintf( $message, $error->getCode(), $error->getMessage(), get_class( $error ) ),
 			);
 
-			return false;
+			return;
 		} catch ( WC_Stancer_Exception $error ) {
-			// translators: 1: Error code. 2: Error message.
+			// translators: "%1$s": Error code. "%2$s": Error message.
 			$message = __( 'The transaction for renewing your subscription has failed. (%1$s: %2$s)', 'stancer' );
 			$order->update_status(
 				'failed',
 				sprintf( $message, $error->getCode(), $error->getMessage() ),
 			);
 
-			return false;
+			return;
 		} finally {
-			if ( $api_payment ) {
+			if ( isset( $api_payment ) ) {
 				WC_Stancer_Payment::save_from( $api_payment );
 			}
 		}

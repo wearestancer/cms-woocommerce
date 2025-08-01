@@ -24,8 +24,6 @@ use Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodTyp
  */
 final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 
-	use WC_Stancer_Refunds_Traits;
-
 	/**
 	 * Name of our payment method
 	 *
@@ -46,7 +44,7 @@ final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 	 * Settings of our payment gateway .
 	 * sent to the frontend on wc.wcSettings
 	 *
-	 * @var array
+	 * @var array<string,mixed>
 	 */
 	protected $settings;
 
@@ -56,6 +54,7 @@ final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 	 * @return void
 	 */
 	public function initialize() {
+		// @phpstan-ignore-next-line global function "WC" trigger phpstan error.
 		$gateways = WC()->payment_gateways->payment_gateways();
 		$this->gateway = $gateways[ $this->name ];
 		$this->settings = $this->gateway->settings;
@@ -74,36 +73,37 @@ final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 	/**
 	 * Get the Stancer gateway settings, and restructure it for easy use in our frontend.
 	 *
-	 * @return array
+	 * @return ?BlockPaymentMethodData
 	 */
 	public function get_payment_method_data() {
 		$logo = $this->gateway->settings['payment_option_logo'] ?? 'no-logo';
-		if ( $this->gateway instanceof WC_Stancer_Gateway ) {
-			$payment_data = $this->gateway->get_payment_data(
-				$this->get_setting( 'page_type', 'pip' ) === 'redirect' ? 'redirect' : 'pip'
-			);
-			return [
-				'title' => $this->get_setting( 'payment_option_text' ),
-				'description' => $this->get_setting( 'payment_option_description' ),
-				'label' => $this->get_setting(
-					'button_label',
-					__( 'Pay by card', 'stancer' ),
-				),
-				'logo' => [
-					'url' => plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $logo,
-					'class' => 'stancer-option__logo stancer-option__logo--' . $logo,
-				],
-				'page_type' => $payment_data['page_type'],
-				'stancer' => $payment_data['data'],
-				'supports' => $this->gateway->supports,
-			];
+		if ( ! $this->gateway instanceof WC_Stancer_Gateway ) {
+			return null;
 		}
+		$payment_data = $this->gateway->get_payment_data(
+			$this->get_setting( 'page_type', 'pip' ) === 'redirect' ? 'redirect' : 'pip'
+		);
+		return [
+			'title' => $this->get_setting( 'payment_option_text' ),
+			'description' => $this->get_setting( 'payment_option_description' ),
+			'label' => $this->get_setting(
+				'button_label',
+				__( 'Pay by card', 'stancer' ),
+			),
+			'logo' => [
+				'url' => plugin_dir_url( STANCER_FILE ) . 'public/svg/symbols.svg#' . $logo,
+				'class' => 'stancer-option__logo stancer-option__logo--' . $logo,
+			],
+			'page_type' => $payment_data['page_type'],
+			'stancer' => $payment_data['data'],
+			'supports' => $this->gateway->supports,
+		];
 	}
 
 	/**
 	 * Get the js file and add it to the WordPress scripts list.
 	 *
-	 * @return array<string>
+	 * @return array<string>|void
 	 */
 	public function get_payment_method_script_handles() {
 		if ( ! $this->gateway instanceof WC_Stancer_Gateway ) {

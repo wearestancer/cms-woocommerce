@@ -7,16 +7,18 @@
  * @copyright 2023-2025 Stancer / Iliad 78
  *
  * @wordpress-plugin
- * Plugin Name: Stancer
- * Plugin URI:  https://gitlab.com/wearestancer/cms/woocommerce
- * Description: Simple payment solution at low prices.
- * Version:     $[current-version]
- * Author:      Stancer
- * Author URI:  https://www.stancer.com/
- * License:     MIT
- * License URI: https://opensource.org/licenses/MIT
- * Domain Path: /languages
- * Text Domain: stancer
+ * Plugin Name:       Stancer
+ * Plugin URI:        https://gitlab.com/wearestancer/cms/woocommerce
+ * Description:       Simple payment solution at low prices.
+ * Requires at least: $[requires-wp-version]
+ * Requires PHP:      $[requires-php-version]
+ * Version:           $[current-version]
+ * Author:            Stancer
+ * Author URI:        https://www.stancer.com/
+ * License:           MIT
+ * License URI:       https://opensource.org/licenses/MIT
+ * Domain Path:       /languages
+ * Text Domain:       stancer
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,6 +54,8 @@ add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'plugin_action
 
 /**
  * Wrapper to load our translations.
+ *
+ * @return void
  */
 function load_translations() {
 	load_plugin_textdomain( 'stancer', false, plugin_basename( dirname( STANCER_FILE ) ) . '/languages' );
@@ -62,6 +66,8 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
 	 * Check if WooCommerce is activated.
 	 *
 	 * Simple stub, just in case.
+	 *
+	 * @return bool
 	 */
 	function is_woocommerce_activated() {
 		return class_exists( 'woocommerce' );
@@ -73,9 +79,9 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
  *
  * @since 1.1.0
  *
- * @param array $links Plugin Action links.
+ * @param array<string,string> $links Plugin Action links.
  *
- * @return array
+ * @return array<string,string>
  * */
 function plugin_action_links( array $links ) {
 	$locale_limit = 1;
@@ -118,6 +124,8 @@ function stancer_setting_url() {
  * Begins execution of the plugin.
  *
  * @since 1.0.0
+ *
+ * @return void
  */
 function run_stancer() {
 	$plugin = new WC_Stancer();

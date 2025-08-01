@@ -75,14 +75,15 @@ class WC_Stancer_Api {
 	 * @since 1.2.0
 	 *
 	 * @param WC_Order $order Wc order.
-	 * @param float|null $refund_amount amount to be refund in cents.
+	 * @param int|null $refund_amount amount to refund in cents.
+	 *
 	 * @return Stancer\Payment
 	 * @throws WC_Stancer_Exception Check that the refund amount is above 50 cents.
 	 * @throws WC_Stancer_Exception Check for minimum sum before accepting refund or showing an error Message to the User.
 	 * @throws WC_Stancer_Exception Catch all api exception and translate it for users.
 	 */
 	public function send_refund( WC_Order $order, ?int $refund_amount ): Stancer\Payment {
-		if ( ! $refund_amount || 0 === $refund_amount ) {
+		if ( ! $refund_amount ) {
 			throw new WC_Stancer_Exception( esc_html( __( 'You cannot refund a null amount', 'stancer' ) ) );
 		}
 
@@ -106,7 +107,7 @@ class WC_Stancer_Api {
 				esc_html(
 					sprintf(
 						// translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
-						__( 'You cannot refund %1$.02f %3$s the order total with already acounted refund is %2$.02f %3$s', 'stancer' ),
+						__( 'You cannot refund %1$.02f %3$s, the order total with the already accounted refund is %2$.02f %3$s.', 'stancer' ),
 						$refund_amount / 100,
 						$api_payment->getRefundableAmount() / 100,
 						$order->get_currency( 'view' ),

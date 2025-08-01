@@ -19,6 +19,12 @@
  *
  * @package stancer
  * @subpackage stancer/includes
+ *
+ * @property string $card_id
+ * @property string $customer_id
+ * @property bool $is_active
+ * @property string $payment_id
+ * @property int $subscription_id
  */
 class WC_Stancer_Subscription extends WC_Stancer_Abstract_Table {
 	/**
@@ -28,7 +34,7 @@ class WC_Stancer_Subscription extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $primary = 'stancer_subscription_id';
+	protected string $primary = 'stancer_subscription_id';
 
 	/**
 	 * Table name.
@@ -37,14 +43,14 @@ class WC_Stancer_Subscription extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $table = 'wc_stancer_subscription';
+	protected string $table = 'wc_stancer_subscription';
 
 	/**
 	 * Is currently active?
 	 *
 	 * @since 1.1.0
 	 *
-	 * @var string
+	 * @var bool
 	 */
 	protected $is_active;
 
@@ -53,7 +59,7 @@ class WC_Stancer_Subscription extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @var string
+	 * @var int
 	 */
 	protected $subscription_id;
 

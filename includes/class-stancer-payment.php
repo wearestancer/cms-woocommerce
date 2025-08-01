@@ -21,6 +21,15 @@ use Stancer;
  *
  * @package stancer
  * @subpackage stancer/includes
+ *
+ * @property integer $amount
+ * @property string $card_id
+ * @property string $created
+ * @property string $customer_id
+ * @property string $currency
+ * @property integer $order_id
+ * @property string $payment_id
+ * @property string $status
  */
 class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 
@@ -31,7 +40,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $primary = 'stancer_payment_id';
+	protected string $primary = 'stancer_payment_id';
 
 	/**
 	 * Table name.
@@ -40,7 +49,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $table = 'wc_stancer_payment';
+	protected string $table = 'wc_stancer_payment';
 
 	/**
 	 * API payment ID.
@@ -49,7 +58,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $payment_id;
+	protected ?string $payment_id;
 
 	/**
 	 * API card ID.
@@ -58,7 +67,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $card_id;
+	protected ?string $card_id;
 
 	/**
 	 * API customer ID.
@@ -67,7 +76,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $customer_id;
+	protected ?string $customer_id;
 
 	/**
 	 * Currency used.
@@ -76,7 +85,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $currency;
+	protected ?string $currency;
 
 	/**
 	 * Amount.
@@ -85,7 +94,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var integer
 	 */
-	protected $amount;
+	protected ?int $amount;
 
 	/**
 	 * WooCommerce order ID.
@@ -94,7 +103,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var integer
 	 */
-	protected $order_id = null;
+	protected ?int $order_id = null;
 
 	/**
 	 * Status.
@@ -103,7 +112,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $status = 'pending';
+	protected string $status = 'pending';
 
 	/**
 	 * Card creation date in Stancer API.
@@ -112,7 +121,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @var string
 	 */
-	protected $created;
+	protected ?string $created;
 
 	/**
 	 * Retrieve a payment.
@@ -125,6 +134,8 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @param string[] $status Statuses to find.
 	 *
 	 * @return ?WC_Stancer_Payment
+	 *
+	 * @phpstan-param PaymentData $payment_data
 	 */
 	public static function find(
 		WC_Order $order,
@@ -172,6 +183,8 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @param array $payment_data Payment data.
 	 *
 	 * @return Stancer\Payment
+	 *
+	 * @phpstan-param BuildPaymentData $payment_data
 	 */
 	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
 		$customer = [
@@ -218,6 +231,8 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @param string $status New status.
+	 *
+	 * @return void
 	 */
 	public function mark_as( string $status ) {
 		$this->status = $status;
@@ -247,7 +262,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$stancer_payment->card_id = $card ? $card->id : null;
 		$stancer_payment->created = $creation ? $creation->format( 'Y-m-d H:i:s' ) : null;
 		$stancer_payment->customer_id = $customer ? $customer->id : null;
-		$stancer_payment->order_id = $api_payment->order_id;
+		$stancer_payment->order_id = (int) $api_payment->order_id;
 
 		$stancer_payment->save();
 

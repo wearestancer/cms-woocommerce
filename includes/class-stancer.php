@@ -24,14 +24,6 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
  * @subpackage stancer/includes
  */
 class WC_Stancer {
-	/**
-	 * The ID of Stancer plugin.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var string $plugin_name The ID of Stancer plugin.
-	 */
-	private $plugin_name;
 
 	/**
 	 * The version of Stancer plugin.
@@ -40,7 +32,7 @@ class WC_Stancer {
 	 *
 	 * @var string $version The current version of Stancer plugin.
 	 */
-	private $version;
+	private $version = STANCER_WC_VERSION;
 
 	/**
 	 * Constructor.
@@ -48,9 +40,6 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->plugin_name = 'stancer';
-		$this->version = STANCER_WC_VERSION;
-
 		$this->load_actions();
 		$this->load_filters();
 	}
@@ -60,7 +49,9 @@ class WC_Stancer {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $gateways List of gateways.
+	 * @param string[] $gateways List of gateways.
+	 *
+	 * @return string[]
 	 */
 	public function add_gateway( $gateways ) {
 		$gateways[] = 'WC_Stancer_Gateway';
@@ -72,16 +63,19 @@ class WC_Stancer {
 	 * Create database at plugin activation.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function install_database() {
 		global $wpdb;
 
 		$version = get_option( 'stancer-version', '0.0.0' );
 
-		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+		if ( version_compare( $this->version, $version, '==' ) ) {
 			return;
 		}
 
+		// @phpstan-ignore-next-line ABSPATH is not what phpstan think
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
@@ -168,11 +162,12 @@ class WC_Stancer {
 	 * Load all actions for Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 		add_action( 'woocommerce_blocks_loaded', [ $this, 'gateway_block_support' ] );
 		add_action(
 			'rest_api_init',
@@ -216,6 +211,8 @@ class WC_Stancer {
 	 * Load all filters for Stancer plugin.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	private function load_filters() {
 		add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateway' ] );
@@ -225,6 +222,8 @@ class WC_Stancer {
 	 * Load Stancer gateway.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function load_gateway() {
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
@@ -233,24 +232,11 @@ class WC_Stancer {
 	}
 
 	/**
-	 * Load public hooks (CSS/JS) for Stancer plugin.
-	 *
-	 * @since 1.0.0
-	 */
-	public function load_public_hooks() {
-		wp_enqueue_script(
-			$this->plugin_name,
-			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
-			[],
-			$this->version,
-			true
-		);
-	}
-
-	/**
 	 * Load the plugin.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return void
 	 */
 	public function load_plugin() {
 		$this->upgrade_plugin();
@@ -288,6 +274,8 @@ class WC_Stancer {
 	 * Fake run method.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function run() { }
 
@@ -295,6 +283,8 @@ class WC_Stancer {
 	 * Upgrade the plugin.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @return void
 	 */
 	public function upgrade_plugin() {
 		$version = get_option( 'stancer-version', '0.0.0' );
@@ -339,6 +329,11 @@ class WC_Stancer {
 					$options[ $key ] = $value;
 					$updated = true;
 				}
+			}
+
+			if ( array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
+				$options['page_type'] = 'pip';
+				$updated = true;
 			}
 		}
 

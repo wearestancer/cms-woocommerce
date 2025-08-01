@@ -1,4 +1,4 @@
-# Copyright (C) 2023-2024 Stancer / Iliad 78
+# Copyright (C) 2023-2025 Stancer / Iliad 78
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
@@ -274,6 +274,22 @@ msgid ""
 msgstr ""
 "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
+
+#. Found in changelog list item.
+msgid "Remove `popup` option"
+msgstr "Suppression de l'option `popup`"
+
+#. Found in changelog list item.
+msgid "Update support for wordpress version to 6.5 and up"
+msgstr "Mise à jour du support des version wordpress 6.5 et supérieures"
+
+#. Found in changelog list item.
+msgid "Remove support for wordpress version from 6.4 and below"
+msgstr "Suppression du support des version wordpress 6.4 et inférieures"
+
+#. Found in changelog list item.
+msgid "Fix a bug regarding iframe display"
+msgstr "Réparation d'un bug d'affichage des paiements intégré à la page"
 
 #. Found in changelog list item.
 msgid "Add support for WooCommerce blocks"

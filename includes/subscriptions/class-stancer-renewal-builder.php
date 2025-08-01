@@ -47,7 +47,7 @@ class WCS_Stancer_Renewal_Builder {
 	/**
 	 * Parameters for API payments.
 	 *
-	 * @var array
+	 * @var RenewalData|array<null> $parameters
 	 */
 	public array $parameters = [];
 
@@ -82,8 +82,11 @@ class WCS_Stancer_Renewal_Builder {
 	 * @since 1.2.5 Adding description parameter to our method, for better contruction.
 	 *
 	 * @param array $descriptions the description parameters that we will use in our api request.
+	 *
 	 * @return void
 	 * @throws WC_Stancer_Exception No Card linked to the subscription.
+	 *
+	 * @phpstan-param SubscriptionDescriptionParameter $descriptions
 	 */
 	public function build_payment_data( array $descriptions ): void {
 		global $wpdb;
@@ -112,8 +115,8 @@ class WCS_Stancer_Renewal_Builder {
 					'SHOP_NAME' => 'WooCommerce',
 					'TOTAL_AMOUNT' => sprintf( '%.02f', $this->amount / 100 ),
 					'CURRENCY' => strtoupper( $this->order->get_currency() ),
-					'ORDER_ID' => (int) $this->order->get_id(),
-					'SUBSCRIPTION_ID' => $subscription->get_id(),
+					'ORDER_ID' => (string) $this->order->get_id(),
+					'SUBSCRIPTION_ID' => (string) $subscription->get_id(),
 				],
 				$descriptions['description'],
 				sprintf(

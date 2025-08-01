@@ -1,8 +1,8 @@
 === Stancer for WooCommerce ===
 Tags: stancer, payment, credit card, sepa, ecommerce
-Requires at least: 6.1.0
+Requires at least: 6.5.0
 Tested up to: 6.8.0
-Requires PHP: 7.4
+Requires PHP: 8.1
 Stable tag: $[current-version]
 License: MIT
 Contributors: stancer
@@ -63,7 +63,8 @@ Do you have any questions about Stancer? [Contact us](https://share-eu1.hsforms.
 
 = Minimum Requirements =
 
-* WordPress 6.1 or greater
+* WordPress 6.5 or greater
+* PHP 8.1 or greater
 
 = Automatic installation =
 
@@ -84,6 +85,11 @@ Updates are done automatically. However, we recommend that you back up your site
 == Changelog ==
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
+
+= Version 1.4.0 =
+* Remove `popup` option
+* Update support for wordpress version to 6.5 and up
+* Remove support for wordpress version from 6.4 and below
 
 = Version 1.3.1 =
 * Fix a bug regarding iframe display
