@@ -24,14 +24,6 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
  * @subpackage stancer/includes
  */
 class WC_Stancer {
-	/**
-	 * The ID of Stancer plugin.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var string $plugin_name The ID of Stancer plugin.
-	 */
-	private $plugin_name;
 
 	/**
 	 * The version of Stancer plugin.
@@ -40,7 +32,7 @@ class WC_Stancer {
 	 *
 	 * @var string $version The current version of Stancer plugin.
 	 */
-	private $version;
+	private $version = STANCER_WC_VERSION;
 
 	/**
 	 * Constructor.
@@ -48,9 +40,6 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->plugin_name = 'stancer';
-		$this->version = STANCER_WC_VERSION;
-
 		$this->load_actions();
 		$this->load_filters();
 	}
@@ -82,7 +71,7 @@ class WC_Stancer {
 
 		$version = get_option( 'stancer-version', '0.0.0' );
 
-		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+		if ( version_compare( $this->version, $version, '==' ) ) {
 			return;
 		}
 
