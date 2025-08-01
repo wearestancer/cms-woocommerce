@@ -24,14 +24,6 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
  * @subpackage stancer/includes
  */
 class WC_Stancer {
-	/**
-	 * The ID of Stancer plugin.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var string $plugin_name The ID of Stancer plugin.
-	 */
-	private $plugin_name;
 
 	/**
 	 * The version of Stancer plugin.
@@ -40,7 +32,7 @@ class WC_Stancer {
 	 *
 	 * @var string $version The current version of Stancer plugin.
 	 */
-	private $version;
+	private $version = STANCER_WC_VERSION;
 
 	/**
 	 * Constructor.
@@ -48,9 +40,6 @@ class WC_Stancer {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-		$this->plugin_name = 'stancer';
-		$this->version = STANCER_WC_VERSION;
-
 		$this->load_actions();
 		$this->load_filters();
 	}
@@ -82,7 +71,7 @@ class WC_Stancer {
 
 		$version = get_option( 'stancer-version', '0.0.0' );
 
-		if ( version_compare( STANCER_WC_VERSION, $version, '==' ) ) {
+		if ( version_compare( $this->version, $version, '==' ) ) {
 			return;
 		}
 
@@ -179,7 +168,6 @@ class WC_Stancer {
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
 		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'load_public_hooks' ] );
 		add_action( 'woocommerce_blocks_loaded', [ $this, 'gateway_block_support' ] );
 		add_action(
 			'rest_api_init',
@@ -241,23 +229,6 @@ class WC_Stancer {
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
 			require_once plugin_dir_path( __DIR__ ) . 'includes/class-stancer-gateway.php';
 		}
-	}
-
-	/**
-	 * Load public hooks (CSS/JS) for Stancer plugin.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function load_public_hooks() {
-		wp_enqueue_script(
-			$this->plugin_name,
-			plugin_dir_url( STANCER_FILE ) . 'public/js/popup-closing.min.js',
-			[],
-			$this->version,
-			true
-		);
 	}
 
 	/**
@@ -358,6 +329,11 @@ class WC_Stancer {
 					$options[ $key ] = $value;
 					$updated = true;
 				}
+			}
+
+			if ( array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
+				$options['page_type'] = 'pip';
+				$updated = true;
 			}
 		}
 

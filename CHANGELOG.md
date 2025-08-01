@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Support for Wordpress version 6.1 to 6.4 (CMS-374)
+- Remove the deprecated popup option (CMS-79)
 
 
 ## [1.3.1] - 2025-07-28
@@ -28,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2024-09-26
 
 ### Added
-- Support of woocommerce checkout blocks. (CMS-68)
+- Support of woocommerce checkout blocks (CMS-68)
 
 ### Changed
 - Change the cb logo to the new logo (CMS-173)
