@@ -50,7 +50,7 @@ abstract class WC_Stancer_Abstract_Table {
 	/**
 	 * Name of primary key.
 	 *
-	 * @since unreleased
+	 * @since 1.4.0
 	 * @var string
 	 */
 	protected string $primary;
@@ -58,7 +58,7 @@ abstract class WC_Stancer_Abstract_Table {
 	/**
 	 * Table name.
 	 *
-	 * @since unreleased
+	 * @since 1.4.0
 	 * @var string
 	 */
 	protected string $table;

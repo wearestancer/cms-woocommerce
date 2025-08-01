@@ -86,6 +86,11 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
+= Version 1.4.0 =
+* Remove `popup` option
+* Update support for wordpress version to 6.5 and up
+* Remove support for wordpress version from 6.4 and below
+
 = Version 1.3.1 =
 * Fix a bug regarding iframe display
 
