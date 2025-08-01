@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Translation harmonization between CMS (CMS-273)
-- Iframe didn't displayed properly when preselected (CMS-374)
 
 ### Removed
 - Support for Wordpress version 6.1 to 6.4 (CMS-374)

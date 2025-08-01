@@ -7,16 +7,18 @@
  * @copyright 2023-2025 Stancer / Iliad 78
  *
  * @wordpress-plugin
- * Plugin Name: Stancer
- * Plugin URI:  https://gitlab.com/wearestancer/cms/woocommerce
- * Description: Simple payment solution at low prices.
- * Version:     $[current-version]
- * Author:      Stancer
- * Author URI:  https://www.stancer.com/
- * License:     MIT
- * License URI: https://opensource.org/licenses/MIT
- * Domain Path: /languages
- * Text Domain: stancer
+ * Plugin Name:       Stancer
+ * Plugin URI:        https://gitlab.com/wearestancer/cms/woocommerce
+ * Description:       Simple payment solution at low prices.
+ * Requires at least: $[requires-wp-version]
+ * Requires PHP:      $[requires-php-version]
+ * Version:           $[current-version]
+ * Author:            Stancer
+ * Author URI:        https://www.stancer.com/
+ * License:           MIT
+ * License URI:       https://opensource.org/licenses/MIT
+ * Domain Path:       /languages
+ * Text Domain:       stancer
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
