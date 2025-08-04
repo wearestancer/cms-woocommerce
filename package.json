@@ -53,5 +53,10 @@
     "sass": "^1.0.0",
     "through2": "^4.0.0",
     "typescript": "^5.0.0"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "es5-ext"
+    ]
   }
 }
