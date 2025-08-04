@@ -43,12 +43,16 @@ msgstr ""
 
   const parts = content
     .replaceAll(/\[(.+)\]\((.+)\)/g, (_, text, link) => `<a href="${link}">${text}</a>`)
-    .split('\n\n')
+    .replaceAll('=\n', '=\n\n')
+    .split(/\n{2,}/)
     .map((v) => v.trim())
   ;
   const first = parts.splice(0, 1).at(0).split('\n').at(0).replaceAll('=', '').trim();
   let priority = 'high';
   let section = 'description';
+
+  // Remove meta
+  parts.shift();
 
   newContent += addEntry(first, 'Plugin name.', priority);
 
@@ -63,19 +67,11 @@ msgstr ""
         section = 'installation';
       } else if (line === '== Changelog ==') {
         section = 'changelog';
+      } else if (line.startsWith('= Version')) {
+        priority = 'low';
       }
 
-      if (line.startsWith('= Version')) {
-        subsection = 'list item';
-
-        for (const changes of line.split('\n')) {
-          if (changes.startsWith('*')) {
-            newContent += addEntry(changes.substring(1), `Found in ${section} ${subsection}.`, 'low');
-          }
-        }
-      } else {
-        newContent += addEntry(line.replaceAll('=', ''), `Found in ${section} ${subsection}.`);
-      }
+      newContent += addEntry(line.replaceAll('=', ''), `Found in ${section} ${subsection}.`);
     } else {
       if (line.startsWith('1. ')) {
         subsection = 'list item';
