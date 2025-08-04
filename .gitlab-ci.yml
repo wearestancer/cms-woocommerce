@@ -24,18 +24,8 @@ variables:
     - composer install
 
 
-.svn-publish:
-  stage: deploy
-
-  image: ${DOCKER_REGISTRY}/wordpress:svn
-
-  before_script:
-    - svn co https://plugins.svn.wordpress.org/stancer svn
-    - cd svn
-
-
-Create archive:
-  stage: deploy
+.base-wp-job:
+  stage: test
 
   image: ${DOCKER_REGISTRY}/wordpress:php${PHP_VERSION}
 
@@ -48,6 +38,47 @@ Create archive:
     - sh scripts/git-filters.sh 1
 
     - pnpm install
+
+
+.svn-publish:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/wordpress:svn
+
+  before_script:
+    - svn co https://plugins.svn.wordpress.org/stancer svn
+    - cd svn
+
+
+Check translations:
+  extends:
+    - .base-wp-job
+
+  script:
+    - pnpm run messages
+    - pnpm run messages:compile
+
+    # Just in case
+    - git restore composer.lock pnpm-lock.yaml
+
+    # To prevent errors with filters, we add changes to remove them
+    - git add --all
+    - git diff --cached
+
+    - git status
+
+    - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
+
+  artifacts:
+    paths:
+      - languages
+
+
+Create archive:
+  extends:
+    - .base-wp-job
+
+  stage: deploy
 
   script:
     - pnpm run build:archive
