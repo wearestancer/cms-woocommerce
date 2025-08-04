@@ -2,8 +2,9 @@ const fs = require("node:fs");
 const exec = require("node:child_process").exec;
 
 const template = fs.realpathSync("languages/stancer.pot");
+const allowRoot = process.env.CI ? '--allow-root' : '';
 
-exec(`wp i18n make-pot . ${template}`, (error) => {
+exec(`wp ${allowRoot} i18n make-pot . ${template}`, (error) => {
   if (error) {
     throw error;
   }

@@ -10,6 +10,7 @@ workflow:
 
 variables:
   DOCKER_REGISTRY: wearestancer
+  FF_SCRIPT_SECTIONS: true
   PHP_VERSION: "8.1"
 
 
@@ -21,21 +22,14 @@ variables:
   before_script:
     - php --version
     - composer --version
+
+    - printf "\e[0Ksection_start:%d:%s%s\r\e[0K%s\n" $(date +%s) install '[collapsed=true]' 'Install'
     - composer install
+    - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) install
 
 
-.svn-publish:
-  stage: deploy
-
-  image: ${DOCKER_REGISTRY}/wordpress:svn
-
-  before_script:
-    - svn co https://plugins.svn.wordpress.org/stancer svn
-    - cd svn
-
-
-Create archive:
-  stage: deploy
+.base-wp-job:
+  stage: test
 
   image: ${DOCKER_REGISTRY}/wordpress:php${PHP_VERSION}
 
@@ -44,13 +38,62 @@ Create archive:
     - composer --version
     - pnpm --version
 
+    - printf "\e[0Ksection_start:%d:%s%s\r\e[0K%s\n" $(date +%s) install '[collapsed=true]' 'Install'
+
     # Apply git filters
     - sh scripts/git-filters.sh 1
 
     - pnpm install
+    - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) install
+
+
+.svn-publish:
+  stage: deploy
+
+  image: ${DOCKER_REGISTRY}/wordpress:svn
+
+  before_script:
+    - printf "\e[0Ksection_start:%d:%s%s\r\e[0K%s\n" $(date +%s) svn_co '[collapsed=true]' 'svn checkout'
+    - svn checkout https://plugins.svn.wordpress.org/stancer svn
+    - cd svn
+    - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) svn_co
+
+
+Check translations:
+  extends:
+    - .base-wp-job
 
   script:
+    - pnpm run messages
+    - pnpm run messages:compile
+
+    # Just in case
+    - git restore composer.lock pnpm-lock.yaml
+
+    # To prevent errors with filters, we add changes to remove them
+    - git add --all
+    - git diff --cached
+
+    - git status
+
+    - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
+
+  artifacts:
+    paths:
+      - languages
+
+
+Create archive:
+  extends:
+    - .base-wp-job
+
+  stage: deploy
+
+  script:
+    - printf "\e[0Ksection_start:%d:%s%s\r\e[0K%s\n" $(date +%s) build '[collapsed=true]' 'Build archive'
     - pnpm run build:archive
+    - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) build
+
     - export ZIP_NAME="wc-${CI_COMMIT_TAG:-$CI_COMMIT_REF_SLUG}"
     - echo "${ZIP_NAME}"
     - mv stancer*.zip "${ZIP_NAME}.zip"
@@ -96,7 +139,7 @@ Publish main changes:
     - rsync -Sa --delete "${TEMP_FOLDER}/stancer/" trunk/
     - svn add --force trunk/*
     - svn stat
-    - svn ci -m "$CI_COMMIT_TITLE" --username "$SVN_USER" --password "$SVN_PASSWD"
+    - svn commit -m "$CI_COMMIT_TITLE" --username "$SVN_USER" --password "$SVN_PASSWD"
 
   needs:
     - job: Create archive
@@ -114,8 +157,8 @@ Publish version:
 
   script:
     - export VERSION="${CI_COMMIT_TAG/v/}"
-    - svn cp trunk "tags/${VERSION}"
-    - svn ci -m "Version ${VERSION}" --username "$SVN_USER" --password "$SVN_PASSWD"
+    - svn copy trunk "tags/${VERSION}"
+    - svn commit -m "Version ${VERSION}" --username "$SVN_USER" --password "$SVN_PASSWD"
 
   rules:
     - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_TAG && $CI_COMMIT_REF_PROTECTED

@@ -204,9 +204,13 @@ msgstr "Installation"
 msgid "Minimum Requirements"
 msgstr "Minimum requis"
 
-#. Found in installation paragraph.
-msgid "WordPress 6.1 or greater"
-msgstr "WordPress 6.1 ou supérieur"
+#. Found in installation list item.
+msgid "WordPress 6.5 or greater"
+msgstr "WordPress 6.5 ou supérieure"
+
+#. Found in installation list item.
+msgid "PHP 8.1 or greater"
+msgstr "PHP 8.1 ou supérieure"
 
 #. Found in installation header.
 msgid "Automatic installation"
@@ -275,31 +279,51 @@ msgstr ""
 "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
 
+#. Found in changelog header.
+msgid "Version 1.4.0"
+msgstr "Version 1.4.0"
+
 #. Found in changelog list item.
 msgid "Remove `popup` option"
 msgstr "Suppression de l'option `popup`"
 
 #. Found in changelog list item.
-msgid "Update support for wordpress version to 6.5 and up"
-msgstr "Mise à jour du support des version wordpress 6.5 et supérieures"
+msgid "Update support for WordPress version to 6.5 and up"
+msgstr "Mise à jour du support des version WordPress 6.5 et supérieures"
 
 #. Found in changelog list item.
-msgid "Remove support for wordpress version from 6.4 and below"
-msgstr "Suppression du support des version wordpress 6.4 et inférieures"
+msgid "Remove support for WordPress version from 6.4 and below"
+msgstr "Suppression du support des version WordPress 6.4 et inférieures"
+
+#. Found in changelog header.
+msgid "Version 1.3.1"
+msgstr "Version 1.3.1"
 
 #. Found in changelog list item.
 msgid "Fix a bug regarding iframe display"
 msgstr "Réparation d'un bug d'affichage des paiements intégré à la page"
 
+#. Found in changelog header.
+msgid "Version 1.3.0"
+msgstr "Version 1.3.0"
+
 #. Found in changelog list item.
 msgid "Add support for WooCommerce blocks"
 msgstr "Ajout du support pour les blocs WooCommerce"
+
+#. Found in changelog header.
+msgid "Version 1.2.6"
+msgstr "Version 1.2.6"
 
 #. Found in changelog list item.
 msgid "Fix subscription description warning showing even when no subscription"
 msgstr ""
 "Correction d'un avertissement de description d'abonnement qui apparaissait "
 "même sans module d'abonnement"
+
+#. Found in changelog header.
+msgid "Version 1.2.5"
+msgstr "Version 1.2.5"
 
 #. Found in changelog list item.
 msgid "Add notification for deprecated `popup` option"
@@ -313,6 +337,10 @@ msgstr "Ajout d'une validation de la description des paiements"
 #. Found in changelog list item.
 msgid "Fix a script having a wider scope than expected"
 msgstr "Correction sur un script ajouté à tort sur trop de page"
+
+#. Found in changelog header.
+msgid "Version 1.2.4"
+msgstr "Version 1.2.4"
 
 #. Found in changelog list item.
 msgid ""
@@ -332,6 +360,10 @@ msgstr ""
 msgid "Adding devcontainer for easy development"
 msgstr "Ajout d'un devcontainer pour faciliter le développement"
 
+#. Found in changelog header.
+msgid "Version 1.2.3"
+msgstr "Version 1.2.3"
+
 #. Found in changelog list item.
 msgid "Fix the integration of the new payment page"
 msgstr "Correction de l'intégration de la nouvelle page de paiement"
@@ -344,6 +376,10 @@ msgstr ""
 "Le mode d'intégration <code>popup</code> est maintenant déprécié, un message "
 "dans la zone d'administration sera affiché dans une prochaine version"
 
+#. Found in changelog header.
+msgid "Version 1.2.2"
+msgstr "Version 1.2.2"
+
 #. Found in changelog list item.
 msgid "Fix a bug during installation"
 msgstr "Correction d'un bogue lors de l'installation du module"
@@ -354,24 +390,44 @@ msgstr ""
 "Les commandes pouvaient être marquées \"En cours\" à tort lors d'erreurs de "
 "paiement"
 
+#. Found in changelog header.
+msgid "Version 1.2.1"
+msgstr "Version 1.2.1"
+
 #. Found in changelog list item.
 msgid "Fix installation on PHP 7.4 (please upgrade your PHP version)"
 msgstr ""
 "Correction de l'installation sous PHP 7.4 (pensez à mettre à jour votre "
 "version de PHP)"
 
+#. Found in changelog header.
+msgid "Version 1.2.0"
+msgstr "Version 1.2.0"
+
 #. Found in changelog list item.
 msgid "Allow to refund payments in the shop"
 msgstr "Ajout des remboursements depuis la boutique"
+
+#. Found in changelog header.
+msgid "Version 1.1.2"
+msgstr "Version 1.1.2"
 
 #. Found in changelog list item.
 msgid "Amount could not have decimals depending on Woo settings"
 msgstr ""
 "Le montant pouvait ne pas avoir de décimales en fonction des réglages de Woo"
 
+#. Found in changelog header.
+msgid "Version 1.1.1"
+msgstr "Version 1.1.1"
+
 #. Found in changelog list item.
 msgid "Internal version for testing release process"
 msgstr "Version interne pour tester le mécanisme de déploiement"
+
+#. Found in changelog header.
+msgid "Version 1.1.0"
+msgstr "Version 1.1.0"
 
 #. Found in changelog list item.
 msgid "New integration mode \"Inside the page\""
@@ -384,6 +440,10 @@ msgid ""
 msgstr ""
 "Support de <a href=\"https://woo.com/fr-fr/products/woocommerce-"
 "subscriptions/\">Woo Subscriptions</a>"
+
+#. Found in changelog header.
+msgid "Version 1.0.0"
+msgstr "Version 1.0.0"
 
 #. Found in changelog list item.
 msgid "First version"

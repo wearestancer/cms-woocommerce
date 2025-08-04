@@ -1,8 +1,8 @@
 === Stancer for WooCommerce ===
 Tags: stancer, payment, credit card, sepa, ecommerce
-Requires at least: 6.5.0
+Requires at least: $[requires-wp-version]
 Tested up to: 6.8.0
-Requires PHP: 8.1
+Requires PHP: $[requires-php-version]
 Stable tag: $[current-version]
 License: MIT
 Contributors: stancer
@@ -88,8 +88,8 @@ Updates are done automatically. However, we recommend that you back up your site
 
 = Version 1.4.0 =
 * Remove `popup` option
-* Update support for wordpress version to 6.5 and up
-* Remove support for wordpress version from 6.4 and below
+* Update support for WordPress version to 6.5 and up
+* Remove support for WordPress version from 6.4 and below
 
 = Version 1.3.1 =
 * Fix a bug regarding iframe display
