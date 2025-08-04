@@ -6,7 +6,9 @@
   "private": true,
   "engines": {
     "node": ">=18",
-    "pnpm": ">=8.0.0"
+    "php": ">=8.1",
+    "pnpm": ">=10.0.0",
+    "wordpress": ">=6.5.0"
   },
   "scripts": {
     "archive": "env node ./scripts/zip.js",
