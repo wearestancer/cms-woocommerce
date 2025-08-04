@@ -173,12 +173,12 @@ msgstr ""
 
 #. Found in changelog list item.
 #, gp-priority: low
-msgid "Update support for wordpress version to 6.5 and up"
+msgid "Update support for WordPress version to 6.5 and up"
 msgstr ""
 
 #. Found in changelog list item.
 #, gp-priority: low
-msgid "Remove support for wordpress version from 6.4 and below"
+msgid "Remove support for WordPress version from 6.4 and below"
 msgstr ""
 
 #. Found in changelog header.

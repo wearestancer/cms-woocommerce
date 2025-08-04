@@ -288,12 +288,12 @@ msgid "Remove `popup` option"
 msgstr "Suppression de l'option `popup`"
 
 #. Found in changelog list item.
-msgid "Update support for wordpress version to 6.5 and up"
-msgstr "Mise à jour du support des version wordpress 6.5 et supérieures"
+msgid "Update support for WordPress version to 6.5 and up"
+msgstr "Mise à jour du support des version WordPress 6.5 et supérieures"
 
 #. Found in changelog list item.
-msgid "Remove support for wordpress version from 6.4 and below"
-msgstr "Suppression du support des version wordpress 6.4 et inférieures"
+msgid "Remove support for WordPress version from 6.4 and below"
+msgstr "Suppression du support des version WordPress 6.4 et inférieures"
 
 #. Found in changelog header.
 msgid "Version 1.3.1"
