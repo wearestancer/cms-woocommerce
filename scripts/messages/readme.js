@@ -87,6 +87,12 @@ msgstr ""
             newContent += addEntry(tmp, `Found in ${section} ${subsection}.`, priority);
           }
         }
+      } else if (line.startsWith('*')) {
+        subsection = 'list item';
+
+        for (const enumeration of line.split('\n')) {
+          newContent += addEntry(enumeration.replace('*', ''), `Found in ${section} ${subsection}.`, priority);
+        }
       } else {
         newContent += addEntry(line.replace('\n', '\\n').replace(/^\*/, ''), `Found in ${section} ${subsection}.`, priority);
       }

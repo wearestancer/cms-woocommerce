@@ -118,8 +118,12 @@ msgstr ""
 msgid "Minimum Requirements"
 msgstr ""
 
-#. Found in installation paragraph.
-msgid "WordPress 6.1 or greater"
+#. Found in installation list item.
+msgid "WordPress 6.5 or greater"
+msgstr ""
+
+#. Found in installation list item.
+msgid "PHP 8.1 or greater"
 msgstr ""
 
 #. Found in installation header.
