@@ -1,170 +1,171 @@
-# Copyright (C) 2023-2026 Stancer / Iliad 78
-# This file is distributed under the MIT.
-msgid ""
-msgstr ""
+# Copyright (C) 2024 Iliad78 / Stancer
+# This file is distributed under the same license as the package.
+#
+msgid   ""
+msgstr  ""
 "Project-Id-Version: $[last-commit-hash]\n"
 "POT-Creation-Date: $[first-commit-date]\n"
 "PO-Revision-Date: $[last-commit-date]\n"
 "Last-Translator: $[last-commit-author]\n"
-"Language: fr-FR \n"
+"Language: it-IT \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Label for an activation switch.
 #: includes/class-stancer-gateway.php
 msgid   "Enable/Disable"
-msgstr "Activer/Désactiver"
+msgstr "Attiva/disattiva"
 
 #. Title for the authentication limit setting.
 #: includes/class-stancer-gateway.php
 msgid   "Authentication limit"
-msgstr "Limite pour les paiements authentifiés"
+msgstr "Limite per i pagamenti autenticati"
 
 #. Auhtentication setting title.
 #: includes/class-stancer-gateway.php
 msgid   "Authentication"
-msgstr "Authentification"
+msgstr "Autenticazione"
 
 #. Title for Behavior setting section.
 #: includes/class-stancer-gateway.php
 msgid   "Behavior"
-msgstr "Comportement"
+msgstr "Comportamento"
 
 #. Card name and last 4 to make it identifiable by the customer.
 #. translators: "%1$s": Card brand. "%2$d" Last 4.
 #: includes/class-stancer-gateway.php includes/Controller/class-stancer-change-payment-method.php subscription/change-payment-method.php
 #, php-format
 msgid   "%1$s ending with %2$s"
-msgstr "%1$s finissant par %2$s"
+msgstr "%1$s che finisce con %2$s"
 
 #. The order currency variable for payment description.
 #: includes/class-stancer-gateway.php
 msgid   "Currency of the order"
-msgstr "Devise de la commande"
+msgstr "Valuta dell'ordine"
 
 #. Description setting label for maximum size.
 #. Translators: " % 1$d": the minimum size of the description " % 2$d": the maximum size of the description.
 #: includes/class-stancer-gateway.php
 msgid   "The description must be between %1$d and %2$d characters."
-msgstr "La description doit être comprise entre %1$d et %2$d caractères."
+msgstr "La descrizione deve essere di lunghezza compresa tra %1$d e %2$d caratteri."
 
 #. Message shown when the description seems too long or too short.
 #. Translators: "%1$d": The minimum size of the description. "%2$d": The maximum size of the description.
 #: includes/class-stancer-gateway.php
 msgid   "The description must be between %1$d and %2$d characters after variable replacement. Do you still wish to submit your settings?"
-msgstr "La description doit être comprise entre %1$d et %2$d après remplacement des variables. Voulez vous tout de même enregistrer vos paramètres ?"
+msgstr "La descrizione deve essere di lunghezza compresa tra %1$d e %2$d caratteri dopo la sostituzione delle variabili. Vuoi comunque salvare i parametri?"
 
 #. Setting title for description.
 #: includes/class-stancer-gateway.php
 msgid   "Description"
-msgstr "Description"
+msgstr "Descrizione"
 
 #. payment description list of variable title
 #: includes/class-stancer-gateway.php
 msgid   "List of available variables:"
-msgstr "Liste des variables disponibles :"
+msgstr "Elenco delle variabili disponibili:"
 
 #. Setting description for the authentication (3DS)
 #: includes/class-stancer-gateway.php
 msgid   "Leave blank if you do not wish to authenticate payments, at zero all payments will be authenticated."
-msgstr "Laissez vide si vous ne souhaitez pas faire de paiement authentifié, à zéro tous les paiements seront authentifiés."
+msgstr "Lascia il campo vuoto se non vuoi eseguire pagamenti autenticati; impostandolo a zero tutti i pagamenti saranno autenticati."
 
 #. Authentication settings description.
 #: includes/class-stancer-gateway.php
 msgid   "Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...)."
-msgstr "Montant minimum pour le déclenchement d'un paiement authentifié (3DS, Verified by Visa, Mastercard Secure Code...)."
+msgstr "Importo minimo per l'attivazione di un pagamento autenticato (3DS, Verified by Visa, Mastercard Secure Code...)."
 
 #. Title to activate our module/plugin.
 #: includes/class-stancer-gateway.php
 msgid   "Enable Stancer"
-msgstr "Activer Stancer"
+msgstr "Attiva Stancer"
 
 #. The order identifier variable for payment description.
 #: includes/class-stancer-gateway.php
 msgid   "Order identifier"
-msgstr "Identifiant de la commande"
+msgstr "Identificativo dell'ordine"
 
 #. Setting Title for payment page display.
 #: includes/class-stancer-gateway.php
 msgid   "Page type"
-msgstr "Mode d'affichage"
+msgstr "Modalità di visualizzazione"
 
 #. Message display on payment solution choice for the customer.
 #: includes/class-stancer-gateway-block-support.php
 msgid   "Pay by card"
-msgstr "Payer par carte"
+msgstr "Paga con carta"
 
 #. Setting description for the payment option logo.
 #: includes/class-stancer-gateway.php
 msgid   "Card logos displayed to the customer during checkout."
-msgstr "Les logos des cartes sont affichés au client lors du paiement."
+msgstr "I loghi delle carte sono visualizzati per il cliente al pagamento."
 
 #. payment method title default value
 #: includes/class-stancer-gateway.php
 msgid   "Credit card / Debit card"
-msgstr "Carte bancaire"
+msgstr "Carta bancaria"
 
 #. description for the payment method setting.
 #: includes/class-stancer-gateway.php
 msgid   "Payment method title shown to the customer during checkout."
-msgstr "Le titre est présenté au client lors de la commande."
+msgstr "Il titolo è presentato al cliente al momento dell'ordine."
 
 #. Title for the payment method setting.
 #: includes/class-stancer-gateway.php
 msgid   "Title"
-msgstr "Titre"
+msgstr "Titolo"
 
 #. Setting description for the payment option text
 #: includes/class-stancer-gateway.php
 msgid   "Payment option description"
-msgstr "Description de l’option de paiement"
+msgstr "Descrizione dell'opzione di pagamento"
 
 #. Link text for plugin setting page.
 #: includes/class-stancer.php
 msgid   "plugin settings"
-msgstr "réglages du module"
+msgstr "impostazioni del modulo"
 
 #. Link alt text for plugin setting page.
 #: stancer.php
 msgid   "View Stancer module settings"
-msgstr "Voir la configuration du module Stancer"
+msgstr "Mostra la configurazione del modulo Stancer"
 
 #. link text for plugin setting page.
 #: stancer.php
 msgid   "Settings"
-msgstr "Réglages"
+msgstr "Impostazioni"
 
 #. Settings title for API key.
 #: includes/class-stancer-gateway.php
 msgid   "Public live API key"
-msgstr "Clé de production publique"
+msgstr "Chiave di produzione pubblica"
 
 #. Settings title for API key.
 #: includes/class-stancer-gateway.php
 msgid   "Public test API key"
-msgstr "Clé de test publique"
+msgstr "Chiave di test pubblica"
 
 #. Customer facing message explaining the redirection.
 #: includes/class-stancer-gateway.php
 msgid   "You will be redirected to our partner's portal to make the payment."
-msgstr "Vous allez être redirigé vers le portail de notre partenaire de paiement."
+msgstr "Stai per essere reindirizzato al portale del nostro partner di pagamento."
 
 #. Setting label for redirect payment page.
 #: includes/class-stancer-gateway.php
 msgid   "Redirect to an external page"
-msgstr "Rediriger vers une page externe"
+msgstr "Reindirizza a una pagina esterna"
 
 #. Settings title for API key.
 #: includes/class-stancer-gateway.php
 msgid   "Secret live API key"
-msgstr "Clé de production privée"
+msgstr "Chiave di produzione privata"
 
 #. Settings title for API key.
 #: includes/class-stancer-gateway.php
 msgid   "Secret test API key"
-msgstr "Clé de test privée"
+msgstr "Chiave di test privata"
 
 #. Stancer name
 #. Plugin Name of the plugin
@@ -177,213 +178,213 @@ msgstr "Stancer"
 #. Description of the plugin
 #: stancer.php includes/class-stancer-gateway.php
 msgid   "Simple payment solution at low prices."
-msgstr "La solution de paiement simple à petit prix."
+msgstr "La soluzione di pagamento semplice a costi contenuti."
 
 #. The text for the link to the customer account.
 #: stancer.php
 msgid   "Customer Account"
-msgstr "Espace Client"
+msgstr "Spazio Cliente"
 
 #. The alt text for the link to the customer account.
 #: stancer.php
 msgid   "Go to Stancer Customer Account"
-msgstr "Aller à l'Espace Client Stancer"
+msgstr "Entra nello Spazio cliente Stancer"
 
 #. The url of our website
 #. Author URI of the plugin
 #: stancer.php
 msgid   "https://www.stancer.com/"
-msgstr "https://www.stancer.com/fr/"
+msgstr "https://www.stancer.com/it/"
 
 #. Key description
 #. translators: %s: Key prefixes (aka sprod, pprod, stest or ptest).
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid   "Starts with \"%s\""
-msgstr "Commence avec \"%s\""
+msgstr "Inizia con \"%s\""
 
 #. Description for the test mode setting
 #: includes/class-stancer-gateway.php
 msgid   "In test mode, no payment will be sent to a bank, only test cards can be used."
-msgstr "En mode test, aucun paiement ne sera envoyé à une banque, seules les cartes de test sont utilisables."
+msgstr "In modalità test, nessun pagamento sarà inviato a una banca; si potranno utilizzare solo le carte di test."
 
 #. Total amount of an order. can be used as a description variable
 #: includes/class-stancer-gateway.php
 msgid   "Total amount"
-msgstr "Montant total"
+msgstr "Importo totale"
 
 #. Full refund sucess message.
 #. translators: "%1$.2f": the amount refunded. "%2$s": the currency.
 #: includes/traits/trait-stancer-refunds.php
 #, php-format
 msgid   "The payment has been fully refunded of %1$.2f %2$s via Stancer."
-msgstr "Le remboursement d'une valeur de %1$.2f %2$s à été complété via Stancer."
+msgstr "Il rimborso di un importo di %1$.2f %2$s è stato completato tramite Stancer."
 
 #. Partial refund sucess message.
 #. translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
 #: includes/traits/trait-stancer-refunds.php
 #, php-format
 msgid   "The payment has been partially refunded of %1$.2f %2$s, the payment is now of: %3$.2f %2$s."
-msgstr "Le paiement a été partiellement remboursé de %1$.2f %2$s, le paiement est désormais de : %3$.2f %2$s."
+msgstr "Dopo il rimborso parziale di %1$.2f %2$s il pagamento è ora di: %3$.2f %2$s."
 
 #. Message shown when trying to refund more than the total payment.
 #. translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s": the currency of the transaction.
 #: includes/class-stancer-api.php
 #, php-format
 msgid   "You cannot refund %1$.02f %3$s, the order total with the already accounted refund is %2$.02f %3$s."
-msgstr "Vous ne pouvez pas rembourser %1$.02f %3$s, le prix total de votre commande est de %2$.02f %3$s."
+msgstr "Impossibile rimborsare %1$.02f %3$s, il prezzo totale dell'ordine è di %2$.02f %3$s."
 
 #. Message shown when trying to refund less than 50 cents.
 #: includes/class-stancer-api.php
 msgid   "A refund must be above 50 cents"
-msgstr "Un remboursement doit être supérieur à cinquante centimes"
+msgstr "Un rimborso deve essere superiore a 0,50 euro"
 
 #. Message shown when trying to refund a null amount.
 #: includes/class-stancer-api.php
 msgid   "You cannot refund a null amount"
-msgstr "Vous devez rembourser une somme non nulle"
+msgstr "L'importo del rimborso non può essere zero"
 
 #. note for the shop owner back office explaining the refund reason.
 #. translators: "%1$s": the reason for the refund process.
 #: includes/traits/trait-stancer-refunds.php
 #, php-format
 msgid   "Reason for refund: %1$s"
-msgstr "Raison du remboursement : %1$s"
+msgstr "Motivo del rimborso: %1$s"
 
 #. Message shown if the description isn't comprised between the min and the max size.
 #. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid   "Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s"
-msgstr "Votre description de paiement n'est pas comprise entre %1$d et %2$d caractères, cela peut entrainer l'utilisation de la description par defaut : %3$s"
+msgstr "La descrizione del pagamento non è di lunghezza compresa tra %1$d e %2$d caratteri; ciò può comportare l'utilizzo della descrizione predefinita: %3$s"
 
 #. Error message when the sdk config check return false.
 #: includes/class-stancer-gateway.php includes/traits/trait-stancer-refunds.php includes/traits/trait-stancer-subscription.php
 msgid   "The module is not correctly configured."
-msgstr "Le module n'est pas correctement configuré."
+msgstr "Il modulo non è configurato correttamente."
 
 #. Error message when the payment failed
 #: includes/class-stancer-gateway.php
 msgid   "The payment attempt failed."
-msgstr "La tentative de paiement a échouée."
+msgstr "Tentativo di pagamento non riuscito."
 
 #. Error message if the payment method cannot be processed
 #: includes/Controller/class-stancer-change-payment-method.php subscription/change-payment-method.php
 msgid   "This method has not been validated. Please try a new one."
-msgstr "Ce moyen de paiement n'a pu être validé. Merci d'essayer avec un autre moyen de paiement."
+msgstr "Impossibile convalidare questo metodo di pagamento. Prova con un altro metodo di pagamento."
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Every supported schemes logos."
-msgstr "Tous les types de cartes supportés."
+msgstr "Tutti i tipi di carta supportati."
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Every supported schemes logos with full Stancer logo."
-msgstr "Tous les types de cartes supportés suivi du logo complet Stancer."
+msgstr "Tutti i tipi di carta supportati seguiti dal logo completo Stancer."
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Every supported schemes logos prefixed with Stancer logo."
-msgstr "Tous les types de cartes supportés préfixés par le logo Stancer."
+msgstr "Tutti i tipi di carta supportati preceduti dal logo completo Stancer."
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Every supported schemes logos suffixed with Stancer logo."
-msgstr "Tous les types de cartes supportés suivis du logo Stancer."
+msgstr "Tutti i tipi di carta supportati seguiti dal logo Stancer."
 
 #. Description of the iframe setting
 #: includes/class-stancer-gateway.php
 msgid   "Inside the page"
-msgstr "Inclus dans la page"
+msgstr "Incluso nella pagina"
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Main schemes logos."
-msgstr "Principaux types de cartes."
+msgstr "Principali tipi di carta."
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Main schemes logos with full Stancer logo."
-msgstr "Principaux types de cartes suivi de logo complet Stancer."
+msgstr "Principali tipi di carta seguiti dal logo completo Stancer."
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
 msgid   "Main schemes logos prefixed with Stancer logo."
-msgstr "Principaux types de cartes préfixé par le logo Stancer."
+msgstr "Principali tipi di carta preceduti dal logo Stancer."
 
 #. Logo text fragment
 #: includes/class-stancer-gateway.php
 msgid   "Main schemes logos suffixed with Stancer logo."
-msgstr "Principaux types de cartes suivi de logo Stancer."
+msgstr "Principali tipi di carta seguiti dal logo Stancer."
 
 #. Description of the no logo option
 #: includes/class-stancer-gateway.php
 msgid   "No logo."
-msgstr "Aucun logo."
+msgstr "Nessun logo."
 
 #. Default value for the payment description
 #. translators: "%s": The order ID.
 #: includes/class-stancer-payment-builder.php
 #, php-format
 msgid   "Payment for order n°%s"
-msgstr "Paiement pour la commande n°%s"
+msgstr "Pagamento per l'ordine n° %s"
 
 #. Default value for the payment description setting.
 #: includes/class-stancer-gateway.php
 msgid   "Payment for order n°ORDER_ID"
-msgstr "Paiement pour la commande n°ORDER_ID"
+msgstr "Pagamento per l'ordine n° ORDER_ID"
 
 #. Description for the payment description setting.
 #: includes/class-stancer-gateway.php
 msgid   "Will be used as description for every payment made, and will be visible to your customer in redirect mode."
-msgstr "Sera utilisé comme description pour chaque paiement, celle-ci sera visible pour vos clients en mode redirection."
+msgstr "Sarà utilizzata come descrizione per tutti i pagamenti; la descrizione sarà visibile ai clienti in modalità reindirizzamento."
 
 #. Message to tell in the back office that the payment was sucessfull.
 #. translators: %s: Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid   "Payment was completed via Stancer (Transaction ID: %s)"
-msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
+msgstr "Il pagamento è stato completato tramite Stancer (ID Transaction : %s)"
 
 #. Message for shop owner inviting them to change their page type
 #. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php
 #, php-format
 msgid   "Stancer payment by popup is deprecated since 31st July 2024, it will be deleted in the next major version (1.3.0). We advise you to change the option in your %s."
-msgstr "Le paiement Stancer par Popup est déprécié depuis le 31 juillet 2024, il sera supprimé à la prochaine version majeur (1.3.0), nous vous conseillons de changer l'option dans les %s."
+msgstr "Il pagamento Stancer con Popup è obsoleto dal 31 luglio 2024 e sarà eliminato alla prossima versione principale (1.3.0); ti consigliamo di modificare l'opzione in %s."
 
 #. Message if the shop owner is using popup page type
 #: includes/class-stancer-gateway.php
 msgid   "Popup option is deprecated and will be removed in a future update."
-msgstr "L'option popup est dépréciée et sera retirée dans une future mise à jour."
+msgstr "L'opzione Popup è obsoleta e sarà eliminata in un aggiornamento futuro."
 
 #. Popup label for page type setting.
 #: includes/class-stancer-gateway.php
 msgid   "Popup (Deprecated)"
-msgstr "Popup (Déprécié)"
+msgstr "Popup (obsoleto)"
 
 #. url name for the stancer setting page
 #: includes/class-stancer-gateway.php
 msgid   "Stancer plugin is not properly configured."
-msgstr "Le module Stancer n'est pas correctement configuré."
+msgstr "Il modulo Stancer non è configurato correttamente."
 
 #. API key aren't set for the selected mode.
 #. translators: "%1$s": the mode in which our API is (test mode or Live mode).
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid   "You are on %1$s mode but your %1$s keys are not properly setup."
-msgstr "Vous êtes en mode %1$s mais les clés %1$s ne sont pas correctement rentrées."
+msgstr "Sei in modalità %1$s ma le chiavi %1$s non sono state inserite correttamente."
 
 #. API Live key aren't set.
 #: includes/class-stancer-gateway.php
 msgid   "Payments can not be done with Stancer. Please setup your API keys."
-msgstr "Vos clients ne peuvent pas payer avec Stancer, configurez vos clés d'API"
+msgstr "I clienti non possono pagare con Stancer, devi configurare le chiavi API"
 
 #. The shop name variable for payment description.
 #: includes/class-stancer-gateway.php
 msgid   "Shop name configured in WooCommerce"
-msgstr "Nom de la boutique configuré dans Woocommerce"
+msgstr "Nome del negozio configurato in WooCommerce"
 
 #. Logo text fragment.
 #: includes/class-stancer-gateway.php
@@ -398,132 +399,132 @@ msgstr "https://gitlab.com/wearestancer/cms/woocommerce"
 #. Setting default value for the change payment method.
 #: includes/class-stancer-gateway.php includes/class-stancer.php
 msgid   "An authorization request will be made in order to validate the new method."
-msgstr "Une demande d'autorisation sera faite afin de validation la nouvelle méthode de paiement."
+msgstr "Sarà inoltrata una richiesta di autorizzazione per la convalida del nuovo metodo di pagamento."
 
 #. Setting description for the change payment method.
 #: includes/class-stancer-gateway.php
 msgid   "Description shown to the customer during payment method change."
-msgstr "Description présentée au client lors du changement de moyen de paiement."
+msgstr "Descrizione presentata al cliente in caso di modifica del metodo di pagamento."
 
 #. Sucess message for the change payment method
 #: includes/Controller/class-stancer-change-payment-method.php subscription/change-payment-method.php
 msgid   "Payment method changed successfully."
-msgstr "Moyen de paiement modifié avec succès."
+msgstr "Metodo di pagamento modificato."
 
 #. Title for the change payment method setting.
 #: includes/class-stancer-gateway.php
 msgid   "Payment method change description"
-msgstr "Description du changement de moyen de paiement"
+msgstr "Descrizione della modifica del metodo di pagamento"
 
 #. Description for the subscription command number setting.
 #: includes/class-stancer-gateway.php
 msgid   "Will be used as description for every renewal made."
-msgstr "Sera utilisé comme description pour chaque renouvellement."
+msgstr "Sarà utilizzata come descrizione a ogni rinnovo."
 
 #. Title for subscription command number setting.
 #: includes/class-stancer-gateway.php
 msgid   "Order number for renewal payments"
-msgstr "Numéro de commande pour les renouvellements d'abonnement"
+msgstr "Numero d'ordine per i rinnovi di abbonamento"
 
 #. Error message when we catch a Stancer sdk exception on payment
 #. translators: "%1$s": Error code. "%2$s": Error message. "%3$s". Exception name.
 #: includes/traits/trait-stancer-subscription.php
 #, php-format
 msgid   "The transaction for renewing your subscription has failed. (%3$s: [%1$s] %2$s)"
-msgstr "La transaction de renouvellement de votre abonnement a échoué. (%3$s : [%1$s] %2$s)"
+msgstr "Errore della transazione di rinnovo dell'abbonamento. (%3$s: [%1$s] %2$s)"
 
 #. Error message when we catch a Stancer plugin exception on payment
 #. translators: "%1$s": Error code. "%2$s": Error message.
 #: includes/traits/trait-stancer-subscription.php
 #, php-format
 msgid   "The transaction for renewing your subscription has failed. ([%1$s]: %2$s)"
-msgstr "La transaction de renouvellement de votre abonnement a échoué. ([%1$s]: %2$s)"
+msgstr "Errore della transazione di rinnovo dell'abbonamento. ([%1$s]: %2$s)"
 
 #. Error message when we try to call the our back with bad parameters.
 #: subscription/change-payment-method.php
 msgid   "Incorrect action"
-msgstr "Action incorrecte"
+msgstr "Azione errata"
 
 #. Note for the back end when payment is invalid.
 #. translators: "%s": Payment status.
 #: includes/traits/trait-stancer-subscription.php
 #, php-format
 msgid   "The payment is not in a valid status (%s)."
-msgstr "Le paiement ne semble pas avoir un statut valide (%s)."
+msgstr "Il pagamento non sembra avere uno stato valido (%s)."
 
 #. Error message if there is no card found for the subscription
 #: includes/subscriptions/class-stancer-renewal-builder.php
 msgid   "No card found for this subscription."
-msgstr "Aucune carte trouvé pour cet abonnement."
+msgstr "Nessuna carta trovata per l'abbonamento."
 
 #. Error message if the subscription is not found in the database.
 #: includes/traits/trait-stancer-subscription.php
 msgid   "We were unable to find the subscription."
-msgstr "Nous n’avons pas trouvé l’abonnement."
+msgstr "Abbonamento non trovato."
 
 #. Error message if the payment renewal is incomplete.
 #: includes/traits/trait-stancer-subscription.php
 msgid   "Something went wrong, the renewal payment is incomplete."
-msgstr "Une erreur est survenue, le paiement de renouvellement semble incomplet."
+msgstr "Si è verificato un errore; il pagamento del rinnovo sembra incompleto."
 
 #. Error message if the payment amount is too low.
 #. translators: 1: Currency.
 #: includes/traits/trait-stancer-subscription.php
 #, php-format
 msgid   "In order to use this payment method, the minimum required order total is 0.50 %s."
-msgstr "Pour utiliser ce mode de paiement le minimum de commande requis est de 0,50 %s."
+msgstr "L'ordine minimo richiesto per questa modalità di pagamento è di 0,50 %s."
 
 #. Error message when a payment is not in a valid status
 #: includes/traits/trait-stancer-subscription.php
 msgid   "We regret to inform you that the payment has been declined. Please consider using an alternative card."
-msgstr "Nous avons le regret de vous informer que le paiement a été refusé. Veuillez envisager d’utiliser une autre carte."
+msgstr "Siamo spiacenti, il pagamento è stato rifiutato. Ti invitiamo a utilizzare un'altra carta."
 
 #. Default value for the renewal description.
 #. translators: "%1$d": Subscription ID. "%2$d": Current order ID. This text shouldn't be longer than 64 characters!
 #: includes/subscriptions/class-stancer-renewal-builder.php
 #, php-format
 msgid   "Renewal payment for subscription n°%1$d, order n°%2$d"
-msgstr "Renouvellement de l'abonnement n°%1$d, commande n°%2$d"
+msgstr "Rinnovo dell'abbonamento n° %1$d, ordine n° %2$d"
 
 #. Default value for the renewal description setting.
 #. Translators: "SUBSCRIPTION_ID": A number refering to the current payment.
 #: includes/class-stancer-gateway.php
 msgid   "Renewal for subscription n°SUBSCRIPTION_ID"
-msgstr "Renouvellement de l'abonnement n°SUBSCRIPTION_ID"
+msgstr "Rinnovo dell'abbonamento n° SUBSCRIPTION_ID"
 
 #. Description value for the renewal description setting.
 #: includes/class-stancer-gateway.php
 msgid   "Description shown to the user on renewal payment"
-msgstr "Description présentée au client lors d'un renouvellement de paiement"
+msgstr "Descrizione presentata al cliente al pagamento di un rinnovo"
 
 #. Title for the description of renewed payments.
 #: includes/class-stancer-gateway.php
 msgid   "Renewal payment description"
-msgstr "Description du paiement de renouvellement"
+msgstr "Descrizione del pagamento di un rinnovo"
 
 #. Label for the subscription identifier option.
 #: includes/class-stancer-gateway.php
 msgid   "Subscription identifier"
-msgstr "Identifiant de l'abonnement"
+msgstr "Identificativo dell'abbonamento"
 
 #. Note for the back end for sucessful payment.
 #. translators: "%s": Payment id or transaction id.
 #: includes/traits/trait-stancer-subscription.php
 #, php-format
 msgid   "Your payment has been successfully processed through Stancer. (Transaction ID: %s)"
-msgstr "Votre paiement a été traité avec succès par Stancer. (Transaction ID: %s)"
+msgstr "Il pagamento è stato completato correttamente da Stancer. (Transaction ID: %s)"
 
 #. Note for the back end for sucessfull renewal
 #: includes/traits/trait-stancer-subscription.php
 msgid   "Your subscription renewal transaction has been successfully submitted."
-msgstr "Votre transaction de renouvellement d’abonnement a été soumise avec succès."
+msgstr "La transazione di rinnovo dell'abbonamento è stata trasmessa."
 
 #. Label for test mode setting.
 #: includes/class-stancer-gateway.php
 msgid   "Enable test mode"
-msgstr "Activer le mode test"
+msgstr "Attiva la modalità test"
 
 #. Title for test mode title.
 #: includes/class-stancer-gateway.php
 msgid   "Test mode"
-msgstr "Mode test"
+msgstr "Modalità test"

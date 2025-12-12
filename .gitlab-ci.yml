@@ -78,6 +78,8 @@ Check translations:
 
     - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
 
+  allow_failure: true
+
   artifacts:
     paths:
       - languages

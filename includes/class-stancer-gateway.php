@@ -638,7 +638,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$inputs['test_mode'] = [
 			'default' => 'yes',
 			'description' => __(
-				'In test mode, no payment will really send to a bank, only test card can be used.',
+				'In test mode, no payment will be sent to a bank, only test card can be used.',
 				'stancer',
 			),
 			'label' => __( 'Enable test mode', 'stancer' ),
@@ -668,7 +668,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		);
 		$desc_auth_limit .= '<br/>';
 		$desc_auth_limit .= __(
-			'Leave blank if you do not wish to authenticate, at zero all payments will be authenticated.',
+			'Leave blank if you do not wish to authenticate payments, at zero all payments will be authenticated.',
 			'stancer',
 		);
 
