@@ -12,6 +12,7 @@
  * @subpackage stancer/includes
  */
 
+use Automattic\WooCommerce\Enums\OrderStatus;
 use Stancer;
 
 // Exit if accessed directly.
@@ -866,6 +867,12 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 		$order->set_transaction_id( $api_payment->getId() );
 
+		if(in_array($status, [Stancer\Payment\Status::CAPTURE, Stancer\Payment\Status::AUTHORIZED])){
+			$api_payment->set_status(Stancer\Payment\Status::CAPTURE);
+			$api_payment->send();
+			$status = $api_payment->status;
+		}
+
 		switch ( $status ) {
 			case Stancer\Payment\Status::FAILED:
 			case Stancer\Payment\Status::REFUSED:
@@ -879,10 +886,18 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				break;
 			case Stancer\Payment\Status::AUTHORIZED:
-				$api_payment->status = Stancer\Payment\Status::CAPTURE;
-				$api_payment->send();
-				// No break, we just need to ask for the capture and leave the "capture" part creating the order.
 
+				$order->update_status(OrderStatus::ON_HOLD);
+				$order->add_order_note(
+					sprintf(
+						//translators: "%s": Stancer payment identifier
+						__('Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice','stancer'),
+						$api_payment->get_id()
+					)
+					);
+
+				wp_safe_redirect( $this->get_return_url( $order ) );
+				break;
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
 			case Stancer\Payment\Status::CAPTURED:

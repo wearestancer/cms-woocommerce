@@ -1,0 +1,23 @@
+.stancer-status{
+  margin-block: 0.3rem;
+}
+.stancer-authorized, .stancer-authorize{
+  background-color: #f8dda7;
+  color: #573b00;
+}
+.stancer-captured, .stancer-to_capture, .stancer-capture-sent, .stancer-capture{
+  color:#2c4700;
+  background: #c6e1c6;
+}
+.stancer-canceled, .stancer-refunded{
+  color: #454545;
+  background: #e5e5e5;
+}
+.stancer-refused, .stancer-failed, .stancer-expired, .stancer-disputed{
+  color:#570000;
+  background: #eba3a3;
+
+}
+.capture-stancer-block{
+  margin-top: 0.3rem;
+}

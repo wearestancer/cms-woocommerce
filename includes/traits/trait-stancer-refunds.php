@@ -122,6 +122,9 @@ trait WC_Stancer_Refunds_Traits {
 				$amount,
 				strtoupper( $currency->value )
 			);
+			$db_payment = WC_Stancer_Payment::find($wc_order);
+			$db_payment->mark_as(WC_Stancer_Payment::STANCER_REFUNDED);
+
 		}
 
 		$wc_stancer_payment = WC_Stancer_Payment::find( $wc_order );

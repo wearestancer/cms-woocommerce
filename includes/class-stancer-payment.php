@@ -34,6 +34,16 @@ use Stancer;
 class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 
 	/**
+	 * Name of the refund status.
+	 * (this is a custom WooCommerce status as it doesn't exist in API)
+	 *
+	 * @since unreleased
+	 *
+	 * @var string
+	 */
+	public const STANCER_REFUNDED = 'refunded';
+
+	/**
 	 * Name of primary key.
 	 *
 	 * @since 1.0.0
@@ -235,6 +245,14 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @return void
 	 */
 	public function mark_as( string $status ) {
+		/*
+		* Stancer payment doesn't have refund statuses
+		* We asign a refunded status when a payment is fully refunded
+		* For clarity purpose
+		*/
+		if($this->status === WC_Stancer_Payment::STANCER_REFUNDED){
+			return;
+		}
 		$this->status = $status;
 		$this->save();
 	}
