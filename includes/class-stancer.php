@@ -58,7 +58,25 @@ class WC_Stancer {
 
 		return $gateways;
 	}
+	/**
+	 * Hook to display capture button and status in the order page.
+	 *
+	 * @param mixed $order An order or an order Id.
+	 * @return void
+	 */
+	public function call_capture( mixed $order ) {
+		try {
+			if ( $order->get_payment_method() === 'stancer' ) {
+				$capture_service = new WC_Stancer_Capture( $order );
+				$capture_service->maybe_display_capture();
+			}
+			// We don't want our capture widget to impact negatively the order display.
+			// If we have any error we just return.
+		} catch ( \Exception ) {
+			return;
 
+		}
+	}
 	/**
 	 * Create database at plugin activation.
 	 *
@@ -175,6 +193,10 @@ class WC_Stancer {
 			}
 		);
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
+		add_action( 'woocommerce_admin_order_data_after_payment_info', [ $this,'call_capture' ] );
+		add_action( 'admin_post_stancer_capture', [ $this,'stancer_capture' ] );
+		// `this->stancer_capture` always terminate, but not the add_action phpstan over interpret the code.
+		// @phpstan-ignore deadCode.unreachable
 		add_action( WC_Stancer_Cron::HOOK, [ new WC_Stancer_Cron(), 'reconcile' ] );
 	}
 
@@ -279,6 +301,34 @@ class WC_Stancer {
 	 * @return void
 	 */
 	public function run() { }
+
+	/**
+	 * Hook to capture authorized payment.
+	 *
+	 * @return never
+	 */
+	public function stancer_capture(): never {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_safe_redirect( home_url() );
+			exit();
+		}
+		if ( ! wp_verify_nonce( $_GET['nonce'], 'stancer_capture' ) ) {
+			wp_safe_redirect( admin_url() );
+			exit();
+		}
+		$order_id = $_GET['order_id'];
+		$capture_controller = new WC_Stancer_Capture( $order_id );
+		$capture_controller->capture_authorize_payment();
+		$get_data = build_query(
+			[
+				'page' => 'wc-orders',
+				'action' => 'edit',
+				'id' => $order_id,
+			]
+		);
+		wp_safe_redirect( admin_url( 'admin.php' ) . '?' . $get_data );
+		exit();
+	}
 
 	/**
 	 * Upgrade the plugin.

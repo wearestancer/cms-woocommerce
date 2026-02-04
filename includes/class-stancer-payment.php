@@ -250,7 +250,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		* We asign a refunded status when a payment is fully refunded
 		* For clarity purpose
 		*/
-		if($this->status === WC_Stancer_Payment::STANCER_REFUNDED){
+		if ( self::STANCER_REFUNDED === $this->status ) {
 			return;
 		}
 		$this->status = $status;

@@ -52,54 +52,11 @@ add_action(
 );
 
 
-// Add Capture Button and Capture Post route to our backoffice.
-add_action('woocommerce_admin_order_data_after_payment_info','callCapture');
-add_action('admin_post_stancer_capture','stancer_capture');
 
 // Add links on plugins.
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'plugin_action_links' );
 
 
-/**
- * Hook to capture authorized payment.
- *
- * @return never
- */
-function stancer_capture(): never{
-	if(!current_user_can('manage_options')){
-		wp_redirect(home_url());
-		exit();
-	}
-	if(!wp_verify_nonce($_GET['nonce'],"stancer_capture")){
-		wp_redirect(admin_url());
-		exit();
-	}
-	$order_id= $_GET['order_id'];
-	$capture_controller = new WC_Stancer_Capture($order_id);
-	$capture_controller->capture_authorize_payment();
-	$get_data = build_query([
-		'page' => 'wc-orders',
-		'action'=> 'edit',
-		'id' => $order_id
-	]);
-	wp_redirect(admin_url('admin.php').'?'.$get_data);
-	exit();
-}
-
-/**
- * Hook to display capture button and status in the order page.
- *
- * @return ?string
- */
-function callCapture(mixed $order){
-	if($order->get_payment_method()==='stancer')
-	{
-
-		$captureService = new WC_Stancer_Capture($order);
-		return $captureService->maybe_display_capture();
-	}
-	return;
-}
 
 /**
  * Wrapper to load our translations.
@@ -122,7 +79,6 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
 		return class_exists( 'woocommerce' );
 	}
 }
-
 /**
  * Add links on plugins.
  *

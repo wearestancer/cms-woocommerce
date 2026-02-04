@@ -867,8 +867,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 		$order->set_transaction_id( $api_payment->getId() );
 
-		if(in_array($status, [Stancer\Payment\Status::CAPTURE, Stancer\Payment\Status::AUTHORIZED])){
-			$api_payment->set_status(Stancer\Payment\Status::CAPTURE);
+		if ( in_array( $status, [ Stancer\Payment\Status::CAPTURE, Stancer\Payment\Status::AUTHORIZED ], true ) ) {
+			$api_payment->set_status( Stancer\Payment\Status::CAPTURE );
 			$api_payment->send();
 			$status = $api_payment->status;
 		}
@@ -886,15 +886,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				break;
 			case Stancer\Payment\Status::AUTHORIZED:
-
-				$order->update_status(OrderStatus::ON_HOLD);
+				$order->update_status( 'on-hold' );// Should be OrderStatus::ON_HOLD but phpstan doesn't understand.
 				$order->add_order_note(
 					sprintf(
-						//translators: "%s": Stancer payment identifier
-						__('Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice','stancer'),
+						// translators: "%s": Stancer payment identifier.
+						__( 'Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice', 'stancer' ),
 						$api_payment->get_id()
 					)
-					);
+				);
 
 				wp_safe_redirect( $this->get_return_url( $order ) );
 				break;

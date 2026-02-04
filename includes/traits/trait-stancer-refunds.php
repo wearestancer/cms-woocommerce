@@ -107,23 +107,23 @@ trait WC_Stancer_Refunds_Traits {
 		if ( 0 !== $refundable ) {
 			$text = sprintf(
 				// translators: "%1$.2f": Amount refunded. "%2$s": Currency. "%3$.2f": Total amount after all refunds.
-				__(
+				esc_html__(
 					'The payment has been partially refunded of %1$.2f %2$s, the payment is now of: %3$.2f %2$s.',
 					'stancer',
 				),
 				$amount,
-				strtoupper( $currency->value ),
-				( $refundable / 100 )
+				esc_html( strtoupper( $currency->value ) ),
+				$refundable / 100
 			);
 		} else {
 			$text = sprintf(
 				// translators: "%1$.2f": the amount refunded. "%2$s": the currency.
-				__( 'The payment has been fully refunded of %1$.2f %2$s via Stancer.', 'stancer' ),
+				esc_html__( 'The payment has been fully refunded of %1$.2f %2$s via Stancer.', 'stancer' ),
 				$amount,
 				strtoupper( $currency->value )
 			);
-			$db_payment = WC_Stancer_Payment::find($wc_order);
-			$db_payment->mark_as(WC_Stancer_Payment::STANCER_REFUNDED);
+			$db_payment = WC_Stancer_Payment::find( $wc_order );
+			$db_payment->mark_as( WC_Stancer_Payment::STANCER_REFUNDED );
 
 		}
 
@@ -132,8 +132,10 @@ trait WC_Stancer_Refunds_Traits {
 		$wc_order->add_order_note( $text );
 
 		if ( '' !== $reason ) {
-			// translators: "%1$s": the reason for the refund process.
-			$wc_order->add_order_note( sprintf( __( 'Reason for refund: %1$s', 'stancer' ), $reason ) );
+			$wc_order->add_order_note(
+				// translators: "%1$s": the reason for the refund process.
+				sprintf( esc_html__( 'Reason for refund: %1$s', 'stancer' ), $reason )
+			);
 		}
 
 		return true;
