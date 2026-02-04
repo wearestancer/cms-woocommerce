@@ -53,11 +53,6 @@ trait WC_Stancer_Refunds_Traits {
 			$transaction_id = $stancer_payment->payment_id;
 		}
 
-		$status = [
-			Stancer\Payment\Status::TO_CAPTURE,
-			Stancer\Payment\Status::CAPTURED,
-		];
-
 		try {
 			// Don't know why, but WC does not find the settings if did not do it myself.
 			$settings = get_option( 'woocommerce_stancer_settings' );
@@ -68,7 +63,11 @@ trait WC_Stancer_Refunds_Traits {
 			}
 			$api_payment = new Stancer\Payment( $transaction_id );
 
-			return in_array( $api_payment->get_status(), $status, true );
+			return match ( $api_payment->get_status() ) {
+				Stancer\Payment\Status::TO_CAPTURE,
+				Stancer\Payment\Status::CAPTURED => true,
+				default =>false,
+			};
 		} catch ( Exception $e ) {
 			return false;
 		}
@@ -109,7 +108,7 @@ trait WC_Stancer_Refunds_Traits {
 					'stancer',
 				),
 				$amount,
-				strtoupper( $currency ),
+				strtoupper( $currency->value ),
 				( $refundable / 100 )
 			);
 		} else {
@@ -117,7 +116,7 @@ trait WC_Stancer_Refunds_Traits {
 				// translators: "%1$.2f": the amount refunded. "%2$s": the currency.
 				__( 'The payment has been fully refunded of %1$.2f %2$s via Stancer.', 'stancer' ),
 				$amount,
-				strtoupper( $currency )
+				strtoupper( $currency->value )
 			);
 		}
 
