@@ -65,12 +65,19 @@ class WC_Stancer_Capture {
 		}
 		$payment = WC_Stancer_Payment::find( $this->order );
 		if ( ! $payment ) {
-			throw new Stancer\Exceptions\InvalidArgumentException( esc_html__( 'the order is not associated with a Stancer payment', 'stancer' ) );
+			throw new Stancer\Exceptions\InvalidArgumentException(
+				esc_html__( 'This order is not associated with a Stancer payment.', 'stancer' )
+			);
 		}
 		$this->payment = $payment;
 		$gateway = new WC_Stancer_Gateway();
 		if ( ! $gateway->api_config->is_configured() ) {
-			throw new Stancer\Exceptions\NotAuthorizedException( esc_html__( 'your Stancer Module is not properly setup', 'stancer' ) );
+			throw new Stancer\Exceptions\NotAuthorizedException(
+				esc_html__(
+					'The module is not correctly configured.',
+					'stancer',
+				)
+			);
 		}
 		$this->api_payment = new Stancer\Payment( $payment->payment_id );
 	}
@@ -112,10 +119,11 @@ class WC_Stancer_Capture {
 		printf(
 			'
 			<div class="capture-stancer-block">
-			<a href="%1$s" class="button capture-stancer">Capture the payment</a>
+			<a href="%1$s" class="button capture-stancer">%2$s</a>
 			</div>
 		',
 			esc_url( admin_url( 'admin-post.php' ) . '?' . $get_data ),
+			esc_html__( 'Capture the payment', 'stancer' )
 		);
 	}
 
@@ -148,8 +156,8 @@ class WC_Stancer_Capture {
 			true
 		)
 		) {
-			$this->order->payment_complete();
-			$this->payment->mark_as( $this->api_payment->get_status() );
+			return $this->order->payment_complete();
 		}
+		return false;
 	}
 }

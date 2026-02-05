@@ -54,9 +54,30 @@ msgstr ""
 "Vous ne pouvez pas rembourser %1$.02f %3$s, le prix total de votre commande "
 "est de %2$.02f %3$s."
 
+#: includes/class-stancer-capture.php
+msgid "This order is not associated with a Stancer payment."
+msgstr "Cette commande n'est pas associé a un paiement Stancer."
+
+#: includes/class-stancer-capture.php includes/class-stancer-gateway.php
+#: includes/traits/trait-stancer-refunds.php
+#: includes/traits/trait-stancer-subscription.php
+msgid "The module is not correctly configured."
+msgstr "Le module n'est pas correctement configuré."
+
+#: includes/class-stancer-capture.php
+msgid "Capture the payment"
+msgstr "Capturer le paiement"
+
 #: includes/class-stancer-cron.php
 msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr "Toutes les 15 minutes (reconciliation Stancer)"
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
+msgstr ""
+"Le paiement a été confirmé via Stancer reconciliation (ID Transaction : %s)"
 
 #. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 #: includes/class-stancer-cron.php
@@ -224,6 +245,7 @@ msgid "Title"
 msgstr "Titre"
 
 #: includes/class-stancer-gateway.php
+#, fuzzy
 msgid "Payment method description shown to the customer during checkout."
 msgstr "Le titre est présenté au client lors de la commande."
 
@@ -281,6 +303,7 @@ msgid "Authentication"
 msgstr "Authentification"
 
 #: includes/class-stancer-gateway.php
+#, fuzzy
 msgid ""
 "In test mode, no payment will be sent to a bank, only test card can be used."
 msgstr ""
@@ -328,14 +351,19 @@ msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 "Vous allez être redirigé vers le portail de notre partenaire de paiement."
 
-#: includes/class-stancer-gateway.php includes/traits/trait-stancer-refunds.php
-#: includes/traits/trait-stancer-subscription.php
-msgid "The module is not correctly configured."
-msgstr "Le module n'est pas correctement configuré."
-
 #: includes/class-stancer-gateway.php
 msgid "The payment attempt failed."
 msgstr "La tentative de paiement a échouée."
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-gateway.php
+#, fuzzy, php-format
+msgid ""
+"Payment was authorized via stancer (Transaction ID: %s), you still need to "
+"capture it in your backoffice."
+msgstr ""
+"Le paiement a été authorisé via Stancer (ID Transaction : %s), il vous "
+"faudra le capturer dans votre backoffice"
 
 #. translators: "%s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
@@ -391,7 +419,7 @@ msgstr "Moyen de paiement modifié avec succès."
 #. translators: "%1$s": Card brand. "%2$s": Last 4.
 #: includes/Controller/class-stancer-change-payment-method.php
 #: subscription/change-payment-method.php
-#, php-format
+#, fuzzy, php-format
 msgid "%1$s finishing with %2$s"
 msgstr "%1$s finissant par %2$s"
 
@@ -482,7 +510,7 @@ msgstr ""
 
 #. translators: "%1$s": Error code. "%2$s": Error message.
 #: includes/traits/trait-stancer-subscription.php
-#, php-format
+#, fuzzy, php-format
 msgid "The transaction for renewing your subscription has failed. (%1$s: %2$s)"
 msgstr ""
 "La transaction de renouvellement de votre abonnement a échoué. ([%1$s]: %2$s)"
@@ -511,3 +539,10 @@ msgstr "Espace Client"
 #: subscription/change-payment-method.php
 msgid "Incorrect action"
 msgstr "Action incorrecte"
+
+#~ msgid "Popup option is deprecated and will be removed in a future update."
+#~ msgstr ""
+#~ "L'option popup est dépréciée et sera retirée dans une future mise à jour."
+
+#~ msgid "Popup (Deprecated)"
+#~ msgstr "Popup (Déprécié)"

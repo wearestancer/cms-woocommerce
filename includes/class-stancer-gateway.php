@@ -872,7 +872,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$api_payment->send();
 			$status = $api_payment->status;
 		}
-
 		switch ( $status ) {
 			case Stancer\Payment\Status::FAILED:
 			case Stancer\Payment\Status::REFUSED:
@@ -890,7 +889,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				$order->add_order_note(
 					sprintf(
 						// translators: "%s": Stancer payment identifier.
-						__( 'Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice', 'stancer' ),
+						__( 'Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice.', 'stancer' ),
 						$api_payment->get_id()
 					)
 				);
@@ -910,13 +909,13 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				WC()->cart->empty_cart();
 
 				// Complete order.
-				$order->payment_complete( $api_payment->getId() );
+				$order->payment_complete( $api_payment->id );
 
 				$order->add_order_note(
 					sprintf(
 						// translators: "%s": Stancer payment identifier.
 						__( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ),
-						$api_payment->getId()
+						$api_payment->id
 					)
 				);
 

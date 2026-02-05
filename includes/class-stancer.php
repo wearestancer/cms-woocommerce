@@ -92,6 +92,7 @@ class WC_Stancer {
 		if ( version_compare( $this->version, $version, '==' ) ) {
 			return;
 		}
+
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared

@@ -1,23 +1,30 @@
-.stancer-status{
+.stancer-status {
   margin-block: 0.3rem;
 }
-.stancer-authorized, .stancer-authorize{
+.stancer-authorized,
+.stancer-authorize {
   background-color: #f8dda7;
   color: #573b00;
 }
-.stancer-captured, .stancer-to_capture, .stancer-capture-sent, .stancer-capture{
-  color:#2c4700;
+.stancer-captured,
+.stancer-to_capture,
+.stancer-capture-sent,
+.stancer-capture {
   background: #c6e1c6;
+  color: #2c4700;
 }
-.stancer-canceled, .stancer-refunded{
-  color: #454545;
+.stancer-canceled,
+.stancer-refunded {
   background: #e5e5e5;
+  color: #454545;
 }
-.stancer-refused, .stancer-failed, .stancer-expired, .stancer-disputed{
-  color:#570000;
+.stancer-refused,
+.stancer-failed,
+.stancer-expired,
+.stancer-disputed {
   background: #eba3a3;
-
+  color: #570000;
 }
-.capture-stancer-block{
+.capture-stancer-block {
   margin-top: 0.3rem;
 }
