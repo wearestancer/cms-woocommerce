@@ -333,6 +333,9 @@ class WC_Stancer {
 				$options['page_type'] = 'pip';
 				$updated = true;
 			}
+			if ( array_key_exists( 'auth_limit', $options ) ) {
+				unset( $options['auth_limit'] );
+			}
 		}
 
 		if ( $updated ) {

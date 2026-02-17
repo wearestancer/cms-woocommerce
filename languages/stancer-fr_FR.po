@@ -294,25 +294,6 @@ msgstr "Inclus dans la page"
 msgid "Redirect to an external page"
 msgstr "Rediriger vers une page externe"
 
-#: includes/class-stancer-gateway.php
-msgid ""
-"Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, "
-"Mastercard Secure Code...)."
-msgstr ""
-"Montant minimum pour le déclenchement d'un paiement authentifié (3DS, "
-"Verified by Visa, Mastercard Secure Code...)."
-
-#: includes/class-stancer-gateway.php
-msgid ""
-"Leave blank if you do not wish to authenticate payments, at zero all "
-"payments will be authenticated."
-msgstr ""
-"Laissez vide si vous ne souhaitez pas faire de paiement authentifié, à zéro "
-"tous les paiements seront authentifiés."
-
-#: includes/class-stancer-gateway.php
-msgid "Authentication limit"
-msgstr "Limite pour les paiements authentifiés"
 
 #: includes/class-stancer-gateway.php
 msgid ""

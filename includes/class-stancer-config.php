@@ -23,13 +23,6 @@ use Stancer;
  * @subpackage stancer/includes
  */
 class WC_Stancer_Config {
-	/**
-	 * Auth limit.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $auth_limit;
 
 	/**
 	 * Description.
@@ -103,7 +96,6 @@ class WC_Stancer_Config {
 	 * @param string[] $settings Base settings.
 	 */
 	public function __construct( $settings ) {
-		$this->auth_limit = $settings['auth_limit'] ?? 0;
 		$this->description = $settings['payment_description'] ?? '';
 		$this->host = $settings['host'] ?? '';
 		$this->mode = Stancer\Config::TEST_MODE;
