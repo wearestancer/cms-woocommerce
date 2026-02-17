@@ -563,7 +563,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$inputs['payment_option_logo'] = [
 			'default' => 'all-schemes-stancer',
 			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),
-			'title' => __( 'Payment option logos', 'stancer' ),
+			'title' => __( 'Payment option logo', 'stancer' ),
 			'type' => 'payment_option_logo',
 		];
 

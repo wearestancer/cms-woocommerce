@@ -212,7 +212,7 @@ msgid "Card logos displayed to the customer during checkout."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Payment option logos"
+msgid "Payment option logo"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -255,7 +255,7 @@ msgid "Authentication"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "In test mode, no payment will really send to a bank, only test card can be used."
+msgid "In test mode, no payment will be sent to a bank, only test card can be used."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
@@ -288,7 +288,7 @@ msgid "Minimum amount to trigger an authenticated payment (3DS, Verified by Visa
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Leave blank if you do not wish to authenticate, at zero all payments will be authenticated."
+msgid "Leave blank if you do not wish to authenticate payments, at zero all payments will be authenticated."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
