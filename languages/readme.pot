@@ -196,7 +196,7 @@ msgstr ""
 
 #. Found in changelog list item.
 #, gp-priority: low
-msgid "Add support for WooCommerce blocks"
+msgid "Add support for <a href=\"https://woocommerce.com/document/blocs-woocommerce/\">WooCommerce blocks</a>"
 msgstr ""
 
 #. Found in changelog header.

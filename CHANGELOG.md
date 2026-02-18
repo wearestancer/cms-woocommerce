@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2024-09-26
 
 ### Added
-- Support of woocommerce checkout blocks (CMS-68)
+- Support of [woocommerce checkout blocks](https://woocommerce.com/fr/checkout-blocks/) (CMS-68)
 
 ### Changed
 - Change the cb logo to the new logo (CMS-173)
