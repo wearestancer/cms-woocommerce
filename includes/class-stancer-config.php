@@ -140,6 +140,7 @@ class WC_Stancer_Config {
 		if ( $this->host ) {
 			$api_config->setHost( $this->host );
 		}
+		$api_config->setVersion( Stancer\Enum\ApiVersion::VERSION_2 );
 
 		// phpcs:disable WordPress.WP.CapitalPDangit.MisspelledInText
 		$api_config->addAppData( 'libstancer-woocommerce', STANCER_WC_VERSION );

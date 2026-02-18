@@ -26,7 +26,7 @@ fs.readFile('README.txt', { encoding: 'utf8' }, (err, content) => {
   }
 
   let newContent = `
-# Copyright (C) 2023-2024 Stancer / Iliad 78
+# Copyright (C) 2023-${new Date().getFullYear()} Stancer / Iliad 78
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""

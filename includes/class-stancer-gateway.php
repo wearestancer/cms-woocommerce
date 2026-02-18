@@ -878,7 +878,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( ! empty( $status ) ) {
-			$stancer_payment->mark_as( $status );
+			$stancer_payment->mark_as( $status->value );
 		}
 		$order->set_transaction_id( $api_payment->getId() );
 

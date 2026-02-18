@@ -75,7 +75,6 @@ class WC_Stancer {
 			return;
 		}
 
-		// @phpstan-ignore-next-line ABSPATH is not what phpstan think
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared

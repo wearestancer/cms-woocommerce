@@ -28,7 +28,7 @@
         "scope:dependency": "composer install --no-dev && composer run prep-vendor && composer run prefix-stancer && composer du"
     },
     "require": {
-        "stancer/stancer": "^1.0"
+        "stancer/stancer": "^2.1"
     },
     "require-dev": {
         "php-stubs/woocommerce-stubs": "^8.9",
