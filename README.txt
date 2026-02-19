@@ -95,7 +95,7 @@ Updates are done automatically. However, we recommend that you back up your site
 * Fix a bug regarding iframe display
 
 = Version 1.3.0 =
-* Add support for WooCommerce blocks
+* Add support for [WooCommerce blocks](https://woocommerce.com/document/blocs-woocommerce/)
 
 = Version 1.2.6 =
 * Fix subscription description warning showing even when no subscription

@@ -190,11 +190,11 @@ msgstr ""
 
 #. Found in description paragraph.
 msgid ""
-"Do you have any questions about Stancer? <a href=\"https://share-eu1.hsforms."
-"com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contact us</a>"
+"Do you have any questions about Stancer? <a href=\"https://share-"
+"eu1.hsforms.com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contact us</a>"
 msgstr ""
-"Vous avez des questions sur Stancer ? <a href=\"https://share-eu1.hsforms."
-"com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contactez-nous</a>"
+"Vous avez des questions sur Stancer ? <a href=\"https://share-"
+"eu1.hsforms.com/1eDEtFIXEQtWpVz8PyOEK3gft2n5\">Contactez-nous</a>"
 
 #. Found in installation header.
 msgid "Installation"
@@ -308,8 +308,11 @@ msgid "Version 1.3.0"
 msgstr "Version 1.3.0"
 
 #. Found in changelog list item.
-msgid "Add support for WooCommerce blocks"
-msgstr "Ajout du support pour les blocs WooCommerce"
+msgid ""
+"Add support for <a href=\"https://woocommerce.com/document/blocs-woocommerce/"
+"\">WooCommerce blocks</a>"
+msgstr ""
+"Support de <a href=\"https://woocommerce.com/document/blocs-woocommerce/\">WooCommerce blocks</a>"
 
 #. Found in changelog header.
 msgid "Version 1.2.6"
