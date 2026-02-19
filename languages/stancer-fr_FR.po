@@ -1,5 +1,6 @@
 # Copyright (C) 2023-2026 Stancer / Iliad 78
-# This file is distributed under the MIT.
+# This file is distributed under the same license as the package.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: $[last-commit-hash]\n"
@@ -8,8 +9,7 @@ msgstr ""
 "POT-Creation-Date: $[first-commit-date]\n"
 "PO-Revision-Date: $[last-commit-date]\n"
 "Last-Translator: $[last-commit-author]\n"
-"Language-Team: \n"
-"Language: fr_FR\n"
+"Language: fr-FR \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -38,11 +38,11 @@ msgstr "https://www.stancer.com/fr/"
 
 #: includes/class-stancer-api.php
 msgid "You cannot refund a null amount"
-msgstr "Vous devez remboursez une somme non nulle"
+msgstr "Vous devez rembourser une somme non nulle"
 
 #: includes/class-stancer-api.php
 msgid "A refund must be above 50 cents"
-msgstr "Un remboursement doit être supérieur à cinquante centime"
+msgstr "Un remboursement doit être supérieur à cinquante centimes"
 
 #. translators: "%1f$.02f": refunded payment sums. "%2$.02f": the amount still refundable. "%3$s":  the currency of the transaction.
 #: includes/class-stancer-api.php
@@ -51,8 +51,8 @@ msgid ""
 "You cannot refund %1$.02f %3$s, the order total with the already accounted "
 "refund is %2$.02f %3$s."
 msgstr ""
-"Vous ne pouvez pas remboursez %1$.02f %3$s le prix total de votre commande "
-"est de %2$.02f %3$s"
+"Vous ne pouvez pas rembourser %1$.02f %3$s, le prix total de votre commande "
+"est de %2$.02f %3$s."
 
 #: includes/class-stancer-gateway-block-support.php
 msgid "Pay by card"
@@ -63,7 +63,7 @@ msgstr "Payer par carte"
 #, php-format
 msgid "You are on %1$s mode but your %1$s keys are not properly setup."
 msgstr ""
-"Vous êtes en mode %1$s mais les clefs %1$s ne sont pas correctement rentrées."
+"Vous êtes en mode %1$s mais les clés %1$s ne sont pas correctement rentrées."
 
 #: includes/class-stancer-gateway.php
 msgid "Payments can not be done with Stancer. Please setup your API keys."
@@ -108,23 +108,23 @@ msgstr "Logo Stancer."
 
 #: includes/class-stancer-gateway.php
 msgid "Main schemes logos prefixed with Stancer logo."
-msgstr "Les principaux types de cartes préfixé par le logo Stancer."
+msgstr "Principaux types de cartes préfixé par le logo Stancer."
 
 #: includes/class-stancer-gateway.php
 msgid "Main schemes logos."
-msgstr "Les principaux types de cartes."
+msgstr "Principaux types de cartes."
 
 #: includes/class-stancer-gateway.php
 msgid "Main schemes logos suffixed with Stancer logo."
-msgstr "Les principaux types de cartes suivi de logo Stancer."
+msgstr "Principaux types de cartes suivi de logo Stancer."
 
 #: includes/class-stancer-gateway.php
 msgid "Main schemes logos with full Stancer logo."
-msgstr "Les principaux types de cartes suivi de logo complet Stancer."
+msgstr "Principaux types de cartes suivi de logo complet Stancer."
 
 #: includes/class-stancer-gateway.php
 msgid "Every supported schemes logos prefixed with Stancer logo."
-msgstr "Tous les types de cartes supportés préfixé par le logo Stancer."
+msgstr "Tous les types de cartes supportés préfixés par le logo Stancer."
 
 #: includes/class-stancer-gateway.php
 msgid "Every supported schemes logos."
@@ -132,7 +132,7 @@ msgstr "Tous les types de cartes supportés."
 
 #: includes/class-stancer-gateway.php
 msgid "Every supported schemes logos suffixed with Stancer logo."
-msgstr "Tous les types de cartes supportés suivi du logo Stancer."
+msgstr "Tous les types de cartes supportés suivis du logo Stancer."
 
 #: includes/class-stancer-gateway.php
 msgid "Every supported schemes logos with full Stancer logo."
@@ -172,7 +172,7 @@ msgstr "La description doit être comprise entre %1$d et %2$d caractères."
 
 #: includes/class-stancer-gateway.php
 msgid "Shop name configured in WooCommerce"
-msgstr "Nom de la boutique configuré dans WooCommerce"
+msgstr "Nom de la boutique configuré dans Woocommerce"
 
 #: includes/class-stancer-gateway.php
 msgid "Total amount"
@@ -208,7 +208,7 @@ msgstr "Titre"
 
 #: includes/class-stancer-gateway.php
 msgid "Payment method description shown to the customer during checkout."
-msgstr "La description présentée au client lors de la commande."
+msgstr "Le titre est présenté au client lors de la commande."
 
 #: includes/class-stancer-gateway.php
 msgid "Payment option description"
@@ -219,13 +219,13 @@ msgid "Card logos displayed to the customer during checkout."
 msgstr "Les logos des cartes sont affichés au client lors du paiement."
 
 #: includes/class-stancer-gateway.php
-msgid "Payment option logos"
-msgstr "Logos de l’option de paiement"
+msgid "Payment option logo"
+msgstr "Logo de l'option de paiement"
 
 #: includes/class-stancer-gateway.php
 msgid "Description shown to the customer during payment method change."
 msgstr ""
-"La description présentée au client lors du changement de moyen de paiement."
+"Description présentée au client lors du changement de moyen de paiement."
 
 #: includes/class-stancer-gateway.php
 msgid "Payment method change description"
@@ -265,10 +265,9 @@ msgstr "Authentification"
 
 #: includes/class-stancer-gateway.php
 msgid ""
-"In test mode, no payment will really send to a bank, only test card can be "
-"used."
+"In test mode, no payment will be sent to a bank, only test card can be used."
 msgstr ""
-"En mode test, aucun paiement ne sera envoyé à une banque, seuls les cartes "
+"En mode test, aucun paiement ne sera envoyé à une banque, seules les cartes "
 "de test sont utilisables."
 
 #: includes/class-stancer-gateway.php
@@ -289,7 +288,7 @@ msgstr "Mode d'affichage"
 
 #: includes/class-stancer-gateway.php
 msgid "Inside the page"
-msgstr "Intégré à la page"
+msgstr "Inclus dans la page"
 
 #: includes/class-stancer-gateway.php
 msgid "Redirect to an external page"
@@ -305,11 +304,11 @@ msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid ""
-"Leave blank if you do not wish to authenticate, at zero all payments will be "
-"authenticated."
+"Leave blank if you do not wish to authenticate payments, at zero all "
+"payments will be authenticated."
 msgstr ""
-"Laissez vide si vous ne souhaitez pas faire de paiement authentifié, si vous "
-"le placez à zéro tous les paiements seront authentifiés."
+"Laissez vide si vous ne souhaitez pas faire de paiement authentifié, à zéro "
+"tous les paiements seront authentifiés."
 
 #: includes/class-stancer-gateway.php
 msgid "Authentication limit"
@@ -362,7 +361,7 @@ msgstr ""
 #: includes/class-stancer-payment-builder.php
 #, php-format
 msgid "Payment for order n°%s"
-msgstr "Payment pour la commande n°%s"
+msgstr "Paiement pour la commande n°%s"
 
 #. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php
@@ -434,7 +433,7 @@ msgstr "Raison du remboursement : %1$s"
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "We were unable to find the subscription."
-msgstr "Nous n’avons pas détecté l’abonnement."
+msgstr "Nous n’avons pas trouvé l’abonnement."
 
 #. translators: "%s": Currency.
 #: includes/traits/trait-stancer-subscription.php
@@ -489,7 +488,7 @@ msgstr ""
 #, php-format
 msgid "The transaction for renewing your subscription has failed. (%1$s: %2$s)"
 msgstr ""
-"La transaction de renouvellement de votre abonnement a échoué. (%1$s : %2$s)"
+"La transaction de renouvellement de votre abonnement a échoué. ([%1$s]: %2$s)"
 
 #: includes/traits/trait-stancer-subscription.php
 msgid "Your subscription renewal transaction has been successfully submitted."
