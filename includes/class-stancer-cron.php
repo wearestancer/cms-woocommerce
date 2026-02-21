@@ -169,11 +169,22 @@ class WC_Stancer_Cron {
 		$context    = [ 'source' => 'stancer-cron' ];
 
 		try {
-			$api_payment = new Stancer\Payment( $payment_id );
-			$api_status  = $api_payment->status;
+			$api_payment    = new Stancer\Payment( $payment_id );
+			$api_status_raw = $api_payment->status;
 
-			// No status yet or still pending on the API side — wait for next run.
-			if ( ! $api_status ) {
+			// No status yet — wait for next run.
+			if ( ! $api_status_raw ) {
+				return;
+			}
+
+			// Normalize to string — compatible whether the SDK returns an enum
+			// (Stancer\Payment\Status, PHP 8.1+) or a plain string.
+			$api_status = $api_status_raw instanceof Stancer\Payment\Status
+				? $api_status_raw->value
+				: (string) $api_status_raw;
+
+			// Still pending on the API side — wait for next run.
+			if ( 'pending' === $api_status ) {
 				return;
 			}
 
@@ -199,10 +210,10 @@ class WC_Stancer_Cron {
 			}
 
 			switch ( $api_status ) {
-				case Stancer\Payment\Status::TO_CAPTURE:
-				case Stancer\Payment\Status::CAPTURE:
-				case Stancer\Payment\Status::CAPTURE_SENT:
-				case Stancer\Payment\Status::CAPTURED:
+				case Stancer\Payment\Status::TO_CAPTURE->value:
+				case Stancer\Payment\Status::CAPTURE->value:
+				case Stancer\Payment\Status::CAPTURE_SENT->value:
+				case Stancer\Payment\Status::CAPTURED->value:
 					if ( $order->needs_payment() ) {
 						$order->payment_complete( $payment_id );
 						$order->add_order_note(
@@ -217,24 +228,24 @@ class WC_Stancer_Cron {
 								'Stancer cron: order %d marked complete (payment %s, status %s).',
 								$order->get_id(),
 								$payment_id,
-								$api_status->value
+								$api_status
 							),
 							$context
 						);
 					}
 					break;
 
-				case Stancer\Payment\Status::REFUSED:
-				case Stancer\Payment\Status::FAILED:
-				case Stancer\Payment\Status::CANCELED:
-				case Stancer\Payment\Status::EXPIRED:
+				case Stancer\Payment\Status::REFUSED->value:
+				case Stancer\Payment\Status::FAILED->value:
+				case Stancer\Payment\Status::CANCELED->value:
+				case Stancer\Payment\Status::EXPIRED->value:
 					if ( ! $order->has_status( [ 'failed', 'cancelled' ] ) ) {
 						$order->update_status(
 							'failed',
 							sprintf(
 								// translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 								__( 'Payment %1$s via Stancer (Transaction ID: %2$s)', 'stancer' ),
-								$api_status->value,
+								$api_status,
 								$payment_id
 							)
 						);
@@ -243,7 +254,7 @@ class WC_Stancer_Cron {
 								'Stancer cron: order %d marked failed (payment %s, status %s).',
 								$order->get_id(),
 								$payment_id,
-								$api_status->value
+								$api_status
 							),
 							$context
 						);
@@ -255,7 +266,7 @@ class WC_Stancer_Cron {
 						sprintf(
 							'Stancer cron: payment %s has status "%s" — no action taken.',
 							$payment_id,
-							$api_status->value
+							$api_status
 						),
 						$context
 					);
