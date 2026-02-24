@@ -177,6 +177,7 @@ class WC_Stancer {
 			}
 		);
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
+		add_action( WC_Stancer_Cron::HOOK, [ new WC_Stancer_Cron(), 'reconcile' ] );
 	}
 
 	/**
@@ -216,6 +217,7 @@ class WC_Stancer {
 	 */
 	private function load_filters() {
 		add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateway' ] );
+		add_filter( 'cron_schedules', [ 'WC_Stancer_Cron', 'add_schedule' ] );
 	}
 
 	/**
