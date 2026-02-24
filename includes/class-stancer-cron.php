@@ -24,7 +24,7 @@ use Stancer;
  *
  * Schedule / unschedule are called on plugin activation / deactivation.
  *
- * @since 1.4.0
+ * @since Unreleased
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -34,7 +34,7 @@ class WC_Stancer_Cron {
 	/**
 	 * WP-Cron hook name.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @var string
 	 */
@@ -43,7 +43,7 @@ class WC_Stancer_Cron {
 	/**
 	 * Custom cron schedule identifier.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @var string
 	 */
@@ -55,7 +55,7 @@ class WC_Stancer_Cron {
 	 * Payments younger than this threshold are skipped to allow the Stancer
 	 * payment page to complete its redirect flow before we poll the API.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @var int
 	 */
@@ -66,7 +66,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Hooked to the WordPress `cron_schedules` filter.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @param array<string, array<string, mixed>> $schedules Existing cron schedules.
 	 *
@@ -86,7 +86,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Called on plugin activation. Has no effect if already scheduled.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @return void
 	 */
@@ -101,7 +101,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Called on plugin deactivation.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @return void
 	 */
@@ -116,26 +116,34 @@ class WC_Stancer_Cron {
 	/**
 	 * Reconcile pending payments by polling the Stancer API.
 	 *
-	 * Finds all local payments with status "pending" that were created more
-	 * than THRESHOLD seconds ago and checks their real status against the API.
-	 * Updates the local record and the WooCommerce order accordingly.
+	 * Finds all local payments with status "pending" or "authorized" that were
+	 * created between THRESHOLD seconds ago and one week ago, then checks their
+	 * real status against the API. Updates the local record and the WooCommerce
+	 * order accordingly.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @return void
 	 */
 	public function reconcile(): void {
 		global $wpdb;
 
-		$threshold = gmdate( 'Y-m-d H:i:s', time() - static::THRESHOLD );
+		$week_timestamp = 604800;
+
+		$minimum_threshold = gmdate( 'Y-m-d H:i:s', time() - static::THRESHOLD );
+		$maximum_threshold = gmdate( 'Y-m-d H:i:s', time() - $week_timestamp );
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT * FROM {$wpdb->prefix}wc_stancer_payment
-				 WHERE status = 'pending'
-				 AND datetime_created <= %s",
-				$threshold
+				 WHERE `status` in ('pending','authorized')
+				 AND `datetime_created` <= %s
+				 AND `datetime_created` >= %s",
+				[
+					$minimum_threshold,
+					$maximum_threshold,
+				]
 			)
 		);
 		// phpcs:enable
@@ -146,8 +154,16 @@ class WC_Stancer_Cron {
 
 		$logger = wc_get_logger();
 
-		foreach ( $rows as $row ) {
-			$this->process_row( $row, $logger );
+		$config = ( new WC_Stancer_Gateway() )->api_config;
+		if ( $config->is_configured() ) {
+			foreach ( $rows as $row ) {
+				$this->process_row( $row, $logger );
+			}
+		} else {
+			$logger->info(
+				sprintf( 'Stancer cron: Stancer configuration is not properly set up, please check your setting page.' ),
+				[ 'source' => 'stancer-cron' ]
+			);
 		}
 	}
 
@@ -157,7 +173,7 @@ class WC_Stancer_Cron {
 	 * Retrieves the payment status from the Stancer API and updates the local
 	 * record and WooCommerce order if the status has changed.
 	 *
-	 * @since 1.4.0
+	 * @since Unreleased
 	 *
 	 * @param object              $row    Database row from wc_stancer_payment.
 	 * @param WC_Logger_Interface $logger WooCommerce logger.
@@ -169,29 +185,23 @@ class WC_Stancer_Cron {
 		$context    = [ 'source' => 'stancer-cron' ];
 
 		try {
-			$api_payment    = new Stancer\Payment( $payment_id );
-			$api_status_raw = $api_payment->status;
+			$api_payment = new Stancer\Payment( $payment_id );
+			$api_status  = $api_payment->status;
 
 			// No status yet — wait for next run.
-			if ( ! $api_status_raw ) {
+			if ( ! $api_status ) {
 				return;
 			}
 
-			// Normalize to string — compatible whether the SDK returns an enum
-			// (Stancer\Payment\Status, PHP 8.1+) or a plain string.
-			$api_status = $api_status_raw instanceof Stancer\Payment\Status
-				? $api_status_raw->value
-				: (string) $api_status_raw;
-
-			// Still pending on the API side — wait for next run.
-			if ( 'pending' === $api_status ) {
+			// Still authorized on the API side — wait for next run.
+			if ( Stancer\Payment\Status::AUTHORIZED === $api_status ) {
 				return;
 			}
 
 			// Update local record with the real API status.
 			$stancer_payment = new WC_Stancer_Payment();
 			$stancer_payment->hydrate( (array) $row );
-			$stancer_payment->mark_as( $api_status );
+			$stancer_payment->mark_as( $api_status->value );
 
 			// Retrieve the associated WooCommerce order.
 			$order = wc_get_order( (int) $row->order_id );
@@ -210,10 +220,10 @@ class WC_Stancer_Cron {
 			}
 
 			switch ( $api_status ) {
-				case Stancer\Payment\Status::TO_CAPTURE->value:
-				case Stancer\Payment\Status::CAPTURE->value:
-				case Stancer\Payment\Status::CAPTURE_SENT->value:
-				case Stancer\Payment\Status::CAPTURED->value:
+				case Stancer\Payment\Status::TO_CAPTURE:
+				case Stancer\Payment\Status::CAPTURE:
+				case Stancer\Payment\Status::CAPTURE_SENT:
+				case Stancer\Payment\Status::CAPTURED:
 					if ( $order->needs_payment() ) {
 						$order->payment_complete( $payment_id );
 						$order->add_order_note(
@@ -228,24 +238,23 @@ class WC_Stancer_Cron {
 								'Stancer cron: order %d marked complete (payment %s, status %s).',
 								$order->get_id(),
 								$payment_id,
-								$api_status
+								$api_status->value
 							),
 							$context
 						);
 					}
 					break;
 
-				case Stancer\Payment\Status::REFUSED->value:
-				case Stancer\Payment\Status::FAILED->value:
-				case Stancer\Payment\Status::CANCELED->value:
-				case Stancer\Payment\Status::EXPIRED->value:
+				case Stancer\Payment\Status::REFUSED:
+				case Stancer\Payment\Status::CANCELED:
+				case Stancer\Payment\Status::EXPIRED:
 					if ( ! $order->has_status( [ 'failed', 'cancelled' ] ) ) {
 						$order->update_status(
 							'failed',
 							sprintf(
 								// translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 								__( 'Payment %1$s via Stancer (Transaction ID: %2$s)', 'stancer' ),
-								$api_status,
+								$api_status->value,
 								$payment_id
 							)
 						);
@@ -254,7 +263,7 @@ class WC_Stancer_Cron {
 								'Stancer cron: order %d marked failed (payment %s, status %s).',
 								$order->get_id(),
 								$payment_id,
-								$api_status
+								$api_status->value
 							),
 							$context
 						);
@@ -266,7 +275,7 @@ class WC_Stancer_Cron {
 						sprintf(
 							'Stancer cron: payment %s has status "%s" — no action taken.',
 							$payment_id,
-							$api_status
+							$api_status->value
 						),
 						$context
 					);
