@@ -54,6 +54,22 @@ msgstr ""
 "Vous ne pouvez pas rembourser %1$.02f %3$s, le prix total de votre commande "
 "est de %2$.02f %3$s."
 
+#: includes/class-stancer-cron.php
+msgid "Every 15 minutes (Stancer reconciliation)"
+msgstr "Toutes les 15 minutes (reconciliation Stancer)"
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
+msgstr "Le paiement a été confirmé via Stancer reconciliation (ID Transaction : %s)"
+
+#. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment %1$s via Stancer (Transaction ID: %2$s)"
+msgstr "Paiement %1$s via Stancer (ID Transaction : %2$s)"
+
 #: includes/class-stancer-gateway-block-support.php
 msgid "Pay by card"
 msgstr "Payer par carte"

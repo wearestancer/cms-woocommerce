@@ -215,6 +215,7 @@ class WC_Stancer {
 	 */
 	private function load_filters() {
 		add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateway' ] );
+		// phpcs:ignore WordPress.WP.CronInterval.ChangeDetected
 		add_filter( 'cron_schedules', [ 'WC_Stancer_Cron', 'add_schedule' ] );
 	}
 
