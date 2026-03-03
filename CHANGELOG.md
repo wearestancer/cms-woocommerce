@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - IT translation (CMS-442)
 - WP-Cron reconciliation job that polls the Stancer API every 15 minutes for
   payments still recorded as "pending" locally, and updates WooCommerce order
-  statuses accordingly (complete for captured/to_capture, failed for
-  refused/failed/canceled/expired). Stancer does not support webhooks, so this
+  statuses accordingly (complete for to_capture/capture_sent/captured, failed for
+  refused/canceled/expired). Stancer does not support webhooks, so this
   job is required to ensure orders are not left permanently in a pending state.
 
 ### Changed

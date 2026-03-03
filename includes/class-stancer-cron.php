@@ -117,7 +117,7 @@ class WC_Stancer_Cron {
 	 * Reconcile pending payments by polling the Stancer API.
 	 *
 	 * Finds all local payments with status "pending" or "authorized" that were
-	 * created between THRESHOLD seconds ago and one week ago, then checks their
+	 * created between fifteen minutes and one week ago, then checks their
 	 * real status against the API. Updates the local record and the WooCommerce
 	 * order accordingly.
 	 *
@@ -130,19 +130,19 @@ class WC_Stancer_Cron {
 
 		$week_timestamp = 604800;
 
-		$minimum_threshold = gmdate( 'Y-m-d H:i:s', time() - static::THRESHOLD );
-		$maximum_threshold = gmdate( 'Y-m-d H:i:s', time() - $week_timestamp );
+		$fifteen_minutes_before = gmdate( 'Y-m-d H:i:s', time() - static::THRESHOLD );
+		$one_week_before = gmdate( 'Y-m-d H:i:s', time() - $week_timestamp );
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT * FROM {$wpdb->prefix}wc_stancer_payment
-				 WHERE `status` in ('pending','authorized')
+				 WHERE `status` IN ('pending','authorized')
 				 AND `datetime_created` <= %s
 				 AND `datetime_created` >= %s",
 				[
-					$minimum_threshold,
-					$maximum_threshold,
+					$fifteen_minutes_before,
+					$one_week_before,
 				]
 			)
 		);
@@ -221,7 +221,6 @@ class WC_Stancer_Cron {
 
 			switch ( $api_status ) {
 				case Stancer\Payment\Status::TO_CAPTURE:
-				case Stancer\Payment\Status::CAPTURE:
 				case Stancer\Payment\Status::CAPTURE_SENT:
 				case Stancer\Payment\Status::CAPTURED:
 					if ( $order->needs_payment() ) {

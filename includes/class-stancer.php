@@ -294,6 +294,8 @@ class WC_Stancer {
 			return;
 		}
 
+		WC_Stancer_Cron::schedule();
+
 		$this->install_database();
 
 		$options = get_option( 'woocommerce_stancer_settings' );
