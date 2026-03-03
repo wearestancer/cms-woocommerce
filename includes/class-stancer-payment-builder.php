@@ -63,14 +63,11 @@ class WC_Stancer_Payment_Builder {
 	 * @since 1.0.0
 	 * @since 1.2.5 Moved from `WC_Stancer_Api` to `WC_Stancer_Payment_Builder`
 	 *
-	 * @param bool|null $force_auth Do we need to force authentication.
-	 *
 	 * @return void
 	 */
-	public function build_payment_data( $force_auth = null ): void {
+	public function build_payment_data(): void {
 		$total = $this->order->get_total();
 		$amount = static::prepare_amount( $total );
-		$auth = $force_auth;
 		$currency_code = $this->order->get_currency();
 		$params = [
 			'CART_ID' => (string) $this->order->get_id(),
@@ -85,14 +82,9 @@ class WC_Stancer_Payment_Builder {
 			// translators: "%s": The order ID.
 			sprintf( __( 'Payment for order n°%s', 'stancer' ), $this->order->get_id() )
 		);
-		if ( null === $auth ) {
-			$auth_limit = $this->api_config->auth_limit;
-			$auth = is_null( $auth_limit ) || '' === $auth_limit ? false : $total >= $auth_limit;
-		}
-
 		$this->parameters = [
 			'amount' => $amount,
-			'auth' => $auth,
+			'auth' => true,
 			'capture' => false,
 			'currency' => strtolower( $currency_code ),
 			'description' => $description,

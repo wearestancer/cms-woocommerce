@@ -661,23 +661,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			],
 			'type' => 'select',
 		];
-
-		$desc_auth_limit = __(
-			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',
-			'stancer',
-		);
-		$desc_auth_limit .= '<br/>';
-		$desc_auth_limit .= __(
-			'Leave blank if you do not wish to authenticate payments, at zero all payments will be authenticated.',
-			'stancer',
-		);
-
-		$inputs['auth_limit'] = [
-			'default' => '0',
-			'title' => __( 'Authentication limit', 'stancer' ),
-			'type' => 'text',
-			'description' => $desc_auth_limit,
-		];
 		$paym_desc_description = $desc_description(
 			__(
 				'Will be used as description for every payment made, and will be visible to your customer in redirect mode.',
