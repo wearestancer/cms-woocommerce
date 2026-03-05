@@ -475,26 +475,27 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$desc = __( 'Starts with "%s"', 'stancer' );
 
 		return [
-			'api_live_public_key' => [
-				'description' => sprintf( $desc, 'pprod_' ),
-				'pattern' => 'pprod_',
-				'title' => __( 'Public live API key', 'stancer' ),
-			],
 			'api_live_secret_key' => [
 				'description' => sprintf( $desc, 'sprod_' ),
 				'pattern' => 'sprod_',
 				'title' => __( 'Secret live API key', 'stancer' ),
 			],
-			'api_test_public_key' => [
-				'description' => sprintf( $desc, 'ptest_' ),
-				'pattern' => 'ptest_',
-				'title' => __( 'Public test API key', 'stancer' ),
+			'api_live_public_key' => [
+				'description' => sprintf( $desc, 'pprod_' ),
+				'pattern' => 'pprod_',
+				'title' => __( 'Public live API key', 'stancer' ),
 			],
 			'api_test_secret_key' => [
 				'description' => sprintf( $desc, 'stest_' ),
 				'pattern' => 'stest_',
 				'title' => __( 'Secret test API key', 'stancer' ),
 			],
+			'api_test_public_key' => [
+				'description' => sprintf( $desc, 'ptest_' ),
+				'pattern' => 'ptest_',
+				'title' => __( 'Public test API key', 'stancer' ),
+			],
+
 		];
 	}
 
