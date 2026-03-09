@@ -96,8 +96,12 @@ trait WC_Stancer_Refunds_Traits {
 			throw new Exception( esc_html( $message ) );
 		}
 
+		// We use API V1 for refund related operation.
+		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) (string) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
+		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
+
 		$currency = $stancer_payment->currency;
 
 		if ( 0 !== $refundable ) {
