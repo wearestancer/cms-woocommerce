@@ -145,20 +145,20 @@ msgid "Starts with \"%s\""
 msgstr "Inizia con \"%s\""
 
 #: includes/class-stancer-gateway.php
-msgid "Public live API key"
-msgstr "Chiave di produzione pubblica"
-
-#: includes/class-stancer-gateway.php
 msgid "Secret live API key"
 msgstr "Chiave di produzione privata"
 
 #: includes/class-stancer-gateway.php
-msgid "Public test API key"
-msgstr "Chiave di test pubblica"
+msgid "Public live API key"
+msgstr "Chiave di produzione pubblica"
 
 #: includes/class-stancer-gateway.php
 msgid "Secret test API key"
 msgstr "Chiave di test privata"
+
+#: includes/class-stancer-gateway.php
+msgid "Public test API key"
+msgstr "Chiave di test pubblica"
 
 #: includes/class-stancer-gateway.php
 msgid "List of available variables:"

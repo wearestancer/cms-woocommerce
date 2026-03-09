@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Using stancer api V2 (CMS-470)
 - Better translations (CMS-442)
+- API key order, to follow the manage order (CMS-489)
 
 ### Removed
 - Remove the authorizations options (CMS-480)

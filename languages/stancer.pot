@@ -137,19 +137,19 @@ msgid "Starts with \"%s\""
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Public live API key"
-msgstr ""
-
-#: includes/class-stancer-gateway.php
 msgid "Secret live API key"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-msgid "Public test API key"
+msgid "Public live API key"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
 msgid "Secret test API key"
+msgstr ""
+
+#: includes/class-stancer-gateway.php
+msgid "Public test API key"
 msgstr ""
 
 #: includes/class-stancer-gateway.php
