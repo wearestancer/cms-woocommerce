@@ -35,6 +35,9 @@ define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
 
 require_once STANCER_DIRECTORY_PATH . '/vendor/autoload.php';
 
+register_activation_hook( STANCER_FILE, [ 'WC_Stancer_Cron', 'schedule' ] );
+register_deactivation_hook( STANCER_FILE, [ 'WC_Stancer_Cron', 'unschedule' ] );
+
 add_action( 'plugins_loaded', 'load_translations' );
 
 // Declare compatibility with Hpos.
