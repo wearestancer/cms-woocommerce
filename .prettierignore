@@ -1,0 +1,10 @@
+vendor/*
+node_modules/*
+.devcontainer/*
+.gitlab/*
+
+pnpm-lock.yaml
+CHANGELOG.md
+README.md
+.gitlab-ci.yml
+.phpcs.xml
