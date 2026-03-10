@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
