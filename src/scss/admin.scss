@@ -1,6 +1,6 @@
-@use 'sass:list';
-@use 'sass:map';
-@use './icons';
+@use "sass:list";
+@use "sass:map";
+@use "./icons";
 
 @mixin medium-screen() {
   @media (min-width: 550px) {
@@ -19,7 +19,7 @@
 
   .woocommerce .form-table & & {
     &__form-control {
-      display: grid ;
+      display: grid;
       grid-template-columns: 1fr;
       align-content: stretch;
       align-items: stretch;
@@ -83,7 +83,10 @@
 
         @each $name, $data in icons.$image-map {
           &#{$elem}__preview--#{$name} {
-            aspect-ratio: list.slash(map-get($data, 'width'), map-get($data, 'height'));
+            aspect-ratio: list.slash(
+              map.get($data, "width"),
+              map.get($data, "height")
+            );
           }
         }
       }
