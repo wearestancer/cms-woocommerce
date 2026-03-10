@@ -280,6 +280,22 @@ msgstr ""
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
 
 #. Found in changelog header.
+msgid "Version 1.4.1"
+msgstr "Version 1.4.1"
+
+#. Found in changelog list item.
+msgid "Remove authorization option"
+msgstr "Suppression de l'option d'autorisation"
+
+#. Found in changelog list item.
+msgid "Add use of Stancer API V2"
+msgstr "Ajout de l'API V2 Stancer"
+
+#. Found in changelog list item.
+msgid "Change order of API keys"
+msgstr "Changement d'ordre des clefs d'API"
+
+#. Found in changelog header.
 msgid "Version 1.4.0"
 msgstr "Version 1.4.0"
 
@@ -312,7 +328,8 @@ msgid ""
 "Add support for <a href=\"https://woocommerce.com/document/blocs-woocommerce/"
 "\">WooCommerce blocks</a>"
 msgstr ""
-"Support de <a href=\"https://woocommerce.com/document/blocs-woocommerce/\">WooCommerce blocks</a>"
+"Support de <a href=\"https://woocommerce.com/document/blocs-woocommerce/"
+"\">WooCommerce blocks</a>"
 
 #. Found in changelog header.
 msgid "Version 1.2.6"

@@ -86,6 +86,11 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
+= Version 1.4.1 =
+* Remove authorization option
+* Add use of Stancer API V2
+* Change order of API keys
+
 = Version 1.4.0 =
 * Remove `popup` option
 * Update support for WordPress version to 6.5 and up
