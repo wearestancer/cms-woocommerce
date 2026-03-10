@@ -1,6 +1,6 @@
-@use "sass:list";
-@use "sass:map";
-@use "./icons";
+@use 'sass:list';
+@use 'sass:map';
+@use './icons';
 
 @mixin medium-screen() {
   @media (min-width: 550px) {
@@ -22,8 +22,8 @@
       display: grid;
       grid-template-columns: 1fr;
       align-content: stretch;
-      align-items: stretch;
       justify-content: stretch;
+      align-items: stretch;
       gap: 1ch;
 
       @include medium-screen() {
@@ -37,17 +37,17 @@
       #{$elem}__label {
         display: grid;
         align-content: center;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         justify-items: center;
         gap: 1.5ch;
-        min-height: calc(20px + 2.5em);
+        transition-duration: 250ms;
+        transition-property: border-color, box-shadow;
         border: 1px solid #8c8f94;
         border-radius: 3px;
         padding: 1.5ch;
+        min-height: calc(20px + 2.5em);
         text-align: center;
-        transition-duration: 250ms;
-        transition-property: border-color, box-shadow;
 
         @supports (min-height: calc(20px + 2lh)) {
           min-height: calc(20px + 2lh);
@@ -68,13 +68,13 @@
 
         &--stancer {
           @include large-screen() {
-            grid-column: span 2;
             grid-template-columns: repeat(2, max-content);
+            grid-column: span 2;
           }
 
           grid-template-rows: 1fr;
-          align-items: end;
           justify-content: center;
+          align-items: end;
         }
       }
 
@@ -83,10 +83,7 @@
 
         @each $name, $data in icons.$image-map {
           &#{$elem}__preview--#{$name} {
-            aspect-ratio: list.slash(
-              map.get($data, "width"),
-              map.get($data, "height")
-            );
+            aspect-ratio: list.slash(map.get($data, 'width'), map.get($data, 'height'));
           }
         }
       }
@@ -97,9 +94,9 @@
         &:checked {
           & + #{$elem}__label {
             $color: #2271b1;
+            box-shadow: 0 0 0 1px $color;
 
             border-color: $color;
-            box-shadow: 0 0 0 1px $color;
           }
         }
       }

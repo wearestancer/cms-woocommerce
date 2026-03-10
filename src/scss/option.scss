@@ -20,8 +20,7 @@
 
         @if math.round($ratio) == $ratio {
           $ratio: math.div($ratio, 100);
-        }
-        @else {
+        } @else {
           $ratio: list.slash($width, $height);
         }
 
@@ -37,12 +36,11 @@
 
 .payment_method_stancer {
   &.payment_box {
+    display: grid;
+    gap: 1ch;
     &:empty {
       display: none;
     }
-
-    display: grid;
-    gap: 1ch;
   }
 }
 // We need to have a high specifity to override the woo "object-fit" (who totally breack our logos on chrome)

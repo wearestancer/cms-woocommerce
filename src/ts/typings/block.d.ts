@@ -8,10 +8,14 @@
  * There is also some custom defined types
  *
  */
-import type { BillingDataProps, ShippingDataProps, ShippingStatusProps, BillingAddressShippingAddress } from "./payment-data";
+import type {
+  BillingAddressShippingAddress,
+  BillingDataProps,
+  ShippingDataProps,
+  ShippingStatusProps,
+} from './payment-data';
 
 declare global {
-
   interface BlockApiResponse extends PaymentResult {
     payment_result: PaymentResult;
   }
@@ -37,7 +41,7 @@ declare global {
   interface PaymentResult {
     payment_status: string;
     redirect_url: string;
-    payment_details: Array<{ key: string, value: string }>;
+    payment_details: Array<{ key: string; value: string }>;
   }
 
   interface StancerPaymentInterface {
@@ -78,6 +82,5 @@ declare global {
     // A boolean which indicates whether the shopper has checked the save payment method checkbox.
     shouldSavePayment: boolean;
   };
-
 }
-export { };
+export {};

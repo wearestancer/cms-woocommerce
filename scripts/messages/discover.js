@@ -1,7 +1,7 @@
-const fs = require("node:fs");
-const exec = require("node:child_process").exec;
+const fs = require('node:fs');
+const exec = require('node:child_process').exec;
 
-const template = fs.realpathSync("languages/stancer.pot");
+const template = fs.realpathSync('languages/stancer.pot');
 const allowRoot = process.env.CI ? '--allow-root' : '';
 
 exec(`wp ${allowRoot} i18n make-pot . ${template}`, (error) => {
@@ -9,11 +9,13 @@ exec(`wp ${allowRoot} i18n make-pot . ${template}`, (error) => {
     throw error;
   }
 
-  const content = fs.readFileSync(template, { encoding: 'utf-8' })
+  const content = fs
+    .readFileSync(template, { encoding: 'utf-8' })
     .replace(/^# Copyright \(C\) (.+) Stancer$/m, '# Copyright (C) 2023-$1 Stancer / Iliad 78')
-    .replace(/^"Report-Msgid-Bugs-To: .+"$/m, '"Report-Msgid-Bugs-To: https://gitlab.com/wearestancer/cms/woocommerce/-/issues\\n"')
-    .replace(/^(#: .+?):\d+$/gsm, '$1')
-  ;
-
+    .replace(
+      /^"Report-Msgid-Bugs-To: .+"$/m,
+      '"Report-Msgid-Bugs-To: https://gitlab.com/wearestancer/cms/woocommerce/-/issues\\n"',
+    )
+    .replace(/^(#: .+?):\d+$/gms, '$1');
   fs.writeFileSync(template, content, { encoding: 'utf-8' });
 });

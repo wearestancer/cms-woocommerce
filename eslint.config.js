@@ -1,12 +1,11 @@
-const { defineConfig, globalIgnores } = require("eslint/config");
+const { defineConfig, globalIgnores } = require('eslint/config');
 
-const globals = require("globals");
-const tsParser = require("@typescript-eslint/parser");
-const typescriptEslint = require("@typescript-eslint/eslint-plugin");
-const stylistic = require("@stylistic/eslint-plugin");
-const js = require("@eslint/js");
+const globals = require('globals');
+const tsParser = require('@typescript-eslint/parser');
+const typescriptEslint = require('@typescript-eslint/eslint-plugin');
+const js = require('@eslint/js');
 
-const { FlatCompat } = require("@eslint/eslintrc");
+const { FlatCompat } = require('@eslint/eslintrc');
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -19,9 +18,6 @@ const WARN = 1;
 
 module.exports = defineConfig([
   {
-    plugins: {
-      "@stylistic": stylistic,
-    },
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -31,45 +27,51 @@ module.exports = defineConfig([
       parserOptions: {},
     },
 
-    extends: compat.extends("plugin:@typescript-eslint/recommended"),
+    extends: compat.extends('plugin:@typescript-eslint/recommended'),
 
     rules: {
-      "@typescript-eslint/no-inferrable-types": OFF,
-      "@typescript-eslint/no-namespace": OFF,
-      "comma-dangle": [ERROR, "always-multiline"],
-      "func-call-spacing": OFF,
-      "no-console": process.env.NODE_ENV === "production" ? WARN : OFF,
-      "no-debugger": process.env.NODE_ENV === "production" ? WARN : OFF,
+      '@typescript-eslint/no-inferrable-types': OFF,
+      '@typescript-eslint/no-namespace': OFF,
+      'comma-dangle': [ERROR, 'always-multiline'],
+      'func-call-spacing': OFF,
+      'no-console': process.env.NODE_ENV === 'production' ? WARN : OFF,
+      'no-debugger': process.env.NODE_ENV === 'production' ? WARN : OFF,
 
-      semi: [ERROR, "always"],
+      semi: [ERROR, 'always'],
 
-      "space-before-function-paren": [
+      'space-before-function-paren': [
         ERROR,
         {
-          anonymous: "always",
-          asyncArrow: "always",
-          named: "never",
+          anonymous: 'always',
+          asyncArrow: 'always',
+          named: 'never',
         },
       ],
     },
   },
-  globalIgnores(["vendor/*", "public/*", "vendor-prefixer/*", "scripts/*"]),
+  globalIgnores([
+    'vendor/*',
+    'public/*',
+    'vendor-prefixer/*',
+    'scripts/*',
+    'eslint.config.js',
+  ]),
   {
-    files: ["**/**.js"],
+    files: ['**/**.js'],
 
     rules: {
-      "@typescript-eslint/no-var-requires": OFF,
+      '@typescript-eslint/no-var-requires': OFF,
     },
   },
   {
-    files: ["**/**.ts", "**/**.tsx"],
+    files: ['**/**.ts', '**/**.tsx'],
 
     languageOptions: {
       parser: tsParser,
     },
 
     plugins: {
-      "@typescript-eslint": typescriptEslint,
+      '@typescript-eslint': typescriptEslint,
     },
   },
 ]);
