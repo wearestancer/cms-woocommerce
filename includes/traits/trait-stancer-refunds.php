@@ -124,6 +124,8 @@ trait WC_Stancer_Refunds_Traits {
 			);
 		}
 
+		$wc_stancer_payment = WC_Stancer_Payment::find( $wc_order );
+		$wc_stancer_payment->mark_as( $stancer_payment->getStatus()->value );
 		$wc_order->add_order_note( $text );
 
 		if ( '' !== $reason ) {
