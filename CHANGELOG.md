@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] - 2026-03-10
+
+### Added
+- IT translation (CMS-442)
+- WP-Cron reconciliation job that polls the Stancer API every 15 minutes for
+  payments still recorded as "pending" locally, and updates WooCommerce order
+  statuses accordingly (complete for to_capture/capture_sent/captured, failed for
+  refused/canceled/expired). Stancer does not support webhooks, so this
+  job is required to ensure orders are not left permanently in a pending state.
+
+### Changed
+- Using stancer api V2 (CMS-470)
+- Better translations (CMS-442)
+- API key order, to follow the manage order (CMS-489)
+- Update the Release template to follow the new procedures (CMS-477)
+- Using API V1 for refund related operation
+
+### Removed
+- Remove the authorizations options (CMS-480)
+
+
 ## [1.4.0] - 2025-08-01
 
 ### Added
@@ -29,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2024-09-26
 
 ### Added
-- Support of woocommerce checkout blocks (CMS-68)
+- Support of [woocommerce checkout blocks](https://woocommerce.com/fr/checkout-blocks/) (CMS-68)
 
 ### Changed
 - Change the cb logo to the new logo (CMS-173)

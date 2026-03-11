@@ -4,7 +4,7 @@
  *
  * @package stancer
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @wordpress-plugin
  * Plugin Name:       Stancer
@@ -34,6 +34,9 @@ define( 'STANCER_FILE', __FILE__ );
 define( 'STANCER_DIRECTORY_PATH', plugin_dir_path( STANCER_FILE ) );
 
 require_once STANCER_DIRECTORY_PATH . '/vendor/autoload.php';
+
+register_activation_hook( STANCER_FILE, [ 'WC_Stancer_Cron', 'schedule' ] );
+register_deactivation_hook( STANCER_FILE, [ 'WC_Stancer_Cron', 'unschedule' ] );
 
 add_action( 'plugins_loaded', 'load_translations' );
 

@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -475,26 +475,27 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$desc = __( 'Starts with "%s"', 'stancer' );
 
 		return [
-			'api_live_public_key' => [
-				'description' => sprintf( $desc, 'pprod_' ),
-				'pattern' => 'pprod_',
-				'title' => __( 'Public live API key', 'stancer' ),
-			],
 			'api_live_secret_key' => [
 				'description' => sprintf( $desc, 'sprod_' ),
 				'pattern' => 'sprod_',
 				'title' => __( 'Secret live API key', 'stancer' ),
 			],
-			'api_test_public_key' => [
-				'description' => sprintf( $desc, 'ptest_' ),
-				'pattern' => 'ptest_',
-				'title' => __( 'Public test API key', 'stancer' ),
+			'api_live_public_key' => [
+				'description' => sprintf( $desc, 'pprod_' ),
+				'pattern' => 'pprod_',
+				'title' => __( 'Public live API key', 'stancer' ),
 			],
 			'api_test_secret_key' => [
 				'description' => sprintf( $desc, 'stest_' ),
 				'pattern' => 'stest_',
 				'title' => __( 'Secret test API key', 'stancer' ),
 			],
+			'api_test_public_key' => [
+				'description' => sprintf( $desc, 'ptest_' ),
+				'pattern' => 'ptest_',
+				'title' => __( 'Public test API key', 'stancer' ),
+			],
+
 		];
 	}
 
@@ -563,7 +564,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$inputs['payment_option_logo'] = [
 			'default' => 'all-schemes-stancer',
 			'desc_tip' => __( 'Card logos displayed to the customer during checkout.', 'stancer' ),
-			'title' => __( 'Payment option logos', 'stancer' ),
+			'title' => __( 'Payment option logo', 'stancer' ),
 			'type' => 'payment_option_logo',
 		];
 
@@ -638,7 +639,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$inputs['test_mode'] = [
 			'default' => 'yes',
 			'description' => __(
-				'In test mode, no payment will really send to a bank, only test card can be used.',
+				'In test mode, no payment will be sent to a bank, only test card can be used.',
 				'stancer',
 			),
 			'label' => __( 'Enable test mode', 'stancer' ),
@@ -660,23 +661,6 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				'redirect' => __( 'Redirect to an external page', 'stancer' ),
 			],
 			'type' => 'select',
-		];
-
-		$desc_auth_limit = __(
-			'Minimum amount to trigger an authenticated payment (3DS, Verified by Visa, Mastercard Secure Code...).',
-			'stancer',
-		);
-		$desc_auth_limit .= '<br/>';
-		$desc_auth_limit .= __(
-			'Leave blank if you do not wish to authenticate, at zero all payments will be authenticated.',
-			'stancer',
-		);
-
-		$inputs['auth_limit'] = [
-			'default' => '0',
-			'title' => __( 'Authentication limit', 'stancer' ),
-			'type' => 'text',
-			'description' => $desc_auth_limit,
 		];
 		$paym_desc_description = $desc_description(
 			__(
@@ -878,7 +862,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 
 		if ( ! empty( $status ) ) {
-			$stancer_payment->mark_as( $status );
+			$stancer_payment->mark_as( $status->value );
 		}
 		$order->set_transaction_id( $api_payment->getId() );
 

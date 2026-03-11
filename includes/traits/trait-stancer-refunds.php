@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes/traits
@@ -53,11 +53,6 @@ trait WC_Stancer_Refunds_Traits {
 			$transaction_id = $stancer_payment->payment_id;
 		}
 
-		$status = [
-			Stancer\Payment\Status::TO_CAPTURE,
-			Stancer\Payment\Status::CAPTURED,
-		];
-
 		try {
 			// Don't know why, but WC does not find the settings if did not do it myself.
 			$settings = get_option( 'woocommerce_stancer_settings' );
@@ -68,7 +63,11 @@ trait WC_Stancer_Refunds_Traits {
 			}
 			$api_payment = new Stancer\Payment( $transaction_id );
 
-			return in_array( $api_payment->get_status(), $status, true );
+			return match ( $api_payment->get_status() ) {
+				Stancer\Payment\Status::TO_CAPTURE,
+				Stancer\Payment\Status::CAPTURED => true,
+				default =>false,
+			};
 		} catch ( Exception $e ) {
 			return false;
 		}
@@ -97,8 +96,12 @@ trait WC_Stancer_Refunds_Traits {
 			throw new Exception( esc_html( $message ) );
 		}
 
+		// We use API V1 for refund related operation.
+		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) (string) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
+		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
+
 		$currency = $stancer_payment->currency;
 
 		if ( 0 !== $refundable ) {
@@ -109,7 +112,7 @@ trait WC_Stancer_Refunds_Traits {
 					'stancer',
 				),
 				$amount,
-				strtoupper( $currency ),
+				strtoupper( $currency->value ),
 				( $refundable / 100 )
 			);
 		} else {
@@ -117,10 +120,12 @@ trait WC_Stancer_Refunds_Traits {
 				// translators: "%1$.2f": the amount refunded. "%2$s": the currency.
 				__( 'The payment has been fully refunded of %1$.2f %2$s via Stancer.', 'stancer' ),
 				$amount,
-				strtoupper( $currency )
+				strtoupper( $currency->value )
 			);
 		}
 
+		$wc_stancer_payment = WC_Stancer_Payment::find( $wc_order );
+		$wc_stancer_payment->mark_as( $stancer_payment->getStatus()->value );
 		$wc_order->add_order_note( $text );
 
 		if ( '' !== $reason ) {

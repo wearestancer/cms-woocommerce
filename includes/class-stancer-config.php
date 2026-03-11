@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -23,13 +23,6 @@ use Stancer;
  * @subpackage stancer/includes
  */
 class WC_Stancer_Config {
-	/**
-	 * Auth limit.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	public $auth_limit;
 
 	/**
 	 * Description.
@@ -103,7 +96,6 @@ class WC_Stancer_Config {
 	 * @param string[] $settings Base settings.
 	 */
 	public function __construct( $settings ) {
-		$this->auth_limit = $settings['auth_limit'] ?? 0;
 		$this->description = $settings['payment_description'] ?? '';
 		$this->host = $settings['host'] ?? '';
 		$this->mode = Stancer\Config::TEST_MODE;
@@ -140,6 +132,7 @@ class WC_Stancer_Config {
 		if ( $this->host ) {
 			$api_config->setHost( $this->host );
 		}
+		$api_config->setVersion( Stancer\Enum\ApiVersion::VERSION_2 );
 
 		// phpcs:disable WordPress.WP.CapitalPDangit.MisspelledInText
 		$api_config->addAppData( 'libstancer-woocommerce', STANCER_WC_VERSION );

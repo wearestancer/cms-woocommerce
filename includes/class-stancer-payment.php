@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -199,10 +199,10 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$api_payment = new Stancer\Payment();
 		$api_payment->amount = $payment_data['amount'];
 		$api_payment->capture = isset( $payment_data['capture'] ) ? $payment_data['capture'] : false;
-		$api_payment->currency = $payment_data['currency'];
+		$api_payment->currency = Stancer\Currency::tryFrom( $payment_data['currency'] );
 		$api_payment->customer = $api_customer;
 		$api_payment->order_id = (string) $payment_data['order_id'];
-		$api_payment->methods_allowed = [ 'card' ];
+		$api_payment->methods_allowed = [ Stancer\Payment\MethodsAllowed::CARD ];
 
 		if ( array_key_exists( 'auth', $payment_data ) && $payment_data['auth'] ) {
 			$api_payment->auth = true;
@@ -256,7 +256,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$customer = $api_payment->customer;
 
 		$stancer_payment->payment_id = $api_payment->id;
-		$stancer_payment->currency = $api_payment->currency;
+		$stancer_payment->currency = $api_payment->currency->value;
 		$stancer_payment->amount = $api_payment->amount;
 		$stancer_payment->status = $api_payment->status ?? 'pending';
 		$stancer_payment->card_id = $card ? $card->id : null;

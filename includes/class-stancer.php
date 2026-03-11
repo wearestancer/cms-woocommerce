@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -74,8 +74,6 @@ class WC_Stancer {
 		if ( version_compare( $this->version, $version, '==' ) ) {
 			return;
 		}
-
-		// @phpstan-ignore-next-line ABSPATH is not what phpstan think
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
@@ -177,6 +175,7 @@ class WC_Stancer {
 			}
 		);
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
+		add_action( WC_Stancer_Cron::HOOK, [ new WC_Stancer_Cron(), 'reconcile' ] );
 	}
 
 	/**
@@ -216,6 +215,8 @@ class WC_Stancer {
 	 */
 	private function load_filters() {
 		add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateway' ] );
+		// phpcs:ignore WordPress.WP.CronInterval.ChangeDetected
+		add_filter( 'cron_schedules', [ 'WC_Stancer_Cron', 'add_schedule' ] );
 	}
 
 	/**
@@ -293,6 +294,8 @@ class WC_Stancer {
 			return;
 		}
 
+		WC_Stancer_Cron::schedule();
+
 		$this->install_database();
 
 		$options = get_option( 'woocommerce_stancer_settings' );
@@ -334,6 +337,9 @@ class WC_Stancer {
 			if ( array_key_exists( 'page_type', $options ) && 'iframe' === $options['page_type'] ) {
 				$options['page_type'] = 'pip';
 				$updated = true;
+			}
+			if ( array_key_exists( 'auth_limit', $options ) ) {
+				unset( $options['auth_limit'] );
 			}
 		}
 

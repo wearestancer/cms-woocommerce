@@ -6,13 +6,14 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
  */
 
 use Stancer;
+
 /**
  * Stancer API.
  *
@@ -51,13 +52,12 @@ class WC_Stancer_Api {
 	 *
 	 * @param WC_Order $order Order.
 	 * @param string|null $card_id Card identifier.
-	 * @param bool|null $force_auth Force authentication, keep `null` to let the configuration decide.
 	 *
 	 * @return Stancer\Payment|null
 	 */
-	public function send_payment( WC_Order $order, $card_id = null, $force_auth = null ): ?Stancer\Payment {
+	public function send_payment( WC_Order $order, $card_id = null ): ?Stancer\Payment {
 		$data_builder = new WC_Stancer_Payment_Builder( $order, $this->api_config );
-		$data_builder->build_payment_data( $force_auth );
+		$data_builder->build_payment_data();
 		$api_payment = $data_builder->create_api_payment( $card_id );
 		if ( $api_payment ) {
 			if ( $api_payment->isModified() && ! static::sent_object_to_api( $api_payment ) ) {
@@ -100,6 +100,8 @@ class WC_Stancer_Api {
 
 		$api_payment = new Stancer\Payment( $transaction_id );
 
+		// We use API V1 for all refund related operation.
+		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 		try {
 			$api_payment->refund( (int) ( $refund_amount ) );
 		} catch ( Stancer\Exceptions\InvalidAmountException $e ) {
@@ -114,6 +116,8 @@ class WC_Stancer_Api {
 					)
 				)
 			);
+		} finally {
+			Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
 		}
 		return $api_payment;
 	}
