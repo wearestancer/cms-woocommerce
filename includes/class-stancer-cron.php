@@ -243,9 +243,7 @@ class WC_Stancer_Cron {
 						);
 					}
 					break;
-
 				case Stancer\Payment\Status::REFUSED:
-				case Stancer\Payment\Status::CANCELED:
 				case Stancer\Payment\Status::EXPIRED:
 					if ( ! $order->has_status( [ 'failed', 'cancelled' ] ) ) {
 						$order->update_status(
