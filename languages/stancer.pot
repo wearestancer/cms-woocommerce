@@ -54,16 +54,16 @@ msgstr ""
 msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr ""
 
-#. translators: "%s": Stancer payment identifier.
-#: includes/class-stancer-cron.php
-#, php-format
-msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
-msgstr ""
-
 #. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 #: includes/class-stancer-cron.php
 #, php-format
 msgid "Payment %1$s via Stancer (Transaction ID: %2$s)"
+msgstr ""
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
 msgstr ""
 
 #: includes/class-stancer-gateway-block-support.php
