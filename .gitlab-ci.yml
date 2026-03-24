@@ -49,7 +49,7 @@ variables:
 .check-git-diff:
   script:
       # Just in case
-    - git restore composer.lock pnpm-lock.yaml
+    - git restore composer.lock pnpm-lock.yaml package.json
 
     # To prevent errors with filters, we add changes to remove them
     - git add --all
