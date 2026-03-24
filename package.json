@@ -1,9 +1,7 @@
 {
   "name": "stancer",
   "version": "1.4.1",
-  "author": "Stancer",
   "license": "MIT",
-  "private": true,
   "engines": {
     "node": ">=18",
     "php": ">=8.1",
@@ -15,48 +13,55 @@
     "build:archive": "pnpm run build:plugin && composer run scope:dependency && pnpm run archive && composer run after:scoping",
     "build:assets": "gulp build",
     "build:plugin": "pnpm run build:assets && pnpm run messages:compile && pnpm run versions",
-    "lint": "eslint . --ext .mjs,.js,.ts,.tsx --cache --cache-location node_modules/.cache/eslint",
+    "lint": "eslint . --ext .mjs,.js,.ts,.tsx,.cjs --cache --cache-location node_modules/.cache/eslint",
     "messages": "pnpm run messages:discover && pnpm run messages:merge",
-    "messages:discover": "env node ./scripts/messages/discover.js && env node ./scripts/messages/readme.js",
     "messages:compile": "env node ./scripts/messages/compile.js",
+    "messages:discover": "env node ./scripts/messages/discover.js && env node ./scripts/messages/readme.js",
     "messages:merge": "env node ./scripts/messages/merge.js",
     "versions": "env node ./scripts/version.js"
   },
   "dependencies": {
-    "@wordpress/api-fetch": "^6.47.0"
+    "@wordpress/api-fetch": "^6.55.0"
   },
   "devDependencies": {
-    "@types/jquery": "^3.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "@types/select2": "^4.0.0",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "archiver": "^5.0.0",
-    "autoprefixer": "^10.0.0",
-    "del": "^7.0.0",
-    "eslint": "^8.0.0",
-    "glob": "^8.0.0",
-    "gulp": "^4.0.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
+    "@stancer/prettier": "^3.0.5",
+    "@types/jquery": "^4.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/select2": "^4.0.63",
+    "@typescript-eslint/eslint-plugin": "^8.57.0",
+    "@typescript-eslint/parser": "^8.57.0",
+    "archiver": "^7.0.1",
+    "autoprefixer": "^10.4.27",
+    "del": "^8.0.1",
+    "eslint": "^10.0.3",
+    "glob": "^13.0.6",
+    "globals": "^17.4.0",
+    "gulp": "^5.0.1",
     "gulp-cheerio": "^1.0.0",
-    "gulp-csso": "^4.0.0",
-    "gulp-postcss": "^9.0.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-sass": "^5.0.0",
-    "gulp-save": "^1.0.0",
-    "gulp-svgmin": "^4.0.0",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^2.1.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-sass": "^6.0.1",
+    "gulp-save": "^1.3.0",
+    "gulp-svgmin": "^4.1.0",
     "gulp-svgstore": "^9.0.0",
-    "gulp-terser": "^2.0.0",
+    "gulp-terser": "^2.1.0",
     "gulp-typescript": "6.0.0-alpha.1",
-    "postcss": "^8.0.0",
-    "react": "^18.2.0",
-    "sass": "^1.0.0",
-    "through2": "^4.0.0",
-    "typescript": "^5.0.0"
+    "postcss": "^8.5.8",
+    "react": "^19.2.4",
+    "sass": "^1.98.0",
+    "through2": "^4.0.2",
+    "typescript": "^5.9.3"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
       "es5-ext"
     ]
-  }
+  },
+  "author": "Stancer",
+  "private": true
 }

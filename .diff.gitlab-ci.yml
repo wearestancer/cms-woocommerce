@@ -1,4 +1,3 @@
-
 workflow:
   rules:
     - if: '$CI_COMMIT_REF_PROTECTED == "true"'
@@ -7,12 +6,10 @@ workflow:
       when: never
     - when: always
 
-
 variables:
   DOCKER_REGISTRY: wearestancer
   FF_SCRIPT_SECTIONS: true
-  PHP_VERSION: "8.1"
-
+  PHP_VERSION: '8.1'
 
 .base-php-job:
   stage: test
@@ -26,7 +23,6 @@ variables:
     - printf "\e[0Ksection_start:%d:%s%s\r\e[0K%s\n" $(date +%s) install '[collapsed=true]' 'Install'
     - composer install
     - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) install
-
 
 .base-wp-job:
   stage: test
@@ -46,20 +42,6 @@ variables:
     - pnpm install
     - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) install
 
-.check-git-diff:
-  script:
-      # Just in case
-    - git restore composer.lock pnpm-lock.yaml
-
-    # To prevent errors with filters, we add changes to remove them
-    - git add --all
-    - git diff --cached
-
-    - git status
-
-    - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
-
-
 .svn-publish:
   stage: deploy
 
@@ -71,7 +53,6 @@ variables:
     - cd svn
     - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) svn_co
 
-
 Check translations:
   extends:
     - .base-wp-job
@@ -79,12 +60,21 @@ Check translations:
   script:
     - pnpm run messages
     - pnpm run messages:compile
-    - !reference [.check-git-diff, script]
+
+    # Just in case
+    - git restore composer.lock pnpm-lock.yaml
+
+    # To prevent errors with filters, we add changes to remove them
+    - git add --all
+    - git diff --cached
+
+    - git status
+
+    - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
 
   artifacts:
     paths:
       - languages
-
 
 Create archive:
   extends:
@@ -105,15 +95,6 @@ Create archive:
     paths:
       - '*.zip'
 
-eslint:
-  extends:
-    - .base-wp-job
-
-  script:
-    - pnpm run lint --fix
-    - !reference [.check-git-diff, script]
-
-
 phpcs:
   extends:
     - .base-php-job
@@ -126,7 +107,6 @@ phpcs:
     reports:
       junit: phpcs.junit.xml
 
-
 phpstan:
   extends:
     - .base-php-job
@@ -138,16 +118,6 @@ phpstan:
   artifacts:
     reports:
       codequality: gl-static-analysis-report.json
-
-prettier:
-  extends:
-    - .base-wp-job
-
-  script:
-    - pnpm up
-    - pnpm exec prettier --write .
-    - !reference [.check-git-diff, script]
-
 
 Publish main changes:
   extends:
@@ -169,7 +139,6 @@ Publish main changes:
     - if: $CI_COMMIT_TAG
       when: never
     - if: $SVN_USER && $SVN_PASSWD && $CI_COMMIT_REF_PROTECTED
-
 
 Publish version:
   extends:

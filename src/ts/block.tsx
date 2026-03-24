@@ -1,15 +1,12 @@
 /**
  * This function register the stancer payment method
-*/
+ */
 const main = () => {
-
   // Declare Interfaces.
-  interface IframeProps {
-    data: () => CompletePaymentData
-  };
+
   interface LabelProp {
     components?: {
-      PaymentMethodLabel: PaymentMethodLabel,
+      PaymentMethodLabel: PaymentMethodLabel;
     };
   }
   interface PaymentMethodLabelProps {
@@ -18,9 +15,7 @@ const main = () => {
   }
 
   //Declare Types.
-  type MutableRefObject<T> = React.MutableRefObject<T>;
-  type PaymentMethodLabel = (arg0: Partial<PaymentMethodLabelProps>) => JSX.Element;
-  type SetReactResponse = React.Dispatch<React.SetStateAction<CheckoutResponseReact>>;
+  type PaymentMethodLabel = (arg0: Partial<PaymentMethodLabelProps>) => React.JSX.Element;
 
   // Declare WordPress related globals.
   const wordPress = window.wp;
@@ -48,47 +43,40 @@ const main = () => {
    * @param IsisClosed
    * @returns void
    */
-  const buttonListener = (data: () => CompletePaymentData): void => useEffect(() => {
-    const button = document.querySelector('.wc-block-components-checkout-place-order-button');
-    if (
-      data().payment_method !== 'stancer' ||
-      settings.page_type !== 'pip' ||
-      button === null
-    ) {
-      return;
-    }
-    button.addEventListener('click', (e: Event) => {
-      const checkedPaymentMethod = document.querySelector('.wc-block-components-radio-control__option-checked');
-
-      if (
-        checkedPaymentMethod?.getAttribute('for') !== null &&
-        !checkedPaymentMethod?.getAttribute('for')?.includes('stancer') &&
-        button.innerHTML !== wordPress.htmlEntities.decodeEntities(settings.label)
-      ) {
+  const buttonListener = (data: () => CompletePaymentData): void =>
+    useEffect(() => {
+      const button = document.querySelector('.wc-block-components-checkout-place-order-button');
+      if (data().payment_method !== 'stancer' || settings.page_type !== 'pip' || button === null) {
         return;
       }
+      button.addEventListener('click', (e: Event) => {
+        const checkedPaymentMethod = document.querySelector('.wc-block-components-radio-control__option-checked');
 
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      callApi(data())
-        .then(
-          (response) => {
-            // Block checkout doesn't give us an easy acess to the checkout data that we sent.
-            const receipt = response.payment_result.payment_details.filter((object: { key: string, value: string }) => {
+        if (
+          checkedPaymentMethod?.getAttribute('for') !== null &&
+          !checkedPaymentMethod?.getAttribute('for')?.includes('stancer') &&
+          button.innerHTML !== wordPress.htmlEntities.decodeEntities(settings.label)
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        callApi(data()).then((response) => {
+          // Block checkout doesn't give us an easy acess to the checkout data that we sent.
+          const receipt =
+            response.payment_result.payment_details.filter((object: { key: string; value: string }) => {
               return object.key == 'receipt';
             })[0].value ?? '';
 
-            window.stancer_iframe(
-              {
-                redirect: response.payment_result.redirect_url,
-                result: response.payment_result.payment_status,
-                receipt: receipt,
-              },
-            );
-          }
-        );
-    });
-  }, []);
+          window.stancer_iframe({
+            redirect: response.payment_result.redirect_url,
+            result: response.payment_result.payment_status,
+            receipt: receipt,
+          });
+        });
+      });
+    }, []);
 
   /**
    *
@@ -96,15 +84,13 @@ const main = () => {
    * @returns Promise<BlockApiResponse>
    */
   const callApi = async (data: CompletePaymentData): Promise<BlockApiResponse> => {
-    const response = await wordPress.apiFetch(
-      {
-        path: '/wc/store/v1/checkout',
-        method: 'POST',
-        data: data,
-      },
-    )
+    const response = await wordPress.apiFetch({
+      path: '/wc/store/v1/checkout',
+      method: 'POST',
+      data: data,
+    });
     return response;
-  }
+  };
 
   /**
    * Create a reactNode with our description, we also have our Iframe logic in here to get the props.
@@ -123,19 +109,21 @@ const main = () => {
         shipping_address: shippingData?.shippingAddress,
       };
       return formdata;
-    }
+    };
 
     buttonListener(formdata);
-    return <div>
-      <Description />
-    </div>;
+    return (
+      <div>
+        <Description />
+      </div>
+    );
   };
 
   /**
- * Get the description of our payment module
- *
- * @returns ReactNode
- */
+   * Get the description of our payment module
+   *
+   * @returns ReactNode
+   */
   const Description = (): React.ReactNode => {
     return wordPress.htmlEntities.decodeEntities(settings.description);
   };
@@ -154,10 +142,15 @@ const main = () => {
       throw new Error('Label not Found');
     }
 
-    return <div className="payment_method_stancer" >
-      <PaymentMethodLabel text={settings.title + ' '} />
-      <img className={settings.logo.class} src={settings.logo.url} />
-    </div>;
+    return (
+      <div className="payment_method_stancer">
+        <PaymentMethodLabel text={settings.title + ' '} />
+        <img
+          className={settings.logo.class}
+          src={settings.logo.url}
+        />
+      </div>
+    );
   };
 
   const options = {
@@ -173,6 +166,6 @@ const main = () => {
   };
 
   registerPaymentMethod(options);
-}
+};
 
-main()
+main();

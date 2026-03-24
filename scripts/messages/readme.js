@@ -45,8 +45,7 @@ msgstr ""
     .replaceAll(/\[(.+)\]\((.+)\)/g, (_, text, link) => `<a href="${link}">${text}</a>`)
     .replaceAll('=\n', '=\n\n')
     .split(/\n{2,}/)
-    .map((v) => v.trim())
-  ;
+    .map((v) => v.trim());
   const first = parts.splice(0, 1).at(0).split('\n').at(0).replaceAll('=', '').trim();
   let priority = 'high';
   let section = 'description';
@@ -78,7 +77,11 @@ msgstr ""
 
         for (const enumeration of line.split(/\d+\./g)) {
           if (enumeration) {
-            const tmp = enumeration.split('\n').map((v) => v.trim()).filter((v) => v).join('\\n');
+            const tmp = enumeration
+              .split('\n')
+              .map((v) => v.trim())
+              .filter((v) => v)
+              .join('\\n');
 
             newContent += addEntry(tmp, `Found in ${section} ${subsection}.`, priority);
           }
@@ -90,7 +93,11 @@ msgstr ""
           newContent += addEntry(enumeration.replace('*', ''), `Found in ${section} ${subsection}.`, priority);
         }
       } else {
-        newContent += addEntry(line.replace('\n', '\\n').replace(/^\*/, ''), `Found in ${section} ${subsection}.`, priority);
+        newContent += addEntry(
+          line.replace('\n', '\\n').replace(/^\*/, ''),
+          `Found in ${section} ${subsection}.`,
+          priority,
+        );
       }
     }
   }

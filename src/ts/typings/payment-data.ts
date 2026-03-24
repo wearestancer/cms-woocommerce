@@ -1,4 +1,3 @@
-
 interface BaseAddress {
   address_1: string;
   address_2: string;

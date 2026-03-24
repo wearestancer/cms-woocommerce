@@ -1,8 +1,8 @@
-const exec = require("node:child_process").exec;
-const path = require("node:path");
-const glob = require("glob");
+const exec = require('node:child_process').exec;
+const path = require('node:path');
+const { glob } = require('glob');
 
-glob("languages/*.po", (err, files) => {
+glob('languages/*.po', (err, files) => {
   if (err) {
     throw err;
   }
