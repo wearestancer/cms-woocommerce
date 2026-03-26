@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Capture button in order's details (CMS-202)
+- Order can now have an authorized status (CMS-202)
+
 ### Changed
 - Handling of canceled payment in WP-Cron (CMS-494)
 
