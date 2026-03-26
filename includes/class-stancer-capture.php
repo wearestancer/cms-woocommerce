@@ -12,7 +12,6 @@
  * @subpackage stancer/includes
  */
 
-use Automattic\WooCommerce\Admin\Overrides\Order;
 use Stancer;
 
 /**
@@ -52,12 +51,12 @@ class WC_Stancer_Capture {
 	/**
 	 * Constructor
 	 *
-	 * @param Order|integer $order The order displayed.
+	 * @param WC_Order|integer $order The order displayed.
 	 *
 	 * @throws Stancer\Exceptions\InvalidArgumentException If we don't have a stancer payment linked to the Order.
 	 * @throws Stancer\Exceptions\NotAuthorizedException If we don't have a config properly set up.
 	 */
-	public function __construct( Order|int $order ) {
+	public function __construct( WC_Order|int $order ) {
 		if ( is_int( $order ) ) {
 			$this->order = wc_get_order( $order );
 		} else {
