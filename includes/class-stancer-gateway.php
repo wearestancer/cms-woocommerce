@@ -132,7 +132,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$order->set_transaction_id( $api_payment->getId() );
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
-					'lang' => str_replace( '_', '-', get_locale() ),
+					'lang' => substr( determine_locale(), 0, 2 ),
 				]
 			);
 			$reload = false;

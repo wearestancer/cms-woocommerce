@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Handling of canceled payment in WP-Cron (CMS-494)
 
+### FIX
+- Payment page language follow Woocommerce local language (CMS-496)
+
+
 ## [1.4.1] - 2026-03-10
 
 ### Added

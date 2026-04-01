@@ -114,8 +114,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 		$data = $this->get_payment_data();
 		$payment = WC_Stancer_Payment::find( $this->subscription, $data, true, [ 'pending' ] );
 		$api_payment = new Stancer\Payment( $payment->payment_id );
-		$lang = str_replace( '_', '-', get_locale() );
-
+		$lang = substr( determine_locale(), 0, 2 );
 		$response['redirect'] = $api_payment->getPaymentPageUrl( [ 'lang' => $lang ] );
 		$response['result'] = 'success';
 		return $response;
