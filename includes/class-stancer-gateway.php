@@ -868,9 +868,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 		$order->set_transaction_id( $api_payment->getId() );
 
-		if ( in_array( $status, [ Stancer\Payment\Status::CAPTURE, Stancer\Payment\Status::AUTHORIZED ], true ) ) {
-			$api_payment->set_status( Stancer\Payment\Status::CAPTURE );
-			$api_payment->send();
+		if ( Stancer\Payment\Status::AUTHORIZED === $status ) {
+			$api_payment->capture();
 			$status = $api_payment->status;
 		}
 		switch ( $status ) {
