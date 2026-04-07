@@ -155,7 +155,7 @@ class WC_Stancer_Capture {
 			true
 		)
 		) {
-			return $this->order->payment_complete();
+			return WC_Stancer_Payment_Builder::complete_payment( $this->order, $this->api_payment );
 		}
 		return false;
 	}

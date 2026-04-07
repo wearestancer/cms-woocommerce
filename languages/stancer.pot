@@ -337,12 +337,6 @@ msgstr ""
 msgid "Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice."
 msgstr ""
 
-#. translators: "%s": Stancer payment identifier.
-#: includes/class-stancer-gateway.php
-#, php-format
-msgid "Payment was completed via Stancer (Transaction ID: %s)"
-msgstr ""
-
 #. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 #, php-format
@@ -353,6 +347,12 @@ msgstr ""
 #: includes/class-stancer-payment-builder.php
 #, php-format
 msgid "Payment for order n°%s"
+msgstr ""
+
+#. translators: "%1$s": Stancer payment identifier.
+#: includes/class-stancer-payment-builder.php
+#, php-format
+msgid "Payment was completed via Stancer (Transaction ID: %1$s)"
 msgstr ""
 
 #. translators: "%s": Link to plugin settings.
