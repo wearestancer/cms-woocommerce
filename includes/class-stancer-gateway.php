@@ -816,6 +816,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		return $this->create_api_payment( $order, $card_id );
 	}
+
 	/**
 	 * Complete order.
 	 *
@@ -908,16 +909,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				// Remove cart.
 				WC()->cart->empty_cart();
 
-				// Complete order.
-				$order->payment_complete( $api_payment->id );
-
-				$order->add_order_note(
-					sprintf(
-						// translators: "%s": Stancer payment identifier.
-						__( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ),
-						$api_payment->id
-					)
-				);
+				WC_Stancer_Payment_Builder::complete_payment( $order, $api_payment );
 
 				$this->register_subscription_data( $order, $stancer_payment );
 
@@ -930,6 +922,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		exit();
 	}
+
 	/**
 	 * Redirect Processing order to order_Checkout .
 	 * We can have multiple redirection but if they scope badly we have a processing Error.
