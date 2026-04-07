@@ -50,6 +50,21 @@ msgstr ""
 msgid "You cannot refund %1$.02f %3$s, the order total with the already accounted refund is %2$.02f %3$s."
 msgstr ""
 
+#: includes/class-stancer-capture.php
+msgid "This order is not associated with a Stancer payment."
+msgstr ""
+
+#: includes/class-stancer-capture.php
+#: includes/class-stancer-gateway.php
+#: includes/traits/trait-stancer-refunds.php
+#: includes/traits/trait-stancer-subscription.php
+msgid "The module is not correctly configured."
+msgstr ""
+
+#: includes/class-stancer-capture.php
+msgid "Capture the payment"
+msgstr ""
+
 #: includes/class-stancer-cron.php
 msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr ""
@@ -313,13 +328,13 @@ msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-#: includes/traits/trait-stancer-refunds.php
-#: includes/traits/trait-stancer-subscription.php
-msgid "The module is not correctly configured."
+msgid "The payment attempt failed."
 msgstr ""
 
+#. translators: "%s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
-msgid "The payment attempt failed."
+#, php-format
+msgid "Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice."
 msgstr ""
 
 #. translators: "%s": Stancer payment identifier.

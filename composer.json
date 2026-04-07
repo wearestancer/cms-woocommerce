@@ -23,6 +23,7 @@
     "after:scoping": "bash ./scripts/clean-after-archives.sh && composer install",
     "phpstan": "./vendor/bin/phpstan",
     "phpcs": "./vendor/bin/phpcs",
+    "phpcs-fix": "./vendor/bin/phpcbf",
     "prefix-stancer": "bash ./scripts/class-prefixer.sh",
     "prep-vendor": "bash ./scripts/scoper-dl.sh && scoper add-prefix -nf && rm -rf vendor/*",
     "scope:dependency": "composer install --no-dev && composer run prep-vendor && composer run prefix-stancer && composer du"

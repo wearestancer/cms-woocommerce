@@ -54,9 +54,30 @@ msgstr ""
 "Impossibile rimborsare %1$.02f %3$s, il prezzo totale dell'ordine è di "
 "%2$.02f %3$s."
 
+#: includes/class-stancer-capture.php
+msgid "This order is not associated with a Stancer payment."
+msgstr "Questo ordine non è associato a un pagamento Stancer"
+
+#: includes/class-stancer-capture.php includes/class-stancer-gateway.php
+#: includes/traits/trait-stancer-refunds.php
+#: includes/traits/trait-stancer-subscription.php
+msgid "The module is not correctly configured."
+msgstr "Il modulo non è configurato correttamente."
+
+#: includes/class-stancer-capture.php
+msgid "Capture the payment"
+msgstr "Cattura il pagamento"
+
 #: includes/class-stancer-cron.php
 msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr "Ogni 15 minuti (riconciliazione Stancer)"
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
+msgstr ""
+"Pagamento confermato tramite riconciliazione Stancer (ID transazione: %s)"
 
 #. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 #: includes/class-stancer-cron.php
@@ -330,14 +351,18 @@ msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 "Stai per essere reindirizzato al portale del nostro partner di pagamento."
 
-#: includes/class-stancer-gateway.php includes/traits/trait-stancer-refunds.php
-#: includes/traits/trait-stancer-subscription.php
-msgid "The module is not correctly configured."
-msgstr "Il modulo non è configurato correttamente."
-
 #: includes/class-stancer-gateway.php
 msgid "The payment attempt failed."
 msgstr "Tentativo di pagamento non riuscito."
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-gateway.php
+#, php-format
+msgid ""
+"Payment was authorized via stancer (Transaction ID: %s), you still need to "
+"capture it in your backoffice."
+msgstr ""
+"Il pagamento è stato autorizzato tramite Stancer (ID transazione: %s), ma devi ancora catturarlo dal tuo backoffice."
 
 #. translators: "%s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php

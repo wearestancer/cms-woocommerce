@@ -52,8 +52,11 @@ add_action(
 );
 
 
+
 // Add links on plugins.
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'plugin_action_links' );
+
+
 
 /**
  * Wrapper to load our translations.
@@ -76,7 +79,6 @@ if ( ! function_exists( 'is_woocommerce_activated' ) ) {
 		return class_exists( 'woocommerce' );
 	}
 }
-
 /**
  * Add links on plugins.
  *
