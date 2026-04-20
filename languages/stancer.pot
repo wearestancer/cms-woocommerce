@@ -331,13 +331,13 @@ msgstr ""
 msgid "The payment attempt failed."
 msgstr ""
 
-#. translators: "%s": Stancer payment identifier.
+#. translators: "%1$s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 #, php-format
-msgid "Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice."
+msgid "Payment was authorized via stancer (Transaction ID: %1$s), you still need to capture it in your backoffice."
 msgstr ""
 
-#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+#. translators: "%1$d": The minimum description size. "%2$d": The maximum description size. "%3$s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid "Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s"

@@ -888,8 +888,8 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				$order->update_status( 'on-hold' );// Should be OrderStatus::ON_HOLD but phpstan doesn't understand.
 				$order->add_order_note(
 					sprintf(
-						// translators: "%s": Stancer payment identifier.
-						__( 'Payment was authorized via stancer (Transaction ID: %s), you still need to capture it in your backoffice.', 'stancer' ),
+						// translators: "%1$s": Stancer payment identifier.
+						__( 'Payment was authorized via stancer (Transaction ID: %1$s), you still need to capture it in your backoffice.', 'stancer' ),
 						$api_payment->get_id()
 					)
 				);
@@ -964,7 +964,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( strlen( $value ) > static::MAX_SIZE_DESCRIPTION
 			|| strlen( $value ) < static::MIN_SIZE_DESCRIPTION ) {
 			$message = sprintf(
-				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+				// translators: "%1$d": The minimum description size. "%2$d": The maximum description size. "%3$s": The default description message already translated.
 				esc_html__(
 					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s',
 					'stancer'
