@@ -88,7 +88,7 @@ Updates are done automatically. However, we recommend that you back up your site
 
 = Version 1.4.2 =
 * Add a capture button in order view
-* internationalization of payment page
+* Internationalization of payment page
 * Fix customer disappearing on captured payment
 
 = Version 1.4.1 =

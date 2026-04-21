@@ -6,7 +6,7 @@
  *
  * @link https://www.stancer.com/
  * @license MIT
- * @copyright 2023-2025 Stancer / Iliad 78
+ * @copyright 2023-2026 Stancer / Iliad 78
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -17,7 +17,7 @@ use Stancer;
 /**
  * Service class for Order Capture
  *
- * @since unreleased
+ * @since 1.4.2
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -27,7 +27,7 @@ class WC_Stancer_Capture {
 	/**
 	 * Order linked to the authorized payment.
 	 *
-	 * @since unreleased
+	 * @since 1.4.2
 	 * @var WC_Order
 	 */
 	private WC_Order $order;
@@ -35,7 +35,7 @@ class WC_Stancer_Capture {
 	/**
 	 * Stored locally payment data.
 	 *
-	 * @since unreleased
+	 * @since 1.4.2
 	 * @var WC_Stancer_Payment
 	 */
 	private WC_Stancer_Payment $payment;
@@ -43,13 +43,15 @@ class WC_Stancer_Capture {
 	/**
 	 * Api payment.
 	 *
-	 * @since unreleased
+	 * @since 1.4.2
 	 * @var Stancer\Payment
 	 */
 	private Stancer\Payment $api_payment;
 
 	/**
 	 * Constructor
+	 *
+	 * @since 1.4.2
 	 *
 	 * @param WC_Order|integer $order The order displayed.
 	 *
@@ -83,6 +85,8 @@ class WC_Stancer_Capture {
 
 	/**
 	 * Display the payment's status, and maybe the capture button.
+	 *
+	 * @since 1.4.2
 	 *
 	 * @return void
 	 */
@@ -129,6 +133,8 @@ class WC_Stancer_Capture {
 	/**
 	 * Handle a capture payment request.
 	 *
+	 * @since 1.4.2
+	 *
 	 * @return void
 	 */
 	public function capture_authorize_payment() {
@@ -141,6 +147,8 @@ class WC_Stancer_Capture {
 
 	/**
 	 * If payment is complete say so in WooCommerce BackOffice
+	 *
+	 * @since 1.4.2
 	 *
 	 * @return bool
 	 */

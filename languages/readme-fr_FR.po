@@ -288,7 +288,7 @@ msgid "Add a capture button in order view"
 msgstr "Ajouter un bouton de capture dans la page de commande"
 
 #. Found in changelog list item.
-msgid "internationalization of payment page"
+msgid "Internationalization of payment page"
 msgstr "Internationalisation de la page de paiement"
 
 #. Found in changelog list item.

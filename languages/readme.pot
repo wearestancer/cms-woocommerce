@@ -173,7 +173,7 @@ msgstr ""
 
 #. Found in changelog list item.
 #, gp-priority: low
-msgid "internationalization of payment page"
+msgid "Internationalization of payment page"
 msgstr ""
 
 #. Found in changelog list item.

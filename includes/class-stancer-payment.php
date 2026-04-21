@@ -37,7 +37,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * Name of the refund status.
 	 * (this is a custom WooCommerce status as it doesn't exist in API)
 	 *
-	 * @since unreleased
+	 * @since 1.4.2
 	 *
 	 * @var string
 	 */
