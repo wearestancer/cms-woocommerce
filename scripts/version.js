@@ -5,18 +5,18 @@ const { glob } = require('glob');
 const pack = require('../package.json');
 
 const globOptions = {
-  ignore: ['node_modules/**', 'scripts/**', 'vendor/**'],
+  ignore: [
+    'node_modules/**',
+    'scripts/**',
+    'vendor/**',
+    'vendor-prefixer/**',
+  ],
 };
 const currentYear = String(new Date().getFullYear());
 const currentDate = new Date().toISOString().split('T').at(0);
 
-glob('**/*.php', globOptions, (err, files) => {
-  if (err) {
-    throw err;
-  }
-
+glob('**/*.php', globOptions).then((files) => {
   const now = new Date().getTime();
-
   files.forEach((file) => {
     const filepath = path.join(process.cwd(), file);
 
