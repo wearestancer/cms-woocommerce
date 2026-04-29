@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.2] - 2026-04-29
 
 ### Added
-- Capture button in order's details (CMS-202)
+- Capture button in order details (CMS-202)
 - Order can now have an authorized status (CMS-202)
 
 ### Changed
@@ -15,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Better linting of js files
 
 ### Fixed
-- Payment page language follow Woocommerce local language (CMS-496)
-- Customer disapeared on payment capture (CMS-504)
+- Payment page language follows Woocommerce local language (CMS-496)
+- Customer disappeared on payment capture (CMS-504)
 
 
 ## [1.4.1] - 2026-03-10
