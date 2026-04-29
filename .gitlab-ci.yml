@@ -46,6 +46,19 @@ variables:
     - pnpm install
     - printf "\e[0Ksection_end:%d:%s\r\e[0K\n" $(date +%s) install
 
+.check-git-diff:
+  script:
+      # Just in case
+    - git restore composer.lock pnpm-lock.yaml package.json
+
+    # To prevent errors with filters, we add changes to remove them
+    - git add --all
+    - git diff --cached
+
+    - git status
+
+    - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
+
 
 .svn-publish:
   stage: deploy
@@ -66,17 +79,7 @@ Check translations:
   script:
     - pnpm run messages
     - pnpm run messages:compile
-
-    # Just in case
-    - git restore composer.lock pnpm-lock.yaml
-
-    # To prevent errors with filters, we add changes to remove them
-    - git add --all
-    - git diff --cached
-
-    - git status
-
-    - if [ -n "$(git status --untracked-files=no --porcelain)" ]; then exit 1; fi
+    - !reference [.check-git-diff, script]
 
   artifacts:
     paths:
@@ -101,6 +104,14 @@ Create archive:
   artifacts:
     paths:
       - '*.zip'
+
+eslint:
+  extends:
+    - .base-wp-job
+
+  script:
+    - pnpm run lint --fix
+    - !reference [.check-git-diff, script]
 
 
 phpcs:
@@ -127,6 +138,15 @@ phpstan:
   artifacts:
     reports:
       codequality: gl-static-analysis-report.json
+
+prettier:
+  extends:
+    - .base-wp-job
+
+  script:
+    - pnpm up
+    - pnpm exec prettier --write .
+    - !reference [.check-git-diff, script]
 
 
 Publish main changes:

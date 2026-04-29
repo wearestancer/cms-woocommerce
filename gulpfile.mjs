@@ -2,9 +2,9 @@ import { readFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { deleteAsync } from 'del';
 import * as sass from 'sass';
 import autoprefixer from 'autoprefixer';
+import { deleteAsync } from 'del';
 import gulp from 'gulp';
 import cheerio from 'gulp-cheerio';
 import csso from 'gulp-csso';
@@ -80,10 +80,18 @@ const views = [
 ];
 const sizes = {};
 
-const roundedText = (num) => Number.parseFloat(num).toFixed(precision).replaceAll(/\.?0+$/g, '');
+const roundedText = (num) =>
+  Number.parseFloat(num)
+    .toFixed(precision)
+    .replaceAll(/\.?0+$/g, '');
 const rounded = (num) => Number.parseFloat(roundedText(num));
 const svgSize = ($elem, width, height) => {
-  const [svgX, svgY, svgWidth, svgHeight] = $elem.attr('viewBox').split(' ');
+  const [
+    svgX,
+    svgY,
+    svgWidth,
+    svgHeight,
+  ] = $elem.attr('viewBox').split(' ');
 
   const w = svgWidth - svgX;
   const h = svgHeight - svgY;
@@ -113,7 +121,12 @@ const svgViewbox = (size, width, height, x, y) => {
   return {
     posX,
     posY,
-    viewbox: [posX, posY, roundedText(width), roundedText(height)].join(' '),
+    viewbox: [
+      posX,
+      posY,
+      roundedText(width),
+      roundedText(height),
+    ].join(' '),
   };
 };
 
@@ -131,29 +144,30 @@ export const scss = () => {
     .pipe(gulp.dest('public/css'))
     .pipe(csso())
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('public/css'))
-  ;
+    .pipe(gulp.dest('public/css'));
 };
 
 export const svg = () => {
   return gulp
     .src('src/svg/*.svg')
-    .pipe(svgmin((file) => {
-      const prefix = basename(file.relative, extname(file.relative)) + '-';
+    .pipe(
+      svgmin((file) => {
+        const prefix = basename(file.relative, extname(file.relative)) + '-';
 
-      return {
-        configFile: `${__dirname}/src/svg.js`,
-        plugins: [
-          {
-            name: 'cleanupIDs',
-            params: {
-              minify: true,
-              prefix,
+        return {
+          configFile: `${__dirname}/src/svg.js`,
+          plugins: [
+            {
+              name: 'cleanupIDs',
+              params: {
+                minify: true,
+                prefix,
+              },
             },
-          },
-        ],
-      };
-    }))
+          ],
+        };
+      }),
+    )
     .pipe(gulp.dest('public/svg'))
     .pipe(svgstore())
     .pipe(
@@ -221,13 +235,10 @@ export const svg = () => {
 
             const $sep1 = $('<line stroke="#ccc" stroke-linecap="round"/>')
               .attr('y1', viewY + padding)
-              .attr('y2', viewY + (maxHeight - padding))
-            ;
+              .attr('y2', viewY + (maxHeight - padding));
             const $sep2 = $('<line stroke="#ccc" stroke-linecap="round"/>')
               .attr('y1', viewY + padding)
-              .attr('y2', viewY + (maxHeight - padding))
-            ;
-
+              .attr('y2', viewY + (maxHeight - padding));
             const stancerPrefixSize = svgSize($stancerPrefix, null, maxHeight);
             const stancerSuffixSize = svgSize($stancerSuffix, null, maxHeight - 4.5);
 
@@ -237,8 +248,7 @@ export const svg = () => {
               .attr('x', viewX)
               .attr('y', viewY + (maxHeight - stancerPrefixSize.height) / 2)
               .attr('width', stancerPrefixSize.width)
-              .attr('height', stancerPrefixSize.height)
-            ;
+              .attr('height', stancerPrefixSize.height);
 
             totalWidth += stancerPrefixSize.width + gap;
 
@@ -261,8 +271,7 @@ export const svg = () => {
                 .attr('x', viewX + totalWidth)
                 .attr('y', viewY + (maxHeight - size.height) / 2)
                 .attr('width', size.width)
-                .attr('height', size.height)
-              ;
+                .attr('height', size.height);
 
               totalWidth += size.width + gap;
 
@@ -281,8 +290,7 @@ export const svg = () => {
               .attr('x', viewX + totalWidth)
               .attr('y', viewY + (maxHeight - stancerSuffixSize.height) / 2)
               .attr('width', stancerSuffixSize.width)
-              .attr('height', stancerSuffixSize.height)
-            ;
+              .attr('height', stancerSuffixSize.height);
 
             totalWidth += stancerSuffixSize.width;
 
@@ -298,7 +306,9 @@ export const svg = () => {
               const viewName = [
                 name,
                 view.name,
-              ].filter((value) => value).join('-');
+              ]
+                .filter((value) => value)
+                .join('-');
               const viewBox = [
                 roundedText(view.start(viewX, prefixWidth)),
                 viewY,
@@ -345,23 +355,22 @@ export const svg = () => {
       }),
     )
     .pipe(rename('_icons.scss'))
-    .pipe(gulp.dest('src/scss'))
-  ;
+    .pipe(gulp.dest('src/scss'));
 };
 
 export const ts = () => {
   const stancerFlat = readFileSync('public/svg/stancer-flat.svg', { encoding: 'utf-8' }).trim();
 
-  return project.src()
+  return project
+    .src()
     .pipe(replace('<svg stancer-flat></svg>', stancerFlat))
-    .pipe(project()).js
-    .pipe(gulp.dest('public/js'))
+    .pipe(project())
+    .js.pipe(gulp.dest('public/js'))
     .pipe(terser())
     .pipe(rename({ extname: '.min.js' }))
-    .pipe(gulp.dest('public/js'))
-  ;
+    .pipe(gulp.dest('public/js'));
 };
 
-export const watch = () => gulp.watch(['./src/ts/**/*.ts','./src/ts/**/*.tsx'],ts);
+export const watch = () => gulp.watch(['./src/ts/**/*.ts', './src/ts/**/*.tsx'], ts);
 export const build = gulp.series(clean, svg, gulp.parallel(scss, ts));
 export default build;

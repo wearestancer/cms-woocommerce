@@ -54,21 +54,36 @@ msgstr ""
 "Vous ne pouvez pas rembourser %1$.02f %3$s, le prix total de votre commande "
 "est de %2$.02f %3$s."
 
+#: includes/class-stancer-capture.php
+msgid "This order is not associated with a Stancer payment."
+msgstr "Cette commande n'est pas associé a un paiement Stancer."
+
+#: includes/class-stancer-capture.php includes/class-stancer-gateway.php
+#: includes/traits/trait-stancer-refunds.php
+#: includes/traits/trait-stancer-subscription.php
+msgid "The module is not correctly configured."
+msgstr "Le module n'est pas correctement configuré."
+
+#: includes/class-stancer-capture.php
+msgid "Capture the payment"
+msgstr "Capturer le paiement"
+
 #: includes/class-stancer-cron.php
 msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr "Toutes les 15 minutes (reconciliation Stancer)"
-
-#. translators: "%s": Stancer payment identifier.
-#: includes/class-stancer-cron.php
-#, php-format
-msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
-msgstr "Le paiement a été confirmé via Stancer reconciliation (ID Transaction : %s)"
 
 #. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 #: includes/class-stancer-cron.php
 #, php-format
 msgid "Payment %1$s via Stancer (Transaction ID: %2$s)"
 msgstr "Paiement %1$s via Stancer (ID Transaction : %2$s)"
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
+msgstr ""
+"Le paiement a été confirmé via Stancer reconciliation (ID Transaction : %s)"
 
 #: includes/class-stancer-gateway-block-support.php
 msgid "Pay by card"
@@ -224,7 +239,7 @@ msgstr "Titre"
 
 #: includes/class-stancer-gateway.php
 msgid "Payment method description shown to the customer during checkout."
-msgstr "Le titre est présenté au client lors de la commande."
+msgstr "La description est présenté au client lors de la commande."
 
 #: includes/class-stancer-gateway.php
 msgid "Payment option description"
@@ -310,7 +325,6 @@ msgstr "Inclus dans la page"
 msgid "Redirect to an external page"
 msgstr "Rediriger vers une page externe"
 
-
 #: includes/class-stancer-gateway.php
 msgid ""
 "Will be used as description for every payment made, and will be visible to "
@@ -328,22 +342,21 @@ msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 "Vous allez être redirigé vers le portail de notre partenaire de paiement."
 
-#: includes/class-stancer-gateway.php includes/traits/trait-stancer-refunds.php
-#: includes/traits/trait-stancer-subscription.php
-msgid "The module is not correctly configured."
-msgstr "Le module n'est pas correctement configuré."
-
 #: includes/class-stancer-gateway.php
 msgid "The payment attempt failed."
 msgstr "La tentative de paiement a échouée."
 
-#. translators: "%s": Stancer payment identifier.
+#. translators: "%1$s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 #, php-format
-msgid "Payment was completed via Stancer (Transaction ID: %s)"
-msgstr "Le paiement a été complété via Stancer (ID Transaction : %s)"
+msgid ""
+"Payment was authorized via stancer (Transaction ID: %1$s), you still need to "
+"capture it in your backoffice."
+msgstr ""
+"Le paiement a été authorisé via Stancer (ID Transaction : %1$s), il vous "
+"faudra le capturer dans votre backoffice"
 
-#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+#. translators: "%1$d": The minimum description size. "%2$d": The maximum description size. "%3$s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid ""
@@ -359,6 +372,12 @@ msgstr ""
 #, php-format
 msgid "Payment for order n°%s"
 msgstr "Paiement pour la commande n°%s"
+
+#. translators: "%1$s": Stancer payment identifier.
+#: includes/class-stancer-payment-builder.php
+#, php-format
+msgid "Payment was completed via Stancer (Transaction ID: %1$s)"
+msgstr "Le paiement a été complété via Stancer (ID Transaction : %1$s)"
 
 #. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php

@@ -1,40 +1,41 @@
 {
-    "name": "stancer/cms-woocommerce",
-    "description": "Stancer Woocommerce payment plugin",
-    "type": "wordpress-plugin",
-    "license": "MIT",
-    "config": {
-        "allow-plugins": {
-            "composer/installers": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        },
-        "sort-packages": true
+  "name": "stancer/cms-woocommerce",
+  "description": "Stancer Woocommerce payment plugin",
+  "type": "wordpress-plugin",
+  "license": "MIT",
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     },
-    "extra": {
-        "installer-name": "stancer"
-    },
-    "autoload": {
-        "classmap": [
-            "includes/",
-            "vendor-prefixer/"
-        ]
-    },
-    "scripts": {
-        "after:scoping": "bash ./scripts/clean-after-archives.sh && composer install",
-        "phpstan": "./vendor/bin/phpstan",
-        "phpcs": "./vendor/bin/phpcs",
-        "prefix-stancer": "bash ./scripts/class-prefixer.sh",
-        "prep-vendor": "bash ./scripts/scoper-dl.sh && scoper add-prefix -nf && rm -rf vendor/*",
-        "scope:dependency": "composer install --no-dev && composer run prep-vendor && composer run prefix-stancer && composer du"
-    },
-    "require": {
-        "stancer/stancer": "^2.1"
-    },
-    "require-dev": {
-        "php-stubs/woocommerce-stubs": "^8.9",
-        "phpstan/phpstan": "^2.1",
-        "stancer/php-stubs-woo-subscriptions": "^6.0",
-        "szepeviktor/phpstan-wordpress": "^2.0",
-        "wp-coding-standards/wpcs": "^3.0"
-    }
+    "sort-packages": true
+  },
+  "extra": {
+    "installer-name": "stancer"
+  },
+  "autoload": {
+    "classmap": [
+      "includes/",
+      "vendor-prefixer/"
+    ]
+  },
+  "scripts": {
+    "after:scoping": "bash ./scripts/clean-after-archives.sh && composer install",
+    "phpstan": "./vendor/bin/phpstan",
+    "phpcs": "./vendor/bin/phpcs",
+    "phpcs-fix": "./vendor/bin/phpcbf",
+    "prefix-stancer": "bash ./scripts/class-prefixer.sh",
+    "prep-vendor": "bash ./scripts/scoper-dl.sh && scoper add-prefix -nf && rm -rf vendor/*",
+    "scope:dependency": "composer install --no-dev && composer run prep-vendor && composer run prefix-stancer && composer du"
+  },
+  "require": {
+    "stancer/stancer": "^2.1"
+  },
+  "require-dev": {
+    "php-stubs/woocommerce-stubs": "^8.9",
+    "phpstan/phpstan": "^2.1",
+    "stancer/php-stubs-woo-subscriptions": "^6.0",
+    "szepeviktor/phpstan-wordpress": "^2.0",
+    "wp-coding-standards/wpcs": "^3.0"
+  }
 }

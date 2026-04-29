@@ -24,7 +24,6 @@ services:
       - ./fs/etc/caddy:/etc/caddy
       - ..:/var/www/html/wp-content/plugins/stancer:cached
 
-
   database:
     image: mariadb:latest
 
@@ -51,7 +50,6 @@ services:
       - db:/var/lib/mysql
       - ./fs/etc/mysql/conf.d:/etc/mysql/conf.d
 
-
   mailtrap:
     image: dbck/mailtrap
 
@@ -60,7 +58,6 @@ services:
 
     networks:
       - mail
-
 
   wordpress:
     build:
@@ -92,7 +89,6 @@ services:
       - root-path:/var/www/html
       - ..:/var/www/html/wp-content/plugins/stancer:cached
 
-
 networks:
   app:
     name: woocommerce-network-app
@@ -100,7 +96,6 @@ networks:
     name: woocommerce-network-database
   mail:
     name: woocommerce-network-mail
-
 
 volumes:
   caddy-config:

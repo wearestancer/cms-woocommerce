@@ -50,20 +50,35 @@ msgstr ""
 msgid "You cannot refund %1$.02f %3$s, the order total with the already accounted refund is %2$.02f %3$s."
 msgstr ""
 
-#: includes/class-stancer-cron.php
-msgid "Every 15 minutes (Stancer reconciliation)"
+#: includes/class-stancer-capture.php
+msgid "This order is not associated with a Stancer payment."
 msgstr ""
 
-#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-capture.php
+#: includes/class-stancer-gateway.php
+#: includes/traits/trait-stancer-refunds.php
+#: includes/traits/trait-stancer-subscription.php
+msgid "The module is not correctly configured."
+msgstr ""
+
+#: includes/class-stancer-capture.php
+msgid "Capture the payment"
+msgstr ""
+
 #: includes/class-stancer-cron.php
-#, php-format
-msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
+msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr ""
 
 #. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 #: includes/class-stancer-cron.php
 #, php-format
 msgid "Payment %1$s via Stancer (Transaction ID: %2$s)"
+msgstr ""
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
 msgstr ""
 
 #: includes/class-stancer-gateway-block-support.php
@@ -313,22 +328,16 @@ msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 
 #: includes/class-stancer-gateway.php
-#: includes/traits/trait-stancer-refunds.php
-#: includes/traits/trait-stancer-subscription.php
-msgid "The module is not correctly configured."
-msgstr ""
-
-#: includes/class-stancer-gateway.php
 msgid "The payment attempt failed."
 msgstr ""
 
-#. translators: "%s": Stancer payment identifier.
+#. translators: "%1$s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 #, php-format
-msgid "Payment was completed via Stancer (Transaction ID: %s)"
+msgid "Payment was authorized via stancer (Transaction ID: %1$s), you still need to capture it in your backoffice."
 msgstr ""
 
-#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+#. translators: "%1$d": The minimum description size. "%2$d": The maximum description size. "%3$s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid "Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s"
@@ -338,6 +347,12 @@ msgstr ""
 #: includes/class-stancer-payment-builder.php
 #, php-format
 msgid "Payment for order n°%s"
+msgstr ""
+
+#. translators: "%1$s": Stancer payment identifier.
+#: includes/class-stancer-payment-builder.php
+#, php-format
+msgid "Payment was completed via Stancer (Transaction ID: %1$s)"
 msgstr ""
 
 #. translators: "%s": Link to plugin settings.

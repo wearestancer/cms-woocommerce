@@ -54,21 +54,36 @@ msgstr ""
 "Impossibile rimborsare %1$.02f %3$s, il prezzo totale dell'ordine è di "
 "%2$.02f %3$s."
 
+#: includes/class-stancer-capture.php
+msgid "This order is not associated with a Stancer payment."
+msgstr "Questo ordine non è associato a un pagamento Stancer"
+
+#: includes/class-stancer-capture.php includes/class-stancer-gateway.php
+#: includes/traits/trait-stancer-refunds.php
+#: includes/traits/trait-stancer-subscription.php
+msgid "The module is not correctly configured."
+msgstr "Il modulo non è configurato correttamente."
+
+#: includes/class-stancer-capture.php
+msgid "Capture the payment"
+msgstr "Cattura il pagamento"
+
 #: includes/class-stancer-cron.php
 msgid "Every 15 minutes (Stancer reconciliation)"
 msgstr "Ogni 15 minuti (riconciliazione Stancer)"
-
-#. translators: "%s": Stancer payment identifier.
-#: includes/class-stancer-cron.php
-#, php-format
-msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
-msgstr "Pagamento confermato tramite riconciliazione Stancer (ID transazione: %s)"
 
 #. translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
 #: includes/class-stancer-cron.php
 #, php-format
 msgid "Payment %1$s via Stancer (Transaction ID: %2$s)"
 msgstr "Pagamento %1$s tramite Stancer (ID transazione: %2$s)"
+
+#. translators: "%s": Stancer payment identifier.
+#: includes/class-stancer-cron.php
+#, php-format
+msgid "Payment confirmed via Stancer reconciliation (Transaction ID: %s)"
+msgstr ""
+"Pagamento confermato tramite riconciliazione Stancer (ID transazione: %s)"
 
 #: includes/class-stancer-gateway-block-support.php
 msgid "Pay by card"
@@ -225,7 +240,7 @@ msgstr "Titolo"
 
 #: includes/class-stancer-gateway.php
 msgid "Payment method description shown to the customer during checkout."
-msgstr "Il titolo è presentato al cliente al momento dell'ordine."
+msgstr "La Descrizione è presentato al cliente al momento dell'ordine."
 
 #: includes/class-stancer-gateway.php
 msgid "Payment option description"
@@ -329,22 +344,21 @@ msgid "You will be redirected to our partner's portal to make the payment."
 msgstr ""
 "Stai per essere reindirizzato al portale del nostro partner di pagamento."
 
-#: includes/class-stancer-gateway.php includes/traits/trait-stancer-refunds.php
-#: includes/traits/trait-stancer-subscription.php
-msgid "The module is not correctly configured."
-msgstr "Il modulo non è configurato correttamente."
-
 #: includes/class-stancer-gateway.php
 msgid "The payment attempt failed."
 msgstr "Tentativo di pagamento non riuscito."
 
-#. translators: "%s": Stancer payment identifier.
+#. translators: "%1$s": Stancer payment identifier.
 #: includes/class-stancer-gateway.php
 #, php-format
-msgid "Payment was completed via Stancer (Transaction ID: %s)"
-msgstr "Il pagamento è stato completato tramite Stancer (ID Transaction : %s)"
+msgid ""
+"Payment was authorized via stancer (Transaction ID: %1$s), you still need to "
+"capture it in your backoffice."
+msgstr ""
+"Il pagamento è stato autorizzato tramite Stancer (ID transazione: %1$s), ma "
+"devi ancora catturarlo dal tuo backoffice."
 
-#. translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+#. translators: "%1$d": The minimum description size. "%2$d": The maximum description size. "%3$s": The default description message already translated.
 #: includes/class-stancer-gateway.php
 #, php-format
 msgid ""
@@ -359,6 +373,13 @@ msgstr ""
 #, php-format
 msgid "Payment for order n°%s"
 msgstr "Pagamento per l'ordine n° %s"
+
+#. translators: "%1$s": Stancer payment identifier.
+#: includes/class-stancer-payment-builder.php
+#, php-format
+msgid "Payment was completed via Stancer (Transaction ID: %1$s)"
+msgstr ""
+"Il pagamento è stato completato tramite Stancer (ID Transaction : %1$s)"
 
 #. translators: "%s": Link to plugin settings.
 #: includes/class-stancer.php

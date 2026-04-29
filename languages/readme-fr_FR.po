@@ -280,6 +280,22 @@ msgstr ""
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
 
 #. Found in changelog header.
+msgid "Version 1.4.2"
+msgstr "Version 1.4.2"
+
+#. Found in changelog list item.
+msgid "Add a capture button in order view"
+msgstr "Ajouter un bouton de capture dans la page de commande"
+
+#. Found in changelog list item.
+msgid "Internationalization of payment page"
+msgstr "Internationalisation de la page de paiement"
+
+#. Found in changelog list item.
+msgid "Fix customer disappearing on captured payment"
+msgstr "Réparer un bug où les clients n'apparaisse pas sur les paiement capturé"
+
+#. Found in changelog header.
 msgid "Version 1.4.1"
 msgstr "Version 1.4.1"
 

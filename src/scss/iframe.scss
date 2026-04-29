@@ -3,9 +3,9 @@
 $base-index: 99990;
 
 @mixin transition {
+  transition-behavior: allow-discrete;
   transition-duration: 150ms;
   transition-timing-function: ease-in-out;
-  transition-behavior: allow-discrete;
 
   @media (prefers-reduced-motion: reduce) {
     transition-duration: 50ms;
@@ -18,27 +18,30 @@ $base-index: 99990;
   position: fixed;
   top: 50%;
   left: 50%;
-  border: 0;
+  z-index: #{$base-index + 1};
+  transition-property: width, height, border-radius, margin-top, margin-left;
   margin-top: calc(var(--stancer-iframe-height, 300px) / -2);
   margin-left: calc(var(--stancer-iframe-width, 400px) / -2);
+  box-shadow:
+    0 0 50px rgba(0, 0, 0, 0.2),
+    0 0 25px rgba(0, 0, 0, 0.2),
+    0 0 5px rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: var(--stancer-iframe-border-radius, 10px);
+  background-color: white;
   width: var(--stancer-iframe-width, 400px);
   height: var(--stancer-iframe-height, 300px);
-  background-color: white;
-  border-radius: var(--stancer-iframe-border-radius, 10px);
-  box-shadow: 0 0 50px rgba(0, 0, 0, .2), 0 0 25px rgba(0, 0, 0, .2), 0 0 5px rgba(0, 0, 0, .2);
-  transition-property: width, height, border-radius, margin-top, margin-left;
-  z-index: #{$base-index + 1};
 }
 
 .stancer-backdrop {
   @include transition();
 
   position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  z-index: $base-index;
   backdrop-filter: blur(5px);
   transition-property: opacity;
-  z-index: $base-index;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 
   @starting-style {
     opacity: 0;
@@ -62,10 +65,10 @@ $base-index: 99990;
     position: absolute;
     right: 25px;
     bottom: 25px;
+    opacity: 0.3;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.2));
     width: #{$width * 1px};
     height: #{$height * 1px};
-    opacity: 0.3;
-    filter: drop-shadow(0 0 1px rgba(0, 0, 0, .2));
   }
 }
 

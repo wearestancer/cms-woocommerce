@@ -1,6 +1,7 @@
-import type { StancerSettings } from "./stancer";
+import type { StancerSettings } from './stancer';
+
 declare global {
-  interface AdminData{
+  interface AdminData {
     confirmMessage: string;
     descriptionMessage: string;
     minSize: number;
@@ -15,8 +16,8 @@ declare global {
   const stancer_data: StancerData;
   const wc_checkout_params: WooCommerceCheckoutParams;
 
-  type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess
-  type PaymentMethods = { stancer: StancerSettings }
+  type CheckoutResponse = CheckoutResponseFailure | CheckoutResponseSuccess;
+  type PaymentMethods = { stancer: StancerSettings };
 
   interface ChangePaymentData {
     nonce?: string;
@@ -37,13 +38,13 @@ declare global {
 
   interface CheckoutResponseFailure extends CheckoutResponseBase {
     result: 'failure';
-    reason: string
+    reason: string;
   }
 
   interface CheckoutResponseReact {
-    redirect: string
-    result: string
-    receipt: string
+    redirect: string;
+    result: string;
+    receipt: string;
   }
 
   interface CheckoutResponseSuccess extends CheckoutResponseBase {
@@ -61,7 +62,7 @@ declare global {
     route: {
       url?: string;
       path: string;
-    }
+    };
     data: ChangePaymentData | (() => string) | string;
   }
 
@@ -71,8 +72,8 @@ declare global {
     url: string & Location;
     width: number;
   }
-
-  interface React { }
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface React {}
 
   interface Redirection {
     receipt: string;
@@ -83,7 +84,7 @@ declare global {
   }
 
   interface StancerData {
-    changePaymentMethod?: ChangePaymentMethod
+    changePaymentMethod?: ChangePaymentMethod;
     initiate: string;
   }
 
@@ -98,25 +99,25 @@ declare global {
   interface WCSettings {
     currency: {
       code: string;
-    }
+    };
     paymentMethodData: PaymentMethods;
     description: string;
   }
 
   interface WordPressEnvironment {
     htmlEntities: {
-      decodeEntities: (arg0: string) => string
-    }
-    apiFetch(arg0:{
-      path: string;
-      method:string;
-      data: ChangePaymentData | (() => string) | string;
-    }):Promise<CheckoutResponse>;
+      decodeEntities: (arg0: string) => string;
+    };
     apiFetch(arg0: {
-      path: '/wc/store/v1/checkout',
-      method: 'POST',
-      data: CompletePaymentData,
-    }):Promise<BlockApiResponse>;
+      path: string;
+      method: string;
+      data: ChangePaymentData | (() => string) | string;
+    }): Promise<CheckoutResponse>;
+    apiFetch(arg0: {
+      path: '/wc/store/v1/checkout';
+      method: 'POST';
+      data: CompletePaymentData;
+    }): Promise<BlockApiResponse>;
   }
 
   interface WooCommerceCheckoutParams {
@@ -125,18 +126,18 @@ declare global {
 
   interface WooCommerceEnvironment {
     wcBlocksRegistry: {
-      registerPaymentMethod: (arg0: object) => void
-    }
-    wcSettings: WCSettings
+      registerPaymentMethod: (arg0: object) => void;
+    };
+    wcSettings: WCSettings;
   }
   interface Window extends stancerWindows {
     stancer_admin: AdminData;
     stancer: StancerData;
-    wc : WooCommerceEnvironment;
+    wc: WooCommerceEnvironment;
     wc_checkout_params: WooCommerceCheckoutParams;
     wp: WordPressEnvironment;
     wcSettings: WCSettings;
   }
 }
 
-export { };
+export {};

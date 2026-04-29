@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] - 2026-04-29
+
+### Added
+- Capture button in order details (CMS-202)
+- Order can now have an authorized status (CMS-202)
+
+### Changed
+- Handling of canceled payment in WP-Cron (CMS-494)
+- Better linting of js files
+
+### Fixed
+- Payment page language follows Woocommerce local language (CMS-496)
+- Customer disappeared on payment capture (CMS-504)
+
+
 ## [1.4.1] - 2026-03-10
 
 ### Added

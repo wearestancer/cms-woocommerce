@@ -94,6 +94,25 @@ class WC_Stancer_Payment_Builder {
 	}
 
 	/**
+	 * Complete order with a payment.
+	 *
+	 * @param WC_Order $order the order to be completed.
+	 * @param Stancer\Payment $payment the id of the payment that complete the order.
+	 * @return bool
+	 */
+	public static function complete_payment( WC_Order $order, Stancer\Payment $payment ): bool {
+		$sucess = $order->payment_complete( $payment->id );
+		$order->add_order_note(
+			sprintf(
+				// translators: "%1$s": Stancer payment identifier.
+				__( 'Payment was completed via Stancer (Transaction ID: %1$s)', 'stancer' ),
+				$payment->id
+			)
+		);
+		return $sucess;
+	}
+
+	/**
 	 * Create a Stancer\Payment Ready to be send.
 	 *
 	 * @since 1.0.0
@@ -112,7 +131,8 @@ class WC_Stancer_Payment_Builder {
 
 			if ( $card_id ) {
 				if ( $this->parameters['auth'] ) {
-					$api_payment->set_auth( $api_payment->getPaymentPageUrl() );
+					$lang = substr( determine_locale(), 0, 2 );
+					$api_payment->set_auth( $api_payment->getPaymentPageUrl( [ 'lang' => $lang ] ) );
 				} else {
 					$api_payment->set_status( Stancer\Payment\Status::CAPTURE );
 				}

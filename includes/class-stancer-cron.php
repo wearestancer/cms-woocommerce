@@ -24,7 +24,7 @@ use Stancer;
  *
  * Schedule / unschedule are called on plugin activation / deactivation.
  *
- * @since Unreleased
+ * @since 1.4.1
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -34,7 +34,7 @@ class WC_Stancer_Cron {
 	/**
 	 * WP-Cron hook name.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -43,7 +43,7 @@ class WC_Stancer_Cron {
 	/**
 	 * Custom cron schedule identifier.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -55,7 +55,7 @@ class WC_Stancer_Cron {
 	 * Payments younger than this threshold are skipped to allow the Stancer
 	 * payment page to complete its redirect flow before we poll the API.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @var int
 	 */
@@ -66,7 +66,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Hooked to the WordPress `cron_schedules` filter.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @param array<string, array<string, mixed>> $schedules Existing cron schedules.
 	 *
@@ -86,7 +86,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Called on plugin activation. Has no effect if already scheduled.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @return void
 	 */
@@ -101,7 +101,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Called on plugin deactivation.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @return void
 	 */
@@ -121,7 +121,7 @@ class WC_Stancer_Cron {
 	 * real status against the API. Updates the local record and the WooCommerce
 	 * order accordingly.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @return void
 	 */
@@ -173,7 +173,7 @@ class WC_Stancer_Cron {
 	 * Retrieves the payment status from the Stancer API and updates the local
 	 * record and WooCommerce order if the status has changed.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @param object              $row    Database row from wc_stancer_payment.
 	 * @param WC_Logger_Interface $logger WooCommerce logger.
@@ -218,6 +218,17 @@ class WC_Stancer_Cron {
 
 				return;
 			}
+			$update_status = function ( string $status ) use ( $order, $api_status, $payment_id ) {
+				$order->update_status(
+					$status,
+					sprintf(
+						// translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
+						__( 'Payment %1$s via Stancer (Transaction ID: %2$s)', 'stancer' ),
+						$api_status->value,
+						$payment_id
+					)
+				);
+			};
 
 			switch ( $api_status ) {
 				case Stancer\Payment\Status::TO_CAPTURE:
@@ -243,18 +254,23 @@ class WC_Stancer_Cron {
 						);
 					}
 					break;
+				case Stancer\Payment\Status::CANCELED:
+					if ( $order->has_status( [ 'refunded','cancelled' ] ) ) {
+						break;
+					}
+					Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
+					if ( count( $api_payment->get_refunds() ) ) {
+						$update_status( 'refunded' );
+					} else {
+						$update_status( 'cancelled' );
+					}
+					Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
+					break;
+
 				case Stancer\Payment\Status::REFUSED:
 				case Stancer\Payment\Status::EXPIRED:
 					if ( ! $order->has_status( [ 'failed', 'cancelled' ] ) ) {
-						$order->update_status(
-							'failed',
-							sprintf(
-								// translators: "%1$s": Stancer payment status. "%2$s": Stancer payment identifier.
-								__( 'Payment %1$s via Stancer (Transaction ID: %2$s)', 'stancer' ),
-								$api_status->value,
-								$payment_id
-							)
-						);
+							$update_status( 'failed' );
 						$logger->info(
 							sprintf(
 								'Stancer cron: order %d marked failed (payment %s, status %s).',

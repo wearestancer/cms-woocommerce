@@ -12,6 +12,7 @@
  * @subpackage stancer/includes
  */
 
+use Automattic\WooCommerce\Enums\OrderStatus;
 use Stancer;
 
 // Exit if accessed directly.
@@ -132,7 +133,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 			$order->set_transaction_id( $api_payment->getId() );
 			$redirect = $api_payment->getPaymentPageUrl(
 				[
-					'lang' => str_replace( '_', '-', get_locale() ),
+					'lang' => substr( determine_locale(), 0, 2 ),
 				]
 			);
 			$reload = false;
@@ -815,6 +816,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		return $this->create_api_payment( $order, $card_id );
 	}
+
 	/**
 	 * Complete order.
 	 *
@@ -866,6 +868,10 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		}
 		$order->set_transaction_id( $api_payment->getId() );
 
+		if ( Stancer\Payment\Status::AUTHORIZED === $status ) {
+			$api_payment->capture();
+			$status = $api_payment->status;
+		}
 		switch ( $status ) {
 			case Stancer\Payment\Status::FAILED:
 			case Stancer\Payment\Status::REFUSED:
@@ -879,10 +885,17 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 				break;
 			case Stancer\Payment\Status::AUTHORIZED:
-				$api_payment->status = Stancer\Payment\Status::CAPTURE;
-				$api_payment->send();
-				// No break, we just need to ask for the capture and leave the "capture" part creating the order.
+				$order->update_status( 'on-hold' );// Should be OrderStatus::ON_HOLD but phpstan doesn't understand.
+				$order->add_order_note(
+					sprintf(
+						// translators: "%1$s": Stancer payment identifier.
+						__( 'Payment was authorized via stancer (Transaction ID: %1$s), you still need to capture it in your backoffice.', 'stancer' ),
+						$api_payment->get_id()
+					)
+				);
 
+				wp_safe_redirect( $this->get_return_url( $order ) );
+				break;
 			case Stancer\Payment\Status::TO_CAPTURE:
 			case Stancer\Payment\Status::CAPTURE:
 			case Stancer\Payment\Status::CAPTURED:
@@ -895,16 +908,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 				// Remove cart.
 				WC()->cart->empty_cart();
 
-				// Complete order.
-				$order->payment_complete( $api_payment->getId() );
-
-				$order->add_order_note(
-					sprintf(
-						// translators: "%s": Stancer payment identifier.
-						__( 'Payment was completed via Stancer (Transaction ID: %s)', 'stancer' ),
-						$api_payment->getId()
-					)
-				);
+				WC_Stancer_Payment_Builder::complete_payment( $order, $api_payment );
 
 				$this->register_subscription_data( $order, $stancer_payment );
 
@@ -917,6 +921,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 
 		exit();
 	}
+
 	/**
 	 * Redirect Processing order to order_Checkout .
 	 * We can have multiple redirection but if they scope badly we have a processing Error.
@@ -959,7 +964,7 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		if ( strlen( $value ) > static::MAX_SIZE_DESCRIPTION
 			|| strlen( $value ) < static::MIN_SIZE_DESCRIPTION ) {
 			$message = sprintf(
-				// translators: "$1%d": The minimum description size. "$2%d": The maximum description size. "$3%s": The default description message already translated.
+				// translators: "%1$d": The minimum description size. "%2$d": The maximum description size. "%3$s": The default description message already translated.
 				esc_html__(
 					'Your payment description is not between %1$d and %2$d characters, it could result in the use of default description: %3$s',
 					'stancer'
