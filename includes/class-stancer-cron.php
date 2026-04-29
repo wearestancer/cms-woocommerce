@@ -24,7 +24,7 @@ use Stancer;
  *
  * Schedule / unschedule are called on plugin activation / deactivation.
  *
- * @since Unreleased
+ * @since 1.4.1
  *
  * @package stancer
  * @subpackage stancer/includes
@@ -34,7 +34,7 @@ class WC_Stancer_Cron {
 	/**
 	 * WP-Cron hook name.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -43,7 +43,7 @@ class WC_Stancer_Cron {
 	/**
 	 * Custom cron schedule identifier.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @var string
 	 */
@@ -55,7 +55,7 @@ class WC_Stancer_Cron {
 	 * Payments younger than this threshold are skipped to allow the Stancer
 	 * payment page to complete its redirect flow before we poll the API.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @var int
 	 */
@@ -66,7 +66,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Hooked to the WordPress `cron_schedules` filter.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @param array<string, array<string, mixed>> $schedules Existing cron schedules.
 	 *
@@ -86,7 +86,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Called on plugin activation. Has no effect if already scheduled.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @return void
 	 */
@@ -101,7 +101,7 @@ class WC_Stancer_Cron {
 	 *
 	 * Called on plugin deactivation.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @return void
 	 */
@@ -121,7 +121,7 @@ class WC_Stancer_Cron {
 	 * real status against the API. Updates the local record and the WooCommerce
 	 * order accordingly.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @return void
 	 */
@@ -173,7 +173,7 @@ class WC_Stancer_Cron {
 	 * Retrieves the payment status from the Stancer API and updates the local
 	 * record and WooCommerce order if the status has changed.
 	 *
-	 * @since Unreleased
+	 * @since 1.4.1
 	 *
 	 * @param object              $row    Database row from wc_stancer_payment.
 	 * @param WC_Logger_Interface $logger WooCommerce logger.

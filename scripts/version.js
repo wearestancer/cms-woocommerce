@@ -28,7 +28,7 @@ glob('**/*.php', globOptions).then((files) => {
       const data = content
         .replace(/define\( 'STANCER_ASSETS_VERSION'.+/, `define( 'STANCER_ASSETS_VERSION', '${now}' );`)
         .replace(/define\( 'STANCER_WC_VERSION'.+/, `define( 'STANCER_WC_VERSION', '${pack.version}' );`)
-        .replaceAll(/\* @since unreleased/g, `* @since ${pack.version}`)
+        .replaceAll(/\* @since [Uu]nreleased/g, `* @since ${pack.version}`)
         .replace(/\* Version:.+/, `* Version:     ${pack.version}`)
         .replace(/\* @copyright (\d{4})(?:-\d{4})?\s+Stancer.+/, (_match, date) => {
           if (date === currentYear) {
