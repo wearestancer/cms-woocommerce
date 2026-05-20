@@ -86,6 +86,10 @@ Updates are done automatically. However, we recommend that you back up your site
 
 [See complete changelog file on GitLab](https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md).
 
+= Version 1.4.3 =
+* Fixes for retried payments display
+* Plugin tested up to WordPress 7.0
+
 = Version 1.4.2 =
 * Add a capture button in order view
 * Internationalization of payment page
