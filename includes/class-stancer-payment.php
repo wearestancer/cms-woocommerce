@@ -142,6 +142,8 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 * @param array $payment_data Payment data used to create a new payment.
 	 * @param bool $generate_api_payment Do we need to generate a new payment if not already present.
 	 * @param string[] $status Statuses to find.
+	 * @param ?string $order_by parameter to order by.
+	 * @param bool $desc Do we sort in descending order.
 	 *
 	 * @return ?WC_Stancer_Payment
 	 *
@@ -151,7 +153,9 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		WC_Order $order,
 		array $payment_data = [],
 		bool $generate_api_payment = false,
-		array $status = []
+		array $status = [],
+		?string $order_by = null,
+		bool $desc = false,
 	) {
 		global $wpdb;
 
@@ -167,6 +171,12 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 			$sql .= ' AND status IN (' . $placeholder . ')';
 
 			array_push( $values, ...array_map( 'esc_sql', $status ) );
+		}
+		if ( ! empty( $order_by ) ) {
+			$sql .= ' ORDER BY ' . $order_by;
+			if ( $desc ) {
+				$sql .= ' DESC';
+			}
 		}
 
 		$row = $wpdb->get_row( $wpdb->prepare( $sql, $values ) );

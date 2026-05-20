@@ -64,7 +64,8 @@ class WC_Stancer_Capture {
 		} else {
 			$this->order = $order;
 		}
-		$payment = WC_Stancer_Payment::find( $this->order );
+		// Find the last payment created for this order.
+		$payment = WC_Stancer_Payment::find( $this->order, [], false, [], 'created', true );
 		if ( ! $payment ) {
 			throw new Stancer\Exceptions\InvalidArgumentException(
 				esc_html__( 'This order is not associated with a Stancer payment.', 'stancer' )
