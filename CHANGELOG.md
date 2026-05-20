@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+## Changed
+- tested up to WordPress 7.0 (CMS-517) 
+
 ## Fixed
 - Show last payment status when multiple payment exist for one order. (CMS-512)
 - Payment page reopening on iframe when payment failed. (CMS-515)
