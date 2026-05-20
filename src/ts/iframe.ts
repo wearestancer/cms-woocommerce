@@ -58,7 +58,7 @@
         return;
       }
 
-      if (data.paymentStatus && data.paymentStatus.startsWith('fail')) {
+      if (data.paymentStatus && data.paymentStatus.startsWith('fail.')) {
         window.location.href = redirection.receipt;
         return;
       }

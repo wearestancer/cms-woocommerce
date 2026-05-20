@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 - Show last payment status when multiple payment exist for one order. (CMS-512)
+- Payment page reopening on iframe when payment failed. (CMS-515)
 
 ## [1.4.2] - 2026-04-29
 
