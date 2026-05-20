@@ -58,6 +58,11 @@
         return;
       }
 
+      if (data.paymentStatus && data.paymentStatus.startsWith('fail.')) {
+        window.location.href = redirection.receipt;
+        return;
+      }
+
       const maxHeight = window.innerHeight ?? 100;
       const maxWidth = window.innerWidth ?? 100;
       let height = 400;
