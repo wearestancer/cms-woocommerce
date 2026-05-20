@@ -280,6 +280,18 @@ msgstr ""
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
 
 #. Found in changelog header.
+msgid "Version 1.4.3"
+msgstr "Version 1.4.3"
+
+#. Found in changelog list item.
+msgid "Fixes for retried payments display"
+msgstr "Corrige des bugs concernant l'affichage des paiements réessayés"
+
+#. Found in changelog list item.
+msgid "Plugin tested up to WordPress 7.0"
+msgstr "Module testé jusqu'à WordPress 7.0"
+
+#. Found in changelog header.
 msgid "Version 1.4.2"
 msgstr "Version 1.4.2"
 
@@ -293,7 +305,8 @@ msgstr "Internationalisation de la page de paiement"
 
 #. Found in changelog list item.
 msgid "Fix customer disappearing on captured payment"
-msgstr "Réparer un bug où les clients n'apparaisse pas sur les paiement capturé"
+msgstr ""
+"Corrige un bug où les clients n'apparaissent pas sur les paiements capturés"
 
 #. Found in changelog header.
 msgid "Version 1.4.1"
