@@ -72,7 +72,7 @@ class WC_Stancer {
 			}
 			// We don't want our capture widget to impact negatively the order display.
 			// If we have any error we just return.
-		} catch ( \Exception ) {
+		} catch ( \Throwable ) {
 			return;
 
 		}
