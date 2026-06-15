@@ -280,6 +280,14 @@ msgstr ""
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
 
 #. Found in changelog header.
+msgid "Version 1.4.4"
+msgstr "Version 1.4.4"
+
+#. Found in changelog list item.
+msgid "Fix a bug that hindered the display of some orders."
+msgstr "Corrige un bug empechant l'affichage de certaines commandes"
+
+#. Found in changelog header.
 msgid "Version 1.4.3"
 msgstr "Version 1.4.3"
 
