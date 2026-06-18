@@ -147,7 +147,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return ?WC_Stancer_Payment
 	 *
-	 * @phpstan-param PaymentData $payment_data
+	 * @phpstan-param PaymentData|BuildPaymentData $payment_data
 	 */
 	public static function find(
 		WC_Order $order,

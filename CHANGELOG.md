@@ -5,11 +5,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [unreleased]
-
-### Remove
-- Deleting now useless references to API_VERSION_1 (CMS-524)
-
 ## [1.4.4] - 2026-06-15
 
 
@@ -18,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Some edge cases preventing user to access their order. (CMS-520)
+
+### Remove
+- Deleting now useless references to API_VERSION_1 (CMS-524)
 
 ## [1.4.3] - 2026-05-20
 

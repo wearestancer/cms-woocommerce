@@ -196,8 +196,6 @@ class WC_Stancer {
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
 		add_action( 'woocommerce_admin_order_data_after_payment_info', [ $this,'call_capture' ] );
 		add_action( 'admin_post_stancer_capture', [ $this,'stancer_capture' ] );
-		// `this->stancer_capture` always terminate, but not the add_action phpstan over interpret the code.
-		// @phpstan-ignore deadCode.unreachable
 		add_action( WC_Stancer_Cron::HOOK, [ new WC_Stancer_Cron(), 'reconcile' ] );
 	}
 
