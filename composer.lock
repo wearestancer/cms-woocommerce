@@ -111,16 +111,16 @@
         },
         {
             "name": "stancer/stancer",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/wearestancer/library/lib-php.git",
-                "reference": "91b90a8d843faf680aa1680373268069ab15b6b5"
+                "reference": "82acd33d70f64f3b0b752f8640014377c1716f84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/wearestancer%2Flibrary%2Flib-php/repository/archive.zip?sha=91b90a8d843faf680aa1680373268069ab15b6b5",
-                "reference": "91b90a8d843faf680aa1680373268069ab15b6b5",
+                "url": "https://gitlab.com/api/v4/projects/wearestancer%2Flibrary%2Flib-php/repository/archive.zip?sha=82acd33d70f64f3b0b752f8640014377c1716f84",
+                "reference": "82acd33d70f64f3b0b752f8640014377c1716f84",
                 "shasum": ""
             },
             "require": {
@@ -170,22 +170,22 @@
                 "issues": "https://gitlab.com/wearestancer/library/lib-php/-/issues",
                 "source": "https://gitlab.com/wearestancer/library/lib-php"
             },
-            "time": "2026-02-03T14:19:51+00:00"
+            "time": "2026-05-21T07:38:57+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/composer-installer.git",
-                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1"
+                "reference": "963f0c67bffde0eac41b56be71ac0e8ba132f0bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/845eb62303d2ca9b289ef216356568ccc075ffd1",
-                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/963f0c67bffde0eac41b56be71ac0e8ba132f0bd",
+                "reference": "963f0c67bffde0eac41b56be71ac0e8ba132f0bd",
                 "shasum": ""
             },
             "require": {
