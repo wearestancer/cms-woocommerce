@@ -258,13 +258,11 @@ class WC_Stancer_Cron {
 					if ( $order->has_status( [ 'refunded','cancelled' ] ) ) {
 						break;
 					}
-					Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 					if ( count( $api_payment->get_refunds() ) ) {
 						$update_status( 'refunded' );
 					} else {
 						$update_status( 'cancelled' );
 					}
-					Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
 					break;
 
 				case Stancer\Payment\Status::REFUSED:
