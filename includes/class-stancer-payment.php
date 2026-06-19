@@ -147,11 +147,11 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @return ?WC_Stancer_Payment
 	 *
-	 * @phpstan-param PaymentData|BuildPaymentData $payment_data
+	 * @phpstan-param ?PaymentData $payment_data
 	 */
 	public static function find(
 		WC_Order $order,
-		array $payment_data = [],
+		?array $payment_data = null,
 		bool $generate_api_payment = false,
 		array $status = [],
 		?string $order_by = null,
@@ -183,7 +183,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 
 		// phpcs:enable
 
-		if ( ! $row && $generate_api_payment ) {
+		if ( ! $row && $generate_api_payment && null !== $payment_data ) {
 			$api_payment = static::generate_api_payment( $order, $payment_data );
 			$stancer_payment = static::save_from( $api_payment );
 		} else {
@@ -201,10 +201,11 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 	 *
 	 * @param WC_Order $order Source order.
 	 * @param array $payment_data Payment data.
+	 * @phpstan-param PaymentData $payment_data
 	 *
 	 * @return Stancer\Payment
 	 *
-	 * @phpstan-param BuildPaymentData $payment_data
+	 * @throws WC_Stancer_Exception If we didn't build a payment correctly.
 	 */
 	public static function generate_api_payment( WC_Order $order, array $payment_data ) {
 		$customer = [
@@ -213,6 +214,13 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 			'email' => $order->get_billing_email(),
 			'id' => $order->get_customer_id(),
 		];
+		if (
+			! isset( $payment_data['amount'] ) ||
+			! isset( $payment_data['currency'] ) ||
+			! isset( $payment_data['order_id'] )
+		) {
+			throw new WC_Stancer_Exception( 'Payment Data are incomplete and we cannot create a payment' );
+		}
 
 		$api_customer = WC_Stancer_Customer::get_api_customer( $customer );
 

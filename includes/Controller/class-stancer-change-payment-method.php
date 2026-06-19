@@ -125,7 +125,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return ChangePaymentValidate
+	 * @return ChangePaymentValidate|ChangePaymentInvalidate
 	 */
 	public function create_change_payment_validate(): array {
 		$data = $this->get_payment_data();
@@ -177,14 +177,12 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 		return $response;
 	}
 
-
-
 	/**
 	 * Get the payment data from the current subscription.
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return BuildPaymentData
+	 * @return PaymentData
 	 */
 	public function get_payment_data(): array {
 		$customer = [

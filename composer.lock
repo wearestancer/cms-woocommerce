@@ -111,16 +111,16 @@
         },
         {
             "name": "stancer/stancer",
-            "version": "v2.1.1",
+            "version": "v2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/wearestancer/library/lib-php.git",
-                "reference": "82acd33d70f64f3b0b752f8640014377c1716f84"
+                "reference": "e0fcd78e10a29920600893d809485838064d4655"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/wearestancer%2Flibrary%2Flib-php/repository/archive.zip?sha=82acd33d70f64f3b0b752f8640014377c1716f84",
-                "reference": "82acd33d70f64f3b0b752f8640014377c1716f84",
+                "url": "https://gitlab.com/api/v4/projects/wearestancer%2Flibrary%2Flib-php/repository/archive.zip?sha=e0fcd78e10a29920600893d809485838064d4655",
+                "reference": "e0fcd78e10a29920600893d809485838064d4655",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,7 @@
                 "issues": "https://gitlab.com/wearestancer/library/lib-php/-/issues",
                 "source": "https://gitlab.com/wearestancer/library/lib-php"
             },
-            "time": "2026-05-21T07:38:57+00:00"
+            "time": "2026-06-24T11:04:39+00:00"
         }
     ],
     "packages-dev": [
