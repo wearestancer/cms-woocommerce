@@ -140,8 +140,7 @@ class WC_Stancer_Capture {
 	 */
 	public function capture_authorize_payment() {
 
-		$this->api_payment->status = Stancer\Payment\Status::CAPTURE;
-		$this->api_payment->send();
+		$this->api_payment->capture();
 		$this->complete_payment_if_captured();
 		$this->payment->mark_as( $this->api_payment->get_status()->value );
 	}
