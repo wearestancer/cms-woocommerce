@@ -167,6 +167,11 @@ msgstr ""
 msgid "Fix a bug that hindered the display of some orders."
 msgstr ""
 
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Support Woocommerce Subscriptions (tested up to version 8.8)."
+msgstr ""
+
 #. Found in changelog header.
 msgid "Version 1.4.3"
 msgstr ""

@@ -277,6 +277,10 @@ msgstr "Version 1.4.4"
 msgid "Fix a bug that hindered the display of some orders."
 msgstr "Corrige un bug empechant l'affichage de certaines commandes"
 
+#. Found in changelog list item.
+msgid "Support Woocommerce Subscriptions (tested up to version 8.8)."
+msgstr "Support de Woocommerce Subscriptions (testé jusqu'à la version 8.8)."
+
 #. Found in changelog header.
 msgid "Version 1.4.3"
 msgstr "Version 1.4.3"
