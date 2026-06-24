@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.4] - 2026-06-15
 
-## Fixed
+
+### Added
+ - Support for Woo Subscription 8.8
+
+### Fixed
 - Some edge cases preventing user to access their order. (CMS-520)
 
 ## [1.4.3] - 2026-05-20

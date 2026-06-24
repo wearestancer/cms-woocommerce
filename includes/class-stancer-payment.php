@@ -286,7 +286,7 @@ class WC_Stancer_Payment extends WC_Stancer_Abstract_Table {
 		$stancer_payment->payment_id = $api_payment->id;
 		$stancer_payment->currency = $api_payment->currency->value;
 		$stancer_payment->amount = $api_payment->amount;
-		$stancer_payment->status = $api_payment->status ?? 'pending';
+		$stancer_payment->status = $api_payment->status->value ?? 'pending';
 		$stancer_payment->card_id = $card ? $card->id : null;
 		$stancer_payment->created = $creation ? $creation->format( 'Y-m-d H:i:s' ) : null;
 		$stancer_payment->customer_id = $customer ? $customer->id : null;

@@ -47,16 +47,6 @@ msgstr ""
 "les virements SEPA classiques ou instantanés, ou encore les prélèvements "
 "SEPA, pour les encaisser depuis votre site marchand WooCommerce."
 
-#. Found in description paragraph.
-msgid ""
-"In order to make the shopping experience smoother, customers have the "
-"possibility to register a credit card during the checkout process in order "
-"to quickly pay their next purchases."
-msgstr ""
-"Afin de fluidifier l’expérience d’achat, les clients ont la possibilité "
-"d’enregistrer une carte bancaire lors du paiement de la commande afin de "
-"pouvoir régler rapidement leurs prochains achats."
-
 #. Found in description header.
 msgid "Easy integration"
 msgstr "Une intégration simpifiée"

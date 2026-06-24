@@ -15,8 +15,6 @@ With Stancer, develop business online in a secure way. No commitment, no subscri
 
 The Stancer module for WooCommerce allows you to accept the most common payment methods used by your customers such as credit cards, classic or instant SEPA transfers, or SEPA direct debits, to collect them from your WooCommerce merchant site.
 
-In order to make the shopping experience smoother, customers have the possibility to register a credit card during the checkout process in order to quickly pay their next purchases.
-
 
 = Easy integration =
 

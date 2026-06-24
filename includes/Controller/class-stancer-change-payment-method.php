@@ -133,7 +133,7 @@ class WCS_Stancer_Change_Payment_Method extends WP_REST_Controller {
 		$api_payment = new Stancer\Payment( $payment->payment_id );
 
 		$payment->card_id = $api_payment->card->id;
-		$payment->status = $api_payment->status;
+		$payment->status = $api_payment->status->value ?? \Stancer\Payment\Status::FAILED->value;
 		$payment->save();
 
 		$customer = new WC_Customer( $this->subscription->get_customer_id() );
