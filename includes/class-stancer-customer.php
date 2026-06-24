@@ -21,6 +21,8 @@ use Stancer;
  *
  * @package stancer
  * @subpackage stancer/includes
+ *
+ * @property int $stancer_customer_id
  */
 class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	/**
@@ -102,7 +104,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @param int $customer_id WooCommerce customer ID.
 	 *
-	 * @return object|null
+	 * @return self|null
 	 */
 	public static function find( $customer_id ) {
 		global $wpdb;
@@ -122,11 +124,12 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param CustomerData $customer Customer data.
+	 * @param array $customer Customer data.
+	 * @phpstan-param CustomerData $customer
 	 *
 	 * @return Stancer\Customer
 	 */
-	public static function generate_api_customer( $customer ) {
+	public static function generate_api_customer( array $customer ) {
 		$api_customer = new Stancer\Customer();
 
 		$api_customer->name = $customer['first_name'] . ' ' . $customer['last_name'];
@@ -144,11 +147,12 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param CustomerData $customer Customer data.
+	 * @param array $customer Customer data.
+	 * @phpstan-param CustomerData $customer
 	 *
 	 * @return Stancer\Customer
 	 */
-	public static function get_api_customer( $customer ) {
+	public static function get_api_customer( array $customer ) {
 		$stancer_customer = null;
 
 		if ( ! empty( $customer['id'] ) ) {
@@ -180,7 +184,7 @@ class WC_Stancer_Customer extends WC_Stancer_Abstract_Table {
 
 		$existing_customer = static::find( (int) $api_customer->external_id );
 
-		if ( $existing_customer ) {
+		if ( $existing_customer && $existing_customer->stancer_customer_id ) {
 			$stancer_customer = new static( $existing_customer->stancer_customer_id );
 		} else {
 			$stancer_customer = new static();

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Some edge cases preventing user to access their order. (CMS-520)
+- Up the level of static typehinting analysis.
 
 ### Remove
 - Deleting now useless references to API_VERSION_1 (CMS-524)

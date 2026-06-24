@@ -202,6 +202,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function display_notice() {
+		/**
+		 * A notice of error (We create it so we know it's a string).
+		 *
+		 *  @var ?string $notice
+		*/
 		$notice = WC()->session->get( 'stancer_error_payment' );
 
 		if ( ! empty( $notice ) ) {
@@ -809,10 +814,17 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @param int $order_id Order ID.
 	 *
 	 * @return CheckoutResponse
+	 * @throws WC_Stancer_Exception If the order_id is not tied to an WC_Order.
 	 */
 	public function process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
+		if ( ! $order instanceof WC_Order ) {
+			throw new WC_Stancer_Exception( 'We couldn\'t find an order' );
+		}
 		$card_id = filter_input( INPUT_POST, 'stancer-card', FILTER_SANITIZE_STRING );
+		if ( false === $card_id ) {
+			$card_id = null;
+		}
 
 		return $this->create_api_payment( $order, $card_id );
 	}
@@ -825,10 +837,15 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 	 * @param int $order_id Order ID.
 	 *
 	 * @return void|never
+	 *
+	 * @throws WC_Stancer_Exception If the order_id is not tied to an WC_Order.
 	 */
 	public function receipt_page( $order_id ) {
 
 		$order = wc_get_order( $order_id );
+		if ( ! $order instanceof WC_Order ) {
+			throw new WC_Stancer_Exception( 'We couldn\'t find an order' );
+		}
 		if ( isset( $_GET['order_payed'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_safe_redirect( $this->get_return_url( $order ) );
 		}
@@ -850,6 +867,11 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		$stancer_payment = WC_Stancer_Payment::find( $order, [], false, [ 'pending' ] );
 		$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
 
+		/**
+		 *  We always populete a payment with a Stancer\Auth.
+		 *
+		 *  @var Stancer\Auth $auth
+		*/
 		$auth = $api_payment->auth;
 		$api_card = $api_payment->card;
 		$status = $api_payment->status;
@@ -935,9 +957,14 @@ class WC_Stancer_Gateway extends WC_Payment_Gateway {
 		];
 		// We bypass nonce verification, because we don't get a nonce to verify from.
 		$order = wc_get_order( get_query_var( 'order-pay', false ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! is_object( $order ) ) {
+		if ( ! $order instanceof WC_Order ) {
 			return;
 		}
+		/**
+		 * The order key, if we can find one it's a string else it's an empty string.
+		 *
+		 * @var string $order_key
+		 * */
 		$order_key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( hash_equals( $order->get_order_key(), $order_key ) && $this->id === $order->get_payment_method( 'view' ) ) {
 			if ( in_array( $order->get_status( 'view' ), $finished_status, true ) ) {

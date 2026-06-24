@@ -57,10 +57,16 @@ class WC_Stancer_Capture {
 	 *
 	 * @throws Stancer\Exceptions\InvalidArgumentException If we don't have a stancer payment linked to the Order.
 	 * @throws Stancer\Exceptions\NotAuthorizedException If we don't have a config properly set up.
+	 * @throws WC_Stancer_Exception If we can't find an order for the orderID.
 	 */
 	public function __construct( WC_Order|int $order ) {
 		if ( is_int( $order ) ) {
-			$this->order = wc_get_order( $order );
+			$obj_order = wc_get_order( $order );
+			if ( ! $obj_order instanceof WC_Order ) {
+				throw new WC_Stancer_Exception( 'We couldn\'t find an order' );
+			} else {
+				$this->order = $obj_order;
+			}
 		} else {
 			$this->order = $order;
 		}
