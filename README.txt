@@ -87,6 +87,7 @@ Updates are done automatically. However, we recommend that you back up your site
 
 = Version 1.4.4 =
 * Fix a bug that hindered the display of some orders.
+* Support Woocommerce Subscriptions (tested up to version 8.8).
 
 = Version 1.4.3 =
 * Fixes for retried payments display
