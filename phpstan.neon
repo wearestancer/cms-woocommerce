@@ -74,7 +74,7 @@ parameters:
             'class': string,
           },
         'page_type': string,
-        'stancer': GetPaymentData,
+        'stancer': GetPaymentData[],
         'supports': string[],
       }
     '''
@@ -104,6 +104,7 @@ parameters:
         'auth': bool,
         'capture'?: bool,
         'currency': string,
+        'customer': ?Stancer\Customer,
         'description'?: string,
         'order_id': string,
         'return_url': string,
@@ -123,6 +124,7 @@ parameters:
       array{
         'amount'?: int,
         'auth'?: bool,
+        'capture'?: bool,
         'currency'?: string,
         'description'?: string,
         'return_url'?: string,

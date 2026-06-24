@@ -100,8 +100,6 @@ class WC_Stancer_Api {
 
 		$api_payment = new Stancer\Payment( $transaction_id );
 
-		// We use API V1 for all refund related operation.
-		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 		try {
 			$api_payment->refund( (int) ( $refund_amount ) );
 		} catch ( Stancer\Exceptions\InvalidAmountException $e ) {
@@ -116,8 +114,6 @@ class WC_Stancer_Api {
 					)
 				)
 			);
-		} finally {
-			Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
 		}
 		return $api_payment;
 	}
