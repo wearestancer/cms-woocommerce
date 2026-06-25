@@ -9,7 +9,7 @@ parameters:
     - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
   scanFiles:
     - vendor/stancer/php-stubs-woo-subscriptions/stubs.php
-  level: 6
+  level: 7
   paths:
     - includes/
     - subscription/
@@ -55,6 +55,12 @@ parameters:
       }
     '''
 
+    ChangePaymentInvalidate: '''
+      array{
+        'messages': string,
+      }
+    '''
+
     RequestChangePayment: '''
       array{
         'subscription':string,
@@ -74,7 +80,7 @@ parameters:
             'class': string,
           },
         'page_type': string,
-        'stancer': GetPaymentData,
+        'stancer': PaymentDataDetails,
         'supports': string[],
       }
     '''
@@ -90,25 +96,23 @@ parameters:
 
     GetPaymentData: '''
       array{
-        'data': array<string,mixed>,
-        'page_type': 'pip',
+        'data': PaymentDataDetails,
+        'page_type': string,
         'message': string,
       }
     '''
 
-    # MARK: Payment API Request
+    PaymentDataDetails: '''
+     array{
+      'initiate': string,
+      'changePaymentMethod'?: array{
+        'nonce': non-falsy-string,
+        'url': string
+        }
+     }
+     '''
 
-    BuildPaymentData: '''
-      array{
-        'amount': int,
-        'auth': bool,
-        'capture'?: bool,
-        'currency': string,
-        'description'?: string,
-        'order_id': string,
-        'return_url': string,
-      }
-    '''
+    # MARK: Payment API Request
 
     CustomerData: '''
       array{
@@ -123,7 +127,9 @@ parameters:
       array{
         'amount'?: int,
         'auth'?: bool,
+        'capture'?: bool,
         'currency'?: string,
+        'customer'?: Stancer\Customer,
         'description'?: string,
         'return_url'?: string,
         'order_id'?: string,

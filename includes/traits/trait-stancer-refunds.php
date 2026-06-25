@@ -88,19 +88,15 @@ trait WC_Stancer_Refunds_Traits {
 	public function process_refund( $order_id, $amount = null, $reason = '' ): bool {
 		$wc_order = wc_get_order( $order_id );
 
-		if ( $this->api_config->is_not_configured() ) {
+		if ( $this->api_config->is_not_configured() || ! $wc_order instanceof WC_Order ) {
 			$message = __( 'The module is not correctly configured.', 'stancer' );
 
 			WC()->session->set( 'stancer_error_payment', $message );
 
 			throw new Exception( esc_html( $message ) );
 		}
-
-		// We use API V1 for refund related operation.
-		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 		$stancer_payment = $this->api->send_refund( $wc_order, $amount ? (int) (string) ( $amount * 100 ) : null );
 		$refundable = $stancer_payment->getRefundableAmount();
-		Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
 
 		$currency = $stancer_payment->currency;
 

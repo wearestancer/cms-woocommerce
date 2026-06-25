@@ -47,16 +47,6 @@ msgstr ""
 "les virements SEPA classiques ou instantanés, ou encore les prélèvements "
 "SEPA, pour les encaisser depuis votre site marchand WooCommerce."
 
-#. Found in description paragraph.
-msgid ""
-"In order to make the shopping experience smoother, customers have the "
-"possibility to register a credit card during the checkout process in order "
-"to quickly pay their next purchases."
-msgstr ""
-"Afin de fluidifier l’expérience d’achat, les clients ont la possibilité "
-"d’enregistrer une carte bancaire lors du paiement de la commande afin de "
-"pouvoir régler rapidement leurs prochains achats."
-
 #. Found in description header.
 msgid "Easy integration"
 msgstr "Une intégration simpifiée"
@@ -278,6 +268,18 @@ msgid ""
 msgstr ""
 "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/"
 "CHANGELOG.md\">Voir les changements complet sur GitLab</a>."
+
+#. Found in changelog header.
+msgid "Version 1.4.4"
+msgstr "Version 1.4.4"
+
+#. Found in changelog list item.
+msgid "Fix a bug that hindered the display of some orders."
+msgstr "Corrige un bug empechant l'affichage de certaines commandes"
+
+#. Found in changelog list item.
+msgid "Support Woocommerce Subscriptions (tested up to version 8.8)."
+msgstr "Support de Woocommerce Subscriptions (testé jusqu'à la version 8.8)."
 
 #. Found in changelog header.
 msgid "Version 1.4.3"

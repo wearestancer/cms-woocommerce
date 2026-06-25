@@ -158,6 +158,8 @@ abstract class WC_Stancer_Abstract_Table {
 	 * @since 1.0.0
 	 *
 	 * @return static
+	 *
+	 * @throws WC_Stancer_Exception If we have An array instead of a string for value.
 	 */
 	public function save() {
 		global $wpdb;
@@ -172,12 +174,16 @@ abstract class WC_Stancer_Abstract_Table {
 		];
 
 		$data = array_diff_key( $properties, array_flip( $defaults ) );
-		$key_callback = fn( $key ) => '`' . esc_sql( $key ) . '`';
+		$key_callback = fn( string $key ) => '`' . esc_sql( $key ) . '`';
 
 		$keys = array_map( $key_callback, array_keys( $data ) );
 
 		$values = [];
 		foreach ( $data as $key => $value ) {
+
+			if ( is_array( $value ) ) {
+				throw new WC_Stancer_Exception( 'We cannot have an array here' );
+			}
 			$value_formatted = '"' . esc_sql( $value ) . '"';
 
 			if ( 'last4' === $key ) {
@@ -201,7 +207,7 @@ abstract class WC_Stancer_Abstract_Table {
 					VALUES
 						(' . implode( ', ', $values ) . ', NOW());';
 		} else {
-			$fields_callback = fn ( $key, $value ) => '`' . esc_sql( $key ) . '` = ' . $value;
+			$fields_callback = fn ( string $key, string|int $value ) => '`' . esc_sql( $key ) . '` = ' . $value;
 
 			$fields = array_map( $fields_callback, array_keys( $values ), $values );
 

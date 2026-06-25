@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.4.4] - 2026-06-24
+
+
+### Added
+ - Support for Woo Subscription 8.8
+
+### Fixed
+- Some edge cases preventing user to access their order. (CMS-520)
+- Up the level of static typehinting analysis.
+
+### Remove
+- Deleting now useless references to API_VERSION_1 (CMS-524)
+
+
 ## [1.4.3] - 2026-05-20
 
 ## Changed
@@ -12,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 - Show last payment status when multiple payment exist for one order. (CMS-512)
 - Payment page reopening on iframe when payment failed. (CMS-515)
+
 
 ## [1.4.2] - 2026-04-29
 

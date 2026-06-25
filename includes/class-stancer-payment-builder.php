@@ -130,7 +130,7 @@ class WC_Stancer_Payment_Builder {
 			$api_payment = new Stancer\Payment( $stancer_payment->payment_id );
 
 			if ( $card_id ) {
-				if ( $this->parameters['auth'] ) {
+				if ( array_key_exists( 'auth', $this->parameters ) ) {
 					$lang = substr( determine_locale(), 0, 2 );
 					$api_payment->set_auth( $api_payment->getPaymentPageUrl( [ 'lang' => $lang ] ) );
 				} else {

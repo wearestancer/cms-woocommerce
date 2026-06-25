@@ -72,7 +72,7 @@ class WC_Stancer {
 			}
 			// We don't want our capture widget to impact negatively the order display.
 			// If we have any error we just return.
-		} catch ( \Exception ) {
+		} catch ( \Throwable ) {
 			return;
 
 		}
@@ -184,7 +184,6 @@ class WC_Stancer {
 	 */
 	private function load_actions() {
 		add_action( 'plugins_loaded', [ $this, 'load_plugin' ] );
-		add_action( 'wc_ajax_create_order', [ $this, 'create_order' ] );
 		add_action( 'woocommerce_blocks_loaded', [ $this, 'gateway_block_support' ] );
 		add_action(
 			'rest_api_init',
@@ -196,8 +195,6 @@ class WC_Stancer {
 		add_action( 'admin_notices', [ $this, 'display_depreciation' ] );
 		add_action( 'woocommerce_admin_order_data_after_payment_info', [ $this,'call_capture' ] );
 		add_action( 'admin_post_stancer_capture', [ $this,'stancer_capture' ] );
-		// `this->stancer_capture` always terminate, but not the add_action phpstan over interpret the code.
-		// @phpstan-ignore deadCode.unreachable
 		add_action( WC_Stancer_Cron::HOOK, [ new WC_Stancer_Cron(), 'reconcile' ] );
 	}
 

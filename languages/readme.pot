@@ -34,10 +34,6 @@ msgstr ""
 msgid "The Stancer module for WooCommerce allows you to accept the most common payment methods used by your customers such as credit cards, classic or instant SEPA transfers, or SEPA direct debits, to collect them from your WooCommerce merchant site."
 msgstr ""
 
-#. Found in description paragraph.
-msgid "In order to make the shopping experience smoother, customers have the possibility to register a credit card during the checkout process in order to quickly pay their next purchases."
-msgstr ""
-
 #. Found in description header.
 msgid "Easy integration"
 msgstr ""
@@ -160,6 +156,20 @@ msgstr ""
 
 #. Found in changelog paragraph.
 msgid "<a href=\"https://gitlab.com/wearestancer/cms/woocommerce/-/blob/main/CHANGELOG.md\">See complete changelog file on GitLab</a>."
+msgstr ""
+
+#. Found in changelog header.
+msgid "Version 1.4.4"
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fix a bug that hindered the display of some orders."
+msgstr ""
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Support Woocommerce Subscriptions (tested up to version 8.8)."
 msgstr ""
 
 #. Found in changelog header.

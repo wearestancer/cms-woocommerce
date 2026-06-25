@@ -84,9 +84,9 @@ final class WC_Stancer_Gateway_Block_Support extends AbstractPaymentMethodType {
 			$this->get_setting( 'page_type', 'pip' ) === 'redirect' ? 'redirect' : 'pip'
 		);
 		return [
-			'title' => $this->get_setting( 'payment_option_text' ),
-			'description' => $this->get_setting( 'payment_option_description' ),
-			'label' => $this->get_setting(
+			'title' => (string) $this->get_setting( 'payment_option_text' ),
+			'description' => (string) $this->get_setting( 'payment_option_description' ),
+			'label' => (string) $this->get_setting(
 				'button_label',
 				__( 'Pay by card', 'stancer' ),
 			),

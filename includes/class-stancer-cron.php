@@ -181,6 +181,10 @@ class WC_Stancer_Cron {
 	 * @return void
 	 */
 	private function process_row( object $row, WC_Logger_Interface $logger ): void {
+		if ( ! property_exists( $row, 'payment_id' )
+			|| ! property_exists( $row, 'order_id' ) ) {
+			return;
+		}
 		$payment_id = $row->payment_id;
 		$context    = [ 'source' => 'stancer-cron' ];
 
@@ -206,7 +210,7 @@ class WC_Stancer_Cron {
 			// Retrieve the associated WooCommerce order.
 			$order = wc_get_order( (int) $row->order_id );
 
-			if ( ! $order ) {
+			if ( ! $order instanceof WC_Order ) {
 				$logger->warning(
 					sprintf(
 						'Stancer cron: order %d not found for payment %s.',
@@ -258,13 +262,11 @@ class WC_Stancer_Cron {
 					if ( $order->has_status( [ 'refunded','cancelled' ] ) ) {
 						break;
 					}
-					Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_1 );
 					if ( count( $api_payment->get_refunds() ) ) {
 						$update_status( 'refunded' );
 					} else {
 						$update_status( 'cancelled' );
 					}
-					Stancer\Config::get_global()->set_version( Stancer\Enum\ApiVersion::VERSION_2 );
 					break;
 
 				case Stancer\Payment\Status::REFUSED:

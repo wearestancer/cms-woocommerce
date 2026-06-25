@@ -21,7 +21,7 @@ RUN useradd --create-home --shell /bin/bash --uid 1000 --groups sudo,www-data $T
 # Ensure target folder is available
 RUN mkdir -p /var/www/html/wp-content/plugins/stancer
 
-COPY ./fs/post-attach /post-attach
+COPY ./fs/woo/ /
 RUN chmod +x /post-attach && chown ${TARGET_USER}: /var/www/html/wp-content/plugins/stancer
 
 USER $TARGET_USER

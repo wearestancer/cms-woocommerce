@@ -22,3 +22,6 @@ vendor-prefixer/**
 *.mo
 *.zip
 *.crt
+
+# External Modules
+woocommerce-subscriptions/
